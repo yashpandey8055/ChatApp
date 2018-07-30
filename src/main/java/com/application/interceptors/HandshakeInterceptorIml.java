@@ -1,4 +1,4 @@
-package com.application;
+package com.application.interceptors;
 
 import java.security.Principal;
 import java.util.Map;
@@ -13,7 +13,7 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
-public class HandshakeInterceptorIml extends DefaultHandshakeHandler implements HandshakeInterceptor{
+public class HandshakeInterceptorIml  implements HandshakeInterceptor{
 
 	@Override
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
@@ -34,23 +34,7 @@ public class HandshakeInterceptorIml extends DefaultHandshakeHandler implements 
 		return true;
 	}
 
-	@Override
-    protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, 
-                                      Map<String, Object> attributes) {
-        if(request.getPrincipal()==null) {
-        	Principal user = new Principal() {
-				
-				@Override
-				public String getName() {
-					
-					return "yash";
-				}
-			};
-			
-			return user;
-        }
-        return request.getPrincipal();
-    }
+	
 	
 	@Override
 	public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,

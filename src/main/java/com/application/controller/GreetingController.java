@@ -1,4 +1,4 @@
-package com.application;
+package com.application.controller;
 
 import java.security.Principal;
 
@@ -11,6 +11,8 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 
 import org.springframework.stereotype.Controller;
 
+import com.application.bean.MessageBean;
+
 @Controller
 public class GreetingController {
 
@@ -19,10 +21,10 @@ public class GreetingController {
 	
 	
     @MessageMapping("/message")
-    public void greeting(@Payload String message, 
+    public void greeting(@Payload MessageBean message, 
     	      Principal principal){
 
-		template.convertAndSendToUser("satish","/queue/queue1",message);
+		template.convertAndSendToUser(message.getName(),"/queue/queue1",message);
     }
 
 }
