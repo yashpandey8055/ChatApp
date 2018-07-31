@@ -24,7 +24,7 @@ public class GreetingController {
     public void greeting(@Payload MessageBean message, 
     	      Principal principal){
 
-		template.convertAndSendToUser(message.getName(),"/queue/queue1",message);
+		template.convertAndSendToUser(principal.getName(),"/queue/queue1",message);
     }
 
 }

@@ -28,12 +28,12 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 	  public Authentication attemptAuthentication(
 	    final HttpServletRequest request,
 	    final HttpServletResponse response) throws IOException {
-	    final String param = ofNullable(request.getHeader(AUTHORIZATION))
-	      .orElse(request.getParameter("t"));
+	    String param = request.getHeader(AUTHORIZATION);
+	      
 	    
 	    String token ;
 	    if(param==null) {
-	    	throw new BadCredentialsException("bad credentials");
+	    	token = request.getParameter("token");
 	    }else {
 	    	 token = param.split(" ")[1];
 	    }
@@ -55,6 +55,6 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 	  protected void unsuccessfulAuthentication(HttpServletRequest request,
 				HttpServletResponse response, AuthenticationException failed)
 				throws IOException, ServletException {
-	    response.sendRedirect("/login.html");
+	    response.sendRedirect("/views/login.html");
 	  }
 }
