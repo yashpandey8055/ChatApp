@@ -2,13 +2,21 @@ package com.application.bean;
 
 public class MessageBean {
 
-	private String name;
+	
 	private String message;
-	public String getName() {
-		return name;
+	private String receiver;
+	private String sender;
+	public String getSender() {
+		return sender;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
+	public String getReceiver() {
+		return receiver;
+	}
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
 	}
 	public String getMessage() {
 		return message;

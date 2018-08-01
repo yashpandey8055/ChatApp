@@ -1,5 +1,5 @@
 var stompClient = null;
-
+var user = null;
 var load = function(){
 	console.log("windows loaded");
 	var cookie = getCookie();
@@ -11,8 +11,11 @@ var load = function(){
 			 if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
 				console.log("something:"+this.responseText)
 				var json = JSON.parse(this.responseText);
-				document.getElementById("username").innerHTML = json.username;
+				user = json.username;
+				document.getElementById("username").innerHTML = user;
 				document.getElementById("auth-token").innerHTML = json.id;
+				//Automatic connect to Websocket
+				connect();
 			}
 		}
 		xmlHttp.open("GET","http://localhost:8080/users/current");
@@ -58,8 +61,9 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/user/queue/queue1', function (greeting) {
-            showGreeting(JSON.parse(greeting.body).content);
+        stompClient.subscribe('/user/queue/queue1', function (message) {
+        	console.log(message.body)
+        	showMessage(JSON.parse(message.body));
         });
     });
 }
@@ -73,11 +77,13 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("/app/message", {}, JSON.stringify({'name': $("#name").val()}));
+    stompClient.send("/app/message", {}, JSON.stringify({'message': $("#message").val()
+    	,'receiver':$('#receiver').val(),'sender':user}));
+    $("#chat").append("<tr><td>" +user+" : "+ $("#message").val() + "</td></tr>");
 }
 
-function showGreeting(message) {
-    $("#greetings").append("<tr><td>" + message + "</td></tr>");
+function showMessage(message) {
+    $("#chat").append("<tr><td>" +message.sender+" : "+ message.message + "</td></tr>");
 }
 
 $(function () {
@@ -85,7 +91,5 @@ $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
-    $( "#connect" ).click(function() { connect(); });
-    $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendName(); });
 });
