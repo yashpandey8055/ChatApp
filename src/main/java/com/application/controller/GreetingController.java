@@ -12,6 +12,7 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
 import com.application.bean.MessageBean;
+import com.application.bean.OnlineNotification;
 
 @Controller
 public class GreetingController {
@@ -27,4 +28,8 @@ public class GreetingController {
 		template.convertAndSendToUser(message.getReceiver(),"/queue/queue1",message);
     }
 
+    @MessageMapping("/online")
+    public void onlineNotification(@Payload OnlineNotification online,Principal principal) {
+    	template.convertAndSend("/queue/online",online);
+    }
 }

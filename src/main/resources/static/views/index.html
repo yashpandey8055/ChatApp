@@ -7,14 +7,56 @@
     <script src="../webjars/sockjs-client/sockjs.min.js"></script>
     <script src="../webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/views/app.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Modern+Antiqua" rel="stylesheet">
 	<style>
-		.wrap{
+		body{
+		font-family: 'Modern Antiqua';
+		}
+		.topbar>p{
 			float:left;
 			display:inline;
-			margin-left:2px;
+			color:white;
+			font: bold 12px/30px Georgia, serif;
 		}
-		.table>tbody>tr>td{
-		border:none;
+
+		.split>ul{
+			text-align:center;
+		}
+		.split{
+			top:5%;
+			padding:10px;
+			position:absolute;
+			height:100%;
+			
+		}
+		.left{
+			
+			background-color:#F7EAFF;
+			width:15%;
+			left:0;
+		}
+		.center{
+			background-color:#F6F1F9;
+			left:15%;
+			right:15%;
+		}
+		.right{
+			width:15%;
+			right:0;
+			background-color:#F7EAFF;
+		}
+		.topbar{
+			padding-left:5%;
+			position:fixed;
+			width:100%;
+			right:0;
+			height:5%;
+			z-index:1;
+			background-color:#920CED;
+			box-shadow:0px 0px 10px #C178F2;
+		}
+		ul{
+			list-style:none;
 		}
 	</style>
 </head>
@@ -23,56 +65,19 @@
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
     enabled. Please enable
     Javascript and reload this page!</h2></noscript>
-<div id="main-content" class="container">
-<div class="row">
-	<div class="col-md-4">
-	<div >
-		<p class="wrap">Hello,</p>
-		<p class= "wrap" id="username">Random User</p>&nbsp
-		<p class= "wrap">with Authentication token</p>&nbsp
-		<p id="auth-token" class= "wrap">NONE</p>
-	</div>
-
-	</div>
-</div>
-        <div class="col-md-6">
-            <form class="form-inline">
-                
-                	<table class="table">
-	                	<tr style="border:none;">
-	                		<td>
-	                		<label for="name">Want to send message to:</label>
-	                		</td>
-	                		<td>
-	                		 <input type="text" id="receiver" class="form-control" placeholder="Name">
-	                		</td>
-	                	</tr>
-	                	<tr style="border:none;">
-	                		<td>
-	                		 <label for="name">Type your message here</label>
-	                		</td>
-	                		<td>
-	                		 <textarea id="message" class="form-control" placeholder="message"></textarea>
-	                		</td>
-	                	</tr>
-                	</table>
-                	<button id="send" class="btn btn-light" type="submit">Send</button>
-                </form>
-        </div>
+    <div class="topbar">
+    	<p>Hello, </p><p id="username">User</p>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Chat:</th>
-                </tr>
-                </thead>
-                <tbody id="chat">
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+	<div class="split left" >
+		<ul id="online_users">
+			<li style="margin-bottom:10px"><b>Online</b></li>
+		</ul>
+	</div>
+	<div class="split center">
+	
+	</div>
+	<div class="split right">
+	
+	</div>
 </body>
 </html>

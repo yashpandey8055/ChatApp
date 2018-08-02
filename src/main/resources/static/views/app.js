@@ -13,9 +13,9 @@ var load = function(){
 				var json = JSON.parse(this.responseText);
 				user = json.username;
 				document.getElementById("username").innerHTML = user;
-				document.getElementById("auth-token").innerHTML = json.id;
 				//Automatic connect to Websocket
 				connect();
+			    
 			}
 		}
 		xmlHttp.open("GET","http://localhost:8080/users/current");
@@ -61,13 +61,45 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
+       //This is user specific queue. This will be used in the chat where a specific user want
+        //to send message to specific user. This will receive the message display.
         stompClient.subscribe('/user/queue/queue1', function (message) {
+        	var onlineUser = JSON.parse(message.body).online;
         	console.log(message.body)
-        	showMessage(JSON.parse(message.body));
+        	if(user!=onlineUser&&onlineUser&&!ifAlreadyAdded(onlineUser)){
+        		 $("#online_users").append("<li>" +JSON.parse(message.body).online+"</li>");
+        	}else{
+        		showMessage(JSON.parse(message.body));
+        	}
         });
+        
+        // This is a notification queue which receives the user who logged in and display 
+        stompClient.subscribe('/queue/online', function (message) {
+        	var onlineUser = JSON.parse(message.body).online;
+        	
+        	// tell the logged in user that this user is also online
+        	stompClient.send("/app/message", {}, JSON.stringify({'online': user,'receiver':JSON.parse(message.body).online}));
+        	if(onlineUser!=user&&onlineUser&&!ifAlreadyAdded(onlineUser)){
+        		$("#online_users").append("<li>" +JSON.parse(message.body).online+"</li>");
+        	}
+        });
+        
+        //Send the notification to all user that current user is online
+        stompClient.send("/app/online", {}, JSON.stringify({'online': user}));
     });
 }
 
+function ifAlreadyAdded(user){
+	var parent = document.getElementById("online_users");
+	var child = parent.firstChild
+	while(child) {
+		console.log(child.nodeValue);
+		if(user==child.innerHTML&&child.nodeType == 1){
+			return true;
+		}
+	    child = child.nextSibling;
+	}
+}
 function disconnect() {
     if (stompClient !== null) {
         stompClient.disconnect();
