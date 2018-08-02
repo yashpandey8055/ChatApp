@@ -7,11 +7,8 @@
     <script src="../webjars/sockjs-client/sockjs.min.js"></script>
     <script src="../webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/views/app.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Modern+Antiqua" rel="stylesheet">
 	<style>
-		body{
-		font-family: 'Modern Antiqua';
-		}
+
 		.topbar>p{
 			float:left;
 			display:inline;
@@ -24,7 +21,6 @@
 		}
 		.split{
 			top:5%;
-			padding:10px;
 			position:absolute;
 			height:100%;
 			
@@ -32,12 +28,12 @@
 		.left{
 			
 			background-color:#F7EAFF;
-			width:15%;
+			width:20%;
 			left:0;
 		}
 		.center{
 			background-color:#F6F1F9;
-			left:15%;
+			left:20%;
 			right:15%;
 		}
 		.right{
@@ -58,6 +54,44 @@
 		ul{
 			list-style:none;
 		}
+		
+		.online_users{
+			padding-left:0px;
+		}
+		.online_users>li{
+			padding-left:10px;
+			padding-top:5px;
+			padding-bottom:5px;
+			padding-right:10px;
+		}
+		.user_profile{
+			background-color:white;
+			box-shadow:0px 0px 10px black;
+			overflow: auto;
+			height:10%;
+			padding:3px;
+			width:100%;
+			word-wrap: break-word;
+		}
+		
+		.user_profile:hover{
+			background-color:white;
+			box-shadow:0px 0px 30px black;
+			overflow: auto;
+			
+			height:12%;
+			width:102%
+		}	
+		.profile_picture{
+			left:0;
+			border: 2px solid white;
+			border-radius: 50%;
+			height:30px; width:30px;
+			
+		}
+		.user_profile>p{
+			margin-bottom:0px;
+		}
 	</style>
 </head>
 
@@ -68,11 +102,27 @@
     <div class="topbar">
     	<p>Hello, </p><p id="username">User</p>
     </div>
+	
 	<div class="split left" >
-		<ul id="online_users">
-			<li style="margin-bottom:10px"><b>Online</b></li>
+		<ul id="some_use" class="online_users">
+			<li>
+			<div class="user_profile">
+				<img src="download.png" align="middle" class="profile_picture"/><br>
+				<p><b>Yash Pandey</b></p>
+				<p>Hello, this is yash pandey</p>
+			</div>
+			</li>
+			<li>
+			<div class="user_profile">
+				<img src="download.png" align="middle" class="profile_picture"/><br>
+				<p><b>Yash Pandey</b></p>
+				<p>Hello, this is yash pandey</p>
+			</div>
+			
+			</li>
 		</ul>
 	</div>
+	
 	<div class="split center">
 	
 	</div>
