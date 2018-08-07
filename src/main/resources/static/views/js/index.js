@@ -41,7 +41,7 @@ function getCookie(){
 	        }
 	    }
 	    return "";
-	};
+	}
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
@@ -63,9 +63,9 @@ function connect() {
         console.log('Connected: ' + frame);
        //This is user specific queue. This will be used in the chat where a specific user want
         //to send message to specific user. This will receive the message display.
-        stompClient.subscribe('/user/queue/queue1', function (message) {
+        stompClient.subscribe('/user/queue/message', function (message) {
         	var onlineUser = JSON.parse(message.body).online;
-        	console.log(message.body)
+        	
         	if(user!=onlineUser&&onlineUser&&!ifAlreadyAdded(onlineUser)){
         		 $("#online_users").append("<li>" +JSON.parse(message.body).online+"</li>");
         	}else{
@@ -75,13 +75,9 @@ function connect() {
         
         // This is a notification queue which receives the user who logged in and display 
         stompClient.subscribe('/queue/online', function (message) {
-        	var onlineUser = JSON.parse(message.body).online;
-        	
         	// tell the logged in user that this user is also online
         	stompClient.send("/app/message", {}, JSON.stringify({'online': user,'receiver':JSON.parse(message.body).online}));
-        	if(onlineUser!=user&&onlineUser&&!ifAlreadyAdded(onlineUser)){
-        		$("#online_users").append("<li>" +JSON.parse(message.body).online+"</li>");
-        	}
+        	addUserToOnlineUser(JSON.parse(message.body));
         });
         
         //Send the notification to all user that current user is online
@@ -89,6 +85,12 @@ function connect() {
     });
 }
 
+function addUserToOnlineUser(message){
+	var onlineUser = message.online;
+	if(onlineUser!=user&&onlineUser&&!ifAlreadyAdded(onlineUser)){
+		$("#online_users").append("<li>" +message.online+"</li>");
+	}
+}
 function ifAlreadyAdded(user){
 	var parent = document.getElementById("online_users");
 	var child = parent.firstChild

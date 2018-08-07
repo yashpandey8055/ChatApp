@@ -40,13 +40,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
 	
-
+	//Mongo Starter
+	compile group: 'org.springframework.boot', name:'spring-boot-starter-data-mongodb'
     
-    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
-	compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
-    
-    // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
-	compile group: 'org.springframework', name: 'spring-jdbc', version: '5.0.4.RELEASE'
     
 
     testCompile("org.springframework.boot:spring-boot-starter-test")

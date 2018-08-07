@@ -25,7 +25,7 @@ public class GreetingController {
     public void greeting(@Payload MessageBean message, 
     	      Principal principal){
 
-		template.convertAndSendToUser(message.getReceiver(),"/queue/queue1",message);
+		template.convertAndSendToUser(message.getReceiver(),"/queue/message",message);
     }
 
     @MessageMapping("/online")
