@@ -28,9 +28,9 @@ public class MongoConfiguration extends AbstractMongoConfiguration{
 	@Override
 	public MongoClient mongoClient() {
 		
-		//MongoCredential credential = MongoCredential.createCredential(userName,getDatabaseName(),password.toCharArray());
+		MongoCredential credential = MongoCredential.createCredential(userName,getDatabaseName(),password.toCharArray());
 	    ServerAddress serverAddress = new ServerAddress(address, port);
-	    return new MongoClient(serverAddress,MongoClientOptions.builder().build());
+	    return new MongoClient(serverAddress,credential,MongoClientOptions.builder().build());
 	}
 
 	@Override

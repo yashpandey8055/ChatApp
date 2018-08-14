@@ -1,7 +1,6 @@
 package com.application.api;
 
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -14,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.google.common.net.HttpHeaders.AUTHORIZATION;
-import static java.util.Optional.ofNullable;
-import static org.apache.commons.lang3.StringUtils.removeStart;
 
 public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingFilter{
 	private static final String BEARER = "Bearer";

@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import com.application.bean.UserDocument;
-import com.application.config.UUIDAuthenticationService;
+import com.application.api.UserAuthenticationService;
+import com.application.bean.User;
 
 
 
@@ -17,12 +16,20 @@ import com.application.config.UUIDAuthenticationService;
 @RequestMapping("/users")
 public class SecuredUsersController {
   @NonNull
-  UUIDAuthenticationService authentication;
+  UserAuthenticationService authentication;
 
   @GetMapping("/current")
-  public UserDocument getCurrent(@AuthenticationPrincipal final UserDocument user) {
+  public User getCurrent(@AuthenticationPrincipal final User user) {
     return user;
   }
 
-
+  @GetMapping("/some")
+  public String gteSome(String user) {
+    return "HeloWorld";
+  }
+  @GetMapping("/logout")
+  public boolean logout(@AuthenticationPrincipal final User user) {
+    authentication.logout(user);
+    return true;
+  }
 }

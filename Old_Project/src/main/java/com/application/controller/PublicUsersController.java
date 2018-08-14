@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.application.api.UserAuthenticationService;
 import com.application.api.UserCrudService;
 import com.application.bean.UserDocument;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators.UUIDGenerator;
 
 
 

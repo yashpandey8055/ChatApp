@@ -21,7 +21,7 @@
     				console.log(this.responseText);
     			}
     		}
-    		xmlHttp.open("POST","http://localhost:8080/public/users/register",true)
+    		xmlHttp.open("POST","http://localhost:8080/public/users/login?username=yash&password=123",true)
     		xmlHttp.send(JSON.stringify(request));
     	}
     </script>

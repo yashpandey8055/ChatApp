@@ -11,7 +11,7 @@ var register = function(){
     	    }
     	    var username = document.getElementById("username").value;
     	    var password = document.getElementById("password").value;
-    	    xmlHttp.open("GET", "http://localhost:8080/public/users/login?userName="+username, true); // true for asynchronous 
+    	    xmlHttp.open("POST", "http://localhost:8080/public/users/login?username="+username+"&password="+password, true); // true for asynchronous 
     	    xmlHttp.send(null);
     	    
     	}
