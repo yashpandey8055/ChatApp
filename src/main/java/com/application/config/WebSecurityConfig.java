@@ -5,6 +5,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,25 +21,27 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 
 
-
+@Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	private TokenAutheticationProvider provider;
 
-	private RequestMatcher publicURL = new OrRequestMatcher(
+	private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
 		    new AntPathRequestMatcher("/public/**"),
 		    new AntPathRequestMatcher("/views/**"),
-		    new AntPathRequestMatcher("/webjars/**"));
-	
-	private final RequestMatcher protectedURL = new NegatedRequestMatcher(publicURL);
-	
+		    new AntPathRequestMatcher("/webjars/**"),
+		    new AntPathRequestMatcher("/favicon.ico")
+		    );
+
+	private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
 	 WebSecurityConfig(TokenAutheticationProvider provider){
+		super();
 		this.provider = provider;
 	}
 	
 	  @Bean
 	  TokenAuthenticationFilter restAuthenticationFilter() throws Exception {
-	    final TokenAuthenticationFilter filter = new TokenAuthenticationFilter(protectedURL);
+	    final TokenAuthenticationFilter filter = new TokenAuthenticationFilter(PROTECTED_URLS);
 	    filter.setAuthenticationManager(authenticationManager());
 	    filter.setAuthenticationSuccessHandler(successHandler());
 	    return filter;
@@ -47,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	  
 	  @Override
 		public void configure(WebSecurity web) {
-			web.ignoring().requestMatchers(publicURL);
+			web.ignoring().requestMatchers(PUBLIC_URLS);
 		}
 	  
 		@Override
@@ -59,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		      .exceptionHandling()
 		      // this entry point handles when you request a protected page and you are not yet
 		      // authenticated
-		      .defaultAuthenticationEntryPointFor(forbiddenEntryPoint(), protectedURL)
+		      .defaultAuthenticationEntryPointFor(forbiddenEntryPoint(),PROTECTED_URLS)
 		      .and()
 		      .authenticationProvider(provider)
 		      .addFilterBefore(restAuthenticationFilter(), AnonymousAuthenticationFilter.class)
@@ -68,9 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		      .authenticated()
 		      .and()
 		      .csrf().disable()
-		      .formLogin() .loginPage("/views/login.html")
-              .permitAll()
-              .and()
+		      .formLogin().disable()
 		      .httpBasic().disable()
 		      .logout().disable();
 			}

@@ -2,14 +2,24 @@ package com.application.bean;
 
 public class OnlineNotification {
 
-	private String online;
+	private String user;
+	private String action;
 
-	public String getOnline() {
-		return online;
+	public String getUser() {
+		return user;
 	}
 
-	public void setOnline(String online) {
-		this.online = online;
+	public void setUser(String user) {
+		this.user = user;
 	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
 	
 }

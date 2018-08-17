@@ -9,7 +9,6 @@ var load = function(){
 		xmlHttp.onreadystatechange = function(){
 			console.log("something:"+xmlHttp.readystate+" "+xmlHttp.status)
 			 if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-				console.log("something:"+this.responseText)
 				var json = JSON.parse(this.responseText);
 				user = json.username;
 				document.getElementById("username").innerHTML = user;
@@ -87,8 +86,14 @@ function connect() {
 
 function addUserToOnlineUser(message){
 	var onlineUser = message.online;
-	if(onlineUser!=user&&onlineUser&&!ifAlreadyAdded(onlineUser)){
-		$("#online_users").append("<li>" +message.online+"</li>");
+	if(onlineUser==user&&onlineUser&&!ifAlreadyAdded(onlineUser)){
+		$("#online_users").append("<li>"
+			+"<div class='user_profile'>"
+				+"<img src='download.png' align='middle' class='profile_picture'/><br>"
+				+"<p><b>Yash Pandey</b></p>"
+				+"<p>Hello, this is yash pandey</p>"
+			+"</div>"+
+			"</li>");
 	}
 }
 function ifAlreadyAdded(user){

@@ -29,7 +29,7 @@ public class GreetingController {
     }
 
     @MessageMapping("/online")
-    public void onlineNotification(@Payload OnlineNotification online,Principal principal) {
-    	template.convertAndSend("/queue/online",online);
+    public void onlineNotification(@Payload OnlineNotification notification) {
+    	template.convertAndSend("/queue/online",notification);
     }
 }
