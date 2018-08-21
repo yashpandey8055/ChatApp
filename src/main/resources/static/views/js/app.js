@@ -68,22 +68,43 @@ function connect() {
         
         // This is a notification queue which receives the user who logged in and display 
         stompClient.subscribe('/queue/online', function (message) {
+        	console.log(JSON.stringify(message.body))
         	addUserToOnlineUser(JSON.parse(message.body));
         });
         
     });
+    request();
+   
 }
-
+function request(){
+	var token = getCookie();
+	 var xmlHttp = new XMLHttpRequest();
+	 xmlHttp.onreadystatechange = function(){
+		 if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+			 var userList = JSON.parse(this.responseText);
+			 userList.forEach(function(entry){
+				var message = {'user':entry,'action':'CONNECTED'};
+				addUserToOnlineUser(message);
+			 });
+		 }
+	 } 
+	 	xmlHttp.open("GET","http://localhost:8080/users/connected");
+		xmlHttp.setRequestHeader("Authorization","Bearer "+token);
+		xmlHttp.send(null);
+}
 function addUserToOnlineUser(message){
 	var onlineUser = message.user;
-	if(onlineUser!=user&&onlineUser&&!ifAlreadyAdded(onlineUser)){
-		$("#online_users").append("<li>"
+	var action = message.action
+	if(onlineUser!=user&&onlineUser&&!ifAlreadyAdded(onlineUser)&&action=='CONNECTED'){
+		$("#online_users").append("<li id="+onlineUser+">"
 			+"<div class='user_profile'>"
 				+"<img src='download.png' align='middle' class='profile_picture'/><br>"
 				+"<p><b>"+onlineUser+"</b></p>"
 				+"<p>My Bio</p>"
 			+"</div>"+
 			"</li>");
+	}else if(action=='DISCONNECTED'){
+		$("#"+onlineUser).remove();
 	}
 }
 function ifAlreadyAdded(user){

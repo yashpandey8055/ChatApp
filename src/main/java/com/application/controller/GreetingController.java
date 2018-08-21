@@ -1,15 +1,15 @@
 package com.application.controller;
 
 import java.security.Principal;
-
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-
 import org.springframework.stereotype.Controller;
+
 
 import com.application.bean.MessageBean;
 import com.application.bean.OnlineNotification;
@@ -19,7 +19,7 @@ public class GreetingController {
 
 	@Autowired
 	private SimpMessageSendingOperations  template ;
-	
+
 	
     @MessageMapping("/message")
     public void greeting(@Payload MessageBean message, 
@@ -32,4 +32,6 @@ public class GreetingController {
     public void onlineNotification(@Payload OnlineNotification notification) {
     	template.convertAndSend("/queue/online",notification);
     }
+    
+    
 }
