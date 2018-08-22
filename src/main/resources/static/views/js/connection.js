@@ -1,5 +1,7 @@
 var stompClient = null;
 var user = null;
+var userList = null;
+var chatWithUser = null;
 var load = function(){
 	console.log("windows loaded");
 	var cookie = getCookie();
@@ -63,6 +65,8 @@ function connect() {
        //This is user specific queue. This will be used in the chat where a specific user want
         //to send message to specific user. This will receive the message display.
         stompClient.subscribe('/user/queue/message', function (message) {
+        	var chatMessage = JSON.parse(message.body);
+        	displayChatBox(chatMessage.sender);
         	showMessage(JSON.parse(message.body));
         });
         
@@ -81,9 +85,9 @@ function request(){
 	 var xmlHttp = new XMLHttpRequest();
 	 xmlHttp.onreadystatechange = function(){
 		 if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
-			 var userList = JSON.parse(this.responseText);
+			 userList = JSON.parse(this.responseText);
 			 userList.forEach(function(entry){
-				var message = {'user':entry,'action':'CONNECTED'};
+				var message = {'user':entry.username,'action':'CONNECTED'};
 				addUserToOnlineUser(message);
 			 });
 		 }
@@ -96,8 +100,8 @@ function addUserToOnlineUser(message){
 	var onlineUser = message.user;
 	var action = message.action
 	if(onlineUser!=user&&onlineUser&&!ifAlreadyAdded(onlineUser)&&action=='CONNECTED'){
-		$("#online_users").append("<li id="+onlineUser+">"
-			+"<div class='user_profile'>"
+		$("#online_users").append("<li>"
+			+"<div class='user_profile' id="+onlineUser+">"
 				+"<img src='download.png' align='middle' class='profile_picture'/><br>"
 				+"<p><b>"+onlineUser+"</b></p>"
 				+"<p>My Bio</p>"
@@ -125,21 +129,46 @@ function disconnect() {
     setConnected(false);
     console.log("Disconnected");
 }
-
-function sendName() {
-    stompClient.send("/app/message", {}, JSON.stringify({'message': $("#message").val()
-    	,'receiver':$('#receiver').val(),'sender':user}));
-    $("#chat").append("<tr><td>" +user+" : "+ $("#message").val() + "</td></tr>");
+function send(){
+	
+	stompClient.send("/app/message", {}, JSON.stringify({'message': $("#message").val()
+    	,'receiver':chatWithUser,'sender':user}));
+    $("#chatbox").append("<p align='right'>"+$('#message').val()+"</p>");
 }
 
 function showMessage(message) {
-    $("#chat").append("<tr><td>" +message.sender+" : "+ message.message + "</td></tr>");
+	$("#chatbox").append("<p align='left'>"+ message.message +"</p>");
 }
-
+function displayChatBox(id){
+	userList.forEach(function(entry){
+	 if(entry.username == id){
+		 chatWithUser = id;
+	$("#chatarea").append(
+	"<div class='chat_topbar'>"+
+	"<div style='margin:0px;padding:5px;'>"+
+		"<div style='float:left;display:inline-block;margin-left:5px;'><img src='download.png' align='middle' class='profile_picture'/></div>"+
+		"<div style='margin-top:5px;margin-left:5px;display:inline-block'><h4 style='margin-top:2px;margin-bottom:0px;'>"+entry.firstName+" "+entry.lastName+"</h4><p>"+entry.username+"</p></div>"+
+	"</div>"+
+		"</div>"+
+		"<hr>"+
+		"<div class='chatbox' id='chatbox'>"+
+			
+		"</div>"+
+		"<div class='chattext'>"+
+			"<input type='text' id='message' name='chattext' style='height:50%; width:100%'>"+
+			"<button type='button' class='btn btn-primary' onclick='send()'>Send</button>"+
+		"</div>"
+		);
+	 }
+	});
+}
 $(function () {
 	
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
-    $( "#send" ).click(function() { sendName(); });
+    $("#online_users").on("click","li",function(event){
+        var id = event.target.id;
+        displayChatBox(id);
+    });
 });

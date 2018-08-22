@@ -32,7 +32,7 @@ public class SecuredUsersController {
   }
 
   @GetMapping("/connected")
-  public List<String> connectedNotification() {
+  public List<UserDocument> connectedNotification() {
   	return userService.getAllUsers();
   }
 

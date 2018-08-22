@@ -1,4 +1,7 @@
 
+body{
+	overflow:hidden;
+}
 .topbar>p{
 	float:left;
 	display:inline;
@@ -24,10 +27,10 @@
 .center{
 	background-color:#F6F1F9;
 	left:20%;
-	right:15%;
+	right:30%;
 }
 .right{
-	width:15%;
+	width:30%;
 	right:0;
 	background-color:#F7EAFF;
 }

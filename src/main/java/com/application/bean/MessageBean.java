@@ -6,13 +6,7 @@ public class MessageBean {
 	private String message;
 	private String receiver;
 	private String sender;
-	private String online;
-	public String getOnline() {
-		return online;
-	}
-	public void setOnline(String online) {
-		this.online = online;
-	}
+	
 	public String getSender() {
 		return sender;
 	}

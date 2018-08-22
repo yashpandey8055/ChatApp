@@ -29,8 +29,8 @@ public class UserCrudService {
 	public void remove(String username) {
 		userList.remove(username);
 	}
-	public List<String> getAllUsers(){
-		return userList;
+	public List<UserDocument> getAllUsers(){
+		return userDao.findConnectedDetails(userList);
 	}
 	public UserDocument find(String token) {
 		return userDao.find(users.get(token));
