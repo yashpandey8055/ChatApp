@@ -2,6 +2,7 @@ var stompClient = null;
 var user = null;
 var userList = null;
 var chatWithUser = null;
+var chatStack = new Array();
 var load = function(){
 	console.log("windows loaded");
 	var cookie = getCookie();
@@ -141,8 +142,9 @@ function showMessage(message) {
 }
 function displayChatBox(id){
 	userList.forEach(function(entry){
-	 if(entry.username == id){
+	 if(entry.username == id&&!($.inArray(id, chatStack ) > -1)){
 		 chatWithUser = id;
+		 chatStack.push(id);
 	$("#chatarea").append(
 	"<div class='chat_topbar'>"+
 	"<div style='margin:0px;padding:5px;'>"+

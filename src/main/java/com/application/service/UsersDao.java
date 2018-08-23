@@ -1,6 +1,7 @@
 package com.application.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -25,8 +26,7 @@ public class UsersDao {
 
 	}
 	
-	public List<UserDocument> findConnectedDetails(List<String> list){
-		List<UserDocument> users = template.find(Query.query(Criteria.where("userName").in(list)), UserDocument.class);
-		return users;
+	public List<UserDocument> findConnectedDetails(Set<String> list){
+		return template.find(Query.query(Criteria.where("userName").in(list)), UserDocument.class);
 	}
 }

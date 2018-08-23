@@ -18,7 +18,8 @@
     		var xmlHttp = new XMLHttpRequest();
     		xmlHttp.onreadystatechange =function(){
     			if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-    				console.log(this.responseText);
+    				document.cookie="token="+ this.responseText.split('"').join('');
+        	        window.location.href = "http://localhost:8080/views/index.html";
     			}
     		}
     		xmlHttp.open("POST","http://localhost:8080/public/users/register",true)

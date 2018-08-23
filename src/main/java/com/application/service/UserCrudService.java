@@ -1,9 +1,10 @@
 package com.application.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class UserCrudService {
 	UsersDao userDao ;
 	
 	Map<String,String> users = new HashMap<>();
-	List<String> userList = new ArrayList<>();
+	Set<String> userList = new HashSet<>();
 	
 	public void save(String uuid, String username) {
 		users.put(uuid,username);
