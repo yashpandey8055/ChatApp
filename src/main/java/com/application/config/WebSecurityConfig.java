@@ -30,7 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		    new AntPathRequestMatcher("/public/**"),
 		    new AntPathRequestMatcher("/views/**"),
 		    new AntPathRequestMatcher("/webjars/**"),
-		    new AntPathRequestMatcher("/favicon.ico")
+		    new AntPathRequestMatcher("/favicon.ico"),
+		    new AntPathRequestMatcher("/")
 		    );
 
 	private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
