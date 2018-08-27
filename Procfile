@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar -Dspring.profiles.active=dev build/libs/WebSocketWithSecurity-0.1.0.jar --server.port=$PORT $JAR_OPTS 
+web: java $JAVA_OPTS -jar -Dspring.profiles.active=dev build/libs/WebSocketWithSecurity-0.1.0.jar
