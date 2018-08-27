@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.application.bean.ResponseBean;
 import com.application.bean.UserDocument;
 import com.application.config.UUIDAuthenticationService;
 import com.application.service.UsersDao;
@@ -34,6 +35,9 @@ public class PublicUserController {
 	
 	@GetMapping("/users/login")
 	public ResponseEntity<Object> login(@RequestParam String userName){
+		if(userDao.find(userName) == null) {
+			return new ResponseEntity<>("Not found",HttpStatus.NOT_FOUND);
+		}
 		return new ResponseEntity<>(userService.login(userName),HttpStatus.OK);
 	}
 }
