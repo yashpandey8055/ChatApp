@@ -1,3 +1,4 @@
+
 var register = function(){
 			var xmlHttp = new XMLHttpRequest();
     	    xmlHttp.onreadystatechange = function() { 
@@ -6,12 +7,12 @@ var register = function(){
     	        	      this.responseText;
     	        console.log("response is:"+this.responseText)
     	        document.cookie="token="+ this.responseText;
-    	        window.location.href = "http://localhost:8080/views/index.html";
+    	        window.location.href = env+"/views/index.html";
     	        }
     	    }
     	    var username = document.getElementById("username").value;
     	    var password = document.getElementById("password").value;
-    	    xmlHttp.open("GET", "http://localhost:8080/public/users/login?userName="+username, true); // true for asynchronous 
+    	    xmlHttp.open("GET", env+"/public/users/login?userName="+username, true); // true for asynchronous 
     	    xmlHttp.send(null);
     	    
     	}

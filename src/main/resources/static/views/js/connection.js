@@ -4,7 +4,6 @@ var userList = null;
 var chatWithUser = null;
 var chatStack = new Array();
 var load = function(){
-	console.log("windows loaded");
 	var cookie = getCookie();
 	if(cookie!=""){
 		console.log(cookie);
@@ -20,12 +19,11 @@ var load = function(){
 			    
 			}
 		}
-		xmlHttp.open("GET","http://localhost:8080/users/current");
+		xmlHttp.open("GET",env+"/users/current");
 		xmlHttp.setRequestHeader("Authorization","Bearer "+cookie);
 		xmlHttp.send(null);
 	}else{
-		console.log(cookie);
-		window.location.href = "http://localhost:8080/views/login.html"
+		window.location.href = env+"/views/login.html"
 	}
 };
 	
@@ -58,7 +56,7 @@ function setConnected(connected) {
 
 function connect() {
 	var token = getCookie();
-    var socket = new SockJS('/gs-guide-websocket?token='+token);
+    var socket = new SockJS(env+'/gs-guide-websocket?token='+token);
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
@@ -93,7 +91,7 @@ function request(){
 			 });
 		 }
 	 } 
-	 	xmlHttp.open("GET","http://localhost:8080/users/connected");
+	 	xmlHttp.open("GET",env+"/users/connected");
 		xmlHttp.setRequestHeader("Authorization","Bearer "+token);
 		xmlHttp.send(null);
 }
@@ -165,7 +163,7 @@ function displayChatBox(id){
 	});
 }
 $(function () {
-	
+	load();
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
