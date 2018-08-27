@@ -1,1 +1,1 @@
-var env = "http://localhost:8080"
+var env = "https://ketu.herokuapp.com"
