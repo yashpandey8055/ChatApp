@@ -1,6 +1,6 @@
 var stompClient = null;
 var user = null;
-var userList = null;
+var userList = new Array();
 var chatWithUser = null;
 var chatStack = new Array();
 var load = function(){
@@ -71,8 +71,12 @@ function connect() {
         
         // This is a notification queue which receives the user who logged in and display 
         stompClient.subscribe('/queue/online', function (message) {
-        	console.log(JSON.stringify(message.body))
-        	addUserToOnlineUser(JSON.parse(message.body));
+        	var userInfo= JSON.parse(message.body);
+        	var userObject = {"id":"5b84cc5749f51411e024e5f6","firstName":"kumod","lastName":"jha","bio":"asd","username":userInfo.user};
+        	if(userList.indexOf(userObject)<=-1){
+        		userList.push(userObject);
+        	}
+        	addUserToOnlineUser(userInfo);
         });
         
     });
@@ -84,7 +88,10 @@ function request(){
 	 var xmlHttp = new XMLHttpRequest();
 	 xmlHttp.onreadystatechange = function(){
 		 if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
-			 userList = JSON.parse(this.responseText);
+			 var list = JSON.parse(this.responseText);
+			 if(list.length>0){
+				 userList.push(list[0]);
+			 }
 			 userList.forEach(function(entry){
 				var message = {'user':entry.username,'action':'CONNECTED'};
 				addUserToOnlineUser(message);
