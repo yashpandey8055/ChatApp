@@ -8,7 +8,14 @@ body{
 	color:white;
 	font: bold 12px/30px Georgia, serif;
 }
-
+.logout>p{
+	text-align:right;
+	float:right;
+	margin-right:3%;
+	color:white;
+	font: bold 12px/30px Georgia, serif;
+	cursor:pointer;
+}
 .split>ul{
 	text-align:center;
 }

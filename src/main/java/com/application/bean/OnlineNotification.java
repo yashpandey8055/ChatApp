@@ -2,14 +2,14 @@ package com.application.bean;
 
 public class OnlineNotification {
 
-	private String user;
+	private UserDocument user;
 	private String action;
 
-	public String getUser() {
+	public UserDocument getUser() {
 		return user;
 	}
 
-	public void setUser(String user) {
+	public void setUser(UserDocument user) {
 		this.user = user;
 	}
 

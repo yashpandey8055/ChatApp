@@ -72,9 +72,16 @@ function connect() {
         // This is a notification queue which receives the user who logged in and display 
         stompClient.subscribe('/queue/online', function (message) {
         	var userInfo= JSON.parse(message.body);
-        	var userObject = {"id":"5b84cc5749f51411e024e5f6","firstName":"kumod","lastName":"jha","bio":"asd","username":userInfo.user};
-        	if(userList.indexOf(userObject)<=-1){
-        		userList.push(userObject);
+        	console.log("The details of Online user:"+JSON.stringify(userInfo));
+        	if(userList.indexOf(userInfo.user)<=-1&&userInfo.action=='CONNECTED'){
+        		userList.push(userInfo.user);
+        	}else if(userInfo.action=='DISCONNECTED'){
+        		userList.some(function(entry){
+        			if(entry.username==userInfo.user.username){
+        				userList.pop(entry);
+        				return false;
+        			}
+        		});
         	}
         	addUserToOnlineUser(userInfo);
         });
@@ -93,7 +100,7 @@ function request(){
 				 userList.push(list[0]);
 			 }
 			 userList.forEach(function(entry){
-				var message = {'user':entry.username,'action':'CONNECTED'};
+				var message = {'user':entry,'action':'CONNECTED'};
 				addUserToOnlineUser(message);
 			 });
 		 }
@@ -105,16 +112,16 @@ function request(){
 function addUserToOnlineUser(message){
 	var onlineUser = message.user;
 	var action = message.action
-	if(onlineUser!=user&&onlineUser&&!ifAlreadyAdded(onlineUser)&&action=='CONNECTED'){
+	if(onlineUser.username!=user&&onlineUser&&!ifAlreadyAdded(onlineUser.username)&&action=='CONNECTED'){
 		$("#online_users").append("<li>"
-			+"<div class='user_profile' id="+onlineUser+">"
+			+"<div class='user_profile' id="+onlineUser.username+">"
 				+"<img src='download.png' align='middle' class='profile_picture'/><br>"
-				+"<p><b>"+onlineUser+"</b></p>"
+				+"<p><b>"+onlineUser.username+"</b></p>"
 				+"<p>My Bio</p>"
 			+"</div>"+
 			"</li>");
 	}else if(action=='DISCONNECTED'){
-		$("#"+onlineUser).remove();
+		$("#"+onlineUser.username).remove();
 	}
 }
 function ifAlreadyAdded(user){
@@ -177,5 +184,10 @@ $(function () {
     $("#online_users").on("click","li",function(event){
         var id = event.target.id;
         displayChatBox(id);
+    });
+    
+    $("#logout").click(function(){
+    	document.cookie = 'token' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
+    	window.location.href = env+"/views/login.html"
     });
 });

@@ -1,8 +1,5 @@
 package com.application.config;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -10,8 +7,10 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import com.application.bean.OnlineNotification;
+import com.application.bean.UserDocument;
 import com.application.controller.GreetingController;
 import com.application.service.UserCrudService;
+import com.application.service.UsersDao;
 
 @Component
 public class WebSocketSessionListener {
@@ -19,7 +18,9 @@ public class WebSocketSessionListener {
 	@Autowired
 	GreetingController controller;
 
-
+	@Autowired
+	UsersDao userDao;
+	
 	@Autowired
 	UserCrudService userService;
 	
@@ -30,16 +31,18 @@ public class WebSocketSessionListener {
 	public void sessionConnection(SessionConnectedEvent sce) {
 		String user = sce.getUser().getName();
 		userService.add(user);
-		sendNotification(user,CONNECTED);
+		sendNotification(userDao.find(user),CONNECTED);
 	}
 
 	@EventListener(SessionDisconnectEvent.class)
 	public void sessionDisconnection(SessionDisconnectEvent sde) {
 		String user = sde.getUser().getName();
 		userService.remove(user);
-		sendNotification(user,DISCONNECTED);
+		UserDocument document = new UserDocument();
+		document.setUserName(user);
+		sendNotification(document,DISCONNECTED);
 	}
-	private void sendNotification(String user, String action) {
+	private void sendNotification(UserDocument user, String action) {
 		OnlineNotification notification = new OnlineNotification();
 		notification.setUser(user);
 		notification.setAction(action);
