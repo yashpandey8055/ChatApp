@@ -21,7 +21,7 @@ public class HandshakeInterceptorIml implements HandshakeInterceptor {
              = (ServletServerHttpRequest) request;
             HttpSession session = servletRequest
               .getServletRequest().getSession();
-            
+            System.out.println("Upgrade is:"+request.getHeaders().getUpgrade());
             attributes.put("sessionId", session.getId());
             
             System.out.println("Use is: "+request.getPrincipal());
