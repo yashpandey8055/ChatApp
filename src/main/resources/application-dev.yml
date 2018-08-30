@@ -1,0 +1,6 @@
+mongo:
+  address: ds121716.mlab.com
+  dbName: ketu
+  password: Yashpandey@123
+  port: 21716
+  userName: ketu_dev_user

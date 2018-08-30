@@ -97,7 +97,7 @@ function request(){
 		 if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
 			 var list = JSON.parse(this.responseText);
 			 if(list.length>0){
-				 userList.push(list[0]);
+				 userList.push(list);
 			 }
 			 userList.forEach(function(entry){
 				var message = {'user':entry,'action':'CONNECTED'};
