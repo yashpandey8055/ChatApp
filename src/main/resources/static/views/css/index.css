@@ -59,10 +59,16 @@ ul{
 	padding-left:0px;
 }
 .online_users>li{
+	postion:absolute;
 	padding-left:10px;
 	padding-top:5px;
 	padding-bottom:5px;
 	padding-right:10px;
+}
+.chatterBox{
+	position:absolute;
+	height:100%;
+	width:100%;
 }
 .user_profile{
 	background-color:white;

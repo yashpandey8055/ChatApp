@@ -74,7 +74,7 @@ function connect() {
         	var userInfo= JSON.parse(message.body);
         	console.log("The details of Online user:"+JSON.stringify(userInfo));
         	if(userList.indexOf(userInfo.user)<=-1&&userInfo.action=='CONNECTED'){
-        		userList.push(userInfo.user);
+        		userList.push(userInfo);
         	}else if(userInfo.action=='DISCONNECTED'){
         		userList.some(function(entry){
         			if(entry.username==userInfo.user.username){
@@ -83,7 +83,7 @@ function connect() {
         			}
         		});
         	}
-        	addUserToOnlineUser(userList);
+        	addUserToOnlineUser(userInfo);
         });
         
     });
@@ -96,11 +96,10 @@ function request(){
 	 xmlHttp.onreadystatechange = function(){
 		 if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
 			 var list = JSON.parse(this.responseText);
-			 if(list.length>0){
-				 userList.push.apply(userList,list);
-			 }
-			 userList.forEach(function(entry){
-				var message = {'user':entry,'action':'CONNECTED'};
+			 list.forEach(function(entry){
+				 var message = {'user':entry,'action':'CONNECTED'};
+					 userList.push(message);
+				
 				addUserToOnlineUser(message);
 			 });
 		 }
@@ -113,7 +112,7 @@ function addUserToOnlineUser(message){
 	var onlineUser = message.user;
 	var action = message.action;
 	if(onlineUser){
-		if(onlineUser.username!=user&&onlineUser&&!ifAlreadyAdded(onlineUser.username)&&action=='CONNECTED'){
+		if(onlineUser.username!=user&&!ifAlreadyAdded(onlineUser.username)&&action=='CONNECTED'){
 			$("#online_users").append("<li id="+onlineUser.username+">"
 				+"<div class='user_profile' >"
 					+"<img src='download.png' align='middle' class='profile_picture'/><br>"
@@ -157,27 +156,36 @@ function showMessage(message) {
 }
 function displayChatBox(id){
 	userList.some(function(entry){
-	 if(entry.username == id&&!($.inArray(id, chatStack ) > -1)){
-		 chatWithUser = id;
-		 chatStack.push(id);
-	$("#chatarea").append(
-	"<div class='chat_topbar'>"+
-	"<div style='margin:0px;padding:5px;'>"+
-		"<div style='float:left;display:inline-block;margin-left:5px;'><img src='download.png' align='middle' class='profile_picture'/></div>"+
-		"<div style='margin-top:5px;margin-left:5px;display:inline-block'><h4 style='margin-top:2px;margin-bottom:0px;'>"+entry.firstName+" "+entry.lastName+"</h4><p>"+entry.username+"</p></div>"+
-	"</div>"+
-		"</div>"+
-		"<hr>"+
-		"<div class='chatbox' id='chatbox'>"+
+	 if(entry.user.username == id&&!($.inArray(id, chatStack ) > -1)){
+		 if(chatWithUser){
+			 $("#chat_"+chatWithUser).replaceWith(createChatBox(entry)); 
+		}else{
+			 $("#chatarea").append(createChatBox(entry));
 			
-		"</div>"+
-		"<div class='chattext'>"+
-			"<input type='text' id='message' name='chattext' style='height:50%; width:100%'>"+
-			"<button type='button' class='btn btn-primary' onclick='send()'>Send</button>"+
-		"</div>"
-		);
+		 }
+		 chatWithUser = id;
+		 
 	 }
-	});
+});
+}
+
+function createChatBox(entry){
+	return "<div id='chat_"+entry.user.username+"' class='chatterBox'>"+
+			"<div class='chat_topbar'>"+
+			"<div style='margin:0px;padding:5px;'>"+
+				"<div style='float:left;display:inline-block;margin-left:5px;'><img src='download.png' align='middle' class='profile_picture'/></div>"+
+				"<div style='margin-top:5px;margin-left:5px;display:inline-block'><h4 style='margin-top:2px;margin-bottom:0px;'>"+entry.user.firstName+" "+entry.user.lastName+"</h4><p>"+entry.user.username+"</p></div>"+
+			"</div>"+
+				"</div>"+
+				"<hr>"+
+				"<div class='chatbox' id='chatbox'>"+
+					
+				"</div>"+
+				"<div class='chattext'>"+
+					"<input type='text' id='message' name='chattext' style='height:50%; width:100%'>"+
+					"<button type='button' class='btn btn-primary' onclick='send()'>Send</button>"+
+				"</div>"+
+					"</div>"
 }
 $(function () {
 	load();
