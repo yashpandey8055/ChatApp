@@ -83,7 +83,7 @@ function connect() {
         			}
         		});
         	}
-        	addUserToOnlineUser(userInfo);
+        	addUserToOnlineUser(userList);
         });
         
     });
@@ -97,7 +97,7 @@ function request(){
 		 if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
 			 var list = JSON.parse(this.responseText);
 			 if(list.length>0){
-				 userList.push(list);
+				 userList.push.apply(userList,list);
 			 }
 			 userList.forEach(function(entry){
 				var message = {'user':entry,'action':'CONNECTED'};
@@ -111,17 +111,20 @@ function request(){
 }
 function addUserToOnlineUser(message){
 	var onlineUser = message.user;
-	var action = message.action
-	if(onlineUser.username!=user&&onlineUser&&!ifAlreadyAdded(onlineUser.username)&&action=='CONNECTED'){
-		$("#online_users").append("<li>"
-			+"<div class='user_profile' id="+onlineUser.username+">"
-				+"<img src='download.png' align='middle' class='profile_picture'/><br>"
-				+"<p><b>"+onlineUser.username+"</b></p>"
-				+"<p>My Bio</p>"
-			+"</div>"+
-			"</li>");
-	}else if(action=='DISCONNECTED'){
-		$("#"+onlineUser.username).remove();
+	var action = message.action;
+	if(onlineUser){
+		if(onlineUser.username!=user&&onlineUser&&!ifAlreadyAdded(onlineUser.username)&&action=='CONNECTED'){
+			$("#online_users").append("<li id="+onlineUser.username+">"
+				+"<div class='user_profile' >"
+					+"<img src='download.png' align='middle' class='profile_picture'/><br>"
+					+"<p><b>"+onlineUser.username+"</b></p>"
+					+"<p>My Bio</p>"
+				+"</div>"+
+				"</li>");
+			}
+			if(action=='DISCONNECTED'){
+				$("#"+onlineUser.username).remove();
+			}
 	}
 }
 function ifAlreadyAdded(user){
@@ -153,7 +156,7 @@ function showMessage(message) {
 	$("#chatbox").append("<p align='left'>"+ message.message +"</p>");
 }
 function displayChatBox(id){
-	userList.forEach(function(entry){
+	userList.some(function(entry){
 	 if(entry.username == id&&!($.inArray(id, chatStack ) > -1)){
 		 chatWithUser = id;
 		 chatStack.push(id);
@@ -182,7 +185,7 @@ $(function () {
         e.preventDefault();
     });
     $("#online_users").on("click","li",function(event){
-        var id = event.target.id;
+        var id = $(this).closest("li").prop("id");
         displayChatBox(id);
     });
     
