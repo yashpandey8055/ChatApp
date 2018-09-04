@@ -65,7 +65,7 @@ function connect() {
         //to send message to specific user. This will receive the message display.
         stompClient.subscribe('/user/queue/message', function (message) {
         	var chatMessage = JSON.parse(message.body);
-        	displayChatBox(chatMessage.sender);
+        		displayChatBox(chatMessage.sender,false);
         	showMessage(JSON.parse(message.body));
         });
         
@@ -146,22 +146,22 @@ function disconnect() {
 }
 function send(){
 	
-	stompClient.send("/app/message", {}, JSON.stringify({'message': $("#message").val()
+	stompClient.send("/app/message", {}, JSON.stringify({'message': $('#message_'+chatWithUser).val()
     	,'receiver':chatWithUser,'sender':user}));
-    $("#chatbox").append("<p align='right'>"+$('#message').val()+"</p>");
+    $("#chatbox_"+chatWithUser).append("<p align='right'>"+$('#message_'+chatWithUser).val()+"</p>");
 }
 
 function showMessage(message) {
-	$("#chatbox").append("<p align='left'>"+ message.message +"</p>");
+	$("#chatbox_"+message.sender).append("<p align='left'>"+ message.message +"</p>");
 }
-function displayChatBox(id){
+function displayChatBox(id,userClickedList){
 	userList.some(function(entry){
 	 if(entry.user.username == id&&!($.inArray(id, chatStack ) > -1)){
-		 if(chatWithUser){
-			 $("#chat_"+chatWithUser).replaceWith(createChatBox(entry)); 
-		}else{
-			 $("#chatarea").append(createChatBox(entry));
-			
+		 if(document.getElementById("chat_"+entry.user.username)&&userClickedList){
+			 $(".chatterBox").css("z-index",0);
+			$("#chat_"+entry.user.username).css("z-index",1); 
+		 }else if(!document.getElementById("chat_"+entry.user.username)) {
+			 $("#chatarea").prepend(createChatBox(entry));
 		 }
 		 chatWithUser = id;
 		 
@@ -178,11 +178,11 @@ function createChatBox(entry){
 			"</div>"+
 				"</div>"+
 				"<hr>"+
-				"<div class='chatbox' id='chatbox'>"+
+				"<div class='chatbox' id='chatbox_"+entry.user.username+"'>"+
 					
 				"</div>"+
 				"<div class='chattext'>"+
-					"<input type='text' id='message' name='chattext' style='height:50%; width:100%'>"+
+					"<input type='text' id='message_"+entry.user.username+"' name='chattext_"+entry.user.username+"' style='height:50%; width:100%'>"+
 					"<button type='button' class='btn btn-primary' onclick='send()'>Send</button>"+
 				"</div>"+
 					"</div>"
@@ -194,7 +194,7 @@ $(function () {
     });
     $("#online_users").on("click","li",function(event){
         var id = $(this).closest("li").prop("id");
-        displayChatBox(id);
+        displayChatBox(id,true);
     });
     
     $("#logout").click(function(){
