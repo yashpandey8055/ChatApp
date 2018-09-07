@@ -148,11 +148,12 @@ function send(){
 	
 	stompClient.send("/app/message", {}, JSON.stringify({'message': $('#message_'+chatWithUser).val()
     	,'receiver':chatWithUser,'sender':user}));
-    $("#chatbox_"+chatWithUser).append("<p align='right'>"+$('#message_'+chatWithUser).val()+"</p>");
+    $("#chatbox_"+chatWithUser).append("<div class='right_message' align='right'><p>"+$('#message_'+chatWithUser).val()+"</p></div>");
 }
 
 function showMessage(message) {
-	$("#chatbox_"+message.sender).append("<p align='left'>"+ message.message +"</p>");
+	$("#chatbox_"+message.sender).append("<div class='left_message' align='left'><p>"+message.message+"</p></div>");
+
 }
 function displayChatBox(id,userClickedList){
 	userList.some(function(entry){

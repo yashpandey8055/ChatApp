@@ -27,19 +27,20 @@ body{
 }
 .left{
 	
-	background-color:#F7EAFF;
+	background-color:#FFFFFF;
 	width:20%;
 	left:0;
 }
 .center{
-	background-color:#F6F1F9;
+	background-color:#FFFFFF;
 	left:20%;
 	right:30%;
+	margin-top:10px;
 }
 .right{
 	width:30%;
 	right:0;
-	background-color:#F7EAFF;
+	background-color:#FFFFFF;
 }
 .topbar{
 	padding-left:5%;
@@ -48,8 +49,8 @@ body{
 	right:0;
 	height:30px;
 	z-index:1;
-	background-color:#920CED;
-	box-shadow:0px 0px 10px #C178F2;
+	background-color:#8042f4;
+	box-shadow:0px 0px 5px black;
 }
 ul{
 	list-style:none;
@@ -67,8 +68,11 @@ ul{
 }
 .chatterBox{
 	position:absolute;
-	height:100%;
+	height:90%;
 	width:100%;
+	border: 1px solid #8042f4;
+	padding:10px;
+	border-radius:5px;
 }
 .user_profile{
 	background-color:white;
