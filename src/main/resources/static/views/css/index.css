@@ -16,29 +16,26 @@ body{
 	font: bold 12px/30px Georgia, serif;
 	cursor:pointer;
 }
-.split>ul{
-	text-align:center;
-}
+
 .split{
 	top:5%;
 	position:absolute;
 	height:100%;
+	margin-top:10px;
 	
 }
 .left{
-	border-right:1px solid;
+
 	background-color:#FFFFFF;
 	width:20%;
 	left:0;
-	height:90%;
-	margin-top:10px;
-	box-shadow:0px 0px 10px black;
+	
 }
 .center{
 	background-color:#FFFFFF;
 	left:20%;
 	right:30%;
-	margin:10px;
+	margin-left:10px;
 }
 .right{
 	width:30%;
@@ -57,18 +54,18 @@ body{
 }
 ul{
 	list-style:none;
+	padding:0px;
+	padding-top:10px;
 }
 
 .online_users{
-	padding-left:0px;
+		height:90%;
+		width:80%;
+		margin-left:10%;
+		box-shadow:0px 0px 3px black;
+		border-radius:3px;
 }
-.online_users>li{
-	postion:absolute;
-	padding-left:10px;
-	padding-top:5px;
-	padding-bottom:5px;
-	padding-right:10px;
-}
+
 .chatterBox{
 	position:absolute;
 	height:90%;
@@ -77,24 +74,18 @@ ul{
 	padding:10px;
 	border-radius:5px;
 }
-.user_profile{
-	background-color:white;
-	box-shadow:0px 0px 10px black;
-	overflow: auto;
-	height:10%;
-	padding:3px;
-	width:100%;
-	word-wrap: break-word;
+
+	
+.user_profile_picture{
+	left:0;
+	border: 2px solid white;
+	border-radius: 50%;
+	height:30px; width:30px;
+	margin-left:5px;
+	margin-right:5px;
+	
 }
 
-.user_profile:hover{
-	background-color:white;
-	box-shadow:0px 0px 30px black;
-	overflow: auto;
-	
-	height:12%;
-	width:102%
-}	
 .profile_picture{
 	left:0;
 	border: 2px solid white;
