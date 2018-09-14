@@ -7,146 +7,68 @@
     <script src="../webjars/jquery/jquery.min.js"></script>
     <script src="../webjars/sockjs-client/sockjs.min.js"></script>
     <script src="../webjars/stomp-websocket/stomp.min.js"></script>
-    <link href="/views/css/index.css" rel="stylesheet"></link>
-	<style>
-	.chat_topbar{
-		height:10%;
-		width:100%;
-		background-color:#F8F8FF;
-		margin-bottom:10px;
-		border-radius:10px;
-		float:left;
-	}
-	
-	.chatbox{
-		background-color:white;
-		height:65%;
-		width:100%;
-		padding:10px;
-		border-radius:5px;
-		overflow-y:auto;
-	}
-	.chattext{
-		background-color:#F8F8FF;
-		height:20%;
-		padding:5px;
-		width:100%;
-		margin-top:3px;
-		
-		border-radius:5px;
-		overflow-y:auto;
-	}
-	hr {
-	clear: left;
-    display: block;
-    height: 2px;
-    width:100%;
-    border: 0;
-    border-top: 1px solid #8042f4;
-    margin: 1em 0;
-    padding: 0; 
-	}
-	.btn{
-		margin-top:5px;
-		background-color:#8042f4;
-		border:1px solid #8042f4;
-	}
-	.btn:hover{
-		margin-top:5px;
-		background-color:#8042f4;
-		border:1px solid #8042f4;
-	}
-	.chatbox>p{
-		font: bold 12px/30px Georgia, serif;
-		color:black;
-		background-color:white;
-		border-radius:5px;
-		padding:2px;
-		margin:0px;
-	}
-	.chattext>input{
-		height:50%; 
-		width:100%;
-		border:1px solid #8042f4;
-		border-radius:5px;
-	}
-	
-	.left_message>p{
-	background-color:#e6e6e6;display:inline;padding:10px;color:black;border-radius:10px;
-	}
-	
-	.right_message>p{
-		background-color:#8042f4;display:inline;padding:10px;color:white;border-radius:10px;margin-top:5px;
-	}
-	
-	.current_user{
-		height:25%;
-		width:80%;
-		margin-left:10%;
-		box-shadow:0px 0px 3px black;
-		border-radius:3px;
-	}
-	.user_profile{
-		width:100%;
-		height:10%;
-	}
-	</style>
-</head>
+    <link href="/views/css/newcss.css" rel="stylesheet"></link>
+    </head>
 
 <body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-    enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
-    <div class="topbar">
-    	<p>Hello, </p><p id="username">User</p>
-    	<div id="logout" class="logout"><p>logout</p></div>
-    </div>
-	<!-- This is where users who are online will be displayed -->
-	<div class="split left">
-		<div class="online_users">
-		<ul>
-			<li id="+onlineUser.username+">
-				<div class='user_profile' >
-					<img src='download.png' align='middle' class='user_profile_picture'/>
-					<p style="height:30px; width:30px;display:inline-block;" align="center">imyash8055</p>
-				</div>
-				<hr style="clear: left;display: block;height: 2px;width:80%;border: 0;border-top: 1px solid;margin-left:10%;">
-				</li>
-		</ul>
-		</div>
-	</div>
-	
-	<!-- Chat box  and chat here  -->
-	<div class="split center" id="chatarea">
-	<div id='chat_"+imyash8055+"' class='chatterBox'>
-			<div class='chat_topbar'>
-			<div style='margin:0px;padding:5px;'>
-				<div style='float:left;display:inline-block;margin-left:5px;'><img src='download.png' align='middle' class='profile_picture'/></div>
-				<div style='margin-top:5px;margin-left:5px;display:inline-block;color:#596981;'><h4 style='margin-top:2px;margin-bottom:0px;'>Yash Pandey</h4><p>imyash8055</p></div>
-			</div>
-				</div>
-				<hr>
-				<div class='chatbox' id='chatbox_"+imyash8055+"'>
-					<div class="left_message" align="left"><p>Hi Yash</p></div>
-					<div class="right_message" align="right"><p>Hi Yash</p></div>
-				</div>
-				<div class='chattext'>
-					<input type='text' id='message_"+imyash8055' name='chattextimyash8055' >
-					<button type='button' class='btn btn-primary' onclick='send()'>Send</button>
-				</div>
-					</div>
-	</div>
-	
-	<!-- Miscellanious -->
-	<div class="split right">
-	<div class="current_user">
-			<div style="width:100%;text-align:center;padding:10px;">
-				<img src='download.png'  class='profile_picture'/>
-			</div>
-			<p style="text-align: center;">Yash Pandey</p>
-			<p style="text-align: center;">imyash8055</p>
-			<p style="text-align: center;">I created this website moron</p>
-		</div>
-	</div>
 </body>
+	<div class="navbar-nav">
+	</div>
+	<div class="content-container" align="center">
+		<div class="split left">
+			<div class="box">
+				<h4>Recent Conversations</h4>
+			</div>
+			
+			<div class="box">
+				<div class="form-group has-feedback">
+					<i class="glyphicon glyphicon-search form-control-feedback"></i>
+					<input type="text" placeholder="Search Conversations" class="search-box">
+				</div>
+			</div>
+			<div class="conversations">
+				<div class="single-conversation">
+					<div class="profile-picture">
+						<img src="/views/download.png"/>
+					</div>
+					<div class="conversation-content">
+						<div style="font-size:120%"><b>Yash Pandey</b></div>
+						<div>Hello World!</div>
+					</div>
+					<div class="conversation-date">
+						<div>11 Sep</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="split center">
+			<div class="box user-info">
+				<div class="user-info-container">
+					<div style="font-size:120%"><b>Yash Pandey</b></div>
+					<div>imyash8055</div>
+				</div>
+			</div>
+			<div class="side-box user-display-box">
+			
+			</div>
+			<div class="box chat-box">
+				<div class="box chat-display-box">
+					
+					<div class="left-message chat-message" align="left"><div><p class="chat-message-title"><b>Yash</b></p><p class="chat-message-text">Hi Yash</p></div><p class="chat-message-time">11.36 am</p></div>
+					<div class="right-message chat-message" align="left"><div><p class="chat-message-title"><b>Yash</b></p><p class="chat-message-text">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+			    enabled. Please enable
+			    Javascript and reload this page!</p></div><p class="chat-message-time">11.36 am</p></div>
+				
+				</div>
+				<div class="box chat-action-box">
+					<div><input  class="chat-text-box" type="text" placeholder="Write you message"></div>
+					<div class="chat-options-container"><button type='button' class='btn'>Send</button></div>
+				</div>
+			</div>
+		</div>
+		<div class="split right">
+			
+		</div>
+	</div>
 </html>
