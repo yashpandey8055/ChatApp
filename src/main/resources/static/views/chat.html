@@ -7,7 +7,7 @@
     <script src="../webjars/jquery/jquery.min.js"></script>
     <script src="../webjars/sockjs-client/sockjs.min.js"></script>
     <script src="../webjars/stomp-websocket/stomp.min.js"></script>
-    <link href="/views/css/newcss.css" rel="stylesheet"></link>
+    <link href="/views/css/chatpage.css" rel="stylesheet"></link>
     </head>
 
 <body>
@@ -16,11 +16,11 @@
 	</div>
 	<div class="content-container" align="center">
 		<div class="split left">
-			<div class="box">
+			<div class="box center-text">
 				<h4>Recent Conversations</h4>
 			</div>
 			
-			<div class="box">
+			<div class="box search-box-container">
 				<div class="form-group has-feedback">
 					<i class="glyphicon glyphicon-search form-control-feedback"></i>
 					<input type="text" placeholder="Search Conversations" class="search-box">
@@ -28,16 +28,15 @@
 			</div>
 			<div class="conversations">
 				<div class="single-conversation">
+					<div class="conversation-profile-picture">
 					<div class="profile-picture">
-						<img src="/views/download.png"/>
-					</div>
+					<img src="/views/download.png">
+				</div></div>
 					<div class="conversation-content">
-						<div style="font-size:120%"><b>Yash Pandey</b></div>
-						<div>Hello World!</div>
+						<h5 align="left"><b>Yash Pandey</b></h5>
+						<p align="left" style="overflow:hidden;">Seems your browser doesn't support </p>
 					</div>
-					<div class="conversation-date">
-						<div>11 Sep</div>
-					</div>
+					<div class="conversation-date">11.36 am</div>
 				</div>
 			</div>
 			
@@ -50,7 +49,13 @@
 				</div>
 			</div>
 			<div class="side-box user-display-box">
-			
+				<div class="box center-text"><p><b>Online</b></p></div>
+				<div class="users-online profile-picture">
+					<img src="/views/download.png">
+				</div>
+				<div class="users-online profile-picture">
+					<img src="/views/download.png">
+				</div>
 			</div>
 			<div class="box chat-box">
 				<div class="box chat-display-box">
