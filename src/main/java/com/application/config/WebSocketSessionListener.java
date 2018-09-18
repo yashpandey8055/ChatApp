@@ -30,16 +30,18 @@ public class WebSocketSessionListener {
 	@EventListener(SessionConnectedEvent.class)
 	public void sessionConnection(SessionConnectedEvent sce) {
 		String user = sce.getUser().getName();
-		userService.add(user);
-		sendNotification(userDao.find(user),CONNECTED);
+		UserDocument userDocument = userDao.find(user);
+		userService.add(userDocument.getId());
+		sendNotification(userDocument,CONNECTED);
 	}
 
 	@EventListener(SessionDisconnectEvent.class)
 	public void sessionDisconnection(SessionDisconnectEvent sde) {
 		String user = sde.getUser().getName();
-		userService.remove(user);
+		UserDocument userDocument = userDao.find(user);
+		userService.remove(userDocument.getId());
 		UserDocument document = new UserDocument();
-		document.setUserName(user);
+		document.setId(userDocument.getId());
 		sendNotification(document,DISCONNECTED);
 	}
 	private void sendNotification(UserDocument user, String action) {

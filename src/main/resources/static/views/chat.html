@@ -3,16 +3,18 @@
 <head>
     <title>Welcome</title>
     <link href="../webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-     <script src="/views/js/config.js"></script>
     <script src="../webjars/jquery/jquery.min.js"></script>
     <script src="../webjars/sockjs-client/sockjs.min.js"></script>
     <script src="../webjars/stomp-websocket/stomp.min.js"></script>
+         <script src="/views/js/config.js"></script>
+     <script src="/views/js/connection.js"></script>
     <link href="/views/css/chatpage.css" rel="stylesheet"></link>
     </head>
 
 <body>
 </body>
 	<div class="navbar-nav">
+	<div id="logout" class="logout"><p>logout</p></div>
 	</div>
 	<div class="content-container" align="center">
 		<div class="split left">
@@ -48,13 +50,13 @@
 					<div>imyash8055</div>
 				</div>
 			</div>
-			<div class="side-box user-display-box">
+			<div class="side-box user-display-box" id="online_users">
 				<div class="box center-text"><p><b>Online</b></p></div>
 				<div class="users-online profile-picture">
-					<img src="/views/download.png">
+					<img src="https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/sonica.jpg">
 				</div>
 				<div class="users-online profile-picture">
-					<img src="/views/download.png">
+					<img src="https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/sonica.jpg">
 				</div>
 			</div>
 			<div class="box chat-box">

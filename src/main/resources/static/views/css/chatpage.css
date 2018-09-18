@@ -304,3 +304,9 @@ h5{
     padding: 6px 12px;
 
 }
+.logout{
+	float:right;
+	color:white;
+	font-size:20px;
+	cursor:pointer;
+}

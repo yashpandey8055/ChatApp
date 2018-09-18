@@ -22,6 +22,7 @@ public class UserDocument implements UserDetails{
 	String lastName;
 	String bio;
 	String password ;
+	String profileUrl;
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
@@ -91,6 +92,11 @@ public class UserDocument implements UserDetails{
 
 		return true;
 	}
-	
+	public String getProfileUrl() {
+		return profileUrl;
+	}
+	public void setProfileUrl(String profileUrl) {
+		this.profileUrl = profileUrl;
+	}
 
 }
