@@ -1,5 +1,5 @@
 
-var register = function(){
+var login = function(){
 			var xmlHttp = new XMLHttpRequest();
     	    xmlHttp.onreadystatechange = function() { 
     	        if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
@@ -7,7 +7,7 @@ var register = function(){
     	        	      this.responseText;
     	       
     	        document.cookie="token="+ this.responseText;
-    	        window.location.href = env+"/views/index.html";
+    	        window.location.href = env+"/views/chat.html";
     	        }else if(xmlHttp.readyState == 4 &&xmlHttp.status == 404){
     	        	document.getElementById("test").innerHTML =
   	        	      this.responseText;

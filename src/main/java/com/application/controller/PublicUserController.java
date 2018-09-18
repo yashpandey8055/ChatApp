@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.application.bean.ResponseBean;
 import com.application.bean.UserDocument;
 import com.application.config.UUIDAuthenticationService;
 import com.application.service.UsersDao;
