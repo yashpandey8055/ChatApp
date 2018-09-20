@@ -1,4 +1,4 @@
-package com.application.service;
+package com.application.service.dao;
 
 import java.util.List;
 import java.util.Set;
@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import com.application.bean.UserDocument;
+import com.application.service.dao.documents.UserDocument;
 
 @Repository
 public class UsersDao {
@@ -27,6 +27,6 @@ public class UsersDao {
 	}
 	
 	public List<UserDocument> findConnectedDetails(Set<String> list){
-		return template.find(Query.query(Criteria.where("userName").in(list)), UserDocument.class);
+		return template.find(Query.query(Criteria.where("_id").in(list)), UserDocument.class);
 	}
 }

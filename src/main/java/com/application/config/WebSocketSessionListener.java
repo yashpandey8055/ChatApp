@@ -7,16 +7,16 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import com.application.bean.OnlineNotification;
-import com.application.bean.UserDocument;
-import com.application.controller.GreetingController;
+import com.application.controller.MessageController;
 import com.application.service.UserCrudService;
-import com.application.service.UsersDao;
+import com.application.service.dao.UsersDao;
+import com.application.service.dao.documents.UserDocument;
 
 @Component
 public class WebSocketSessionListener {
 
 	@Autowired
-	GreetingController controller;
+	MessageController controller;
 
 	@Autowired
 	UsersDao userDao;

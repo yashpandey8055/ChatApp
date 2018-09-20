@@ -1,4 +1,4 @@
-package com.application.bean;
+package com.application.service.dao.documents;
 
 import java.util.Collection;
 

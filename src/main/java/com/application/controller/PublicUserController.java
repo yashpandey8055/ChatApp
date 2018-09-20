@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.application.bean.UserDocument;
 import com.application.config.UUIDAuthenticationService;
-import com.application.service.UsersDao;
+import com.application.service.dao.UsersDao;
+import com.application.service.dao.documents.UserDocument;
 import com.application.utils.HttpUtils;
 
 @RestController

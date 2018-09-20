@@ -46,33 +46,27 @@
 		<div class="split center">
 			<div class="box user-info">
 				<div class="user-info-container">
-					<div style="font-size:120%"><b>Yash Pandey</b></div>
-					<div>imyash8055</div>
+					<div style="font-size:120%" id="heading-name"><b>Yash Pandey</b></div>
+					<div id="heading-username">imyash8055</div>
 				</div>
+				<button type="button" class="close chat-close-button" aria-label="Close">
+  						<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
 			<div class="side-box user-display-box" id="online_users">
 				<div class="box center-text"><p><b>Online</b></p></div>
-				<div class="users-online profile-picture">
-					<img src="https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/sonica.jpg">
-				</div>
-				<div class="users-online profile-picture">
-					<img src="https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/sonica.jpg">
-				</div>
+				
 			</div>
 			<div class="box chat-box">
-				<div class="box chat-display-box">
-					
-					<div class="left-message chat-message" align="left"><div><p class="chat-message-title"><b>Yash</b></p><p class="chat-message-text">Hi Yash</p></div><p class="chat-message-time">11.36 am</p></div>
-					<div class="right-message chat-message" align="left"><div><p class="chat-message-title"><b>Yash</b></p><p class="chat-message-text">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-			    enabled. Please enable
-			    Javascript and reload this page!</p></div><p class="chat-message-time">11.36 am</p></div>
-				
-				</div>
-				<div class="box chat-action-box">
-					<div><input  class="chat-text-box" type="text" placeholder="Write you message"></div>
-					<div class="chat-options-container"><button type='button' class='btn'>Send</button></div>
-				</div>
+			<ul class="chat-stack">
+			
+			</ul>
 			</div>
+				<div class="box chat-action-box">
+					<div><input  class="chat-text-box" id ="chat-text-box" type="text" placeholder="Write you message"></div>
+					<div class="chat-options-container"><button type='button' class='btn' onclick="send()">Send</button></div>
+				</div>
+			
 		</div>
 		<div class="split right">
 			

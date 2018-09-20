@@ -9,7 +9,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.application.bean.UserDocument;
+import com.application.service.dao.UsersDao;
+import com.application.service.dao.documents.UserDocument;
 
 @Component
 public class UserCrudService {

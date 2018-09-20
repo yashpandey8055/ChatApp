@@ -6,8 +6,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.application.bean.UserDocument;
 import com.application.service.UserCrudService;
+import com.application.service.dao.documents.UserDocument;
 
 @Component
 public class UUIDAuthenticationService {

@@ -146,7 +146,7 @@ function disconnect() {
 }
 function send(){
 	
-	stompClient.send("/app/message", {}, JSON.stringify({'message': $('#message_'+chatWithUser).val()
+	stompClient.send("/app/message", {}, JSON.stringify({'message': $(chat-text-box).val()
     	,'receiver':chatWithUser,'sender':user}));
     $("#chatbox_"+chatWithUser).append("<div class='right_message' align='right'><p>"+$('#message_'+chatWithUser).val()+"</p></div>");
 }

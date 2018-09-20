@@ -12,18 +12,26 @@ import org.springframework.stereotype.Controller;
 
 import com.application.bean.MessageBean;
 import com.application.bean.OnlineNotification;
+import com.application.service.dao.MessageDao;
+import com.application.service.dao.documents.MessageDocument;
 
 @Controller
-public class GreetingController {
+public class MessageController {
 
 	@Autowired
 	private SimpMessageSendingOperations  template ;
 
+	@Autowired
+	private MessageDao dao;
 	
     @MessageMapping("/message")
     public void greeting(@Payload MessageBean message, 
     	      Principal principal){
-
+    	MessageDocument document = new MessageDocument();
+    	document.setMessage(message.getMessage());
+    	document.setReceiver(message.getReceiver());
+    	document.setSender(message.getSender());
+    	dao.save(document);
 		template.convertAndSendToUser(message.getReceiver(),"/queue/message",message);
     }
 

@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import com.application.bean.UserDocument;
 import com.application.config.UUIDAuthenticationService;
 import com.application.service.UserCrudService;
+import com.application.service.dao.documents.UserDocument;
 
 
 

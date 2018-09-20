@@ -1,5 +1,7 @@
 package com.application.bean;
 
+import com.application.service.dao.documents.UserDocument;
+
 public class OnlineNotification {
 
 	private UserDocument user;
