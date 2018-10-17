@@ -22,7 +22,10 @@ public class UsersDao {
 	}
 
 	public UserDocument find(String userName) {
-		return template.findOne(Query.query(Criteria.where("userName").is(userName)), UserDocument.class);
+		Query query = Query.query(Criteria.where("userName").is(userName));
+		query.fields().include("userName").include("firstName").include("lastName").include("bio").include("profileUrl");
+		UserDocument document  = template.findOne(query, UserDocument.class);
+		return document;
 
 	}
 	

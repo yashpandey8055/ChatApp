@@ -1,7 +1,6 @@
 package com.application.controller;
 
 
-import lombok.NonNull;
 
 import java.util.List;
 
@@ -20,7 +19,6 @@ import com.application.service.dao.documents.UserDocument;
 @RestController
 @RequestMapping("/users")
 public class SecuredUsersController {
-  @NonNull
   UUIDAuthenticationService authentication;
 
 	@Autowired

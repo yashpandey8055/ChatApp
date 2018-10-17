@@ -6,6 +6,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Document(collection="users")
 public class UserDocument implements UserDetails{
 
@@ -13,15 +16,20 @@ public class UserDocument implements UserDetails{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	@JsonInclude(Include.NON_NULL)
 	String id ;
 
-
+	@JsonInclude(Include.NON_NULL)
 	String userName ;
+	@JsonInclude(Include.NON_NULL)
 	String firstName;
+	@JsonInclude(Include.NON_NULL)
 	String lastName;
+	@JsonInclude(Include.NON_NULL)
 	String bio;
+	@JsonInclude(Include.NON_NULL)
 	String password ;
+	@JsonInclude(Include.NON_NULL)
 	String profileUrl;
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
