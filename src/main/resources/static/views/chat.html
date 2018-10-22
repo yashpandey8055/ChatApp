@@ -7,14 +7,14 @@
     <script src="../webjars/sockjs-client/sockjs.min.js"></script>
     <script src="../webjars/stomp-websocket/stomp.min.js"></script>
          <script src="/views/js/config.js"></script>
-     <script src="/views/js/chat.js"></script>
+     <script src="/views/js/connection.js"></script>
     <link href="/views/css/chatpage.css" rel="stylesheet"></link>
     </head>
 
 <body>
 </body>
 	<div class="navbar-nav">
-	<div class="logout"><p>logout</p></div>
+	<div id="logout" class="logout"><p>logout</p></div>
 	</div>
 	<div class="content-container" align="center">
 		<div class="split left">
@@ -46,14 +46,14 @@
 		<div class="split center">
 			<div class="box user-info">
 				<div class="user-info-container">
-					<div style="font-size:120%"><b>Yash Pandey</b></div>
-					<div>imyash8055</div>
+					<div style="font-size:120%" id="heading-name"><b>Yash Pandey</b></div>
+					<div id="heading-username">imyash8055</div>
 				</div>
 				<button type="button" class="close chat-close-button" aria-label="Close">
   						<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="side-box user-display-box">
+			<div class="side-box user-display-box" id="online_users">
 				<div class="box center-text"><p><b>Online</b></p></div>
 				
 			</div>
@@ -63,7 +63,7 @@
 			</ul>
 			</div>
 				<div class="box chat-action-box">
-					<div><input  class="chat-text-box"  type="text" placeholder="Write you message"></div>
+					<div><input  class="chat-text-box" id ="chat-text-box" type="text" placeholder="Write you message"></div>
 					<div class="chat-options-container"><button type='button' class='btn' onclick="send()">Send</button></div>
 				</div>
 			
