@@ -1,7 +1,5 @@
 var stompClient = null;
 var currentUser;
-var currentChattingWithUser;
-var chatStack = new Array();
 var currentOnlineUsers = new Map();
 var load = function(){
 	var cookie = getCookie();
@@ -41,8 +39,7 @@ function getCookie(){
 function send(){
 	stompClient.send("/app/message", {}, JSON.stringify({'message': $('#chat-text-box').val()
     	,'receiver':currentChattingWithUser,'sender':currentUser.username}));
-	 $("#chatbox_"+currentChattingWithUser).append("<div class='left-message chat-message' align='left'><div><p class='chat-message-title'><b>"+currentUser.firstName+"</b></p><p class='chat-message-text'>"+$('#chat-text-box').val()+"</p></div><p class='chat-message-time'>Just Now</p></div>");
-}
+	}
 function connect() {
 	var token = getCookie();
     var socket = new SockJS(env+'/gs-guide-websocket?token='+token);
@@ -51,13 +48,7 @@ function connect() {
         console.log('Connected: ' + frame);
         
         stompClient.subscribe('/user/queue/message', function (message){
-        	var messageBody = JSON.parse(message.body);
-        	var username = messageBody.sender;
-        	 if(chatStack.indexOf(messageBody.sender)<=-1){
-        		addChatBox(messageBody.sender);
-             	chatStack.push(username);
-        	 }
-        	 $("#chatbox_"+username).append("<div class='left-message chat-message' align='left'><div><p class='chat-message-title'><b>"+currentOnlineUsers.get(username).firstName+"</b></p><p class='chat-message-text'>"+messageBody.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>");
+        	
         })
         stompClient.subscribe('/queue/online', function (message) {
         	var messageBody = JSON.parse(message.body);
@@ -107,34 +98,7 @@ $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
-    $(".chat-close-button").click(function(){
-    	chatStack.pop($('.chat-stack li:last-child').attr("id"));
-    	var next = chatStack[chatStack.length - 1];
-    	var user = currentOnlineUsers.get(next);
-    	if(user){
-    		currentChattingWithUser = user.username;
-	    	$("#heading-name").html("<b>"+user.firstName+" "+user.lastName+"</b>");
-	    	$("#heading-username").text(user.username);
-    	}else{
-    		currentChattingWithUser = null;
-    		$("#heading-name").html("<b></b>");
-	    	$("#heading-username").text("");
-    	}
-	    	$('.chat-stack li:last-child').remove();
-    	
-    });
-    $("#online_users").on("click","div",function(event){
-        var username = $(this).closest("div").prop("id");
-        if(chatStack.indexOf(username)<=-1){
-        	var user = currentOnlineUsers.get(username);
-        	currentChattingWithUser = user.username;
-        	$("#heading-name").html("<b>"+user.firstName+" "+user.lastName+"</b>");
-        	$("#heading-username").text(user.username);
-        	addChatBox(user.username);
-        	chatStack.push(user.username);
-        }
-       
-    });
+    
     $("#logout").click(function(){
     	document.cookie = 'token' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
     	window.location.href = env+"/views/login.html"

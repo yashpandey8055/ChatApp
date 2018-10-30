@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+    <link href="../webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../webjars/jquery/jquery.min.js"></script>
+    <script src="../webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="../webjars/stomp-websocket/stomp.min.js"></script>
+         <script src="/views/js/config.js"></script>
+     <script src="/views/js/connection.js"></script>
+    <link href="/views/css/chatpage.css" rel="stylesheet"></link>
+    </head>
+
+<body>
+</body>
+	<div class="navbar-nav">
+	<div id="logout" class="logout"><p>logout</p></div>
+	</div>
+	<div class="content-container" align="center">
+		<div class="split left">
+			<div class="box center-text">
+				<h4>Recent Conversations</h4>
+			</div>
+			
+			<div class="box search-box-container">
+				<div class="form-group has-feedback">
+					<i class="glyphicon glyphicon-search form-control-feedback"></i>
+					<input type="text" placeholder="Search Conversations" class="search-box">
+				</div>
+			</div>
+			<div class="conversations">
+				<div class="single-conversation">
+					<div class="conversation-profile-picture">
+					<div class="profile-picture">
+					<img src="/views/download.png">
+				</div></div>
+					<div class="conversation-content">
+						<h5 align="left"><b>Yash Pandey</b></h5>
+						<p align="left" style="overflow:hidden;">Seems your browser doesn't support </p>
+					</div>
+					<div class="conversation-date">11.36 am</div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="split center">
+			<div class="box user-info">
+				<div class="user-info-container">
+					<div style="font-size:120%" id="heading-name"><b>Yash Pandey</b></div>
+					<div id="heading-username">imyash8055</div>
+				</div>
+				<button type="button" class="close chat-close-button" aria-label="Close">
+  						<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="side-box user-display-box" id="online_users">
+				<div class="box center-text"><p><b>Online</b></p></div>
+				
+			</div>
+			<div class="box chat-box">
+			<ul class="chat-stack">
+			
+			</ul>
+			</div>
+				<div class="box chat-action-box">
+					<div><input  class="chat-text-box" id ="chat-text-box" type="text" placeholder="Write you message"></div>
+					<div class="chat-options-container"><button type='button' class='btn' onclick="send()">Send</button></div>
+				</div>
+			
+		</div>
+		<div class="split right">
+			
+		</div>
+	</div>
+</html>
