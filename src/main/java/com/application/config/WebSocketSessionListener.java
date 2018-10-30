@@ -40,9 +40,7 @@ public class WebSocketSessionListener {
 		String user = sde.getUser().getName();
 		UserDocument userDocument = userDao.find(user);
 		userService.remove(userDocument.getId());
-		UserDocument document = new UserDocument();
-		document.setId(userDocument.getId());
-		sendNotification(document,DISCONNECTED);
+		sendNotification(userDocument,DISCONNECTED);
 	}
 	private void sendNotification(UserDocument user, String action) {
 		OnlineNotification notification = new OnlineNotification();

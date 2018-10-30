@@ -51,16 +51,20 @@ function connect() {
         console.log('Connected: ' + frame);
         
         stompClient.subscribe('/user/queue/message', function (message){
-        	chatStack.push()
         	var messageBody = JSON.parse(message.body);
-        	addChatBox(messageBody.sender);
+        	var username = messageBody.sender;
+        	 if(chatStack.indexOf(messageBody.sender)<=-1){
+        		addChatBox(messageBody.sender);
+             	chatStack.push(username);
+        	 }
+        	 $("#chatbox_"+username).append("<div class='left-message chat-message' align='left'><div><p class='chat-message-title'><b>"+currentOnlineUsers.get(username).firstName+"</b></p><p class='chat-message-text'>"+messageBody.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>");
         })
         stompClient.subscribe('/queue/online', function (message) {
         	var messageBody = JSON.parse(message.body);
         	var user = messageBody.user;
         	var action = messageBody.action;
         	if(action == 'CONNECTED' && !currentOnlineUsers.get(user.username)){
-        		currentOnlineUsers.set(user.id,{"username":user.username,"firstName":user.firstName,"lastName":user.lastName});
+        		currentOnlineUsers.set(user.username,{"username":user.username,"firstName":user.firstName,"lastName":user.lastName});
         		$("#online_users").append("<div id='"+user.username+"' class='users-online profile-picture' ><img src='"+user.profileUrl+"'></div>");
         	}else if( action== 'DISCONNECTED'){
         		currentOnlineUsers.delete(user.username);
@@ -78,10 +82,10 @@ function request(){
 	 xmlHttp.onreadystatechange = function(){
 		 if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
 			 var connectedusers = JSON.parse(this.responseText);
-			 connectedusers.some(function(user){
-				 if(currentUser.id != user.id){
+			 	connectedusers.some(function(user){
+				 if(currentUser.username != user.username){
 					 currentOnlineUsers.set(user.username,{"username":user.username,"firstName":user.firstName,"lastName":user.lastName});
-					 $("#online_users").append("<div id='"+user.id+"' class='users-online profile-picture'><img src='"+user.profileUrl+"'></div>");
+					 $("#online_users").append("<div id='"+user.username+"' class='users-online profile-picture'><img src='"+user.profileUrl+"'></div>");
 				 }
 				});
 		 }
@@ -94,11 +98,7 @@ function request(){
 function addChatBox(id){
 	$('.chat-stack').append("<li id='"+id+"'>"+
 				"<div class='box chat-display-box' id='chatbox_"+id+"'>"+
-					"<div class='left-message chat-message' align='left'><div><p class='chat-message-title'><b>Abhishek</b></p><p class='chat-message-text'>Hello How are you</p></div><p class='chat-message-time'>11.36 am</p></div>"+
-					"<div class='right-message chat-message' align='left'><div><p class='chat-message-title'><b>Yash</b></p><p class='chat-message-text'>Seems your browser doesn't support Javascript! Websocket relies on Javascript being"+
-			    "enabled. Please enable"+
-			   "Javascript and reload this page!</p></div><p class='chat-message-time'>11.36 am</p></div>"+
-				
+					
 				"</div>"+
 				"</li>")
 }
@@ -124,9 +124,9 @@ $(function () {
     	
     });
     $("#online_users").on("click","div",function(event){
-        var id = $(this).closest("div").prop("id");
-        if(chatStack.indexOf(id)<=-1){
-        	var user = currentOnlineUsers.get(id);
+        var username = $(this).closest("div").prop("id");
+        if(chatStack.indexOf(username)<=-1){
+        	var user = currentOnlineUsers.get(username);
         	currentChattingWithUser = user.username;
         	$("#heading-name").html("<b>"+user.firstName+" "+user.lastName+"</b>");
         	$("#heading-username").text(user.username);
