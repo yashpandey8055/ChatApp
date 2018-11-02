@@ -1,6 +1,46 @@
+
 var stompClient = null;
 var currentUser;
 var currentOnlineUsers = new Map();
+
+
+function Stack(){
+	var obj = {};
+	var array = [];
+	obj.append = function(username) {
+		if(hasElement(username)){
+		    array.push(username);
+			$('.chat-stack').append("<li id=chatelement_'"+username+"'><div class='box chat-display-box' id='chatbox_"+username+"'></div></li>");
+		}
+	};
+	obj.prepend = function(username){
+		if(hasElement(username)){
+			for(var i =array.length-1;i>0;i--){
+				array[i+1] = array[i];
+			}
+			array[0] = username;
+			$('.chat-stack').prepend("<li id=chatelement_'"+username+"'><div class='box chat-display-box' id='chatbox_"+username+"'></div></li>");
+		}
+	}  
+	obj.hasElement = function(username){
+		for(var i=0;i<array.length-1;i++){
+			if(array[i]==username){
+				return true;
+			}
+		}
+		return false;
+	}
+	obj.switchToFirst = function(username){
+		for(var i=0;i<array.length-1;i++){
+			if(array[i]==username){
+				array[i] = array[0];
+				array[0] = username;
+				document.getElementById(username)
+			}
+		}
+	}
+	return obj;
+}
 var load = function(){
 	var cookie = getCookie();
 	if(cookie!=""){
@@ -48,8 +88,11 @@ function connect() {
         console.log('Connected: ' + frame);
         
         stompClient.subscribe('/user/queue/message', function (message){
-        	
-        })
+        	if(document.getElementById('chatelement_'+id)){
+        		$('.chat-stack').prepend("<li id=chatelement_'"+id+"'><div class='box chat-display-box' id='chatbox_"+id+"'></div></li>");
+        	}
+        }
+        });
         stompClient.subscribe('/queue/online', function (message) {
         	var messageBody = JSON.parse(message.body);
         	var user = messageBody.user;
@@ -87,18 +130,20 @@ function request(){
 }
 
 function addChatBox(id){
-	$('.chat-stack').append("<li id='"+id+"'>"+
-				"<div class='box chat-display-box' id='chatbox_"+id+"'>"+
-					
-				"</div>"+
-				"</li>")
+	if(document.getElementById('chatelement_'+id)){
+		$('.chat-stack').append("<li id=chatelement_'"+id+"'><div class='box chat-display-box' id='chatbox_"+id+"'></div></li>");
+	}
 }
 $(function () {
 	load();
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
-    
+    $("#online_users").on("click","div",function(event){
+        var id = $(this).closest("div").prop("id");
+        	var user = currentOnlineUsers.get(id);
+        	addChatBox(user.username);
+    });
     $("#logout").click(function(){
     	document.cookie = 'token' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
     	window.location.href = env+"/views/login.html"

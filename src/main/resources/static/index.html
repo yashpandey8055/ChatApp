@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style> 
+ <script src="../webjars/jquery/jquery.min.js"></script>
+<script>
+function Stack(){
+	var obj = {};
+	var array = [];
+	obj.append = function(username) {
+	    array.push(username);
+	};
+	obj.prepend = function(username){
+		for(var i =array.length-1;i>=0;i--){
+			array[i+1] = array[i];
+		}
+		array[0] = username;
+	}  
+	obj.print = function(){
+		for(var i =0;i<array.length;i++){
+			$("#test").append("<li>"+array[i]+"</li>")
+		}
+		
+	} 
+	return obj;
+}
 
-</style>
+var stack = new Stack();
+function append(){
+	stack.append($('#inputtext').val());
+}
+
+function prepend(){
+	stack.prepend($('#inputtext').val());
+}
+
+function printStack(){
+	stack.print();
+}
+</script>
 </head>
 <body>
-Hello there buddy!! welcome to my page!
+<input type="text" id="inputtext"/>
+<button onclick="append()">append</button>
+<button onclick="prepend()">prepend</button>
+<button onclick="printStack()">print</button>
+<ul id="test">
+
+</ul>
 </body>
 </html>
