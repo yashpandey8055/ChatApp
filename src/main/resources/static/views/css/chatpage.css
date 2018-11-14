@@ -233,6 +233,7 @@ h5{
 }
 .chat-display-box{
 	padding-top:10px;
+	padding-left:10px;
 	padding-bottom:10px;
   	position: absolute;
     height: 70%;
