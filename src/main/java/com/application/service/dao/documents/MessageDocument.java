@@ -1,5 +1,7 @@
 package com.application.service.dao.documents;
 
+import java.util.Date;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="messages")
@@ -8,6 +10,7 @@ public class MessageDocument {
 	private String sender;
 	private String receiver ;
 	private String message;
+	private Date date; 
 	public String getSender() {
 		return sender;
 	}
@@ -25,6 +28,12 @@ public class MessageDocument {
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 }
