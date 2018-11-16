@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import com.application.bean.MessageBean;
 import com.application.bean.OnlineNotification;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class GreetingController {
@@ -24,7 +25,8 @@ public class GreetingController {
     @MessageMapping("/message")
     public void greeting(@Payload MessageBean message, 
     	      Principal principal){
-
+    	ObjectMapper mapper = new ObjectMapper();
+    	mapper.readValue(src, valueTypeRef)
 		template.convertAndSendToUser(message.getReceiver(),"/queue/message",message);
     }
 

@@ -158,7 +158,19 @@ h5{
 	margin:10%;
 	margin-left:15%;
 	display:inline;
+	position:relative;
 	
+}
+.notification-number{
+	position: absolute;
+	border-radius:3px;
+    background-color: transparent;
+    height: 12px;
+    width: 12px;
+    font-size: 10px;
+    color: transparent;
+    top: 81%;
+    left: 75%;
 }
 .users-online>img{
 	box-shadow:1px 1px 3px black;

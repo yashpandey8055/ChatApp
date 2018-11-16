@@ -53,7 +53,16 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
        stompClient.subscribe('/user/queue/message', function (message){
-        	
+    	   message = JSON.parse(message.body);
+    	   if(currentChattingWithUser==message.receiver){
+    		   $("#chatbox_"+selectedUser).prepend("<div class='left-message chat-message' align='left'><div><p class='chat-message-title'><b>"+message.sender+"</b></p><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>") 
+    	   }
+    	   else{
+    		   
+    		  var count = $("#notification-user-"+message.sender).text();
+    		  $("#notification-user-"+message.sender).text(parseInt(count)+1);
+    		  $("#notification-user-"+message.sender).css({"background-color":"red","color":"white"});
+    	   }
        });
         stompClient.subscribe('/queue/online', function (message) {
         	var messageBody = JSON.parse(message.body);
@@ -61,7 +70,7 @@ function connect() {
         	var action = messageBody.action;
         	if(action == 'CONNECTED' && !currentOnlineUsers.get(user.username)){
         		currentOnlineUsers.set(user.username,{"username":user.username,"firstName":user.firstName,"lastName":user.lastName});
-        		$("#online_users").append("<div id='"+user.username+"' class='users-online profile-picture' ><img src='"+user.profileUrl+"'></div>");
+        		$("#online_users").append("<div id='"+user.username+"' class='users-online profile-picture' ><img src='"+user.profileUrl+"'><p class='notification-number' id='notification-user-"+user.username+"'>0</p></div>");
         	}else if( action== 'DISCONNECTED'){
         		currentOnlineUsers.delete(user.username);
         		$("#"+user.username).remove();
@@ -75,10 +84,15 @@ function connect() {
 				 connectedusers.some(function(user){
 					 if(currentUser.id != user.id){
 						 currentOnlineUsers.set(user.username,{"username":user.username,"firstName":user.firstName,"lastName":user.lastName});
-						 $("#online_users").append("<div id='"+user.username+"' class='users-online profile-picture'><img src='"+user.profileUrl+"'></div>");
+						 $("#online_users").append("<div id='"+user.username+"' class='users-online profile-picture'><img src='"+user.profileUrl+"'><p class='notification-number' id='notification-user-"+user.username+"'>0</p></div>");
 					 }
 			});
 	  });
+}
+function send(){
+	stompClient.send("/app/message", {}, JSON.stringify({'message': $('#chat-text-box').val()
+    	,'receiver':currentChattingWithUser,'sender':currentUser.username}));
+	 $("#chatbox_"+currentChattingWithUser).append("<div class='left-message chat-message' align='left'><div><p class='chat-message-title'><b>You</b></p><p class='chat-message-text'>"+$('#chat-text-box').val()+"</p></div><p class='chat-message-time'>Just Now</p></div>");
 }
 function prepareBox(selectedUser){
 	var params = new Map();
@@ -117,6 +131,8 @@ $(function () {
 	$("#online_users").on("click","div",function(event){
         var id = $(this).closest("div").prop("id");
         	var user = currentOnlineUsers.get(id);
+        	$("#notification-user-"+user.username).text(0);
+  		  $("#notification-user-"+user.username).css({"background-color":"transparent","color":"transparent"});
         	prepareBox(user.username);
     });
 	 $("#logout").click(function(){
