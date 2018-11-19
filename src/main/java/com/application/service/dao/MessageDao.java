@@ -1,5 +1,6 @@
 package com.application.service.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,15 @@ public class MessageDao {
 	}
 	
 	public List<MessageDocument> getMessages(String user,String receiver) {
-		Query messageQuery = Query.query(Criteria.where("sender").is(user).and("receiver").is(receiver));
+		List<String> participants = new ArrayList<>(2);
+		participants.add(user);
+		participants.add(receiver);
+		Query messageQuery = Query.query(Criteria.where("participants").all(participants));
+		return template.find(messageQuery, MessageDocument.class);
+	}
+	
+	public List<MessageDocument> getPastConversation(String user) {
+		Query messageQuery = Query.query(Criteria.where("participants").in(user));
 		return template.find(messageQuery, MessageDocument.class);
 	}
 }

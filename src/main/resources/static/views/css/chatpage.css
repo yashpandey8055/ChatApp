@@ -113,15 +113,16 @@ h5{
 	overflow:auto;
 }
 .single-conversation{
-	height:20%;
+	height:15%;
 	width:100%;;
 	border-bottom:1px solid #DCDCDC;
 	background-color: #F5F5F5;
 	bottom:0;
 	padding:10px;
+	overflow:hidden;
 }
 .conversation-profile-picture{
-	width:20%;
+	width:15%;
 	position:relative;
 	left:0px;
 	height:80%;

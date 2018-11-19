@@ -54,8 +54,8 @@ function connect() {
     stompClient.connect({}, function (frame) {
        stompClient.subscribe('/user/queue/message', function (message){
     	   message = JSON.parse(message.body);
-    	   if(currentChattingWithUser==message.receiver){
-    		   $("#chatbox_"+selectedUser).prepend("<div class='left-message chat-message' align='left'><div><p class='chat-message-title'><b>"+message.sender+"</b></p><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>") 
+    	   if(currentChattingWithUser==message.sender){
+    		   $("#chatbox_"+message.sender).append("<div class='right-message chat-message' align='left'><div><p class='chat-message-title'><b>"+message.sender+"</b></p><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>") 
     	   }
     	   else{
     		   
@@ -127,7 +127,21 @@ $(function () {
 	}else{
 		window.location.href = env+"/views/login.html"
 	}
-	
+	httpRequest.get(env+"/pastConversations",null,function(response){
+		console.log(response);
+		response = JSON.parse(response);
+		response.forEach(function(message){
+			$("#conversations").append("<div class='single-conversation'>"+
+					"<div class='conversation-profile-picture'><div class='profile-picture'><img src='"+message.profileUrl+"'></div></div>"+
+					"<div class='conversation-content'>"+
+						"<h5 align='left'><b>"+message.sender+"</b></h5>"+
+						"<p align='left' style='overflow:hidden;'>"+message.message+" </p>"+
+					"</div>"+
+					"<div class='conversation-date'>"+message.daysAgo+"</div>"+
+				"</div>")
+		});
+		
+	});
 	$("#online_users").on("click","div",function(event){
         var id = $(this).closest("div").prop("id");
         	var user = currentOnlineUsers.get(id);
