@@ -6,6 +6,7 @@ public class MessageBean {
 	private String message;
 	private String receiver;
 	private String sender;
+	private String senderProfileUrl;
 	
 	public String getSender() {
 		return sender;
@@ -24,5 +25,11 @@ public class MessageBean {
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	public String getSenderProfileUrl() {
+		return senderProfileUrl;
+	}
+	public void setSenderProfileUrl(String senderProfileUrl) {
+		this.senderProfileUrl = senderProfileUrl;
 	}
 }

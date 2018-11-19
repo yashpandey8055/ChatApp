@@ -23,7 +23,9 @@ import com.application.bean.MessageBean;
 import com.application.bean.OnlineNotification;
 import com.application.bean.PastConversations;
 import com.application.service.dao.MessageDao;
+import com.application.service.dao.UsersDao;
 import com.application.service.dao.documents.MessageDocument;
+import com.application.service.dao.documents.UserDocument;
 
 @Controller
 public class MessageController {
@@ -32,7 +34,10 @@ public class MessageController {
 	private SimpMessageSendingOperations  template ;
 
 	@Autowired
-	private MessageDao dao;
+	private MessageDao messagedDao;
+	
+	@Autowired
+	private UsersDao userDao;
 	
     @MessageMapping("/message")
     public void greeting(@Payload MessageBean message, 
@@ -42,7 +47,8 @@ public class MessageController {
     	document.setReceiver(message.getReceiver());
     	document.setSender(message.getSender());
     	document.setDate(new Date());
-    	dao.save(document);
+    	message.setSenderProfileUrl(userDao.findProfileUrl(message.getSender()).getProfileUrl());
+    	messagedDao.save(document);
 		template.convertAndSendToUser(message.getReceiver(),"/queue/message",message);
     }
 
@@ -53,29 +59,31 @@ public class MessageController {
     
     @GetMapping("/getMessages")
     public @ResponseBody List<MessageDocument> getMessages(Principal user,@RequestParam String receiver) {
-    	return dao.getMessages(user.getName(), receiver);
+    	return messagedDao.getMessages(user.getName(), receiver);
     }
     
     @GetMapping("/pastConversations")
     public @ResponseBody Collection<PastConversations> pastConversations(Principal user) {
-    	List<MessageDocument> messageDocuments =  dao.getPastConversation(user.getName());
+    	List<MessageDocument> messageDocuments =  messagedDao.getPastConversation(user.getName());
     	Collections.sort(messageDocuments);
     	Map<String, PastConversations> pastConversation = new HashMap<>();
     	for(MessageDocument document: messageDocuments) {
     		String userName = document.getReceiver().equals(user.getName())?document.getSender():document.getReceiver();
-    		pastConversation.computeIfAbsent(userName, k->insertNewConversation(new PastConversations(), document)).setSender(userName);
+    		pastConversation.computeIfAbsent(userName, k->insertNewConversation(new PastConversations(), document,userName)).setSender(userName);
     		
+    	}
+    	List<UserDocument> userDocuments = userDao.findAll(pastConversation.keySet());
+    	for(UserDocument userDocument:userDocuments) {
+    		pastConversation.get(userDocument.getUsername()).setProfileUrl(userDocument.getProfileUrl());
     	}
     	return pastConversation.values();
     	
     }
     
-    static PastConversations insertNewConversation(PastConversations pastConversation,MessageDocument document) {
-    	
+    private PastConversations insertNewConversation(PastConversations pastConversation,MessageDocument document, String userName) {
     	pastConversation.setDaysAgo(calculateTimeDifference(document.getDate()));
     	pastConversation.setDate(document.getDate());
     	pastConversation.setMessage(document.getMessage());
-    	pastConversation.setProfileUrl("/views/download.png");
 		return pastConversation;
     	
     }

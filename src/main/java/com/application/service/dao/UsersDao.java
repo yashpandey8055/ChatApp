@@ -1,5 +1,6 @@
 package com.application.service.dao;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +29,22 @@ public class UsersDao {
 		return document;
 
 	}
-	
+
+	public UserDocument findProfileUrl(String userName) {
+		Query query = Query.query(Criteria.where("userName").in(userName));
+		query.fields().include("userName").include("profileUrl");
+		UserDocument document  = template.findOne(query, UserDocument.class);
+		return document;
+
+	}
+
+	public List<UserDocument> findAll(Collection<String> userName) {
+		Query query = Query.query(Criteria.where("userName").in(userName));
+		query.fields().include("userName").include("firstName").include("lastName").include("bio").include("profileUrl");
+		List<UserDocument> document  = template.find(query, UserDocument.class);
+		return document;
+
+	}
 	public List<UserDocument> findConnectedDetails(Set<String> list){
 		return template.find(Query.query(Criteria.where("_id").in(list)), UserDocument.class);
 	}

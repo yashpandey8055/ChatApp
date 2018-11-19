@@ -58,18 +58,27 @@ function connect() {
     		   $("#chatbox_"+message.sender).append("<div class='right-message chat-message' align='left'><div><p class='chat-message-title'><b>"+message.sender+"</b></p><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>") 
     	   }
     	   else{
-    		   
     		  var count = $("#notification-user-"+message.sender).text();
     		  $("#notification-user-"+message.sender).text(parseInt(count)+1);
     		  $("#notification-user-"+message.sender).css({"background-color":"red","color":"white"});
     	   }
+    	   $("#chat-conversation-"+message.sender).remove();
+    	   
+    	   $("#conversations").prepend("<div class='single-conversation' id='chat-conversation-"+message.sender+"'>"+
+					"<div class='conversation-profile-picture'><div class='profile-picture'><img src='"+message.senderProfileUrl+"'></div></div>"+
+					"<div class='conversation-content'>"+
+						"<h5 align='left'><b>"+message.sender+"</b></h5>"+
+						"<p align='left' style='overflow:hidden;'>"+message.message+" </p>"+
+					"</div>"+
+					"<div class='conversation-date'>Just Now</div>"+
+				"</div>");
        });
         stompClient.subscribe('/queue/online', function (message) {
         	var messageBody = JSON.parse(message.body);
         	var user = messageBody.user;
         	var action = messageBody.action;
         	if(action == 'CONNECTED' && !currentOnlineUsers.get(user.username)){
-        		currentOnlineUsers.set(user.username,{"username":user.username,"firstName":user.firstName,"lastName":user.lastName});
+        		currentOnlineUsers.set(user.username,{"username":user.username,"firstName":user.firstName,"lastName":user.lastName,"profileUrl":user.profileUrl});
         		$("#online_users").append("<div id='"+user.username+"' class='users-online profile-picture' ><img src='"+user.profileUrl+"'><p class='notification-number' id='notification-user-"+user.username+"'>0</p></div>");
         	}else if( action== 'DISCONNECTED'){
         		currentOnlineUsers.delete(user.username);
@@ -83,7 +92,7 @@ function connect() {
 		  var connectedusers = JSON.parse(response);
 				 connectedusers.some(function(user){
 					 if(currentUser.id != user.id){
-						 currentOnlineUsers.set(user.username,{"username":user.username,"firstName":user.firstName,"lastName":user.lastName});
+						 currentOnlineUsers.set(user.username,{"username":user.username,"firstName":user.firstName,"lastName":user.lastName,"profileUrl":user.profileUrl});
 						 $("#online_users").append("<div id='"+user.username+"' class='users-online profile-picture'><img src='"+user.profileUrl+"'><p class='notification-number' id='notification-user-"+user.username+"'>0</p></div>");
 					 }
 			});
@@ -131,20 +140,32 @@ $(function () {
 		console.log(response);
 		response = JSON.parse(response);
 		response.forEach(function(message){
-			$("#conversations").append("<div class='single-conversation'>"+
+			$("#conversations").append("<div class='single-conversation' id='chat-conversation-"+message.sender+"'>"+
 					"<div class='conversation-profile-picture'><div class='profile-picture'><img src='"+message.profileUrl+"'></div></div>"+
 					"<div class='conversation-content'>"+
 						"<h5 align='left'><b>"+message.sender+"</b></h5>"+
 						"<p align='left' style='overflow:hidden;'>"+message.message+" </p>"+
 					"</div>"+
 					"<div class='conversation-date'>"+message.daysAgo+"</div>"+
-				"</div>")
+				"</div>");
 		});
 		
 	});
+	
+	$("#chat-text-box").keypress(function(e){
+		var key = e.which;
+		if(key==13){
+			$("#send_button").click();
+			$("#chat-text-box").val('');
+			return false;
+		}
+	});
 	$("#online_users").on("click","div",function(event){
+		$("#send_button").prop("disabled",false);
         var id = $(this).closest("div").prop("id");
         	var user = currentOnlineUsers.get(id);
+        	$("#heading-name").html("<b>"+user.firstName+" "+user.lastName+"</b>");
+        	$("#heading-username").html(user.username);
         	$("#notification-user-"+user.username).text(0);
   		  $("#notification-user-"+user.username).css({"background-color":"transparent","color":"transparent"});
         	prepareBox(user.username);
