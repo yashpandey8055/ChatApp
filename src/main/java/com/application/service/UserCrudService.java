@@ -1,11 +1,8 @@
 package com.application.service;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,24 +16,27 @@ public class UserCrudService {
 	UsersDao userDao ;
 	
 	Map<String,String> users = new HashMap<>();
-	Set<String> userList = new HashSet<>();
+	Map<String,UserDocument> userDetails = new HashMap<>();
 	
 	public void save(String uuid, String username) {
 		users.put(uuid,username);
 	}
 
 	public void add(String username) {
-		userList.add(username);
+		userDetails.put(username, userDao.find(username));
 	}
 	public void remove(String username) {
-		userList.remove(username);
+		userDetails.remove(username);
 	}
-	public List<UserDocument> getAllUsers(){
-		return userDao.findConnectedDetails(userList);
+	public Collection<UserDocument> getAllUsers(){
+		return userDetails.values();
 	}
-	public UserDocument find(String token) {
+	public UserDocument findWithToken(String token) {
 		return userDao.find(users.get(token));
 		
 	}
-
+	public UserDocument findWithUsername(String username) {
+		return userDetails.get(username);
+		
+	}
 }

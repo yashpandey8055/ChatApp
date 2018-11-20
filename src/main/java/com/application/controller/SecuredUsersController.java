@@ -2,7 +2,7 @@ package com.application.controller;
 
 
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +29,7 @@ public class SecuredUsersController {
   }
 
   @GetMapping("/connected")
-  public List<UserDocument> connectedNotification() {
+  public Collection<UserDocument> connectedNotification() {
   	return userService.getAllUsers();
   }
 

@@ -25,24 +25,15 @@ public class UsersDao {
 	public UserDocument find(String userName) {
 		Query query = Query.query(Criteria.where("userName").is(userName));
 		query.fields().include("userName").include("firstName").include("lastName").include("bio").include("profileUrl");
-		UserDocument document  = template.findOne(query, UserDocument.class);
-		return document;
-
-	}
-
-	public UserDocument findProfileUrl(String userName) {
-		Query query = Query.query(Criteria.where("userName").in(userName));
-		query.fields().include("userName").include("profileUrl");
-		UserDocument document  = template.findOne(query, UserDocument.class);
-		return document;
+		return template.findOne(query, UserDocument.class);
 
 	}
 
 	public List<UserDocument> findAll(Collection<String> userName) {
 		Query query = Query.query(Criteria.where("userName").in(userName));
 		query.fields().include("userName").include("firstName").include("lastName").include("bio").include("profileUrl");
-		List<UserDocument> document  = template.find(query, UserDocument.class);
-		return document;
+		return  template.find(query, UserDocument.class);
+
 
 	}
 	public List<UserDocument> findConnectedDetails(Set<String> list){
