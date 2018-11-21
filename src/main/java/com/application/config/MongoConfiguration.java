@@ -2,8 +2,10 @@ package com.application.config;
 
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.web.client.RestTemplate;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
@@ -32,6 +34,11 @@ public class MongoConfiguration extends AbstractMongoConfiguration{
 	    ServerAddress serverAddress = new ServerAddress(address, port);
 	    return new MongoClient(serverAddress,credential,MongoClientOptions.builder().build());
 	}
+
+	@Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
+    }
 
 	@Override
 	protected String getDatabaseName() {

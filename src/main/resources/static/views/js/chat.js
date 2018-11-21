@@ -25,6 +25,42 @@ function HttpRequest(){
 	return obj;
 }
 
+function displayUserInformation(id){
+	var user = currentOnlineUsers.get(id);
+	
+	$(".selected-user-info").empty();
+	$(".selected-user-info").append(
+	"<div class='selected-user-info'>"+
+	"<div class='user-selected-profile-picture'><img id='user-selected-profile-picture' alt=''></div>"+
+	"<div class='user-selected-profile-info'>"+
+		"<p><b>"+user.firstName+" "+user.lastName"</b></p>"+
+		"<p>"+user.bio"</p>"+
+		"<hr>"+
+		"<div style='margin:15px;'>"+
+			"<table style='width:80%'>"+
+			"<tr><td><b>Conversations</b></td><td>"+user.conversationpts+"</td></tr>"+
+			"<tr><td><b>Points</b></td><td>"+user.pts+"</td></tr>"+
+			"</table>"+
+		"</div>"+
+		"<hr>"+
+		"<div>"+
+			"<table style='width:90%'>"+
+			"<tr>"+
+			"<td><button type='button' class='btn approve-btn'>Approve ("+user.approvals+")</button></td>"+
+			"<td><button type='button' class='btn disapprove-btn'>Disapprove ("+user.disapprovals+")</button></td>"+
+			"</tr>"+
+			
+			"</table>"+
+		"</div>"+
+	"</div>"
+	);
+	var downloadingImage = new Image();
+	downloadingImage.onload = function(){
+	 $("#user-selected-profile-picture").attr("src",this.src);
+	 $("#user-selected-profile-picture").css({"display":"inline"});
+	};
+	downloadingImage.src = "https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/yash.jpg";
+}
 
 var token = getCookie();
 var stompClient = null;
@@ -137,7 +173,6 @@ $(function () {
 		window.location.href = env+"/views/login.html"
 	}
 	httpRequest.get(env+"/pastConversations",null,function(response){
-		console.log(response);
 		response = JSON.parse(response);
 		response.forEach(function(message){
 			$("#conversations").append("<div class='single-conversation' id='chat-conversation-"+message.sender+"'>"+
@@ -151,7 +186,6 @@ $(function () {
 		});
 		
 	});
-	
 	$("#chat-text-box").keypress(function(e){
 		var key = e.which;
 		if(key==13){
@@ -161,13 +195,14 @@ $(function () {
 		}
 	});
 	$("#online_users").on("click","div",function(event){
-		$("#send_button").prop("disabled",false);
         var id = $(this).closest("div").prop("id");
-        	var user = currentOnlineUsers.get(id);
-        	$("#heading-name").html("<b>"+user.firstName+" "+user.lastName+"</b>");
-        	$("#heading-username").html(user.username);
-        	$("#notification-user-"+user.username).text(0);
-  		  $("#notification-user-"+user.username).css({"background-color":"transparent","color":"transparent"});
+    	var user = currentOnlineUsers.get(id);
+    	displayUserInformation(id);
+		$("#send_button").prop("disabled",false);
+		$("#heading-name").html("<b>"+user.firstName+" "+user.lastName+"</b>");
+        $("#heading-username").html(user.username);
+        $("#notification-user-"+user.username).text(0);
+  		$("#notification-user-"+user.username).css({"background-color":"transparent","color":"transparent"});
         	prepareBox(user.username);
     });
 	 $("#logout").click(function(){

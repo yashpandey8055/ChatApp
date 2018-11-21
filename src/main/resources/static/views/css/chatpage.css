@@ -1,6 +1,6 @@
 body{
 	overflow:scroll;
-	background-color:	#F5F5F5;
+	background-color:	#f2f2f2;
 }
 ul{
 	list-style:none;
@@ -42,14 +42,15 @@ h5{
 	height:100%;
 	border-radius:4px;
 	background-color:white;
-	border:1px solid #808080;
+	border:1px solid #d9d9d9;
 }
 .left{
 	width:25%;
-	height:40%;
-	left:0;
-	background-color:whitesmoke;
-	border-radius: 8px 0px 0px 8px;
+	height:60%;
+	left:0%;
+	background-color:white;
+	border-radius: 0px;
+	box-shadow: 0 2px 2px -1px gray;
 }
 .center{
 	left:25%;
@@ -144,15 +145,15 @@ h5{
 }
 .profile-picture{
     height: 100%;
-    width: 95%;
-    display: inline;
+    width: 100%;
+    display: inherit;
     float: left;
 }
 .profile-picture>img{
 	height:100%;
 	width:100%;
 	border-radius: 50%;
-	border:3px solid white;
+	border:1px solid white;
 }
 
 .users-online{
@@ -201,27 +202,55 @@ h5{
     75% {box-shadow:0px -1px 3px black;}
     100% {box-shadow:1px 1px 3px black;}
 }
+
+@-webkit-keyframes animate-profile-download {
+    0%{background-position:10% 0%}
+    50%{background-position:91% 100%}
+    100%{background-position:10% 0%}
+}
+@keyframes animate-profile-download {
+    0%{background-position:10% 0%}
+    50%{background-position:91% 100%}
+    100%{background-position:10% 0%}
+}
 .selected-user-info{
 	height:100%;
 	width:100%;
 	border-radius: 50%;
 	margin-top:2px;
 }
-.selected-user-info>img{
-	height:100%;
-	width:100%;
-	border-radius: 50%;
-}
 .user-selected-profile-picture{
-	height:40%;
-	width:32%;
+	height:24%;
+	width:28%;
 	float: none;
-	margin:5px;
+	margin:10px;
+	padding:0px;
     display: inherit;
+    border-radius: 50%;
+    border:2px solid white;
+    box-shadow:0px 0px 20px #d1d1e0;
+    background-image: linear-gradient(to left, white,#d1d1e0);
+     background-size: 200% 200%;
+   	-webkit-animation-name: animate-profile-download ; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+    animation-name: animate-profile-download ;
+    animation-iteration-count: infinite;
+    animation-duration: 1s;
+}
+.user-selected-profile-picture>img{
+	 height: 100%;
+    width: 100%;
+    display: none;
+    float: left;
+    border-radius:50%;
 }
 .user-selected-profile-info{
-	height:100%;
 	width:100%;
+	overflow:hidden
+}
+.user-selected-profile-info>hr{
+	margin-top:5px;
+	margin-bottom:5px;
 }
 .user-display-box{
 	height:90%;
@@ -323,7 +352,7 @@ h5{
     padding-left: 5px;
     color:	#808080;
 }
-.btn,.btn:hover,.btn:visited,.btn:focus,.btn:active{
+.send_button,.send_button:hover,.send_button:visited,.send_button:focus,.send_button:active{
 	float:left;
 	border-radius:5px;
 	outline:none;
@@ -333,6 +362,30 @@ h5{
 	display: inline-block;
     padding: 6px 12px;
 
+}
+.approve-btn{
+	color:#28a745;
+	background-color:white;
+	border:1px solid #28a745;
+	border-radius:5px;
+}
+.approve-btn:hover{
+	color:white;
+	background-color:#28a745;
+	border:1px solid #28a745;
+	border-radius:5px;
+}
+.disapprove-btn{
+	color:#dc3545;
+	background-color:white;
+	border:1px solid #dc3545;
+	border-radius:5px;
+}
+.disapprove-btn:hover{
+	color:white;
+	background-color:#dc3545;
+	border:1px solid #dc3545;
+	border-radius:5px;
 }
 .chat-close-button{
 	margin-right:20px;
