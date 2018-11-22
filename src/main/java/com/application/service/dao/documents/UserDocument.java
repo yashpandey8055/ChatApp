@@ -12,9 +12,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Document(collection="users")
 public class UserDocument implements UserDetails{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@JsonInclude(Include.NON_NULL)
 	String id ;
@@ -31,6 +28,14 @@ public class UserDocument implements UserDetails{
 	String password ;
 	@JsonInclude(Include.NON_NULL)
 	String profileUrl;
+	@JsonInclude(Include.NON_NULL)
+	long conversationPts;
+	@JsonInclude(Include.NON_NULL)
+	long followers;
+	@JsonInclude(Include.NON_NULL)
+	long approvals;
+	@JsonInclude(Include.NON_NULL)
+	long disapprovals;
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
@@ -106,5 +111,30 @@ public class UserDocument implements UserDetails{
 	public void setProfileUrl(String profileUrl) {
 		this.profileUrl = profileUrl;
 	}
+	public long getConversationPts() {
+		return conversationPts;
+	}
+	public void setConversationPts(long conversationPts) {
+		this.conversationPts = conversationPts;
+	}
+	public long getFollowers() {
+		return followers;
+	}
+	public void setFollowers(long followers) {
+		this.followers = followers;
+	}
+	public long getApprovals() {
+		return approvals;
+	}
+	public void setApprovals(long approvals) {
+		this.approvals = approvals;
+	}
+	public long getDisapprovals() {
+		return disapprovals;
+	}
+	public void setDisapprovals(long disapprovals) {
+		this.disapprovals = disapprovals;
+	}
+
 
 }

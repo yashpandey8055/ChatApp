@@ -24,7 +24,6 @@ public class UsersDao {
 
 	public UserDocument find(String userName) {
 		Query query = Query.query(Criteria.where("userName").is(userName));
-		query.fields().include("userName").include("firstName").include("lastName").include("bio").include("profileUrl");
 		return template.findOne(query, UserDocument.class);
 
 	}
@@ -38,5 +37,9 @@ public class UsersDao {
 	}
 	public List<UserDocument> findConnectedDetails(Set<String> list){
 		return template.find(Query.query(Criteria.where("_id").in(list)), UserDocument.class);
+	}
+
+	public void pushList(List<UserDocument> documents) {
+		template.insert(documents, UserDocument.class);
 	}
 }

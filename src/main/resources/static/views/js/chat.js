@@ -25,21 +25,20 @@ function HttpRequest(){
 	return obj;
 }
 
-function displayUserInformation(id){
-	var user = currentOnlineUsers.get(id);
+function displayUserInformation(user){
 	
 	$(".selected-user-info").empty();
 	$(".selected-user-info").append(
 	"<div class='selected-user-info'>"+
 	"<div class='user-selected-profile-picture'><img id='user-selected-profile-picture' alt=''></div>"+
 	"<div class='user-selected-profile-info'>"+
-		"<p><b>"+user.firstName+" "+user.lastName"</b></p>"+
-		"<p>"+user.bio"</p>"+
+		"<p><b>"+user.firstName+" "+user.lastName+"</b></p>"+
+		"<p>"+user.bio+"</p>"+
 		"<hr>"+
 		"<div style='margin:15px;'>"+
 			"<table style='width:80%'>"+
-			"<tr><td><b>Conversations</b></td><td>"+user.conversationpts+"</td></tr>"+
-			"<tr><td><b>Points</b></td><td>"+user.pts+"</td></tr>"+
+			"<tr><td><b>Conversations</b></td><td>"+user.conversationPts+"</td></tr>"+
+			"<tr><td><b>Points</b></td><td>"+user.followers+"</td></tr>"+
 			"</table>"+
 		"</div>"+
 		"<hr>"+
@@ -59,7 +58,7 @@ function displayUserInformation(id){
 	 $("#user-selected-profile-picture").attr("src",this.src);
 	 $("#user-selected-profile-picture").css({"display":"inline"});
 	};
-	downloadingImage.src = "https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/yash.jpg";
+	downloadingImage.src = user.profileUrl;
 }
 
 var token = getCookie();
@@ -114,7 +113,7 @@ function connect() {
         	var user = messageBody.user;
         	var action = messageBody.action;
         	if(action == 'CONNECTED' && !currentOnlineUsers.get(user.username)){
-        		currentOnlineUsers.set(user.username,{"username":user.username,"firstName":user.firstName,"lastName":user.lastName,"profileUrl":user.profileUrl});
+        		currentOnlineUsers.set(user.username,user);
         		$("#online_users").append("<div id='"+user.username+"' class='users-online profile-picture' ><img src='"+user.profileUrl+"'><p class='notification-number' id='notification-user-"+user.username+"'>0</p></div>");
         	}else if( action== 'DISCONNECTED'){
         		currentOnlineUsers.delete(user.username);
@@ -128,7 +127,7 @@ function connect() {
 		  var connectedusers = JSON.parse(response);
 				 connectedusers.some(function(user){
 					 if(currentUser.id != user.id){
-						 currentOnlineUsers.set(user.username,{"username":user.username,"firstName":user.firstName,"lastName":user.lastName,"profileUrl":user.profileUrl});
+						 currentOnlineUsers.set(user.username,user);
 						 $("#online_users").append("<div id='"+user.username+"' class='users-online profile-picture'><img src='"+user.profileUrl+"'><p class='notification-number' id='notification-user-"+user.username+"'>0</p></div>");
 					 }
 			});
@@ -168,10 +167,12 @@ $(function () {
 			httpRequest.get(env+"/users/current",null,function(response){
 				currentUser = JSON.parse(response);
 				 connect();
+				 displayUserInformation(currentUser);
 			});
 	}else{
 		window.location.href = env+"/views/login.html"
 	}
+	
 	httpRequest.get(env+"/pastConversations",null,function(response){
 		response = JSON.parse(response);
 		response.forEach(function(message){
@@ -197,7 +198,7 @@ $(function () {
 	$("#online_users").on("click","div",function(event){
         var id = $(this).closest("div").prop("id");
     	var user = currentOnlineUsers.get(id);
-    	displayUserInformation(id);
+    	displayUserInformation(user);
 		$("#send_button").prop("disabled",false);
 		$("#heading-name").html("<b>"+user.firstName+" "+user.lastName+"</b>");
         $("#heading-username").html(user.username);

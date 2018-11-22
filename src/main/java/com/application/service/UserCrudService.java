@@ -22,8 +22,8 @@ public class UserCrudService {
 		users.put(uuid,username);
 	}
 
-	public void add(String username) {
-		userDetails.put(username, userDao.find(username));
+	public void add(UserDocument userDocument) {
+		userDetails.put(userDocument.getUsername(), userDocument);
 	}
 	public void remove(String username) {
 		userDetails.remove(username);
