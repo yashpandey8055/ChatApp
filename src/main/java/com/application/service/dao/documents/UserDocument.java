@@ -36,6 +36,12 @@ public class UserDocument implements UserDetails{
 	long approvals;
 	@JsonInclude(Include.NON_NULL)
 	long disapprovals;
+	@JsonInclude(Include.NON_NULL)
+	String gender;
+
+	@JsonInclude(Include.NON_NULL)
+	int age;
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
@@ -136,5 +142,16 @@ public class UserDocument implements UserDetails{
 		this.disapprovals = disapprovals;
 	}
 
-
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
 }

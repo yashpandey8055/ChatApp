@@ -33,6 +33,8 @@ function displayUserInformation(user){
 	"<div class='user-selected-profile-picture'><img id='user-selected-profile-picture' alt=''></div>"+
 	"<div class='user-selected-profile-info'>"+
 		"<p><b>"+user.firstName+" "+user.lastName+"</b></p>"+
+		"<p>"+user.age+","+user.gender+"</p>"+
+		"<table><tr><td><img src='/views/images/icon2.png' height=20px width=20px></td><td>Bangalore,India</td></tr></table>"+
 		"<p>"+user.bio+"</p>"+
 		"<hr>"+
 		"<div style='margin:15px;'>"+

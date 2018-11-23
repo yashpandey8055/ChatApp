@@ -47,6 +47,7 @@ h5{
 .left{
 	width:25%;
 	height:auto;
+	min-height:50%;
 	left:0%;
 	background-color:white;
 	border-radius: 0px;
@@ -214,6 +215,7 @@ h5{
     100%{background-position:10% 0%}
 }
 .selected-user-info{
+	position:relative;
 	height:90%;
 	width:100%;
 	border-radius: 50%;

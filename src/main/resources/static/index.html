@@ -4,39 +4,22 @@
  <script src="../webjars/jquery/jquery.min.js"></script>
 
 <script>
- function swap(){
-	 var first = $("#element_1").val();
-	 var second = $("#element_2").val();
-	 
-	 var firstHtml = $("#test li:nth-child("+first+")").html();
-	 
-	 var secondHtml = $("#test li:nth-child("+second+")").html();
-	 
-	 $("#box_"+first).remove();
-	 $("#box_"+second).remove();
-	 $("#extra").replaceWith(secondHtml);
-	 $("#box_"+first).replaceWith("<li id='box_"+second+"'>"+secondHtml+"</li>");
-	 $("#box_"+second).replaceWith("<li id='box_"+first+"'>"+$("#element_1").val()+"</li>");
- }
+ 
 </script>
+<style>
+ .left{
+ 	position:absolute;
+ 	top:40%;
+ 	left:40%;
+ 	background:black;
+ 	height:20%;
+ 	transform: perspective(10px) rotateY(1deg);
+ 	width:10%;
+ }
+</style>
 </head>
 <body>
-<ul id="test">
-<li id="box_1">1</li>
-<li id="box_2">2</li>
-<li id="box_3">3</li>
-<li id="box_4">4</li>
-<li id="box_5">5</li>
-<li id="box_6">6</li>
-<li id="box_7">7</li>
-<li id="box_8">8</li>
-<li id="box_9">9</li>
-<li id="extra">extra</li>
-</ul>
-<input type="text" id="element_1">
-Swap with
-<input type="text" id="element_2">
-
-<button onclick="swap()">Swap</button>
+<button>Click me!</button>
+	<div class="left"></div>
 </body>
 </html>

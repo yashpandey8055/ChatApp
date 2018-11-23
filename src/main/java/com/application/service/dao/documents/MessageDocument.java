@@ -1,6 +1,5 @@
 package com.application.service.dao.documents;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
