@@ -9,10 +9,41 @@
          <script src="/views/js/config.js"></script>
      <script src="/views/js/chat.js"></script>
     <link href="/views/css/chatpage.css" rel="stylesheet"></link>
+    
+    <style>
+
+.flip-container {
+	perspective: 1000px;
+}
+
+ .front{
+ 	backface-visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	border-radius:4px;
+	min-height:100%;
+	background-color:white;
+	border:1px solid #d9d9d9;
+}
+
+.flipper {
+	height:100%;
+	transition: 0.6s;
+	position: relative;
+}
+
+.front {
+	z-index: 2;
+	transform: rotateY(0deg);
+}
+
+    </style>
     </head>
 
+
 <body>
-</body>
 	<div class="navbar-nav">
 	<div id="logout" class="logout"><p>logout</p></div>
 	</div>
@@ -45,7 +76,6 @@
 			</div>
 			<div class="side-box user-display-box" id="online_users">
 				<div class="box center-text"><p><b>Online</b></p></div>
-				
 			</div>
 			<div class="box chat-box">
 			<div class='box chat-display-box' >
@@ -59,10 +89,15 @@
 				</div>
 			
 		</div>
-		<div class="split left">
-			<div class="selected-user-info">
-				
+		<div class="flip-container left">
+			<div class="flipper">
+				<div class="front">
+					<div class="selected-user-info">
+						
+				</div>
 			</div>
 		</div>
 	</div>
+	</div>
+</body>
 </html>

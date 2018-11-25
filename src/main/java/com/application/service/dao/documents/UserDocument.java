@@ -38,10 +38,15 @@ public class UserDocument implements UserDetails{
 	long disapprovals;
 	@JsonInclude(Include.NON_NULL)
 	String gender;
-
 	@JsonInclude(Include.NON_NULL)
 	int age;
-	
+	@JsonInclude(Include.NON_NULL)
+	String city;
+	@JsonInclude(Include.NON_NULL)
+	String state;
+	@JsonInclude(Include.NON_NULL)
+	String country;
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
@@ -153,5 +158,23 @@ public class UserDocument implements UserDetails{
 	}
 	public void setAge(int age) {
 		this.age = age;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
 	}
 }

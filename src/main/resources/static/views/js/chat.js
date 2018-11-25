@@ -24,43 +24,51 @@ function HttpRequest(){
 	}
 	return obj;
 }
-
+var turn = 180;
 function displayUserInformation(user){
-	
+	$(".flipper").css({"transform":"rotateY("+turn+"deg)"});
 	$(".selected-user-info").empty();
-	$(".selected-user-info").append(
-	"<div class='selected-user-info'>"+
-	"<div class='user-selected-profile-picture'><img id='user-selected-profile-picture' alt=''></div>"+
-	"<div class='user-selected-profile-info'>"+
-		"<p><b>"+user.firstName+" "+user.lastName+"</b></p>"+
-		"<p>"+user.age+","+user.gender+"</p>"+
-		"<table><tr><td><img src='/views/images/icon2.png' height=20px width=20px></td><td>Bangalore,India</td></tr></table>"+
-		"<p>"+user.bio+"</p>"+
-		"<hr>"+
-		"<div style='margin:15px;'>"+
-			"<table style='width:80%'>"+
-			"<tr><td><b>Conversations</b></td><td>"+user.conversationPts+"</td></tr>"+
-			"<tr><td><b>Points</b></td><td>"+user.followers+"</td></tr>"+
-			"</table>"+
-		"</div>"+
-		"<hr>"+
-		"<div>"+
-			"<table style='width:90%'>"+
-			"<tr>"+
-			"<td><button type='button' class='btn approve-btn'>Approve ("+user.approvals+")</button></td>"+
-			"<td><button type='button' class='btn disapprove-btn'>Disapprove ("+user.disapprovals+")</button></td>"+
-			"</tr>"+
-			
-			"</table>"+
-		"</div>"+
-	"</div>"
-	);
-	var downloadingImage = new Image();
-	downloadingImage.onload = function(){
-	 $("#user-selected-profile-picture").attr("src",this.src);
-	 $("#user-selected-profile-picture").css({"display":"inline"});
-	};
-	downloadingImage.src = user.profileUrl;
+	$(".selected-user-info").css({"transform":"rotateY("+turn+"deg)"});
+	setTimeout(function(){
+				$(".selected-user-info").append(
+						"<div class='selected-user-info'>"+
+						"<div class='user-selected-profile-picture'><img id='user-selected-profile-picture' alt=''></div>"+
+						"<div class='user-selected-profile-info'>"+
+							"<p><b>"+user.firstName+" "+user.lastName+"</b></p>"+
+							"<p>"+user.age+","+user.gender+"</p>"+
+							"<table><tr><td><img src='/views/images/icon2.png' height=20px width=20px></td><td>Bangalore,India</td></tr></table>"+
+							"<p>"+user.bio+"</p>"+
+							"<hr>"+
+							"<div style='margin:15px;'>"+
+								"<table style='width:80%'>"+
+								"<tr><td><b>Conversations</b></td><td>"+user.conversationPts+"</td></tr>"+
+								"<tr><td><b>Points</b></td><td>"+user.followers+"</td></tr>"+
+								"</table>"+
+							"</div>"+
+							"<hr>"+
+							"<div>"+
+								"<table style='width:90%'>"+
+								"<tr>"+
+								"<td><button type='button' class='btn approve-btn'>Approve ("+user.approvals+")</button></td>"+
+								"<td><button type='button' class='btn disapprove-btn'>Disapprove ("+user.disapprovals+")</button></td>"+
+								"</tr>"+
+								
+								"</table>"+
+							"</div>"+
+						"</div>"
+						);
+				var downloadingImage = new Image();
+				downloadingImage.onload = function(){
+				 $("#user-selected-profile-picture").attr("src",this.src);
+				 $("#user-selected-profile-picture").css({"display":"inline"});
+				};
+				downloadingImage.src = user.profileUrl;
+				
+			}, 200);
+	turn=turn+180;
+	if(turn==360){
+		turn = 0;
+	}
 }
 
 var token = getCookie();
@@ -174,7 +182,6 @@ $(function () {
 	}else{
 		window.location.href = env+"/views/login.html"
 	}
-	
 	httpRequest.get(env+"/pastConversations",null,function(response){
 		response = JSON.parse(response);
 		response.forEach(function(message){
@@ -189,6 +196,7 @@ $(function () {
 		});
 		
 	});
+	
 	$("#chat-text-box").keypress(function(e){
 		var key = e.which;
 		if(key==13){
@@ -197,9 +205,13 @@ $(function () {
 			return false;
 		}
 	});
+	
+	
 	$("#online_users").on("click","div",function(event){
         var id = $(this).closest("div").prop("id");
     	var user = currentOnlineUsers.get(id);
+    	$("#"+currentChattingWithUser).prop("disabled",false);
+    	$("#"+user.username).prop("disabled",true);
     	displayUserInformation(user);
 		$("#send_button").prop("disabled",false);
 		$("#heading-name").html("<b>"+user.firstName+" "+user.lastName+"</b>");
