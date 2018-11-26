@@ -71,7 +71,7 @@ public class MessageController {
     @GetMapping("/pastConversations")
     public @ResponseBody Collection<PastConversations> pastConversations(@AuthenticationPrincipal UserDocument user) {
     	List<MessageDocument> messageDocuments =  messagedDao.getPastConversation(user.getUsername());
-    	Collections.sort(messageDocuments);
+    	Collections.sort(messageDocuments,Collections.reverseOrder());
     	Map<String, PastConversations> pastConversation = new HashMap<>();
     	for(MessageDocument document: messageDocuments) {
     		String userName = document.getReceiver().equals(user.getUsername())?document.getSender():document.getReceiver();

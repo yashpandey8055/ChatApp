@@ -6,9 +6,11 @@
     <script src="../webjars/jquery/jquery.min.js"></script>
     <script src="../webjars/sockjs-client/sockjs.min.js"></script>
     <script src="../webjars/stomp-websocket/stomp.min.js"></script>
-         <script src="/views/js/config.js"></script>
-     <script src="/views/js/chat.js"></script>
+    <script src="/views/js/config.js"></script>
+    <script src="/views/js/chat.js"></script>
+    <script src="/views/js/navbar.js"></script>
     <link href="/views/css/chatpage.css" rel="stylesheet"></link>
+    <link href="/views/css/nav-bar.css" rel="stylesheet"></link>
   
     </head>
 
@@ -17,19 +19,37 @@
 	<nav class="navbar-nav">
 	<div class="logo">Ketu</div>
 	<div class="navbar-element">
-		<span class="navbar-element-content">
-			<span class="navbar-element-icon"><img height=100% width=100% alt="" src="https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/yash.jpg"></span>
-		</span>
-		<span class="navbar-element-content">
-			<span class="navbar-element-icon"><img height=100% width=100% alt="" src="/views/images/notification-icon-7.png" style="background:#4a0080;padding:5px"></span>
-		</span>
-		<span class="navbar-element-content">
-			<span class="navbar-element-icon"><img height=100% width=100% alt="" src="/views/images/profile-icon.png" style="background:#4a0080;padding:5px"></span>
-		</span>
-		<span class="navbar-element-content">
-			<span class="navbar-element-icon"><img height=100% width=100% alt="" src="/views/images/message-icon-2.png.png" style="background:#4a0080;padding:5px"></span>
-		</span>
+	<div class="icons">
+		<div class="navbar-element-content">
+			<div class="navbar-element-icon" id="nav-bar-picture-icon"><img height=100% id="nav-bar-profile-picture" width=100% alt="">
+			</div>
+		</div>
+		<div class="navbar-element-content">
+			<div class="navbar-element-icon"><img height=100% width=100% alt="" src="/views/images/notification-icon-7.png" style="background:#4a0080;padding:5px"></div>
+		</div>
+		<div class="navbar-element-content">
+			<div class="navbar-element-icon"><img height=100% width=100% alt="" src="/views/images/profile-icon.png" style="background:#4a0080;padding:5px"></div>
+		</div>
+		<div class="navbar-element-content">
+			<div class="navbar-element-icon"><img height=100% width=100% alt="" src="/views/images/message-icon-2.png.png" style="background:#4a0080;padding:5px"></div>
+		</div>
 	</div>
+	<div class="display-options-box">
+	<ul class="settings-box">
+		<li><div class="edit-profile-option">
+			<img height=100% width=30px style="margin-right:10px;" src="/views/images/edit-profile-icon-2.png">Edit Profile
+			</div>
+		<hr>
+		</li>
+		<li>Account Settings<hr></li>
+		<li>General Settings<hr></li>
+		<li>Privacy Concerns<hr></li>
+		<li>Activity<hr></li>
+		<li>Logout</li>
+	</ul>
+	</div>
+	</div>
+	
 	</nav>
 	<div class="content-container" align="center">
 		<div class="split right">

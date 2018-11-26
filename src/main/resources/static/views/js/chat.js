@@ -101,6 +101,7 @@ function connect() {
     	   message = JSON.parse(message.body);
     	   if(currentChattingWithUser==message.sender){
     		   $("#chatbox_"+message.sender).append("<div class='right-message chat-message' align='right'><div><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>") 
+    		   $("#chatbox_"+currentChattingWithUser).scrollTop(function() { return this.scrollHeight; });
     	   }
     	   else{
     		  var count = $("#notification-user-"+message.sender).text();
@@ -146,6 +147,8 @@ function send(){
 	stompClient.send("/app/message", {}, JSON.stringify({'message': $('#chat-text-box').val()
     	,'receiver':currentChattingWithUser,'sender':currentUser.username}));
 	 $("#chatbox_"+currentChattingWithUser).append("<div class='left-message chat-message' align='left'><div><p class='chat-message-text'>"+$('#chat-text-box').val()+"</p></div><p class='chat-message-time'>Just Now</p></div>");
+		$("#chatbox_"+currentChattingWithUser).scrollTop(function() { return this.scrollHeight; });
+		$("#chat-text-box").val('');
 }
 function prepareBox(selectedUser){
 	var params = new Map();
@@ -167,8 +170,8 @@ function prepareBox(selectedUser){
 			$(".chat-box").append("<div class='box chat-display-box' id='chatbox_"+selectedUser+"'>"+messages+"</div>");
 	    	currentChattingWithUser = selectedUser;
 		}
+		$("#chatbox_"+selectedUser).scrollTop(function() { return this.scrollHeight; });
 	})
-	
 }
 
 $(function () {
@@ -176,11 +179,19 @@ $(function () {
 			httpRequest.get(env+"/users/current",null,function(response){
 				currentUser = JSON.parse(response);
 				 connect();
+					var downloadingImage = new Image();
+					downloadingImage.onload = function(){
+					 $("#nav-bar-profile-picture").attr("src",this.src);
+					 $("#nav-bar-profile-picture").css({"display":"inline"});
+					};
+				downloadingImage.src = currentUser.profileUrl;
 				 displayUserInformation(currentUser);
 			});
 	}else{
 		window.location.href = env+"/views/login.html"
 	}
+
+
 	httpRequest.get(env+"/pastConversations",null,function(response){
 		response = JSON.parse(response);
 		response.forEach(function(message){
