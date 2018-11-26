@@ -26,9 +26,9 @@ function HttpRequest(){
 }
 var turn = 180;
 function displayUserInformation(user){
-	$(".flipper").css({"transform":"rotateY("+turn+"deg)"});
+	//$(".flipper").css({"transform":"rotateY("+turn+"deg)"});
 	$(".selected-user-info").empty();
-	$(".selected-user-info").css({"transform":"rotateY("+turn+"deg)"});
+	//$(".selected-user-info").css({"transform":"rotateY("+turn+"deg)"});
 	setTimeout(function(){
 				$(".selected-user-info").append(
 						"<div class='selected-user-info'>"+
@@ -65,10 +65,10 @@ function displayUserInformation(user){
 				downloadingImage.src = user.profileUrl;
 				
 			}, 200);
-	turn=turn+180;
-	if(turn==360){
-		turn = 0;
-	}
+//	turn=turn+180;
+//	if(turn==360){
+//		turn = 0;
+//	}
 }
 
 var token = getCookie();
@@ -100,7 +100,7 @@ function connect() {
        stompClient.subscribe('/user/queue/message', function (message){
     	   message = JSON.parse(message.body);
     	   if(currentChattingWithUser==message.sender){
-    		   $("#chatbox_"+message.sender).append("<div class='right-message chat-message' align='left'><div><p class='chat-message-title'><b>"+message.sender+"</b></p><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>") 
+    		   $("#chatbox_"+message.sender).append("<div class='right-message chat-message' align='right'><div><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>") 
     	   }
     	   else{
     		  var count = $("#notification-user-"+message.sender).text();
@@ -112,7 +112,6 @@ function connect() {
     	   $("#conversations").prepend("<div class='single-conversation' id='chat-conversation-"+message.sender+"'>"+
 					"<div class='conversation-profile-picture'><div class='profile-picture'><img src='"+message.senderProfileUrl+"'></div></div>"+
 					"<div class='conversation-content'>"+
-						"<h5 align='left'><b>"+message.sender+"</b></h5>"+
 						"<p align='left' style='overflow:hidden;'>"+message.message+" </p>"+
 					"</div>"+
 					"<div class='conversation-date'>Just Now</div>"+
@@ -146,7 +145,7 @@ function connect() {
 function send(){
 	stompClient.send("/app/message", {}, JSON.stringify({'message': $('#chat-text-box').val()
     	,'receiver':currentChattingWithUser,'sender':currentUser.username}));
-	 $("#chatbox_"+currentChattingWithUser).append("<div class='left-message chat-message' align='left'><div><p class='chat-message-title'><b>You</b></p><p class='chat-message-text'>"+$('#chat-text-box').val()+"</p></div><p class='chat-message-time'>Just Now</p></div>");
+	 $("#chatbox_"+currentChattingWithUser).append("<div class='left-message chat-message' align='left'><div><p class='chat-message-text'>"+$('#chat-text-box').val()+"</p></div><p class='chat-message-time'>Just Now</p></div>");
 }
 function prepareBox(selectedUser){
 	var params = new Map();
@@ -156,9 +155,9 @@ function prepareBox(selectedUser){
 		var messages = "";
 		response.forEach(function(message){
 			if(currentUser.username==message.sender){
-				messages= messages +"<div class='left-message chat-message' align='left'><div><p class='chat-message-title'><b>You</b></p><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>"
+				messages= messages +"<div class='left-message chat-message' align='left'><div><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>"
 			}else{
-				messages= messages +"<div class='right-message chat-message' align='left'><div><p class='chat-message-title'><b>"+selectedUser+"</b></p><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>"
+				messages= messages +"<div class='right-message chat-message' align='right'><div><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>"
 			}
 		})
 		if(currentChattingWithUser==selectedUser){
