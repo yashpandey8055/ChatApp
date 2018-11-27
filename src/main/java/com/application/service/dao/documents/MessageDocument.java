@@ -14,6 +14,13 @@ public class MessageDocument implements Comparable<MessageDocument>{
 	private String receiver ;
 	private String message;
 	private Date date; 
+	private Integer index =0;
+	public Integer getIndex() {
+		return index;
+	}
+	public void setIndex(Integer index) {
+		this.index = index;
+	}
 	public String getSender() {
 		return sender;
 	}
@@ -42,6 +49,9 @@ public class MessageDocument implements Comparable<MessageDocument>{
 	}
 	public void setParticipants(List<String> participants) {
 		this.participants = participants;
+	}
+	public List<String> getParticipants() {
+		return participants;
 	}
 	@Override
 	public int compareTo(MessageDocument o) {

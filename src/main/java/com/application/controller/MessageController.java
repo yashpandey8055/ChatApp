@@ -64,8 +64,9 @@ public class MessageController {
     }
     
     @GetMapping("/getMessages")
-    public @ResponseBody List<MessageDocument> getMessages(@AuthenticationPrincipal UserDocument user,@RequestParam String receiver) {
-    	return messagedDao.getMessages(user.getUsername(), receiver);
+    public @ResponseBody List<MessageDocument> getMessages(@AuthenticationPrincipal UserDocument user,@RequestParam String receiver,@RequestParam Integer bucket) {
+    	  List<MessageDocument>documents = messagedDao.getMessages(user.getUsername(), receiver);
+    	  return documents;
     }
     
     @GetMapping("/pastConversations")

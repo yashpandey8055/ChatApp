@@ -66,7 +66,9 @@
     animation-duration: 1s;
 }
 .display-options-box{
-	display:none;
+	display:inline-block;
+	display:-moz-deck;
+	z-index:100;
     height: auto;
     width: 200px;
 	background:white;

@@ -2,8 +2,10 @@ package com.application.service.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -23,6 +25,12 @@ public class MessageDao {
 	}
 
 	public void save(MessageDocument user) {
+		Query query = new Query();
+		query.with(new Sort(Sort.Direction.DESC, "index"));
+		query.limit(1);
+		query.addCriteria(Criteria.where("participants").all(user.getParticipants()));
+		MessageDocument maxIndex = template.findOne(query, MessageDocument.class);
+		user.setIndex(Optional.ofNullable(maxIndex).orElse(new MessageDocument()).getIndex()+1);
 		template.save(user);
 	}
 	
@@ -31,7 +39,8 @@ public class MessageDao {
 		participants.add(user);
 		participants.add(receiver);
 		Query messageQuery = Query.query(Criteria.where("participants").all(participants));
-		return template.find(messageQuery, MessageDocument.class);
+		List<MessageDocument> documents =  template.find(messageQuery, MessageDocument.class);
+		return documents;
 	}
 	
 	public List<MessageDocument> getPastConversation(String user) {

@@ -4,11 +4,11 @@ function HttpRequest(){
 	obj.get = function(url,params,callback){
 		
 		if(params!==null){
-			var requestParam = '?' ;
+			var requestParam = '' ;
 			params.forEach(function(value,key){
 				requestParam = requestParam+key+'='+value+'&'
 			});
-			url = url+requestParam;
+			url = url+'?'+requestParam;
 		}
 		
 		var xmlHttp = new XMLHttpRequest();
@@ -153,10 +153,11 @@ function send(){
 function prepareBox(selectedUser){
 	var params = new Map();
 	params.set("receiver",selectedUser);
+	params.set("bucket",1);
 	httpRequest.get(env+"/getMessages",params,function(response){
-		response = JSON.parse(response);
 		var messages = "";
-		response.forEach(function(message){
+		response = JSON.parse(response);
+		response.some(function(message){
 			if(currentUser.username==message.sender){
 				messages= messages +"<div class='left-message chat-message' align='left'><div><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>"
 			}else{
@@ -172,6 +173,22 @@ function prepareBox(selectedUser){
 		}
 		$("#chatbox_"+selectedUser).scrollTop(function() { return this.scrollHeight; });
 	})
+}
+
+function prependMessages(selectedUser){
+	params.set("receiver",selectedUser);
+	params.set("bucket",2);
+	httpRequest.get(env+"/getMessage",params,function(response){
+		var messages = "";
+		response.forEach(function(message){
+			if(currentUser.username==message.sender){
+				messages= messages +"<div class='left-message chat-message' align='left'><div><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>"
+			}else{
+				messages= messages +"<div class='right-message chat-message' align='right'><div><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>"
+			}
+		})
+			$("#chatbox_"+selectedUser).prepend(messages);
+	});
 }
 
 $(function () {
