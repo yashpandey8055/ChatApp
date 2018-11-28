@@ -34,13 +34,17 @@ public class MessageDao {
 		template.save(user);
 	}
 	
-	public List<MessageDocument> getMessages(String user,String receiver) {
+	public List<MessageDocument> getMessages(String user,String receiver,Integer bucket) {
 		List<String> participants = new ArrayList<>(2);
 		participants.add(user);
 		participants.add(receiver);
-		Query messageQuery = Query.query(Criteria.where("participants").all(participants));
-		List<MessageDocument> documents =  template.find(messageQuery, MessageDocument.class);
-		return documents;
+		Query query = new Query();
+		query.with(new Sort(Sort.Direction.DESC, "index"));
+		query.limit(1);
+		query.addCriteria(Criteria.where("participants").all(participants));
+		MessageDocument maxIndex = template.findOne(query, MessageDocument.class);
+		Query messageQuery = Query.query(Criteria.where("participants").all(participants).and("index").lte(maxIndex.getIndex()-(bucket*10-10)).gt(maxIndex.getIndex()-(bucket*10)));
+		return template.find(messageQuery, MessageDocument.class);
 	}
 	
 	public List<MessageDocument> getPastConversation(String user) {

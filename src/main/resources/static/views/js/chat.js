@@ -75,6 +75,7 @@ var token = getCookie();
 var stompClient = null;
 var currentUser = null;
 var currentChattingWithUser = null;
+var isConversationLoadComplete = false;
 var currentOnlineUsers = new Map();
 const httpRequest = new HttpRequest();
 function getCookie(){
@@ -151,9 +152,10 @@ function send(){
 		$("#chat-text-box").val('');
 }
 function prepareBox(selectedUser){
+	var bucket=1;
 	var params = new Map();
 	params.set("receiver",selectedUser);
-	params.set("bucket",1);
+	params.set("bucket",bucket);
 	httpRequest.get(env+"/getMessages",params,function(response){
 		var messages = "";
 		response = JSON.parse(response);
@@ -172,14 +174,26 @@ function prepareBox(selectedUser){
 	    	currentChattingWithUser = selectedUser;
 		}
 		$("#chatbox_"+selectedUser).scrollTop(function() { return this.scrollHeight; });
+		$("#chatbox_"+selectedUser).on('scroll',function() {
+			if(this.scrollTop==0&&!isConversationLoadComplete){
+				prependMessages(selectedUser,++bucket);
+			}
+
+  		});
+        	
 	})
 }
 
-function prependMessages(selectedUser){
+function prependMessages(selectedUser,bucket){
+	var params = new Map();
 	params.set("receiver",selectedUser);
-	params.set("bucket",2);
-	httpRequest.get(env+"/getMessage",params,function(response){
+	params.set("bucket",bucket);
+	httpRequest.get(env+"/getMessages",params,function(response){
 		var messages = "";
+		response = JSON.parse(response);
+		if(response.length ==0){
+			isConversationLoadComplete =true;
+		}
 		response.forEach(function(message){
 			if(currentUser.username==message.sender){
 				messages= messages +"<div class='left-message chat-message' align='left'><div><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>"
@@ -232,7 +246,7 @@ $(function () {
 			return false;
 		}
 	});
-	
+
 	
 	$("#online_users").on("click","div",function(event){
         var id = $(this).closest("div").prop("id");
@@ -245,7 +259,7 @@ $(function () {
         $("#heading-username").html(user.username);
         $("#notification-user-"+user.username).text(0);
   		$("#notification-user-"+user.username).css({"background-color":"transparent","color":"transparent"});
-        	prepareBox(user.username);
+  		prepareBox(user.username);
     });
 	 $("#logout").click(function(){
 	    	document.cookie = 'token' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
