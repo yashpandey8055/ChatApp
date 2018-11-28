@@ -1,17 +1,33 @@
 <html>
     <head>
         <title>Spring Security Example </title>
+        <link href="../webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	    <script src="../webjars/jquery/jquery.min.js"></script>
+	    <script src="../webjars/sockjs-client/sockjs.min.js"></script>
+	    <script src="../webjars/stomp-websocket/stomp.min.js"></script>
+   		<script src="/views/js/config.js"></script>
+  		<script src="/views/js/login.js"></script>
+    	<link href="/views/css/loginpage.css" rel="stylesheet"></link>
     </head>
-        <script src="/views/js/config.js"></script>
-   <script src="/views/js/login.js"></script>
-    <body>
-        <form  method="post">
-            <div><label> User Name : <input type="text" id = "username" name="username"/> </label></div>
-            <div><label> Password: <input type="password" id= "password" name="password"/> </label></div>
-            <div><input type="button" value="Sign In" onclick="login()"/></div>
-        </form>
-        
-        <a href="/views/register.html">Register</a>
-        <p id="test"></p>
+	<body>
+		<div class="login-box">
+			<div><p class="logo">Ketu</p></div>
+			<div><p class="login-text"><b>Login with your credentials</b></p></div>
+			<div class="login-form">
+				<div class="input-group">
+					<span class="input-group-addon">
+				        <i class="glyphicon glyphicon-user"></i>
+				    </span>
+				    <input type="text" class="form-control" placeholder="Username"/>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">
+				        <i class="glyphicon glyphicon-lock"></i>
+				    </span>
+				    <input type="text" class="form-control" placeholder="Password"/>
+				</div>
+			</div>
+			<div><button>Login</button></div>
+		</div>
     </body>
 </html>
