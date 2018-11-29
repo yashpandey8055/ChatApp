@@ -1,14 +1,20 @@
-.body{
-	background-color:#f2f2f2;
-}
 @font-face {
     font-family: Spantaran;
     src: url(/views/fonts/btxitally.otf);
 }
 @font-face {
+    font-family: BloggerSans;
+    src: url(/views/fonts/BloggerSans-Light.otf);
+}
+@font-face {
     font-family: EuropeUnderground;
     src: url(/views/fonts/EuropeUnderground_light.ttf);
 }
+
+.body{
+	background-color:#f2f2f2;
+}
+
 .login-box{
     width: 500px;
     height:500px;
@@ -33,21 +39,20 @@
 }
 .input-group{
 	margin:15px;
-	font-family:sans-serif;
+	font-family:BloggerSans;
 }
 .input-group>input:focus{
-	border:1px solid #6f4e96;
-	box-shadow:0px 0px 3px #6f4e96;
+	border:1px solid #46377b;
+	box-shadow:0px 0px 3px #46377b;
 }
 .input-group-addon{
 	background:white;
 }
 .logo{
-
-    font-size: 50px;
+	font-size: 50px;
     margin: 15px;
     text-align: center;
-    color: #6f4e96;
+    color: #46377b;
     font-family: Spantaran;
 }
 .login-text{
@@ -55,10 +60,23 @@
     font-size: 30px;
     margin-top: 5px;
     text-align: center;
-    color: #6f4e96;
+    color: #46377b;
     font-family: EuropeUnderground;
 	font-style: normal;
 	font-weight: 500;
+}
+.btnfull{
+	width:100%;
+	color:whitesmoke;
+	font-family:BloggerSans;
+	background-image:linear-gradient(to left ,#46377b,#6f4e96);
+}
+.btnfull:focus,.btnfull:hover,.btnfull:active{
+	outline: none !important;
+	width:100%;
+	color:whitesmoke;
+	background-image:linear-gradient(to left ,#46377b,#6f4e96);
+	box-shadow:0px 0px 2px #6f4e96; 
 }
 @media screen and (max-width: 600px) {
   .login-box{
