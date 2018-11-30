@@ -18,7 +18,7 @@ function HttpRequest(){
 			 if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
 				 callback(this.responseText);
 			}else if(xmlHttp.readyState == 4 &&xmlHttp.status !== 200){
-				callback(null);
+				callback(this.responseText);
 			}
 		}
 		

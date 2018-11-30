@@ -8,7 +8,7 @@ var login = function(){
 	        document.cookie="token="+ response;
 	        window.location.href = env+"/views/chat.html";
         }else {
-        	$(".error-message").text("UserName/Password does not match.");
+        	$(".error-message").text(response);
         	$(".error-message").css({"color":"#b30000"});
         }
 });
