@@ -1,9 +1,9 @@
 var env = "http://localhost:8080"
-	
+
 function HttpRequest(){
 	var obj = {};
 	
-	obj.get = function(url,params,callback){
+	obj.get = function(url,params,token,callback){
 		
 		if(params!==null){
 			var requestParam = '' ;
@@ -17,11 +17,15 @@ function HttpRequest(){
 		xmlHttp.onreadystatechange = function(){
 			 if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
 				 callback(this.responseText);
+			}else if(xmlHttp.readyState == 4 &&xmlHttp.status !== 200){
+				callback(null);
 			}
 		}
 		
 		xmlHttp.open("GET",url);
-		xmlHttp.setRequestHeader("Authorization","Bearer "+token);
+		if(token){
+			xmlHttp.setRequestHeader("Authorization","Bearer "+token);
+		}
 		xmlHttp.send(null);
 	}
 	return obj;

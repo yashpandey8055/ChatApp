@@ -8,6 +8,7 @@
    		<script src="/views/js/config.js"></script>
   		<script src="/views/js/login.js"></script>
     	<link href="/views/css/loginpage.css" rel="stylesheet"></link>
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
 	<body>
 		<div class="login-box">
@@ -18,16 +19,19 @@
 					<span class="input-group-addon">
 				        <i class="glyphicon glyphicon-user"></i>
 				    </span>
-				    <input type="text" class="form-control" placeholder="Username"/>
+				    <input type="text" class="form-control" placeholder="Username" id="username"/>
 				</div>
 				<div class="input-group">
 					<span class="input-group-addon">
 				        <i class="glyphicon glyphicon-lock"></i>
 				    </span>
-				    <input type="text" class="form-control" placeholder="Password"/>
+				    <input type="password" class="form-control" placeholder="Password" id="password"/>
+				</div>
+				<div class="input-group">
+					<p class="error-message">User Not found</p>
 				</div>
 			</div>
-			<div style="width:70%;margin:auto;"><button class="btn btnfull">Login</button></div>
+			<div style="width:70%;margin:auto;"><button class="btn btnfull" onclick="login()">Login</button></div>
 		</div>
     </body>
 </html>

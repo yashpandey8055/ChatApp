@@ -1,5 +1,5 @@
-
-var login = function(){
+var httpRequest = new HttpRequest();
+var something = function(){
 			var xmlHttp = new XMLHttpRequest();
     	    xmlHttp.onreadystatechange = function() { 
     	        if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
@@ -19,3 +19,17 @@ var login = function(){
     	    xmlHttp.send(null);
     	    
     	}
+
+var login = function(){
+	var param = new Map();
+	param.set("userName",$("#username").val());
+	httpRequest.get(env+"/public/users/login",param,null,function(response){
+		if (response!==null){
+	        document.cookie="token="+ response;
+	        window.location.href = env+"/views/chat.html";
+        }else {
+        	$(".error-message").text("UserName/Password does not match.");
+        	$(".error-message").css({"color":"#b30000"});
+        }
+});
+}

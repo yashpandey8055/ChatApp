@@ -1,61 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
- <script src="../webjars/jquery/jquery.min.js"></script>
-
-<script>
- 
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-
-.flip-container {
-	perspective: 100000px;
+body {
+    background-color: tan;
+    color: black;
 }
 
-.flip-container:hover .flipper, .flip-container.hover .flipper {
-		transform: rotateY(-180deg);
+/* On screens that are 992px wide or less, the background color is blue */
+@media screen and (max-width: 992px) {
+    body {
+        background-color: blue;
+        color: white;
+    }
 }
 
-.flip-container, .front, .back {
-	width: 320px;
-	height: 480px;
-}
-
-.flipper {
-	transition: 0.6s;
-	/*transform-style: preserve-3d;*/
-	position: relative;
-}
-
-.front, .back {
-	/*backface-visibility: hidden;*/
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
-.front {
-	z-index: 2;
-	/* for firefox 31 */
-	background-color:black;
-	transform: rotateY(0deg);
-}
-
-.back {
-	transform: rotateY(180deg);
+/* On screens that are 600px wide or less, the background color is olive */
+@media screen and (max-width: 600px) {
+    body {
+        background-color: olive;
+        color: white;
+    }
 }
 </style>
 </head>
 <body>
-<div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-	<div class="flipper">
-		<div class="front">
-			<!-- front content -->
-		</div>
-		<div class="back">
-			<!-- back content -->
-		</div>
-	</div>
-</div>
+
+<h1>Resize the browser window to see the effect!</h1>
+<p>By default, the background color of the document is "tan". If the screen size is 992px or less, the color will change to "blue". If it is 600px or less, it will change to "olive".</p>
+
 </body>
 </html>
