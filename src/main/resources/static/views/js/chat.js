@@ -109,7 +109,7 @@ function connect() {
         });
         
     });
-    httpRequest.get(env+"/users/connected",null,token,function(response){
+    httpRequest.get("/users/connected",null,token,function(response){
 		  var connectedusers = JSON.parse(response);
 				 connectedusers.some(function(user){
 					 if(currentUser.id != user.id){
@@ -131,7 +131,7 @@ function prepareBox(selectedUser){
 	var params = new Map();
 	params.set("receiver",selectedUser);
 	params.set("bucket",bucket);
-	httpRequest.get(env+"/getMessages",params,token,function(response){
+	httpRequest.get("/getMessages",params,token,function(response){
 		var messages = "";
 		response = JSON.parse(response);
 		response.some(function(message){
@@ -163,7 +163,7 @@ function prependMessages(selectedUser,bucket){
 	var params = new Map();
 	params.set("receiver",selectedUser);
 	params.set("bucket",bucket);
-	httpRequest.get(env+"/getMessages",params,token,function(response){
+	httpRequest.get("/getMessages",params,token,function(response){
 		var messages = "";
 		response = JSON.parse(response);
 		if(response.length ==0){
@@ -182,7 +182,7 @@ function prependMessages(selectedUser,bucket){
 
 $(function () {
 	if(token!=""){
-			httpRequest.get(env+"/users/current",null,token,function(response){
+			httpRequest.get("/users/current",null,token,function(response){
 				currentUser = JSON.parse(response);
 				 connect();
 					var downloadingImage = new Image();
@@ -198,7 +198,7 @@ $(function () {
 	}
 
 
-	httpRequest.get(env+"/pastConversations",null,token,function(response){
+	httpRequest.get("/pastConversations",null,token,function(response){
 		response = JSON.parse(response);
 		response.forEach(function(message){
 			$("#conversations").append("<div class='single-conversation' id='chat-conversation-"+message.sender+"'>"+

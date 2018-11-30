@@ -10,7 +10,7 @@ function HttpRequest(){
 			params.forEach(function(value,key){
 				requestParam = requestParam+key+'='+value+'&'
 			});
-			url = url+'?'+requestParam;
+			url = env+url+'?'+requestParam;
 		}
 		
 		var xmlHttp = new XMLHttpRequest();
