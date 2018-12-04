@@ -1,5 +1,5 @@
 var httpRequest = new HttpRequest();
-var en = "https://ketu.herokuapp.com"
+var env = "http://localhost:8080";
 var login = function(){
 	var param = new Map();
 	param.set("userName",$("#username").val());

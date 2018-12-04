@@ -1,5 +1,21 @@
-var env = "https://ketu.herokuapp.com"
-
+var env = "http://localhost:8080"
+var token = getCookie();
+const httpRequest = new HttpRequest();
+function getCookie(){
+	 var name = "token=";
+	    var decodedCookie = decodeURIComponent(document.cookie);
+	    var ca = decodedCookie.split(';');
+	    for(var i = 0; i < ca.length; i++) {
+	        var c = ca[i];
+	        while (c.charAt(0) == ' ') {
+	            c = c.substring(1);
+	        }
+	        if (c.indexOf(name) == 0) {
+	            return c.substring(name.length, c.length);
+	        }
+	    }
+	    return "";
+}
 function HttpRequest(){
 	var obj = {};
 	
@@ -30,3 +46,24 @@ function HttpRequest(){
 	}
 	return obj;
 }
+
+$(function(){
+	$('.display-options-box').hide();  
+	$('#nav-bar-picture-icon').click(function(e) {                              
+	   $('.display-options-box').toggle();  
+	});
+	if(token!=""){
+		httpRequest.get("/users/current",null,token,function(response){
+			currentUser = JSON.parse(response);
+				var downloadingImage = new Image();
+				downloadingImage.onload = function(){
+				 $("#nav-bar-profile-picture").attr("src",this.src);
+				 $("#nav-bar-profile-picture").css({"display":"inline"});
+				};
+				downloadingImage.src = currentUser.profileUrl;
+				displayUserInformation(currentUser);
+			});
+	}else{
+		window.location.href = env+"/views/login.html"
+	}
+})

@@ -46,28 +46,10 @@ function displayUserInformation(user){
 //	}
 }
 
-var token = getCookie();
 var stompClient = null;
-var currentUser = null;
 var currentChattingWithUser = null;
 var isConversationLoadComplete = false;
 var currentOnlineUsers = new Map();
-const httpRequest = new HttpRequest();
-function getCookie(){
-	 var name = "token=";
-	    var decodedCookie = decodeURIComponent(document.cookie);
-	    var ca = decodedCookie.split(';');
-	    for(var i = 0; i < ca.length; i++) {
-	        var c = ca[i];
-	        while (c.charAt(0) == ' ') {
-	            c = c.substring(1);
-	        }
-	        if (c.indexOf(name) == 0) {
-	            return c.substring(name.length, c.length);
-	        }
-	    }
-	    return "";
-}
 
 function connect() {
     var socket = new SockJS(env+'/gs-guide-websocket?token='+token);
@@ -181,23 +163,8 @@ function prependMessages(selectedUser,bucket){
 }
 
 $(function () {
-	if(token!=""){
-			httpRequest.get("/users/current",null,token,function(response){
-				currentUser = JSON.parse(response);
-				 connect();
-					var downloadingImage = new Image();
-					downloadingImage.onload = function(){
-					 $("#nav-bar-profile-picture").attr("src",this.src);
-					 $("#nav-bar-profile-picture").css({"display":"inline"});
-					};
-				downloadingImage.src = currentUser.profileUrl;
-				 displayUserInformation(currentUser);
-			});
-	}else{
-		window.location.href = env+"/views/login.html"
-	}
-
-
+	displayUserInformation(currentUser);
+	connect();
 	httpRequest.get("/pastConversations",null,token,function(response){
 		response = JSON.parse(response);
 		response.forEach(function(message){
