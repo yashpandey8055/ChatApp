@@ -1,0 +1,39 @@
+body{
+	overflow:scroll;
+	background-color:	#f2f2f2;
+	font-family:BloggerSans;
+}
+.container{
+	position:relative;
+	top:70px;
+	height:auto;
+	width:60%;
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.title-content{
+	background-color:white;
+	border: 1px solid #d9d9d9;
+    height: auto;
+    width: 80%;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.user-selected-profile-picture{
+	display:table;
+	margin:15px;
+}
+.user-selected-profile-info{
+	display:table;
+	margin:15px;
+}
+
+.user-content{
+	width:100%;
+	height:200px;
+}

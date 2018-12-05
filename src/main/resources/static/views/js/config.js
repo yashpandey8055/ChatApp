@@ -1,5 +1,6 @@
 var env = "http://localhost:8080"
 var token = getCookie();
+var currentUser = null;
 const httpRequest = new HttpRequest();
 function getCookie(){
 	 var name = "token=";
@@ -63,7 +64,5 @@ $(function(){
 				downloadingImage.src = currentUser.profileUrl;
 				displayUserInformation(currentUser);
 			});
-	}else{
-		window.location.href = env+"/views/login.html"
 	}
 })

@@ -163,7 +163,6 @@ function prependMessages(selectedUser,bucket){
 }
 
 $(function () {
-	displayUserInformation(currentUser);
 	connect();
 	httpRequest.get("/pastConversations",null,token,function(response){
 		response = JSON.parse(response);

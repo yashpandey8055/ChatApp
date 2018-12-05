@@ -6,6 +6,10 @@ body{
     font-family: Spantaran;
     src: url(/views/fonts/btxitally.otf);
 }
+@font-face {
+    font-family: BloggerSans;
+    src: url(/views/fonts/BloggerSans-Light.otf);
+}
 ul{
 	list-style:none;
 }
@@ -372,6 +376,31 @@ h5{
 	border:1px solid #28a745;
 	border-radius:5px;
 }
+.app-btn{
+	color:white;
+	margin-right:5px;
+	margin-top:5px;
+	background-color:#8042f4;
+	border:1px solid #8042f4;
+	border-radius:5px;
+}
+.app-btn:hover{
+	color:white;
+	margin-right:5px;
+	margin-top:5px;
+	background-color:#8042f4;
+	border:1px solid #8042f4;
+	border-radius:5px;
+}
+.simple-btn{
+	color:black;
+	margin-right:5px;
+	margin-top:5px;
+	background-color:white;
+	border:1px solid black;
+	border-radius:5px;
+}
+
 .disapprove-btn{
 	color:#dc3545;
 	background-color:white;

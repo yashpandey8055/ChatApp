@@ -1,3 +1,7 @@
+@font-face {
+    font-family: Spantaran;
+    src: url(/views/fonts/btxitally.otf);
+}
 .navbar-nav{
 	position:fixed;
 	top:0px;
@@ -57,6 +61,7 @@
 	text-alignment:center;
 }
 #nav-bar-profile-picture{
+	height:30px;
 	background-image: linear-gradient(to left, white,#d1d1e0);
      background-size: 200% 200%;
    	-webkit-animation-name: animate-profile-download ; /* Safari 4.0 - 8.0 */
@@ -94,6 +99,16 @@
 .settings-box>li>hr{
 	margin-top:8px;
 	margin-bottom:8px;
+}
+
+ul{
+	list-style:none;
+}
+p{
+	margin-bottom:0px;
+}
+h5{
+	margin:0px;
 }
 @media screen and (max-width:600px){
 	.navbar-nav{
