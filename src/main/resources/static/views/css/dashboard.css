@@ -16,6 +16,7 @@ body{
 	left:10%;
 }
 .center{
+	height:auto;
 	left:35%;
 	right:20%;
 }
@@ -37,13 +38,26 @@ body{
 
 .user-content{
 	width:100%;
-	height:200px;
+	height:auto;
 }
 .side-container{
 	position: fixed;
     top: 70px;
     left: 30px;
 }
-.user-content-header{
-	top:0;
+.post-content-header{
+	display:flex;
+	flex-direction:row;
+	align-items:center;
+}
+.post-content-header>div{
+	margin:5px;
+	text-align: start;
+}
+.post-content-footer{
+		display:flex;
+	flex-direction:row;
+}
+.post-content-footer>div{
+	margin:5px;
 }
