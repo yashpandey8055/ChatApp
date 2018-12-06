@@ -17,9 +17,17 @@ body{
 }
 .center{
 	height:auto;
-	left:35%;
-	right:20%;
+	left:15%;
+	right:10%;
 }
+.dashboard-header{
+	padding:20px;
+}
+.dashboard-header>table{
+	 display: flex;
+    justify-content: flex-start;
+	
+} 
 .title-content{
 	background-color:white;
 	border: 1px solid #d9d9d9;
@@ -40,11 +48,6 @@ body{
 	width:100%;
 	height:auto;
 }
-.side-container{
-	position: fixed;
-    top: 70px;
-    left: 30px;
-}
 .post-content-header{
 	display:flex;
 	flex-direction:row;
@@ -54,10 +57,88 @@ body{
 	margin:5px;
 	text-align: start;
 }
+.post-content{
+	min-height:300px;
+}
+.post-content>img{
+	min-height:300px;
+	height:100%;
+	background-image: linear-gradient(to left, white,#d1d1e0);
+     background-size: 200% 200%;
+   	-webkit-animation-name: animate-profile-download ; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+    animation-name: animate-profile-download ;
+    animation-iteration-count: infinite;
+    animation-duration: 1s;
+}
 .post-content-footer{
-		display:flex;
+	display:flex;
 	flex-direction:row;
 }
+
 .post-content-footer>div{
 	margin:5px;
+}
+
+.dashboard-header-post{
+  	width: inherit;
+	height:100%;
+	display: flex;
+    flex-direction: column;
+}
+.post-icon{
+	display: flex;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius:20px;
+    border:1px solid #e6e6e6;
+    margin:2px;
+}
+.post-icon>img{
+	margin-right:5px;
+}
+.post-content-container{
+	width:100%;
+	height:400px;
+}
+.post-content-box{
+	width:60%;
+	height:100%;
+}
+.comment-box{
+	width:40%;
+	height:100%;
+}
+.post-content-box>img{
+	background-image: linear-gradient(to left, white,#d1d1e0);
+     background-size: 200% 200%;
+   	-webkit-animation-name: animate-profile-download ; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+    animation-name: animate-profile-download ;
+    animation-iteration-count: infinite;
+    animation-duration: 1s;
+}
+.chat-text-box{
+	width:50%;
+}
+@media screen and (max-width:600px){
+	.center{
+		width:100%;
+		height:100%;
+		left:0px;
+		margin:0px;
+	}
+	.dashboard-header-post>input{
+		width:100%;
+	}
+	
+	.content-container{
+		position:fixed;
+		width:100%;
+		margin:0px;
+		height:92%;
+	}
 }

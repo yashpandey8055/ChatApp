@@ -1,0 +1,77 @@
+body{
+	overflow:scroll;
+	background-color:	#f2f2f2;
+	font-family:BloggerSans;
+}
+.container{
+	position:relative;
+	top:70px;
+	height:auto;
+	width:40%;
+	margin-bottom:5px;
+	margin-left:auto;
+	margin-right:auto;
+}
+.left{
+	left:10%;
+}
+.center{
+	height:auto;
+	left:35%;
+	right:20%;
+}
+.title-content{
+	background-color:white;
+	border: 1px solid #d9d9d9;
+    height: auto;
+    width: 100%;
+    padding: 10px; 
+}
+.user-selected-profile-picture{
+	display:table;
+	margin:15px;
+}
+.user-selected-profile-info{
+	display:table;
+	margin:15px;
+}
+
+.user-content{
+	width:100%;
+	height:auto;
+}
+.side-container{
+	position: fixed;
+    top: 70px;
+    left: 30px;
+}
+.post-content-header{
+	display:flex;
+	flex-direction:row;
+	align-items:center;
+}
+.post-content-header>div{
+	margin:5px;
+	text-align: start;
+}
+.post-content{
+	min-height:300px;
+}
+.post-content>img{
+	min-height:300px;
+	height:100%;
+	background-image: linear-gradient(to left, white,#d1d1e0);
+     background-size: 200% 200%;
+   	-webkit-animation-name: animate-profile-download ; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+    animation-name: animate-profile-download ;
+    animation-iteration-count: infinite;
+    animation-duration: 1s;
+}
+.post-content-footer{
+		display:flex;
+	flex-direction:row;
+}
+.post-content-footer>div{
+	margin:5px;
+}
