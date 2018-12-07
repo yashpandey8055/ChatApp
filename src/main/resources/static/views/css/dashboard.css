@@ -102,27 +102,55 @@ body{
 }
 .post-content-container{
 	width:100%;
-	height:400px;
+	height:auto;
+	min-height:400px;
 }
 .post-content-box{
 	width:60%;
 	height:100%;
 }
-.comment-box{
-	width:40%;
+.post-content-box>img{
+	width:100%;
 	height:100%;
+	min-height:400px;
 }
+.post-content-box{
+	width:100%;
+	height:100%;
+	min-height:400px;
+}
+.comment-display-box{
+	width:40%;
+	margin-left:5px;
+}
+
 .post-content-box>img{
 	background-image: linear-gradient(to left, white,#d1d1e0);
      background-size: 200% 200%;
-   	-webkit-animation-name: animate-profile-download ; /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
-    animation-name: animate-profile-download ;
-    animation-iteration-count: infinite;
-    animation-duration: 1s;
+     border-radius:5px;
+     	border:1px solid #d1d1e0;
+}
+.comment-display-box{
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px;
+    background-color: white;
+    min-height:100%;
+    overflow:auto;
+}
+.comment-display-box>div{
+	padding:10px;
+	border-radius:15px;
+	background-color:#dcdcdc;
+	display:flex;
+	flex-direction:column;
+	margin:5px;
+	
 }
 .chat-text-box{
 	width:50%;
+}
+.comment-box{
+	width:100%;
 }
 @media screen and (max-width:600px){
 	.center{

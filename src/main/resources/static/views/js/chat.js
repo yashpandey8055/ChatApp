@@ -163,9 +163,6 @@ function prependMessages(selectedUser,bucket){
 }
 
 $(function () {
-	if(token==""){
-		window.href = env+"/views/login.html"
-	}
 	connect();
 	httpRequest.get("/pastConversations",null,token,function(response){
 		response = JSON.parse(response);

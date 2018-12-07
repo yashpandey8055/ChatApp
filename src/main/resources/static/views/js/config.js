@@ -64,5 +64,7 @@ $(function(){
 				downloadingImage.src = currentUser.profileUrl;
 				displayUserInformation(currentUser);
 			});
+	}else{
+		document.location.href = env+"/views/login.html";
 	}
 })
