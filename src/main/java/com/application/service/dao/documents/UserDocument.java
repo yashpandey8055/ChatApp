@@ -1,5 +1,6 @@
 package com.application.service.dao.documents;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -42,7 +43,10 @@ public class UserDocument implements UserDetails{
 	@JsonInclude(Include.NON_NULL)
 	int age;
 	@JsonInclude(Include.NON_NULL)
-	List<String> following;
+	private List<String> following = new ArrayList<>(1);
+	
+	@JsonInclude(Include.NON_NULL)
+	private boolean isFollowing;
 	@JsonInclude(Include.NON_NULL)
 	String city;
 	@JsonInclude(Include.NON_NULL)
@@ -145,6 +149,12 @@ public class UserDocument implements UserDetails{
 	}
 	public long getDisapprovals() {
 		return disapprovals;
+	}
+	public boolean isFollowing() {
+		return isFollowing;
+	}
+	public void setIsFollowing(boolean isFollowing) {
+		this.isFollowing = isFollowing;
 	}
 	public void setDisapprovals(long disapprovals) {
 		this.disapprovals = disapprovals;

@@ -17,20 +17,7 @@ import com.application.service.dao.documents.UserDocument;
 
 
 @RestController
-@RequestMapping("/users")
 public class SecuredUsersController {
-  UUIDAuthenticationService authentication;
 
-	@Autowired
-	UserCrudService userService;
-  @GetMapping("/current")
-  public UserDocument getCurrent(@AuthenticationPrincipal final UserDocument user) {
-    return user;
-  }
-
-  @GetMapping("/connected")
-  public Collection<UserDocument> connectedNotification() {
-  	return userService.getAllUsers();
-  }
 
 }

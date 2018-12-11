@@ -4,7 +4,7 @@ function displayUserInformation(user){
 	$(".selected-user-info").empty();
 	//$(".selected-user-info").css({"transform":"rotateY("+turn+"deg)"});
 	setTimeout(function(){
-		let displayInfo = "<div class='selected-user-info'>"+
+		var displayInfo = "<div class='selected-user-info'>"+
 		"<div class='user-selected-profile-picture'><img id='user-selected-profile-picture' alt=''></div>"+
 		"<div class='user-selected-profile-info'>"+
 			"<p><b>"+user.firstName+" "+user.lastName+"</b></p>"+
@@ -23,7 +23,14 @@ function displayUserInformation(user){
 				if(user==currentUser){
 					displayInfo = displayInfo + "<button type='button' class='btn simple-btn full-width-btn'>Followers ("+user.followers+")</button>";
 				}else{
-					displayInfo = displayInfo +"<button type='button' class='btn purple-button full-width-btn' onclick='follow()'>Follow</button>";
+					displayInfo = displayInfo +"<button type='button' class='btn purple-button full-width-btn' id='follow-user-btn' onclick='follow()'><img height=20px width=20px src='/views/images/loading-3.gif'></button>"
+					httpRequest.get("/users/follow/isfollowing/"+currentChattingWithUser,null,function(response){
+						if(response == 'true'){
+							$("#follow-user-btn").html("Unfollow");
+						}else{
+							$("#follow-user-btn").html("Follow");
+						}
+					});
 				}
 				displayInfo = displayInfo +"</div></div>";
 				$(".selected-user-info").append(displayInfo);
@@ -108,7 +115,7 @@ function prepareBox(selectedUser){
 	var params = new Map();
 	params.set("receiver",selectedUser);
 	params.set("bucket",bucket);
-	httpRequest.get(env+"/getMessages",params,function(response){
+	httpRequest.get("/getMessages",params,function(response){
 		var messages = "";
 		response = JSON.parse(response);
 		response.some(function(message){
@@ -140,7 +147,7 @@ function prependMessages(selectedUser,bucket){
 	var params = new Map();
 	params.set("receiver",selectedUser);
 	params.set("bucket",bucket);
-	httpRequest.get(env+"/getMessages",params,function(response){
+	httpRequest.get("/getMessages",params,function(response){
 		var messages = "";
 		response = JSON.parse(response);
 		if(response.length ==0){
@@ -158,7 +165,12 @@ function prependMessages(selectedUser,bucket){
 }
 
 $(function () {
-	 connect();
+	httpRequest.get("/users/current",null,function(response){
+		currentUser = JSON.parse(response);
+			displayUserInformation(currentUser);
+			connect();
+		});
+	
 	httpRequest.get(env+"/pastConversations",null,function(response){
 		response = JSON.parse(response);
 		response.forEach(function(message){

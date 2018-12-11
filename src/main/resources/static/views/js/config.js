@@ -48,23 +48,35 @@ function HttpRequest(){
 	return obj;
 }
 function follow(){
-	
+	console.log($("#follow-user-btn").text())
+	if($("#follow-user-btn").text()=='Follow'){
+		httpRequest.get("/users/follow/"+currentChattingWithUser,null,function(response){
+			console.log(response);
+			$("#follow-user-btn").html("Unfollow");
+		});
+	}else if($("#follow-user-btn").text()=='Unfollow'){
+		httpRequest.get("/users/unfollow/"+currentChattingWithUser,null,function(response){
+			console.log(response);
+			$("#follow-user-btn").html("Follow");
+		});
+	}
+	$("#follow-user-btn").html("<img height=20px width=20px src='/views/images/loading-3.gif'>")
 }
 $(function(){
 	$('.display-options-box').hide();  
 	$('#nav-bar-picture-icon').click(function(e) {                              
 	   $('.display-options-box').toggle();  
 	});
+
 	if(token!=""){
 		httpRequest.get("/users/current",null,function(response){
-			currentUser = JSON.parse(response);
+			var user = JSON.parse(response);
 				var downloadingImage = new Image();
 				downloadingImage.onload = function(){
 				 $("#nav-bar-profile-picture").attr("src",this.src);
 				 $("#nav-bar-profile-picture").css({"display":"inline"});
 				};
-				downloadingImage.src = currentUser.profileUrl;
-				displayUserInformation(currentUser);
+				downloadingImage.src = user.profileUrl;
 			});
 	}else{
 		document.location.href = env+"/views/login.html";
