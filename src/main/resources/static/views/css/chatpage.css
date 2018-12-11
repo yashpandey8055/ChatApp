@@ -362,7 +362,7 @@ h5{
     padding-left: 5px;
     color:	#808080;
 }
-.send_button,.send_button:hover,.send_button:visited,.send_button:focus,.send_button:active{
+.purple-button,.purple-button:hover,.purple-button:visited,.purple-button:focus,.purple-button:active{
 	float:left;
 	border-radius:5px;
 	outline:none;
@@ -400,6 +400,17 @@ h5{
 	background-color:#8042f4;
 	border:1px solid #8042f4;
 	border-radius:5px;
+}
+.follow-btn{
+	color:white;
+	margin-right:5px;
+	margin-top:5px;
+	background-color:#8042f4;
+	border:1px solid #8042f4;
+	border-radius:5px;
+}
+.full-width-btn{
+	width:100%;
 }
 .simple-btn{
 	color:black;

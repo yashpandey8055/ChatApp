@@ -1,15 +1,10 @@
 package com.application.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.application.service.dao.UsersDao;
@@ -21,16 +16,16 @@ public class UserController {
 	
 	@Autowired
 	UsersDao dao;
-	@GetMapping("/users/getUser")
-	public ResponseEntity<Object> register(@RequestParam String userName){
-		
-		return new ResponseEntity<>("Hello",HttpStatus.ACCEPTED);
-	}
 	
-	@PostMapping("/users/pushUsers")
-	public ResponseEntity<String> pushUsers(@RequestBody List<UserDocument> documents){
-		dao.pushList(documents);
-		return new ResponseEntity<>("Hello",HttpStatus.ACCEPTED);
+	public ResponseEntity<UserDocument> followUser(@AuthenticationPrincipal final UserDocument currentUser,String userName){
+		UserDocument currentUserDocument = dao.find(currentUser.getUsername());
+		UserDocument followedUserDocument = dao.find(userName);
+		currentUserDocument.getFollowing().add(userName);
+		followedUserDocument.setFollowers(followedUserDocument.getFollowers()+1);
+		dao.save(currentUserDocument);
+		dao.save(followedUserDocument);
+		return new ResponseEntity<>(followedUserDocument,HttpStatus.ACCEPTED);
+		
 	}
 	
 }

@@ -20,7 +20,7 @@ function getCookie(){
 function HttpRequest(){
 	var obj = {};
 	
-	obj.get = function(url,params,token,callback){
+	obj.get = function(url,params,callback){
 		
 		if(params!==null){
 			var requestParam = '' ;
@@ -47,14 +47,16 @@ function HttpRequest(){
 	}
 	return obj;
 }
-
+function follow(){
+	
+}
 $(function(){
 	$('.display-options-box').hide();  
 	$('#nav-bar-picture-icon').click(function(e) {                              
 	   $('.display-options-box').toggle();  
 	});
 	if(token!=""){
-		httpRequest.get("/users/current",null,token,function(response){
+		httpRequest.get("/users/current",null,function(response){
 			currentUser = JSON.parse(response);
 				var downloadingImage = new Image();
 				downloadingImage.onload = function(){

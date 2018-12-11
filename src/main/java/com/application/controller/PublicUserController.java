@@ -1,5 +1,7 @@
 package com.application.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,5 +40,17 @@ public class PublicUserController {
 			return new ResponseEntity<>("Not found",HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(userService.login(userName),HttpStatus.OK);
+	}
+
+	@GetMapping("/users/getUser")
+	public ResponseEntity<Object> getUser(@RequestParam String userName){
+		
+		return new ResponseEntity<>("Hello",HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/users/pushUsers")
+	public ResponseEntity<String> pushUsers(@RequestBody List<UserDocument> documents){
+		userDao.pushList(documents);
+		return new ResponseEntity<>("Hello",HttpStatus.ACCEPTED);
 	}
 }

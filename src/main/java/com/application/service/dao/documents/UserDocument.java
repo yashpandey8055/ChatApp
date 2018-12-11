@@ -1,6 +1,7 @@
 package com.application.service.dao.documents;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,6 +41,8 @@ public class UserDocument implements UserDetails{
 	String gender;
 	@JsonInclude(Include.NON_NULL)
 	int age;
+	@JsonInclude(Include.NON_NULL)
+	List<String> following;
 	@JsonInclude(Include.NON_NULL)
 	String city;
 	@JsonInclude(Include.NON_NULL)
@@ -176,5 +179,11 @@ public class UserDocument implements UserDetails{
 	}
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	public List<String> getFollowing() {
+		return following;
+	}
+	public void setFollowing(List<String> following) {
+		this.following = following;
 	}
 }

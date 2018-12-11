@@ -1,37 +1,32 @@
-
 var turn = 180;
 function displayUserInformation(user){
 	//$(".flipper").css({"transform":"rotateY("+turn+"deg)"});
 	$(".selected-user-info").empty();
 	//$(".selected-user-info").css({"transform":"rotateY("+turn+"deg)"});
 	setTimeout(function(){
-				$(".selected-user-info").append(
-						"<div class='selected-user-info'>"+
-						"<div class='user-selected-profile-picture'><img id='user-selected-profile-picture' alt=''></div>"+
-						"<div class='user-selected-profile-info'>"+
-							"<p><b>"+user.firstName+" "+user.lastName+"</b></p>"+
-							"<p>"+user.age+","+user.gender+"</p>"+
-							"<table><tr><td><img src='/views/images/icon2.png' height=20px width=20px></td><td>Bangalore,India</td></tr></table>"+
-							"<p>"+user.bio+"</p>"+
-							"<hr>"+
-							"<div style='margin:15px;'>"+
-								"<table style='width:80%'>"+
-								"<tr><td><b>Conversations</b></td><td>"+user.conversationPts+"</td></tr>"+
-								"<tr><td><b>Points</b></td><td>"+user.followers+"</td></tr>"+
-								"</table>"+
-							"</div>"+
-							"<hr>"+
-							"<div>"+
-								"<table style='width:90%'>"+
-								"<tr>"+
-								"<td><button type='button' class='btn approve-btn'>Approve ("+user.approvals+")</button></td>"+
-								"<td><button type='button' class='btn disapprove-btn'>Disapprove ("+user.disapprovals+")</button></td>"+
-								"</tr>"+
-								
-								"</table>"+
-							"</div>"+
-						"</div>"
-						);
+		let displayInfo = "<div class='selected-user-info'>"+
+		"<div class='user-selected-profile-picture'><img id='user-selected-profile-picture' alt=''></div>"+
+		"<div class='user-selected-profile-info'>"+
+			"<p><b>"+user.firstName+" "+user.lastName+"</b></p>"+
+			"<p>"+user.age+","+user.gender+"</p>"+
+			"<table><tr><td><img src='/views/images/icon2.png' height=20px width=20px></td><td>Bangalore,India</td></tr></table>"+
+			"<p>"+user.bio+"</p>"+
+			"<hr>"+
+			"<div style='margin:15px;'>"+
+				"<table style='width:80%'>"+
+				"<tr><td><b>Approval rating</b></td><td>"+user.approvals+"</td></tr>"+
+				"<tr><td><b>Conversations</b></td><td>"+user.disapprovals+"</td></tr>"+
+				"</table>"+
+			"</div>"+
+			"<hr>"+
+			"<div>";
+				if(user==currentUser){
+					displayInfo = displayInfo + "<button type='button' class='btn simple-btn full-width-btn'>Followers ("+user.followers+")</button>";
+				}else{
+					displayInfo = displayInfo +"<button type='button' class='btn purple-button full-width-btn' onclick='follow()'>Follow</button>";
+				}
+				displayInfo = displayInfo +"</div></div>";
+				$(".selected-user-info").append(displayInfo);
 				var downloadingImage = new Image();
 				downloadingImage.onload = function(){
 				 $("#user-selected-profile-picture").attr("src",this.src);
@@ -47,10 +42,10 @@ function displayUserInformation(user){
 }
 
 var stompClient = null;
+var currentUser = null;
 var currentChattingWithUser = null;
 var isConversationLoadComplete = false;
 var currentOnlineUsers = new Map();
-
 function connect() {
     var socket = new SockJS(env+'/gs-guide-websocket?token='+token);
     stompClient = Stomp.over(socket);
@@ -91,7 +86,7 @@ function connect() {
         });
         
     });
-    httpRequest.get("/users/connected",null,token,function(response){
+    httpRequest.get(env+"/users/connected",null,function(response){
 		  var connectedusers = JSON.parse(response);
 				 connectedusers.some(function(user){
 					 if(currentUser.id != user.id){
@@ -113,7 +108,7 @@ function prepareBox(selectedUser){
 	var params = new Map();
 	params.set("receiver",selectedUser);
 	params.set("bucket",bucket);
-	httpRequest.get("/getMessages",params,token,function(response){
+	httpRequest.get(env+"/getMessages",params,function(response){
 		var messages = "";
 		response = JSON.parse(response);
 		response.some(function(message){
@@ -145,7 +140,7 @@ function prependMessages(selectedUser,bucket){
 	var params = new Map();
 	params.set("receiver",selectedUser);
 	params.set("bucket",bucket);
-	httpRequest.get("/getMessages",params,token,function(response){
+	httpRequest.get(env+"/getMessages",params,function(response){
 		var messages = "";
 		response = JSON.parse(response);
 		if(response.length ==0){
@@ -163,8 +158,8 @@ function prependMessages(selectedUser,bucket){
 }
 
 $(function () {
-	connect();
-	httpRequest.get("/pastConversations",null,token,function(response){
+	 connect();
+	httpRequest.get(env+"/pastConversations",null,function(response){
 		response = JSON.parse(response);
 		response.forEach(function(message){
 			$("#conversations").append("<div class='single-conversation' id='chat-conversation-"+message.sender+"'>"+
@@ -187,7 +182,6 @@ $(function () {
 			return false;
 		}
 	});
-
 	
 	$("#online_users").on("click","div",function(event){
         var id = $(this).closest("div").prop("id");
