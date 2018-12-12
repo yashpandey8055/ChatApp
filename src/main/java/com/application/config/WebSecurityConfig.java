@@ -28,10 +28,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
 	private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
 		    new AntPathRequestMatcher("/public/**"),
-		    new AntPathRequestMatcher("/views/**"),
+		    new AntPathRequestMatcher("/views/css/**"),
+		    new AntPathRequestMatcher("/views/fonts/**"),
+		    new AntPathRequestMatcher("/views/images/**"),
+		    new AntPathRequestMatcher("/views/js/**"),
 		    new AntPathRequestMatcher("/webjars/**"),
 		    new AntPathRequestMatcher("/favicon.ico"),
-		    new AntPathRequestMatcher("/")
+		    new AntPathRequestMatcher("/"),
+		    new AntPathRequestMatcher("/login")
 		    );
 
 	private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
@@ -72,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		      .authenticated()
 		      .and()
 		      .csrf().disable()
-		      .formLogin().loginPage("/views/login.html").permitAll().and()
+		      .formLogin().loginPage("/login").permitAll().and()
 		      .httpBasic().disable()
 		      .logout().disable();
 			}

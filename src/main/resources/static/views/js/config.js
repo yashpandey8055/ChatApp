@@ -1,6 +1,7 @@
 var env = "http://localhost:8080"
 var token = getCookie();
 var currentUser = null;
+var currentChattingWithUser = null;
 const httpRequest = new HttpRequest();
 function getCookie(){
 	 var name = "token=";

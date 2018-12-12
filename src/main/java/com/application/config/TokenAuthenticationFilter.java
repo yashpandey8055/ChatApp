@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,16 +24,17 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws  IOException, ServletException {
-		String param = request.getHeader(AUTHORIZATION);
-	    String token ;
-	    if(param==null) {
-	    	token = request.getParameter("token").replaceAll("\"","");
-	    }else {
-	    	token = param.split(" ")[1].replaceAll("\"","");
+			{
+		
+	    final Authentication auth = new UsernamePasswordAuthenticationToken(extractToken(request), extractToken(request));
+	    try {
+	    	return getAuthenticationManager().authenticate(auth);
+	    }catch(IllegalArgumentException e) {
+	    	throw new AuthenticationException(auth.getName()+" is not Autheticated") {
+				private static final long serialVersionUID = 1L;
+	    		
+	    	};
 	    }
-	    final Authentication auth = new UsernamePasswordAuthenticationToken(token, token);
-	    return getAuthenticationManager().authenticate(auth);
 	}
 
 	@Override
@@ -48,6 +50,25 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 	  protected void unsuccessfulAuthentication(HttpServletRequest request,
 				HttpServletResponse response, AuthenticationException failed)
 				throws IOException, ServletException {
-	    response.sendRedirect("/views/login.html");
+	    response.sendRedirect("/login");
+	  }
+	  
+	  private String extractToken(HttpServletRequest request) {
+		  String param = request.getHeader(AUTHORIZATION);
+		    String token =null;
+			Cookie[] cookies = request.getCookies();
+			for(Cookie cookie:cookies) {
+				if("token".equalsIgnoreCase(cookie.getName())) {
+					token = cookie.getValue();
+				}
+			}
+		    if(param==null) {
+		    	if(request.getParameter("token")!=null) {
+		    		token = request.getParameter("token").replaceAll("\"","");
+		    	}
+		    }else {
+		    	token = param.split(" ")[1].replaceAll("\"","");
+		    }
+		    return token;
 	  }
 }

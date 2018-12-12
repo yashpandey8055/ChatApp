@@ -22,7 +22,7 @@ public class UUIDAuthenticationService {
 	  }
 
 	  public UserDocument findByToken(final String token) {
-	    return users.findWithToken(token);
+		  return users.findWithToken(token);
 	  }
 
 	

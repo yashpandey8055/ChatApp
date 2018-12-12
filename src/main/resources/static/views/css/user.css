@@ -30,6 +30,7 @@ body{
 .user-selected-profile-picture{
 	display:table;
 	margin:15px;
+	border:none;
 }
 .user-selected-profile-info{
 	display:table;

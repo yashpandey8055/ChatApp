@@ -1,7 +1,7 @@
 $(function () {
 var downloadingImage = new Image();
 				downloadingImage.onload = function(){
-					let url = this.src;
+					var url = this.src;
 						$("#post_1").attr("src",url).fadeIn(2000);
 
 				};

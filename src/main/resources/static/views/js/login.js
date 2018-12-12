@@ -7,7 +7,7 @@ var login = function(){
 	httpRequest.get("/public/users/login",param,null,function(response){
 		if (response!==null){
 	        document.cookie="token="+ response;
-	        window.location.href = env+"/views/chat.html";
+	        window.location.href = env+"/chat";
         }else {
         	$(".error-message").text(response);
         	$(".error-message").css({"color":"#b30000"});
