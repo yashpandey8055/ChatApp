@@ -1,15 +1,17 @@
 var urlParams = new URLSearchParams(window.location.search);
+currentChattingWithUser 
 var user = urlParams.get('user');
 $(function () {
 	httpRequest.get(env+"/users/user/"+user,null,function(response){
 		response = JSON.parse(response);
+		currentChattingWithUser = response.username;
 		var downloadingImage = new Image();
 		downloadingImage.onload = function(){
 			$(".center").prepend("<div class='title-content'>"+
 					"<table>"+
 					"<tbody>"+
 						"<tr>"+
-						"<td><div class='user-selected-profile-picture'><img id='user-selected-profile-picture' style='display:inherit' src='"+this.src+"' alt=''></div></td>"+
+						"<td><div class='user-selected-profile-picture'><img id='user-selected-profile-picture' src='"+this.src+"'/></div></td>"+
 						"<td>"+
 						"<div class='user-selected-profile-info'>"+
 							"<p><b>"+response.firstName+" "+response.lastName+"</b></p><p>"+response.age+","+response.gender+"</p>"+
@@ -28,7 +30,8 @@ $(function () {
 						"</tr>"+
 					"</tbody>"+
 				"</table>"+
-				"</div>"	)
+				"</div>");
+			$("#user-selected-profile-picture").css({"display":"inline"});
 		};
 		downloadingImage.src = response.profileUrl;
 		console.log(JSON.stringify(response));
