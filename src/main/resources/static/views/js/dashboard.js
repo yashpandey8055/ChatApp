@@ -1,3 +1,20 @@
+
+function post(){
+	var request = {
+			'status':$("#update-user-status").val(),
+			'likes':0,
+			'commentCount':0,
+			'comments':[],
+			'isStatus':true,
+			'postImageUrl':null
+	}
+	
+	httpRequest.post("/posts/insert",request,function(response){
+		
+		$(".center").append("")
+	})
+}
+
 $(function () {
 var downloadingImage = new Image();
 				downloadingImage.onload = function(){

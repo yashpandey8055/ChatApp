@@ -57,10 +57,12 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 		  String param = request.getHeader(AUTHORIZATION);
 		    String token =null;
 			Cookie[] cookies = request.getCookies();
+			if(cookies!=null) {
 			for(Cookie cookie:cookies) {
 				if("token".equalsIgnoreCase(cookie.getName())) {
 					token = cookie.getValue();
 				}
+			}
 			}
 		    if(param==null) {
 		    	if(request.getParameter("token")!=null) {

@@ -17,7 +17,7 @@ $(function () {
 							"<tbody>"+
 								"<tr>"+
 								"<td><img src='/views/images/icon2.png' height='20px' width='20px'></td>"+
-									"<td>Bangalore,India</td>"+
+									"<td>"+response.city+","+response.country+"</td>"+
 								"</tr>"+
 							"</tbody>"+
 							"</table>"+

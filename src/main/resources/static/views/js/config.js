@@ -21,6 +21,7 @@ function getCookie(){
 function HttpRequest(){
 	var obj = {};
 	
+	//Get Request
 	obj.get = function(url,params,callback){
 		
 		if(params!==null){
@@ -45,6 +46,25 @@ function HttpRequest(){
 			xmlHttp.setRequestHeader("Authorization","Bearer "+token);
 		}
 		xmlHttp.send(null);
+	}
+	
+	//Post Request
+	obj.post = function(url,request,callback){
+		
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.onreadystatechange =function(){
+			if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+				 callback(this.responseText);
+			}else if(xmlHttp.readyState == 4 &&xmlHttp.status !== 200){
+				callback(this.responseText);
+			}
+		}
+		xmlHttp.open("POST",env+url,true);
+		if(token){
+			xmlHttp.setRequestHeader("Authorization","Bearer "+token);
+		}
+		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		xmlHttp.send(JSON.stringify(request));
 	}
 	return obj;
 }

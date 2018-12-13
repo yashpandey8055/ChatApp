@@ -54,6 +54,7 @@ public class UserDocument implements UserDetails{
 	@JsonInclude(Include.NON_NULL)
 	String country;
 
+	private List<String> posts = new ArrayList<>(1);
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
@@ -195,5 +196,14 @@ public class UserDocument implements UserDetails{
 	}
 	public void setFollowing(List<String> following) {
 		this.following = following;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public List<String> getPosts() {
+		return posts;
+	}
+	public void setPosts(List<String> posts) {
+		this.posts = posts;
 	}
 }
