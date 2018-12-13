@@ -28,9 +28,8 @@ body{
     padding: 10px; 
 }
 .user-selected-profile-picture{
-	display:table;
+	display:flex;
 	margin:15px;
-	border:none;
 }
 .user-selected-profile-info{
 	display:table;
