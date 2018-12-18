@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.application.bean.PostResponse;
 import com.application.service.dao.PostDao;
 import com.application.service.dao.UsersDao;
 import com.application.service.dao.documents.PostDocument;
@@ -31,6 +32,7 @@ public class PostController {
 		user.getPosts().add(postDao.insert(post));
 		user.setPosts(user.getPosts());
 		userDao.save(user);
+		PostResponse response = new PostResponse();
 		return new ResponseEntity<>(post,HttpStatus.OK);
 		
 	}
