@@ -11,16 +11,16 @@ function post(){
 	
 	httpRequest.post("/posts/insert",request,function(response){
 		response = JSON.parse(response);
-		$(".center").append("<div class='title-content user-content'>"+
+		$(".center").append("<div class='title-content user-content' id='"+response.post.id+"'>"+
 			"<div class='post-content-header'>"+
 				"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-					"<img height=100% id='nav-bar-profile-picture' width=100% src='https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/yash.jpg'>"+
+					"<img height=100% id='nav-bar-profile-picture' width=100% src='"+response.user.profileUrl+"'>"+
 				"</div>"+
-				"<div><h5><b>imyash8055</b></h5></div>"+
-			"</div>"+
+				"<div><h5><b>"+response.user.username+"</b></h5></div>"+
+			"</div>"+ 
 			"<div class='post-content'>"+
 			"<div class='post-content-container'>"+
-					"<div class='status-content-box'><div align='left' style='margin: 15px;'>What </div>"+
+					"<div class='status-content-box'><div align='left' style='margin: 15px;'>"+response.post.status+"</div>"+
 					"<div class='post-content-footer'>"+
 						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
 						"<img width=100% src='/views/images/heart-2.png'>"+
@@ -34,55 +34,106 @@ function post(){
 					"<p align='left' style='margin: 15px;'>View All Comments</p>"+
 				"</div>"+
 				"</div>"+
-					"<div class='status-comment-display-box'>"+
-							"<div class='' align='left'>"+
-								"<div class='post-content-header'>"+
-									"<div class='comment-header'>"+
-										"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-											"<img height=100% id='nav-bar-profile-picture' width=100% src='https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/yash.jpg'>"+
-										"</div>"+
-										"<div><h5><b>imyash8055</b></h5></div>"+
-									"</div>"+
-									"<div>"+
-									"<p class=''>What has should have been all apologies asdasdas dasdasdasdasd"+
-									"</p>"+
-									"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
-										"<img width=50% src='/views/images/heart-2.png'>"+
-									"</div>"+
-									"</div>"+
-								"</div>"+
-					"</div>"+
-				"</div>"+
-				"<div class='status-comment-display-box'>"+
-							"<div class='' align='left'>"+
-								"<div class='post-content-header'>"+
-									"<div class='comment-header'>"+
-										"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-											"<img height=100% id='nav-bar-profile-picture' width=100% src='https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/yash.jpg'>"+
-										"</div>"+
-										"<div><h5><b>imyash8055</b></h5></div>"+
-									"</div>"+
-									"<div>"+
-									"<p class=''>What has  </p>"+
-									"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
-										"<img width=50% src='/views/images/heart-2.png'>"+
-									"</div>"+
-									"</div>"+
-								"</div>"+
-					"</div>"+
-				"</div>"+
 			"</div>"+
 		"</div>"+
 		"</div>")
 	})
 }
 
-$(function () {
-var downloadingImage = new Image();
-				downloadingImage.onload = function(){
-					var url = this.src;
-						$("#post_1").attr("src",url).fadeIn(2000);
+function postComment(postId,comment,userName){
+	 var commentRequest = {
+			'comment':comment,
+			'postId':postId,
+			'userName':userName
+	}
+	httpRequest.post("/comment/insert",commentRequest,function(response){
+		console.log(response)
+		response = JSON.parse(response);
+		$('#'+postId).find('.post-content-container').append("<div class='status-comment-display-box'>"+
+				"<div class='' align='left'>"+
+				"<div class='post-content-header'>"+
+					"<div class='comment-header'>"+
+						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+							"<img height=100% id='nav-bar-profile-picture' width=100% src='"+currentUser.profileUrl+"'>"+
+						"</div>"+
+						"<div><h5><b>"+response.userName+"</b></h5></div>"+
+					"</div>"+
+					"<div>"+
+					"<p class=''>"+response.message+"</p>"+
+					"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
+						"<img width=50% src='/views/images/heart-2.png'>"+
+					"</div>"+
+					"</div>"+
+				"</div>"+
+	"</div>"+
+"</div>");
+	});
+}
 
-				};
-	downloadingImage.src = "https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/test.jpg";
+
+$(function () {
+	
+	$(this).keypress(function(e){
+		var key = e.which;
+		if(key==13){
+			postComment($(e.target).parents('[id]:last').attr('id'),$(e.target).val(),currentUser.userName)
+			return false;
+		}
+	});
+	
+	httpRequest.get("/dashboard/getPosts",null,function(response){
+		response = JSON.parse(response);
+		var dashboard_response = '';
+		response.some(function(resp){
+			dashboard_response = dashboard_response + "<div class='title-content user-content' id='"+resp.post.id+"'>"+
+			"<div class='post-content-header'>"+
+				"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+					"<img height=100% id='nav-bar-profile-picture' width=100% src='"+resp.user.profileUrl+"'>"+
+				"</div>"+
+				"<div><h5><b>"+resp.user.username+"</b></h5></div>"+
+			"</div>"+ 
+			"<div class='post-content'>"+
+			"<div class='post-content-container'>"+
+					"<div class='status-content-box'><div align='left' style='margin: 15px;'>"+resp.post.status+"</div>"+
+					"<div class='post-content-footer'>"+
+						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+						"<img width=100% src='/views/images/heart-2.png'>"+
+					"</div>"+
+				"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+					"<img width=100% src='/views/images/message-icon.png'>"+
+				"</div>"+
+				"</div>"+
+				"<div class='comment-write-box'>"+
+					"<div class='horizontal'><input type='text' placeholder='Add a comment'  class='chat-text-box comment-box'/></div>"+
+					"<p align='left' style='margin: 15px;'>View All Comments</p>"+
+				"</div>"+
+				"</div>";
+				resp.comments.some(function(comment_res){
+					dashboard_response = dashboard_response + "<div class='status-comment-display-box'>"+
+					"<div class='' align='left'>"+
+					"<div class='post-content-header'>"+
+						"<div class='comment-header'>"+
+							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+								"<img height=100% id='nav-bar-profile-picture' width=100% src='"+comment_res.profileUrl+"'>"+
+							"</div>"+
+							"<div><h5><b>"+comment_res.userName+"</b></h5></div>"+
+						"</div>"+
+						"<div>"+
+						"<p class=''>"+comment_res.message+"</p>"+
+						"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
+							"<img width=50% src='/views/images/heart-2.png'>"+
+						"</div>"+
+						"</div>"+
+					"</div>"+
+						"</div>"+
+					"</div>"
+				});
+				dashboard_response = dashboard_response +"</div></div></div>"
+		});
+	$(".center").append(dashboard_response);
+	})
+	
 });
+
+
+

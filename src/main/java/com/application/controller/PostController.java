@@ -26,14 +26,16 @@ public class PostController {
 	UsersDao userDao;
 
 	@PostMapping("/insert")
-	public ResponseEntity<PostDocument> insertPost(@AuthenticationPrincipal UserDocument currentUser, @RequestBody PostDocument post){
-		
+	public ResponseEntity<PostResponse> insertPost(@AuthenticationPrincipal UserDocument currentUser, @RequestBody PostDocument post){
+		post.setUserName(currentUser.getUsername());
 		UserDocument user = userDao.find(currentUser.getUsername());
 		user.getPosts().add(postDao.insert(post));
 		user.setPosts(user.getPosts());
 		userDao.save(user);
 		PostResponse response = new PostResponse();
-		return new ResponseEntity<>(post,HttpStatus.OK);
+		response.setPost(post);
+		response.setUser(user);
+		return new ResponseEntity<>(response,HttpStatus.OK);
 		
 	}
 }

@@ -11,6 +11,7 @@ public class PostDocument {
 	private String status;
 	private long likes;
 	private long commentCount; 
+	private String userName;
 	private List<String> comments;
 	private boolean isStatus;
 	private String postImageUrl;
@@ -56,6 +57,12 @@ public class PostDocument {
 	}
 	public void setPostImageUrl(String postImageUrl) {
 		this.postImageUrl = postImageUrl;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 }

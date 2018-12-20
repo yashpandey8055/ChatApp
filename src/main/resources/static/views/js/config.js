@@ -91,13 +91,13 @@ $(function(){
 
 	if(token!=""){
 		httpRequest.get("/users/current",null,function(response){
-			var user = JSON.parse(response);
+			currentUser = JSON.parse(response);
 				var downloadingImage = new Image();
 				downloadingImage.onload = function(){
 				 $("#nav-bar-profile-picture").attr("src",this.src);
 				 $("#nav-bar-profile-picture").css({"display":"inline"});
 				};
-				downloadingImage.src = user.profileUrl;
+				downloadingImage.src = currentUser.profileUrl;
 			});
 	}else{
 		document.location.href = env+"/views/login.html";

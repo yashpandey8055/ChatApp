@@ -49,7 +49,6 @@ function displayUserInformation(user){
 }
 
 var stompClient = null;
-var currentUser = null;
 var currentChattingWithUser = null;
 var isConversationLoadComplete = false;
 var currentOnlineUsers = new Map();
@@ -166,8 +165,8 @@ function prependMessages(selectedUser,bucket){
 
 $(function () {
 	httpRequest.get("/users/current",null,function(response){
-		currentUser = JSON.parse(response);
-			displayUserInformation(currentUser);
+		var thisUser = JSON.parse(response);
+			displayUserInformation(thisUser);
 			connect();
 		});
 	
