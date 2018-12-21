@@ -16,6 +16,9 @@
 
 
 <body>
+	<div class="pop-up-box vertical-align">
+
+	</div>
 	<nav class="navbar-nav">
 	<div class="logo">Ketu</div>
 	<div class="navbar-element">
@@ -57,12 +60,15 @@
 						<div class="horizontal"><input type="text" id="update-user-status" placeholder="write something"  class="chat-text-box"/></div>
 						<div class="horizontal">
 							<div class="post-icon">
-								<img height=30px width=30px src="/views/images/image2.png"/>
-								<h5>Photo</h5>
+								<input type=file id="image-upload"/>
+								<label for="image-upload">
+									<img height=30px width=30px src="/views/images/uploadImage.png"/>
+									<button onclick="loadFileAsText()" style="display:none;"></button>
+								</label>
+								
 							</div>
 							<div class="post-icon">
-								<img height=30px width=30px src="/views/images/video2.png"/>
-								<h5>Video</h5>
+								<input type=file id="video-upload"/><label for="video-upload"><img height=30px width=30px src="/views/images/uploadVideo.png"/></label>
 							</div>
 							<button type='button' class='btn simple-btn post-icon' onclick='post()'>Send</button>
 						</div>

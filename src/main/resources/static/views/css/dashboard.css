@@ -53,9 +53,13 @@ body{
 	flex-direction:row;
 	align-items:center;
 }
+.post-icon>input {
+    display: none;
+}
 .post-content-header>div{
-	margin:5px;
 	text-align: start;
+	margin-left:5px;
+	margin-right:5px;
 }
 .post-content{
 	min-height:100px;
@@ -138,10 +142,8 @@ body{
 }
 .status-comment-display-box{
 	width:100%;
-	padding:5px;
-	border-radius:15px;
-	background-color:#dcdcdc;
-	margin:5px;
+	margin-left:5px;
+	margin-bottom:2px;
 }
 .comment-display-box>div{
 	padding:10px;
@@ -164,6 +166,16 @@ body{
 }
 .comment-header>*{
 	margin:5px;
+}
+
+.pop-up-box{
+	height:60%;
+	width:50%;
+	background:white;
+	border-radius:5px;
+	margin-auto;
+	z-index: 2;
+	border:1px solid #dcdcdc;
 }
 @media screen and (max-width:600px){
 	.center{

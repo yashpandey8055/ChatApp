@@ -56,10 +56,9 @@ function postComment(postId,comment,userName){
 						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
 							"<img height=100% id='nav-bar-profile-picture' width=100% src='"+currentUser.profileUrl+"'>"+
 						"</div>"+
-						"<div><h5><b>"+response.userName+"</b></h5></div>"+
 					"</div>"+
 					"<div>"+
-					"<p class=''>"+response.message+"</p>"+
+					"<p class=''><b>"+comment_res.userName+"</b>&nbsp"+comment_res.message+"</p>"+
 					"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
 						"<img width=50% src='/views/images/heart-2.png'>"+
 					"</div>"+
@@ -70,9 +69,21 @@ function postComment(postId,comment,userName){
 	});
 }
 
-
 $(function () {
+	//Upload Image
+	$(document).on('change', '#image-upload', function(e) {
+		var file = e.target.files[0];
+		var reader = new FileReader();
+
+		reader.onloadend = function(){
+			
+		};
+		
+		reader.readAsDataURL(file)
+	});
 	
+	//Enter Comment
+	//Key 13 is enter key
 	$(this).keypress(function(e){
 		var key = e.which;
 		if(key==13){
@@ -105,7 +116,7 @@ $(function () {
 				"</div>"+
 				"<div class='comment-write-box'>"+
 					"<div class='horizontal'><input type='text' placeholder='Add a comment'  class='chat-text-box comment-box'/></div>"+
-					"<p align='left' style='margin: 15px;'>View All Comments</p>"+
+					"<p align='left' style='margin: 15px;line-height: 0px;'>View All Comments</p>"+
 				"</div>"+
 				"</div>";
 				resp.comments.some(function(comment_res){
@@ -116,10 +127,9 @@ $(function () {
 							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
 								"<img height=100% id='nav-bar-profile-picture' width=100% src='"+comment_res.profileUrl+"'>"+
 							"</div>"+
-							"<div><h5><b>"+comment_res.userName+"</b></h5></div>"+
 						"</div>"+
 						"<div>"+
-						"<p class=''>"+comment_res.message+"</p>"+
+						"<p class=''><b>"+comment_res.userName+"</b>&nbsp"+comment_res.message+"</p>"+
 						"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
 							"<img width=50% src='/views/images/heart-2.png'>"+
 						"</div>"+
