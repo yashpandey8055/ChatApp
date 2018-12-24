@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome</title>
+    <link href="../webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../webjars/jquery/jquery.min.js"></script>
+    <script src="../webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="../webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/views/js/config.js"></script>
+    <script src="/views/js/dashboard.js"></script>
+    <link href="/views/css/chatpage.css" rel="stylesheet"></link>
+    <link href="/views/css/nav-bar.css" rel="stylesheet"></link>
+    <link href="/views/css/dashboard.css" rel="stylesheet"></link>
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	
+  	<script src="/views/js/cropper.js"></script>
+  	<style>
+  		.cropper{
+  		position:absolute;
+  		top:0px; 
+  		left:0px;
+  		 background:transparent;
+  		 border:3px solid grey;
+  		 width:200px;
+  		 height:200px;
+  		 cursor:move;
+  		}
+  		
+  		.container{
+  			padding:0px;
+  			display:block;
+  		}
+  	</style>
+</head>
+<body>
+		<div class="post-icon">
+				<input type=file id="image-upload"/>
+				<label for="image-upload">
+					<img height=30px width=30px src="/views/images/uploadImage.png"/>
+					<button onclick="loadFileAsText()" style="display:none;"></button>
+					</label>
+		</div>
+	<div class="container">
+		<div class="cropper" id="cropper">
+		</div>
+		
+		</div>
+</body>
+</html>
