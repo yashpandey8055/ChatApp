@@ -16,17 +16,25 @@
   	
   	<script src="/views/js/cropper.js"></script>
   	<style>
+  	body{
+  		background:white;
+  	}
   		.cropper{
   		position:absolute;
   		top:0px; 
   		left:0px;
   		 background:transparent;
-  		 border:3px solid grey;
+  		 border:1px solid #DCDCDC;
   		 width:200px;
   		 height:200px;
   		 cursor:move;
   		}
-  		
+  		.cropper>ul>li{
+  			height:20px;
+  			width:20px;
+  			position:absolute;
+  			margin: -5px;
+  		}
   		.container{
   			padding:0px;
   			display:block;
@@ -34,17 +42,28 @@
   	</style>
 </head>
 <body>
-		<div class="post-icon">
-				<input type=file id="image-upload"/>
-				<label for="image-upload">
-					<img height=30px width=30px src="/views/images/uploadImage.png"/>
-					<button onclick="loadFileAsText()" style="display:none;"></button>
-					</label>
-		</div>
+	<div class="post-icon">
+			<input type=file id="image-upload"/>
+			<label for="image-upload">
+				<img height=30px width=30px src="/views/images/uploadImage.png"/>
+				<button onclick="loadFileAsText()" style="display:none;"></button>
+			</label>
+	</div>
+	<button onclick="crop()">Crop</button>
+	<canvas id="myCanvas" width="240" height="297" style="border:1px solid #d3d3d3;">
+	Your browser does not support the HTML5 canvas tag.
+	</canvas>
 	<div class="container">
 		<div class="cropper" id="cropper">
+		<hr width="1" size="500">
+		<hr width="1" size="500">
+			<ul>
+				<li style="top:0;left:0;border-left:3px solid #DCDCDC;border-top:3px solid #DCDCDC;"></li>
+				<li style="top:0;right:0;border-right:3px solid #DCDCDC;border-top:3px solid #DCDCDC;"></li>
+				<li style="bottom:0;left:0;border-left:3px solid #DCDCDC;border-bottom:3px solid #DCDCDC;"></li>
+				<li style="bottom:0;right:0;border-right:3px solid #DCDCDC;border-bottom:3px solid #DCDCDC;"></li>
+			</ul>
 		</div>
-		
-		</div>
+	</div>
 </body>
 </html>

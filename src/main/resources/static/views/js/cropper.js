@@ -23,6 +23,35 @@ function resize(event){
 	mouseY = event.clientY;
 	mouseX = event.clientX;
 }
+
+function crop(){
+	var cropper = document.getElementById("cropper")
+	var cropImage = document.getElementById("crop-image")
+	var canvas = document.getElementById('myCanvas');
+
+	var sourceY =cropper.offsetTop;
+	var sourceX = cropper.offsetLeft;
+	var sourceHeight = cropper.offsetHeight;
+	var sourceWidth =  cropper.offsetWidth;
+	
+	var destY =cropImage.offsetTop;
+	var destX = cropImage.offsetLeft;
+	var destHeight = cropper.offsetHeight;
+	var destWidth = cropper.offsetWidth;
+	var context = canvas.getContext('2d');
+    context.drawImage(cropImage, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+    
+    var srcUrl = canvas[0].toDataUrl("image/png");
+     $("#crop-image").attr({"src":srcUrl})
+    console.log(croppedImage)
+    
+	console.log("Cropper top:"+cropper.offsetTop)
+	console.log("Cropper left:"+cropper.offsetLeft)
+	console.log("Image top:"+cropImage.offsetTop)
+	console.log("Image left:"+cropImage.offsetTop)
+	
+}
+
 $(function(){
 	var cropper = document.getElementById("cropper");
 	cropper.addEventListener('mousemove',function(e){
@@ -55,6 +84,4 @@ $(function(){
 		}
 		
 	})
-	
-	
 })

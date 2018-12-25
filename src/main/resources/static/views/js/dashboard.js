@@ -76,7 +76,7 @@ $(function () {
 		var reader = new FileReader();
 
 		reader.onloadend = function(){
-			$(".container").append("<img src='"+reader.result+"'>");
+			$(".container").append("<img src='"+reader.result+"' id='crop-image'>");
 		};
 		
 		reader.readAsDataURL(file)
