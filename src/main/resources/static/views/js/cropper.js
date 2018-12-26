@@ -1,13 +1,14 @@
 var mouseX =0, mouseY = 0;
+var file = null;
 function drag(event){
-	mouseX = event.clientX-mouseX;
-	mouseY = event.clientY-mouseY;
-
-	cropper.style.top = (cropper.offsetTop + mouseY) + "px";
-	cropper.style.left = (cropper.offsetLeft + mouseX) + "px";
-	mouseX =event.clientX;
-	mouseY = event.clientY;
-
+		mouseX = event.clientX-mouseX;
+		mouseY = event.clientY-mouseY;
+		if(cropper.offsetTop>=0&&cropper.offsetTop<=container.offsetHeight-cropper.offsetHeight){
+		cropper.style.top = (cropper.offsetTop + mouseY) + "px";
+		cropper.style.left = (cropper.offsetLeft + mouseX) + "px";
+		}
+		mouseX =event.clientX;
+		mouseY = event.clientY;
 }
 function resize(event){
 	var resizefactor;
@@ -27,23 +28,24 @@ function resize(event){
 function crop(){
 	var cropper = document.getElementById("cropper")
 	var cropImage = document.getElementById("crop-image")
-	var canvas = document.getElementById('myCanvas');
+	var canvas = document.createElement('canvas');
 
 	var sourceY =cropper.offsetTop;
 	var sourceX = cropper.offsetLeft;
 	var sourceHeight = cropper.offsetHeight;
 	var sourceWidth =  cropper.offsetWidth;
-	
-	var destY =cropImage.offsetTop;
-	var destX = cropImage.offsetLeft;
+	canvas.offsetHeight = cropper.offsetHeight;
+	canvas.offsetWidth = cropper.offsetWidth;
+	var destY =cropper.offsetTop;
+	var destX = cropper.offsetLeft;
 	var destHeight = cropper.offsetHeight;
 	var destWidth = cropper.offsetWidth;
 	var context = canvas.getContext('2d');
     context.drawImage(cropImage, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
-    
-    var srcUrl = canvas[0].toDataUrl("image/png");
+   
+    var srcUrl = canvas.toDataURL();
      $("#crop-image").attr({"src":srcUrl})
-    console.log(croppedImage)
+      $("#crop-image").css({"border-radius":"50%"})
     
 	console.log("Cropper top:"+cropper.offsetTop)
 	console.log("Cropper left:"+cropper.offsetLeft)
@@ -51,9 +53,36 @@ function crop(){
 	console.log("Image left:"+cropImage.offsetTop)
 	
 }
-
+function upload(){
+	var formData = new FormData();
+	formData.append("file",file);
+	formData.append("startX",cropper.offsetLeft);
+	formData.append("startY",cropper.offsetTop)
+	formData.append("cropHeight",cropper.offsetHeight)
+	formData.append("cropWidth",cropper.offsetWidth)
+	formData.append("fileName",$("#fileName").val())
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "/public/uploadProfilePic");
+	xhr.send(formData);
+}
 $(function(){
+	//Upload Image
+	$(document).on('change', '#image-upload', function(e) {
+		file = e.target.files[0];
+		var reader = new FileReader();
+
+		reader.onloadend = function(){
+			$(".container").append("<img src='"+reader.result+"' id='crop-image'>");
+		};
+		
+		reader.readAsDataURL(file)
+	});
+	
 	var cropper = document.getElementById("cropper");
+	
+	var container = document.getElementById("container");
+	cropper.style.top = (0) + "px";
+	cropper.style.left = (0) + "px";
 	cropper.addEventListener('mousemove',function(e){
 		if(event.offsetY>cropper.offsetHeight-30&&event.offsetX>cropper.offsetWidth-30){
 			$(".cropper").css({"cursor":"crosshair"})
@@ -82,6 +111,5 @@ $(function(){
 					cropper.removeEventListener('mousemove',drag)
 				})
 		}
-		
 	})
 })

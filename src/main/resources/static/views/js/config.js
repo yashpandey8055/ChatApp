@@ -66,6 +66,8 @@ function HttpRequest(){
 		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xmlHttp.send(JSON.stringify(request));
 	}
+	
+	
 	return obj;
 }
 function follow(){

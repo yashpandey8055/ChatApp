@@ -18,42 +18,40 @@
   	<style>
   	body{
   		background:white;
+  		padding:100px;
   	}
   		.cropper{
   		position:absolute;
   		top:0px; 
   		left:0px;
   		 background:transparent;
-  		 border:1px solid #DCDCDC;
-  		 width:200px;
-  		 height:200px;
+  		 width:100px;
+  		 height:100px;
   		 cursor:move;
   		}
   		.cropper>ul>li{
   			height:20px;
   			width:20px;
   			position:absolute;
-  			margin: -5px;
   		}
   		.container{
-  			padding:0px;
+  		  	margin-right: 0px;
+   			margin-left: 0px;
+  			padding:2px;
+  			min-height:200px;
+  			border:1px solid black;
   			display:block;
+  			opacity:0.5;
+  		}
+  		.horizontal{
+  		position:absolute;
+  		top:50%;
+  		left:50%;
   		}
   	</style>
 </head>
 <body>
-	<div class="post-icon">
-			<input type=file id="image-upload"/>
-			<label for="image-upload">
-				<img height=30px width=30px src="/views/images/uploadImage.png"/>
-				<button onclick="loadFileAsText()" style="display:none;"></button>
-			</label>
-	</div>
-	<button onclick="crop()">Crop</button>
-	<canvas id="myCanvas" width="240" height="297" style="border:1px solid #d3d3d3;">
-	Your browser does not support the HTML5 canvas tag.
-	</canvas>
-	<div class="container">
+	<div class="container" id="container">
 		<div class="cropper" id="cropper">
 		<hr width="1" size="500">
 		<hr width="1" size="500">
@@ -64,6 +62,18 @@
 				<li style="bottom:0;right:0;border-right:3px solid #DCDCDC;border-bottom:3px solid #DCDCDC;"></li>
 			</ul>
 		</div>
+	</div>
+	<div class="horizontal">
+		<div class="post-icon">
+				<input type=file id="image-upload"/>
+				<label for="image-upload">
+					<img height=30px width=30px src="/views/images/uploadImage.png"/>
+					<button onclick="loadFileAsText()" style="display:none;"></button>
+				</label>
+		</div>
+		<button onclick="crop()">Crop</button>
+		<button onclick="upload()">Upload</button>
+		<input type="text" placeholder="fileName" id='fileName'/>
 	</div>
 </body>
 </html>

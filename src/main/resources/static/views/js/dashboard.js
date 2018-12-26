@@ -70,17 +70,6 @@ function postComment(postId,comment,userName){
 }
 
 $(function () {
-	//Upload Image
-	$(document).on('change', '#image-upload', function(e) {
-		var file = e.target.files[0];
-		var reader = new FileReader();
-
-		reader.onloadend = function(){
-			$(".container").append("<img src='"+reader.result+"' id='crop-image'>");
-		};
-		
-		reader.readAsDataURL(file)
-	});
 	
 	//Enter Comment
 	//Key 13 is enter key
