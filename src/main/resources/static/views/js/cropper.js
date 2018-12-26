@@ -3,10 +3,24 @@ var file = null;
 function drag(event){
 		mouseX = event.clientX-mouseX;
 		mouseY = event.clientY-mouseY;
+		var topValue;
+		var leftValue;
 		if(cropper.offsetTop>=0&&cropper.offsetTop<=container.offsetHeight-cropper.offsetHeight){
-		cropper.style.top = (cropper.offsetTop + mouseY) + "px";
-		cropper.style.left = (cropper.offsetLeft + mouseX) + "px";
+		topValue =  (cropper.offsetTop + mouseY) + "px";
+		}else if(cropper.offsetTop<0){
+			topValue = (0) + "px";
+		}else if(cropper.offsetTop>container.offsetHeight-cropper.offsetHeight){
+			topValue = container.offsetHeight-cropper.offsetHeight + "px";
 		}
+		if(cropper.offsetLeft>=0&&cropper.offsetLeft<=container.offsetWidth-cropper.offsetWidth){
+			leftValue = (cropper.offsetLeft + mouseX) + "px";
+			}else if(cropper.offsetLeft<0){
+				leftValue = (0) + "px";
+			}else if(cropper.offsetLeft>container.offsetWidth-cropper.offsetWidth){
+				leftValue = container.offsetWidth-cropper.offsetWidth + "px";
+		}
+		cropper.style.top = topValue;
+		cropper.style.left = leftValue;
 		mouseX =event.clientX;
 		mouseY = event.clientY;
 }
@@ -14,13 +28,28 @@ function resize(event){
 	var resizefactor;
 	mouseY = event.clientY-mouseY;
 	mouseX = event.clientX-mouseX;
+	var cropperHeight,cropperWidth;
 	if(mouseY>0&&mouseX>0){
 		resizefactor = 1.2;
 	}else{
 		resizefactor = 0.8;
 	}
-	cropper.style.height = (cropper.offsetHeight + resizefactor*mouseY) + "px";
-	cropper.style.width = (cropper.offsetHeight + resizefactor*mouseX) + "px";
+	if(cropper.offsetHeight>=0&&cropper.offsetHeight<=container.offsetHeight){
+		cropperHeight =   (cropper.offsetHeight + resizefactor*mouseY);
+		}else if(cropper.offsetTop<0){
+			cropperHeight = (0);
+		}else if(cropper.offsetTop>container.offsetHeight-cropper.offsetHeight){
+			cropperHeight = container.offsetHeight;
+		}
+		if(cropper.offsetWidth>=0&&cropper.offsetWidth<=container.offsetWidth){
+			cropperWidth = (cropper.offsetWidth + resizefactor*mouseX);
+			}else if(cropper.offsetWidth<0){
+				cropperWidth = (0);
+			}else if(cropper.offsetLeft>container.offsetWidth-cropper.offsetWidth){
+				cropperWidth = container.offsetWidth;
+		}
+	cropper.style.height = cropperHeight + "px";
+	cropper.style.width = cropperWidth + "px";
 	mouseY = event.clientY;
 	mouseX = event.clientX;
 }
@@ -97,7 +126,9 @@ $(function(){
 		
 		if(event.offsetY>cropper.offsetHeight-30&&event.offsetX>cropper.offsetWidth-30){
 			$(".cropper").css({"cursor":"crosshair"})
+			
 			cropper.addEventListener('mousemove',resize);
+			
 			cropper.addEventListener('mouseup',function(e){
 				$(".cropper").css({"cursor":"contex-menu"})
 					$(".cropper").css({"cursor":"context-menu"})
