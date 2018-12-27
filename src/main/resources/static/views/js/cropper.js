@@ -1,4 +1,5 @@
 var mouseX =0, mouseY = 0;
+var container,cropper;
 var file = null;
 function drag(event){
 		mouseX = event.clientX-mouseX;
@@ -30,26 +31,18 @@ function resize(event){
 	mouseX = event.clientX-mouseX;
 	var cropperHeight,cropperWidth;
 	if(mouseY>0&&mouseX>0){
-		resizefactor = 1.2;
+		resizefactor = 2;
 	}else{
-		resizefactor = 0.8;
+		resizefactor = 1;
 	}
-	if(cropper.offsetHeight>=0&&cropper.offsetHeight<=container.offsetHeight){
-		cropperHeight =   (cropper.offsetHeight + resizefactor*mouseY);
-		}else if(cropper.offsetTop<0){
-			cropperHeight = (0);
-		}else if(cropper.offsetTop>container.offsetHeight-cropper.offsetHeight){
-			cropperHeight = container.offsetHeight;
-		}
-		if(cropper.offsetWidth>=0&&cropper.offsetWidth<=container.offsetWidth){
-			cropperWidth = (cropper.offsetWidth + resizefactor*mouseX);
-			}else if(cropper.offsetWidth<0){
-				cropperWidth = (0);
-			}else if(cropper.offsetLeft>container.offsetWidth-cropper.offsetWidth){
-				cropperWidth = container.offsetWidth;
-		}
-	cropper.style.height = cropperHeight + "px";
-	cropper.style.width = cropperWidth + "px";
+	
+	cropperHeight = (cropper.offsetHeight+cropper.offsetTop)<=container.offsetHeight?(cropper.offsetHeight + resizefactor*mouseY)
+			:container.offsetHeight-cropper.offsetTop;
+	cropperWidth = (cropper.offsetWidth+cropper.offsetLeft)<=container.offsetWidth?(cropper.offsetWidth + resizefactor*mouseX)
+			:container.offsetWidth-cropper.offsetLeft;
+	var resize = cropperHeight>cropperWidth?cropperWidth:cropperHeight;
+	cropper.style.height = resize + "px";
+	cropper.style.width = resize + "px";
 	mouseY = event.clientY;
 	mouseX = event.clientX;
 }
@@ -76,44 +69,16 @@ function crop(){
      $("#crop-image").attr({"src":srcUrl})
       $("#crop-image").css({"border-radius":"50%"})
     
-	console.log("Cropper top:"+cropper.offsetTop)
-	console.log("Cropper left:"+cropper.offsetLeft)
-	console.log("Image top:"+cropImage.offsetTop)
-	console.log("Image left:"+cropImage.offsetTop)
 	
 }
-function upload(){
-	var formData = new FormData();
-	formData.append("file",file);
-	formData.append("startX",cropper.offsetLeft);
-	formData.append("startY",cropper.offsetTop)
-	formData.append("cropHeight",cropper.offsetHeight)
-	formData.append("cropWidth",cropper.offsetWidth)
-	formData.append("fileName",$("#fileName").val())
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "/public/uploadProfilePic");
-	xhr.send(formData);
-}
-$(function(){
-	//Upload Image
-	$(document).on('change', '#image-upload', function(e) {
-		file = e.target.files[0];
-		var reader = new FileReader();
+function load(){
+	cropper = document.getElementById("cropper");
+	container = document.getElementById("cropper-container");
+	cropper.style.top = 0+ "px";
+	cropper.style.left = 0 + "px";
 
-		reader.onloadend = function(){
-			$(".container").append("<img src='"+reader.result+"' id='crop-image'>");
-		};
-		
-		reader.readAsDataURL(file)
-	});
-	
-	var cropper = document.getElementById("cropper");
-	
-	var container = document.getElementById("container");
-	cropper.style.top = (0) + "px";
-	cropper.style.left = (0) + "px";
 	cropper.addEventListener('mousemove',function(e){
-		if(event.offsetY>cropper.offsetHeight-30&&event.offsetX>cropper.offsetWidth-30){
+		if(event.offsetY<20&&event.offsetX<20){
 			$(".cropper").css({"cursor":"crosshair"})
 		}else{
 			$(".cropper").css({"cursor":"move"})
@@ -123,8 +88,7 @@ $(function(){
 		$(".cropper").css({"cursor":"move"})
 		mouseX = event.clientX;
 		mouseY = event.clientY;
-		
-		if(event.offsetY>cropper.offsetHeight-30&&event.offsetX>cropper.offsetWidth-30){
+		if(event.offsetY<20&&event.offsetX<20){
 			$(".cropper").css({"cursor":"crosshair"})
 			
 			cropper.addEventListener('mousemove',resize);
@@ -142,5 +106,9 @@ $(function(){
 					cropper.removeEventListener('mousemove',drag)
 				})
 		}
+		$(document).mouseup(function(e){
+			cropper.removeEventListener('mousemove',drag)
+			cropper.removeEventListener('mousemove',resize)
+		})
 	})
-})
+}

@@ -8,21 +8,16 @@
     <script src="../webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/views/js/config.js"></script>
     <script src="/views/js/dashboard.js"></script>
+    <script src="/views/js/cropper.js"></script>
     <link href="/views/css/chatpage.css" rel="stylesheet"></link>
     <link href="/views/css/nav-bar.css" rel="stylesheet"></link>
     <link href="/views/css/dashboard.css" rel="stylesheet"></link>
+    <link href="/views/css/cropper.css" rel="stylesheet"></link>
   	<meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
 
 
-<body>
-	<div class="pop-up-box split vertical-align">
-		<input type='text' placeholder='write something'  class='chat-text-box'/><hr>
-		<div><img src='/views/images/anonymous.png'>
-			<div></div>
-		</div>
-		<hr><button type='button' class='btn simple-btn post-icon'>Upload</button>
-	</div>
+<body>s
 	<nav class="navbar-nav">
 	<div class="logo">Ketu</div>
 	<div class="navbar-element">
@@ -67,7 +62,7 @@
 								<input type=file id="image-upload"/>
 								<label for="image-upload">
 									<img height=30px width=30px src="/views/images/uploadImage.png"/>
-									<button onclick="loadFileAsText()" style="display:none;"></button>
+									<button  style="display:none;"></button>
 								</label>
 								
 							</div>
@@ -78,8 +73,6 @@
 						</div>
 					</div>
 				</div>	
-		
-			
 		</div>
 		</div>
 </body>

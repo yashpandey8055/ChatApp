@@ -33,6 +33,7 @@
   			height:20px;
   			width:20px;
   			position:absolute;
+  			cursor:crosshair;
   		}
   		.container{
   		  	margin-right: 0px;
@@ -48,18 +49,42 @@
   		top:50%;
   		left:50%;
   		}
+  		.top-left-resizer{
+	  		top:0;
+	  		left:0;
+	  		border-left:3px solid #DCDCDC;
+	  		border-top:3px solid #DCDCDC;
+  		}
+  		.top-right-resizer{
+  			top:0;
+  			right:0;
+  			border-right:3px solid #DCDCDC;
+  			border-top:3px solid #DCDCDC;
+  		}
+  		.bottom-left-resizer{
+	  		bottom:0;
+	  		left:0;
+	  		border-left:3px solid #DCDCDC;
+	  		border-bottom:3px solid #DCDCDC;
+  		}
+  		.bottom-right-resizer{
+  			bottom:0;
+  			right:0;
+  			border-right:3px solid #DCDCDC;
+  			border-bottom:3px solid #DCDCDC;
+  		}
   	</style>
 </head>
 <body>
-	<div class="container" id="container">
+	<div class="cropper-container" id="container">
 		<div class="cropper" id="cropper">
 		<hr width="1" size="500">
 		<hr width="1" size="500">
 			<ul>
-				<li style="top:0;left:0;border-left:3px solid #DCDCDC;border-top:3px solid #DCDCDC;"></li>
-				<li style="top:0;right:0;border-right:3px solid #DCDCDC;border-top:3px solid #DCDCDC;"></li>
-				<li style="bottom:0;left:0;border-left:3px solid #DCDCDC;border-bottom:3px solid #DCDCDC;"></li>
-				<li style="bottom:0;right:0;border-right:3px solid #DCDCDC;border-bottom:3px solid #DCDCDC;"></li>
+				<li class="top-left-resizer"></li>
+				<li class="top-right-resizer"></li>
+				<li class="bottom-left-resizer"></li>
+				<li class="bottom-right-resizer"></li>
 			</ul>
 		</div>
 	</div>

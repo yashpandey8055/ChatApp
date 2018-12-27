@@ -16,6 +16,7 @@ body{
 	left:10%;
 }
 .center{
+	border-radius:3px;
 	height:auto;
 	left:20%;
 	right:15%;
@@ -170,13 +171,13 @@ body{
 
 .pop-up-box{
 	padding:30px;
-	position:fixed;
 	height:auto;
 	width:auto;
 	background:white;
 	border-radius:5px;
 	margin:auto;
 	z-index: 2;
+	text-align: center;
 	border:1px solid #dcdcdc;
 }
 .pop-up-box>input{

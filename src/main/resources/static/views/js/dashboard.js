@@ -39,7 +39,42 @@ function post(){
 		"</div>")
 	})
 }
-
+function previewAndUpload(result){
+	$("body").append("<div class='pop-up-box split vertical-align'>"+
+	"<div align=right><button type='button' id='close_button' class='close' onclick='close_this()'><span aria-hidden='true'>&times;</span></button></div>"+
+	"<input type='text' placeholder='write something'  class='chat-text-box'/><hr>"+
+	"<div class='cropper-container' id='cropper-container'>"+
+		"<img src='"+result+"'/>"+
+		"<div class='cropper' id='cropper'>"+
+			"<ul>"+
+				"<li class='top-left-resizer'></li>"+
+				"<li class='top-right-resizer'></li>"+
+				"<li class='bottom-left-resizer'></li>"+
+				"<li class='bottom-right-resizer'></li>"+
+			"</ul>"+
+		"</div>"+
+	"</div>"+
+	"<hr>"+
+	"<button type='button' class='btn purple-button full-width-btn' onclick='uploadFile()'>Upload</button>"+
+"</div>")
+}
+function close_this(){
+	$('.pop-up-box').remove();
+	$('#image-upload').val("");
+	console.log("close clicked")
+}
+function uploadFile(){
+	var formData = new FormData();
+	formData.append("file",file);
+	formData.append("startX",cropper.offsetLeft);
+	formData.append("startY",cropper.offsetTop)
+	formData.append("cropHeight",cropper.offsetHeight)
+	formData.append("cropWidth",cropper.offsetWidth)
+	formData.append("fileName",$("#fileName").val())
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "/public/uploadProfilePic");
+	xhr.send(formData);
+}
 function postComment(postId,comment,userName){
 	 var commentRequest = {
 			'comment':comment,
@@ -70,6 +105,19 @@ function postComment(postId,comment,userName){
 }
 
 $(function () {
+
+	//Upload Image
+	$(document).on('change', '#image-upload', function(e) {
+		var file = e.target.files[0];
+		var reader = new FileReader();
+
+		reader.onloadend = function(){
+			previewAndUpload(reader.result)
+			load();
+		};
+		
+		reader.readAsDataURL(file)
+	});
 	
 	//Enter Comment
 	//Key 13 is enter key
