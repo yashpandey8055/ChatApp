@@ -1,0 +1,14 @@
+.notification-bar{
+	position:fixed;
+	display: inline-block;
+	top:10%;
+	left: 50%;
+	transform: translateX(-50%);
+	margin:auto;
+	color:whitesmoke;
+	height:30px;
+	width:auto;
+	background:#4a0080;
+	z-index:10;
+	border-radius:5px;
+}

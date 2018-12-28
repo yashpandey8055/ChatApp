@@ -1,4 +1,4 @@
-
+var file;
 function post(){
 	var request = {
 			'status':$("#update-user-status").val(),
@@ -39,6 +39,17 @@ function post(){
 		"</div>")
 	})
 }
+function viewVideoandUpload(result){
+	$("body").append("<div class='pop-up-box split vertical-align'>"+
+			"<div align=right><button type='button' id='close_button' class='close' onclick='close_this()'><span aria-hidden='true'>&times;</span></button></div>"+
+			"<input type='text' placeholder='write something'  class='chat-text-box'/><hr>"+
+			"<div class='cropper-container' id='cropper-container'>"+
+			"<video controls='controls'><source src='"+result+"' type='video/mp4'></video>"+
+			"</div>"+
+			"<hr>"+
+			"<button type='button' class='btn purple-button full-width-btn' onclick='uploadVideo()'>Upload</button>"+
+		"</div>");
+}
 function previewAndUpload(result){
 	$("body").append("<div class='pop-up-box split vertical-align'>"+
 	"<div align=right><button type='button' id='close_button' class='close' onclick='close_this()'><span aria-hidden='true'>&times;</span></button></div>"+
@@ -55,7 +66,7 @@ function previewAndUpload(result){
 		"</div>"+
 	"</div>"+
 	"<hr>"+
-	"<button type='button' class='btn purple-button full-width-btn' onclick='uploadFile()'>Upload</button>"+
+	"<button type='button' class='btn purple-button full-width-btn' onclick='uploadImage()'>Upload</button>"+
 "</div>")
 }
 function close_this(){
@@ -63,16 +74,23 @@ function close_this(){
 	$('#image-upload').val("");
 	console.log("close clicked")
 }
-function uploadFile(){
+function uploadImage(){
 	var formData = new FormData();
 	formData.append("file",file);
 	formData.append("startX",cropper.offsetLeft);
 	formData.append("startY",cropper.offsetTop)
 	formData.append("cropHeight",cropper.offsetHeight)
 	formData.append("cropWidth",cropper.offsetWidth)
-	formData.append("fileName",$("#fileName").val())
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "/public/uploadProfilePic");
+	xhr.open("POST", "/public/upload/uploadImage");
+	xhr.send(formData);
+}
+
+function uploadVideo(){
+	var formData = new FormData();
+	formData.append("file",file);
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "/public/upload/uploadVideo");
 	xhr.send(formData);
 }
 function postComment(postId,comment,userName){
@@ -93,7 +111,7 @@ function postComment(postId,comment,userName){
 						"</div>"+
 					"</div>"+
 					"<div>"+
-					"<p class=''><b>"+comment_res.userName+"</b>&nbsp"+comment_res.message+"</p>"+
+					"<p class=''><b>"+response.userName+"</b>&nbsp"+response.message+"</p>"+
 					"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
 						"<img width=50% src='/views/images/heart-2.png'>"+
 					"</div>"+
@@ -108,9 +126,9 @@ $(function () {
 
 	//Upload Image
 	$(document).on('change', '#image-upload', function(e) {
-		var file = e.target.files[0];
+		file = e.target.files[0];
 		var reader = new FileReader();
-
+		console.log(file.type);
 		reader.onloadend = function(){
 			previewAndUpload(reader.result)
 			load();
@@ -118,7 +136,17 @@ $(function () {
 		
 		reader.readAsDataURL(file)
 	});
-	
+	//Upload Video
+	$(document).on('change', '#video-upload', function(e) {
+		file = e.target.files[0];
+		var reader = new FileReader();
+		console.log(file.type);
+		reader.onloadend = function(){
+			viewVideoandUpload(reader.result)
+		};
+		
+		reader.readAsDataURL(file)
+	});
 	//Enter Comment
 	//Key 13 is enter key
 	$(this).keypress(function(e){

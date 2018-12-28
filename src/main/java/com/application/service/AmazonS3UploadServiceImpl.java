@@ -1,7 +1,7 @@
 package com.application.service;
 
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,22 +14,24 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
-@Component
-public class AmazonS3UploadService {
-	private static final Logger log = LoggerFactory.getLogger(AmazonS3UploadService.class);
+@Component("s3Upload")
+public class AmazonS3UploadServiceImpl implements UploadService{
+	private static final Logger log = LoggerFactory.getLogger(AmazonS3UploadServiceImpl.class);
 	private static final String ACCESS_KEY_ID = "AKIAIB5NEGKRHZBMXLPA";
 	private static final String ACCESS_KEY_SECRET = "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";
 	private static final String ACCESS_REGION = "ap-south-1";
 	public static final String IMAGE_UPLOAD_BUCKET_NAME = "ketu-user-profile-pictures";
 	
-	public String uploadToAmazonS3Bucket(InputStream in,String fileName,String bucketname) {
+	@Override
+	public String upload(InputStream in,String fileName,String bucketname) {
 		try {
+			
 			AWSCredentials credentials = new BasicAWSCredentials(ACCESS_KEY_ID ,ACCESS_KEY_SECRET);
 			AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(ACCESS_REGION)
 	                .withCredentials(new AWSStaticCredentialsProvider(credentials))
 	                .build();
 
-			s3Client.putObject(new PutObjectRequest(bucketname,fileName, in, null ));	
+			s3Client.putObject(new PutObjectRequest(Optional.ofNullable(bucketname).orElse(IMAGE_UPLOAD_BUCKET_NAME),fileName, in, null ));	
 			return "https://s3.ap-south-1.amazonaws.com/"+bucketname+"/"+fileName;
 			}catch(Exception e) {
 				log.error("Unable to upload file "+fileName+" into the bucket "+bucketname,e.getMessage());
