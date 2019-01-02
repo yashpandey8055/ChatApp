@@ -55,19 +55,24 @@ function previewAndUpload(result){
 	"<div align=right><button type='button' id='close_button' class='close' onclick='close_this()'><span aria-hidden='true'>&times;</span></button></div>"+
 	"<input type='text' placeholder='write something' id='photo_status_text'  class='chat-text-box'/><hr>"+
 	"<div class='cropper-container' id='cropper-container'>"+
-		"<img src='"+result+"' style='max-width: 300px;max-height: 300px;'/>"+
-		"<div class='cropper' id='cropper'>"+
-			"<ul>"+
-				"<li class='top-left-resizer'></li>"+
-				"<li class='top-right-resizer'></li>"+
-				"<li class='bottom-left-resizer'></li>"+
-				"<li class='bottom-right-resizer'></li>"+
-			"</ul>"+
-		"</div>"+
+		"<img src='/views/images/loading2.gif' id='upload_image_src' style='min-width:100px;min-height:100px'/>"+
 	"</div>"+
 	"<hr>"+
-	"<button type='button' class='btn purple-button full-width-btn' onclick='uploadImage()'>Upload</button>"+
+	"<button type='button' id='crop_button' class='btn simple-button full-width-btn' onclick='_crop_enable()'>Crop</button>"+
+	"<button type='button' id='upload_button' class='btn purple-button full-width-btn' onclick='uploadImage()' disabled>Upload</button>"+
 "</div>")
+}
+
+function _crop_enable(){
+	 $(".cropper-container").append("<div class='cropper' id='cropper'>"+
+				"<ul>"+
+					"<li class='top-left-resizer'></li>"+
+					"<li class='top-right-resizer'></li>"+
+					"<li class='bottom-left-resizer'></li>"+
+					"<li class='bottom-right-resizer'></li>"+
+				"</ul>"+
+			"</div>")
+			  load();
 }
 function close_this(){
 	$('.pop-up-box').remove();
@@ -75,13 +80,16 @@ function close_this(){
 	console.log("close clicked")
 }
 function uploadImage(){
+	var img = document.getElementById("upload_image_src");
+	console.log(img.offsetHeight+" "+img.offsetWidth);
+	console.log($(""))
 	var formData = new FormData();
 	formData.append("file",file);
 	formData.append("status",$("#photo_status_text").val())
-	formData.append("startX",cropper.offsetLeft);
-	formData.append("startY",cropper.offsetTop)
-	formData.append("cropHeight",cropper.offsetHeight)
-	formData.append("cropWidth",cropper.offsetWidth)
+	formData.append("startX",cropper.offsetLeft?cropper.offsetLeft:0);
+	formData.append("startY",cropper.offsetTop?cropper.offsetTop:0)
+	formData.append("cropHeight",cropper.offsetHeight?cropper.offsetHeight:img.offsetHeight)
+	formData.append("cropWidth",cropper.offsetWidth?cropper.offsetWidth:img.offsetWidth)
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function(){
 		 if (xhr.readyState == 4 && xhr.status == 200){
@@ -142,7 +150,7 @@ function uploadImage(){
 			"</div>");
 			
 		}else if(xhr.readyState == 4 &&xhr.status !== 200){
-			 display_notification_popup("Suck My dick");
+			 display_notification_popup("Failed");
 		}
 	}
 	xhr.open("POST", "/upload/uploadImage");
@@ -201,9 +209,38 @@ $(function () {
 		file = e.target.files[0];
 		var reader = new FileReader();
 		console.log(file.type);
+		previewAndUpload();
 		reader.onloadend = function(){
-			previewAndUpload(reader.result)
-			load();
+			var _image_preview = document.getElementById('upload_image_src');
+			
+			
+			var img = document.createElement("img");
+			var canvas = document.createElement("canvas");
+			var ctx = canvas.getContext("2d");
+			img.src = reader.result;
+			var MAX_WIDTH = 800;
+			var MAX_HEIGHT = 800;
+			var height = img.height;
+			var width= img.width;
+			if (width > height) {
+				  if (width > MAX_WIDTH) {
+				    height *= MAX_WIDTH / width;
+				    width = MAX_WIDTH;
+				  }
+				} else {
+				  if (height > MAX_HEIGHT) {
+				    width *= MAX_HEIGHT / height;
+				    height = MAX_HEIGHT;
+				  }
+				}
+			ctx.drawImage(img, 0, 0,width,height);
+			var dataurl = canvas.toDataURL("image/png");
+			_image_preview.src = dataurl;
+			canvas.toBlob(function(blob) {
+				  file = blob; 
+				  $('#upload_button').prop('disabled',false);
+				});
+			
 		};
 		
 		reader.readAsDataURL(file)

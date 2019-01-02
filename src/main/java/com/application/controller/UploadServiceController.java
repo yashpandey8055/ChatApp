@@ -3,7 +3,6 @@ package com.application.controller;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import javax.imageio.ImageIO;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.application.bean.PostResponse;
-import com.application.service.AmazonS3UploadServiceImpl;
 import com.application.service.UploadService;
 import com.application.service.dao.documents.PostDocument;
 import com.application.service.dao.documents.UserDocument;
@@ -31,11 +28,10 @@ import com.application.service.dao.documents.UserDocument;
 @RequestMapping("/upload")
 public class UploadServiceController {
 	private static final Logger log = LoggerFactory.getLogger(UploadServiceController.class);
-	private static final String ERROR_MESSAGE = "Error while uploading. Please try again later";
 	private static final String MP4 = "mp4";
 	private static final String PNG = "png";
 	@Autowired
-	@Qualifier("s3Upload")
+	@Qualifier("localSystem")
 	UploadService s3UploadService;
 	
 	@Autowired
@@ -51,18 +47,17 @@ public class UploadServiceController {
 			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 			BufferedImage originalImage = ImageIO.read(multi.getInputStream());
 			BufferedImage dst =originalImage.getSubimage(0, 
-					0, cropWidth*10, 
-					cropHeight*10);	
-			File file = new File("C:\\Users\\Yash\\Desktop\\swetaji.png");
-			ImageIO.write(dst, "png", file);
-			//ImageIO.write(dst, "png", byteStream);
+					0, cropWidth, 
+					cropHeight);	
+
+			ImageIO.write(dst, "png", byteStream);
 			PostDocument document = new PostDocument();
 			document.setUserName(user.getUsername());
 			document.setIsStatus(false);
 			document.setStatus(status);
 			document.setLikes(0);
 			document.setCommentCount(0);
-			document.setPostImageUrl("ugaaagg bugaa");
+			document.setPostImageUrl(s3UploadService.upload(new ByteArrayInputStream(byteStream.toByteArray()), randomStringGenerate(PNG), null));
 			return postController.insertPost(user, document);
 		} catch (IOException e) {
 			log.error(e.getMessage());
