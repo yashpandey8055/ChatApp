@@ -6,9 +6,19 @@
 	transform: translateX(-50%);
 	margin:auto;
 	color:whitesmoke;
-	height:30px;
-	width:auto;
+	height:0;
+	width:0;
 	background:#4a0080;
 	z-index:10;
 	border-radius:5px;
+}
+.notification-content{
+	position: relative;
+	display:inline-block;
+	top: 50%;
+    left: 50%;
+ 	transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%); /* IE 9 */
+    -webkit-transform: translate(-50%, -50%); /* Chrome, Safari, Opera */
+    white-space:nowrap
 }
