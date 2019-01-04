@@ -1,4 +1,5 @@
 var file;
+
 function post(){
 	var request = {
 			'status':$("#update-user-status").val(),
@@ -96,7 +97,7 @@ function uploadImage(){
 			 var response = JSON.parse(this.responseText);
 			 display_notification_popup("uploaded Succesfully");
 			 close_this();
-			 $(".center").append("<div class='title-content user-content'>"+
+			 $(".center").append("<div class='title-content user-content' id='"+response.post.id+"'>"+
 				"<div class='post-content-header'>"+
 					"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
 						"<img height=100% id='nav-bar-profile-picture' width=100% src="+response.user.profileUrl+">"+
@@ -105,7 +106,7 @@ function uploadImage(){
 				"</div>"+
 				"<div class='post-content'>"+
 					"<div class='post-content-container horizontal'>"+
-						"<div class='post-content-box'><img alt='' id='post_1' src="+response.post.postImageUrl+" >"+
+						"<div class='post-content-box'><img alt='' src="+response.post.postImageUrl+" >"+
 						"<div class='post-content-footer'>"+
 							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
 							"<img width=100% src='/views/images/heart-2.png'>"+
@@ -120,30 +121,7 @@ function uploadImage(){
 						
 						"</div>"+
 						"<div class='comment-display-box'>"+
-								"<div class='' align='left'><div>"+
-									"<div class='post-content-header'>"+
-										"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-											"<img height=100% id='nav-bar-profile-picture' width=100% src='https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/yash.jpg'>"+
-										"</div>"+
-										"<div><h5><b>imyash8055</b></h5></div>"+
-									"</div>"+
-									"<p class=''>What has should have been all apologies asdasdas dasdasdasdasd </p></div>"+
-								"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-									"<img width=50% src='/views/images/heart-2.png'>"+
-								"</div>"+
-								"</div>"+
-								"<div class='' align='left'><div>"+
-									"<div class='post-content-header'>"+
-										"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-											"<img height=100% id='nav-bar-profile-picture' width=100% src='https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/yash.jpg'>"+
-										"</div>"+
-										"<div><h5><b>imyash8055</b></h5></div>"+
-									"</div>"+
-									"<p class=''>What has should have been all apologies asdasdas dasdasdasdasd </p></div>"+
-								"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-									"<img width=50% src='/views/images/heart-2.png'>"+
-								"</div>"+
-								"</div>"+
+								
 						"</div>"+
 					"</div>"+
 				"</div>"+
@@ -166,6 +144,35 @@ function uploadVideo(){
 		 if (xhr.readyState == 4 && xhr.status == 200){
 			 display_notification_popup("uploaded Succesfully");
 			 close_this();
+			 $(".center").append("<div class='title-content user-content' id='"+response.post.id+"'>"+
+						"<div class='post-content-header'>"+
+							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+								"<img height=100% id='nav-bar-profile-picture' width=100% src="+response.user.profileUrl+">"+
+							"</div>"+
+							"<div><h5><b>"+response.user.firstName+"</b></h5></div>"+
+						"</div>"+
+						"<div class='post-content'>"+
+							"<div class='post-content-container horizontal'>"+
+								"<div class='post-content-box'><video controls='controls'><source src='"+response.post.postImageUrl+"' type='video/mp4'></video>" +
+								"<div class='post-content-footer'>"+
+									"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+									"<img width=100% src='/views/images/heart-2.png'>"+
+								"</div>"+
+							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+								"<img width=100% src='/views/images/message-icon.png'>"+
+							"</div>"+
+							"</div>"+
+							"<div class='comment-write-box'>"+
+								"<div class='horizontal'><input type='text' placeholder='Add a comment'  class='chat-text-box comment-box'/></div>"+
+							"</div>"+
+								
+								"</div>"+
+								"<div class='comment-display-box'>"+
+										
+								"</div>"+
+							"</div>"+
+						"</div>"+
+					"</div>");
 		}else if(xhr.readyState == 4 &&xhr.status !== 200){
 			 display_notification_popup("Suck My dick");
 		}
