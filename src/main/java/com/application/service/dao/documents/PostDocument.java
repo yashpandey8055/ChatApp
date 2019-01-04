@@ -1,5 +1,6 @@
 package com.application.service.dao.documents;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,7 +14,7 @@ public class PostDocument {
 	private long commentCount; 
 	private String userName;
 	private List<String> comments;
-	private boolean isStatus;
+	private Boolean isStatus;
 	private String postImageUrl;
 	
 	public String getId() {
@@ -41,15 +42,18 @@ public class PostDocument {
 		this.commentCount = commentCount;
 	}
 	public List<String> getComments() {
+		if(null==comments) {
+			return new ArrayList<>();
+		}
 		return comments;
 	}
 	public void setComments(List<String> comments) {
 		this.comments = comments;
 	}
-	public boolean isStatus() {
+	public Boolean isIsStatus() {
 		return isStatus;
 	}
-	public void setIsStatus(boolean isStatus) {
+	public void setIsStatus(Boolean isStatus) {
 		this.isStatus = isStatus;
 	}
 	public String getPostImageUrl() {

@@ -15,8 +15,10 @@ import com.application.bean.PostResponse;
 import com.application.service.dao.CommentDao;
 import com.application.service.dao.PostDao;
 import com.application.service.dao.UsersDao;
+import com.application.service.dao.documents.CommentDocument;
 import com.application.service.dao.documents.PostDocument;
 import com.application.service.dao.documents.UserDocument;
+import com.application.utils.Utils;
 
 @RestController
 @RequestMapping("/dashboard")
@@ -41,8 +43,13 @@ public class DashboardController {
 			for(PostDocument post:list) {
 				PostResponse postResponse = new PostResponse();
 				postResponse.setUser(userDao.find(user));
-				postResponse.setComments(commentDao.find(post.getId()));
+				List<CommentDocument> comments = commentDao.find(post.getId());
+						comments.stream()
+						.forEach(x->x.setDaysAgo(Utils.calculateTimeDifference(x.getDate())));
+				postResponse.setComments(comments);
+				post.setIsStatus(true);
 				postResponse.setPost(post);
+				
 				response.add(postResponse);
 			}
 		}

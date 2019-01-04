@@ -114,7 +114,7 @@ body{
 .post-content-box>img{
 	width:100%;
 	height:100%;
-	min-height:100px;
+	min-height:300px;
 }
 .post-content-box{
 	width:100%;
@@ -133,10 +133,8 @@ body{
      	border:1px solid #d1d1e0;
 }
 .comment-display-box{
-    border-radius: 5px;
-    box-shadow: 0px 0px 3px;
     background-color: white;
-    min-height:100%;
+    max-height:400px;
     overflow:auto;
     width: 60%;
 	margin-left:5px;
@@ -182,6 +180,10 @@ body{
 }
 .pop-up-box>input{
 	width:100%;
+}
+
+.time-ago{
+	font-size: 11px;
 }
 @media screen and (max-width:600px){
 	.center{

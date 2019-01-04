@@ -27,6 +27,6 @@ public class Utils {
     		seconds = seconds/24;
     		return (int)seconds+" "+time[count]+" ago";
     	}
-    	return ((int)(seconds*timeCount[count]))+" "+time[count]+" ago";
+    	return ((int)(seconds*timeCount[count]))+""+time[count]+" ago";
     }
 }

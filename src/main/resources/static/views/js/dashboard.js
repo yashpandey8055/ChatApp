@@ -50,12 +50,12 @@ function viewVideoandUpload(result){
 			"<button type='button' class='btn purple-button full-width-btn' onclick='uploadVideo()'>Upload</button>"+
 		"</div>");
 }
-function previewAndUpload(result){
+function previewAndUpload(){
 	$("body").append("<div class='pop-up-box split vertical-align'>"+
 	"<div align=right><button type='button' id='close_button' class='close' onclick='close_this()'><span aria-hidden='true'>&times;</span></button></div>"+
 	"<input type='text' placeholder='write something' id='photo_status_text'  class='chat-text-box'/><hr>"+
-	"<div class='cropper-container' id='cropper-container'>"+
-		"<img src='/views/images/loading2.gif' id='upload_image_src' style='min-width:100px;min-height:100px'/>"+
+	"<div class='cropper-container' id='cropper-container'>"+	
+	"<img src='/views/images/loading2.gif' id='upload_image_src'/>"+
 	"</div>"+
 	"<hr>"+
 	"<button type='button' id='crop_button' class='btn simple-button full-width-btn' onclick='_crop_enable()'>Crop</button>"+
@@ -86,10 +86,10 @@ function uploadImage(){
 	var formData = new FormData();
 	formData.append("file",file);
 	formData.append("status",$("#photo_status_text").val())
-	formData.append("startX",cropper.offsetLeft?cropper.offsetLeft:0);
-	formData.append("startY",cropper.offsetTop?cropper.offsetTop:0)
-	formData.append("cropHeight",cropper.offsetHeight?cropper.offsetHeight:img.offsetHeight)
-	formData.append("cropWidth",cropper.offsetWidth?cropper.offsetWidth:img.offsetWidth)
+	formData.append("startX",cropper?cropper.offsetLeft:0);
+	formData.append("startY",cropper?cropper.offsetTop:0)
+	formData.append("cropHeight",cropper?cropper.offsetHeight:img.offsetHeight)
+	formData.append("cropWidth",cropper?cropper.offsetWidth:img.offsetWidth)
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function(){
 		 if (xhr.readyState == 4 && xhr.status == 200){
@@ -182,7 +182,8 @@ function postComment(postId,comment,userName){
 	httpRequest.post("/comment/insert",commentRequest,function(response){
 		console.log(response)
 		response = JSON.parse(response);
-		$('#'+postId).find('.post-content-container').append("<div class='status-comment-display-box'>"+
+		if(response.isStatus){
+		$('#'+postId).find('.post-content-container').prepend("<div class='status-comment-display-box'>"+
 				"<div class='' align='left'>"+
 				"<div class='post-content-header'>"+
 					"<div class='comment-header'>"+
@@ -194,11 +195,30 @@ function postComment(postId,comment,userName){
 					"<p class=''><b>"+response.userName+"</b>&nbsp"+response.message+"</p>"+
 					"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
 						"<img width=50% src='/views/images/heart-2.png'>"+
+						"<p>Just Now</p>"+
 					"</div>"+
 					"</div>"+
 				"</div>"+
 	"</div>"+
 "</div>");
+		}else{
+			$('#'+postId).find('.comment-display-box').prepend("<div align='left'>"+
+					"<div>"+
+					"<div class='post-content-header'>"+
+						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+							"<img height='100%' id='nav-bar-profile-picture' width='100%' src='"+currentUser.profileUrl+"'>"+
+						"</div>"+
+						"<div>"+
+							"<h5><b>"+response.userName+"</b></h5>"+
+						"</div>"+
+					"</div>"+
+					"<p>"+response.message+"</p>"+
+				"</div>"+
+				"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+				"<img width='50%' src='/views/images/heart-2.png'>"+
+				"</div>"+
+			"</div>");
+		}
 	});
 }
 
@@ -211,15 +231,12 @@ $(function () {
 		console.log(file.type);
 		previewAndUpload();
 		reader.onloadend = function(){
-			var _image_preview = document.getElementById('upload_image_src');
-			
-			
+			var _img_preview = document.getElementById('upload_image_src');
 			var img = document.createElement("img");
 			var canvas = document.createElement("canvas");
-			var ctx = canvas.getContext("2d");
 			img.src = reader.result;
-			var MAX_WIDTH = 800;
-			var MAX_HEIGHT = 800;
+			var MAX_WIDTH = 400;
+			var MAX_HEIGHT = 400;
 			var height = img.height;
 			var width= img.width;
 			if (width > height) {
@@ -233,9 +250,12 @@ $(function () {
 				    height = MAX_HEIGHT;
 				  }
 				}
+			canvas.width = width;
+			canvas.height = height;
+			var ctx = canvas.getContext("2d");
 			ctx.drawImage(img, 0, 0,width,height);
 			var dataurl = canvas.toDataURL("image/png");
-			_image_preview.src = dataurl;
+			_img_preview.src = dataurl;
 			canvas.toBlob(function(blob) {
 				  file = blob; 
 				  $('#upload_button').prop('disabled',false);
@@ -270,6 +290,53 @@ $(function () {
 		response = JSON.parse(response);
 		var dashboard_response = '';
 		response.some(function(resp){
+			if(resp.post.isStatus){
+				dashboard_response = dashboard_response +"<div class='title-content user-content' id='"+resp.post.id+"'>"+
+				"<div class='post-content-header'>"+
+					"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+						"<img height=100% id='nav-bar-profile-picture' width=100% src="+resp.user.profileUrl+">"+
+					"</div>"+
+					"<div><h5><b>"+resp.user.firstName+"</b></h5></div>"+
+				"</div>"+
+				"<div class='post-content'>"+
+					"<div class='post-content-container horizontal'>"+
+						"<div class='post-content-box'><img alt='' id='post_1' src="+resp.post.postImageUrl+" >"+
+						"<div class='post-content-footer'>"+
+							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+							"<img width=100% src='/views/images/heart-2.png'>"+
+						"</div>"+
+					"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+						"<img width=100% src='/views/images/message-icon.png'>"+
+					"</div>"+
+					"</div>"+
+					"<div class='comment-write-box'>"+
+						"<div class='horizontal'><input type='text' placeholder='Add a comment'  class='chat-text-box comment-box'/></div>"+
+					"</div>"+
+						
+						"</div>"+
+						"<div class='comment-display-box'>";
+					resp.comments.some(function(comment_res){
+						dashboard_response = dashboard_response +
+						"<div align='left'>"+
+							"<div>"+
+								"<div class='post-content-header'>"+
+									"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+										"<img height='100%' id='nav-bar-profile-picture' width='100%' src='"+comment_res.profileUrl+"'>"+
+									"</div>"+
+									"<div>"+
+										"<h5><b>"+comment_res.userName+"</b></h5>"+
+										"<p class='time-ago'>"+comment_res.daysAgo+"</p>"+
+									"</div>"+
+								"</div>"+
+								"<p>"+comment_res.message+"</p>"+
+							"</div>"+
+							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+							"<img width='50%' src='/views/images/heart-2.png'>"+
+							"</div>"+
+						"</div>"
+					});
+					dashboard_response = dashboard_response +	"</div></div></div></div>";
+			}else{
 			dashboard_response = dashboard_response + "<div class='title-content user-content' id='"+resp.post.id+"'>"+
 			"<div class='post-content-header'>"+
 				"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
@@ -313,8 +380,9 @@ $(function () {
 					"</div>"
 				});
 				dashboard_response = dashboard_response +"</div></div></div>"
+			}
 		});
-	$(".center").append(dashboard_response);
+		$(".center").append(dashboard_response);
 	})
 	
 });

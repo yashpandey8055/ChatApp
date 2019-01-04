@@ -1,5 +1,6 @@
 package com.application.service.dao.documents;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,6 +14,9 @@ public class CommentDocument {
 	private String message;
 	private List<String> replies;
 	private long likes;
+	private Date date;
+	private String daysAgo;
+	private Boolean isStatus;
 	private long repliesCount;
 	public String getId() {
 		return id;
@@ -61,6 +65,24 @@ public class CommentDocument {
 	}
 	public void setPostId(String postId) {
 		this.postId = postId;
+	}
+	public Boolean isIsStatus() {
+		return isStatus;
+	}
+	public void setIsStatus(Boolean isStatus) {
+		this.isStatus = isStatus;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public String getDaysAgo() {
+		return daysAgo;
+	}
+	public void setDaysAgo(String daysAgo) {
+		this.daysAgo = daysAgo;
 	}
 	
 }

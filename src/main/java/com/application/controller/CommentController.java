@@ -1,6 +1,7 @@
 package com.application.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,8 @@ public class CommentController {
 		commentDocument.setUserName(comment.getUserName());
 		commentDocument.setProfileUrl(currentUser.getProfileUrl());
 		commentDocument.setPostId(post.getId());
+		commentDocument.setIsStatus(post.isIsStatus());
+		commentDocument.setDate(new Date());
 		commentDao.insert(commentDocument);
 		post.getComments().add(commentDao.insert(commentDocument));
 		post.setComments(post.getComments());
