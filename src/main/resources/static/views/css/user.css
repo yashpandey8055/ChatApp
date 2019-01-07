@@ -68,6 +68,10 @@ body{
     animation-iteration-count: infinite;
     animation-duration: 1s;
 }
+.user-selected-profile-info{
+	margin-left:0px;
+	margin-right:0px;
+}
 .post-content-footer{
 		display:flex;
 	flex-direction:row;

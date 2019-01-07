@@ -9,7 +9,7 @@ function post(){
 			'isStatus':true,
 			'postImageUrl':null
 	}
-	
+	$("#update-user-status").val('');
 	httpRequest.post("/posts/insert",request,function(response){
 		response = JSON.parse(response);
 		$(".center").append("<div class='title-content user-content' id='"+response.post.id+"'>"+
@@ -190,7 +190,7 @@ function postComment(postId,comment,userName){
 		console.log(response)
 		response = JSON.parse(response);
 		if(response.isStatus){
-		$('#'+postId).find('.post-content-container').prepend("<div class='status-comment-display-box'>"+
+		$('#'+postId).find('.post-content-container').append("<div class='status-comment-display-box'>"+
 				"<div class='' align='left'>"+
 				"<div class='post-content-header'>"+
 					"<div class='comment-header'>"+
@@ -225,6 +225,16 @@ function postComment(postId,comment,userName){
 				"<img width='50%' src='/views/images/heart-2.png'>"+
 				"</div>"+
 			"</div>");
+		}
+	});
+}
+function comment(){
+	console.log(this);
+	$(this).keypress(function(e){
+		var key = e.which;
+		if(key==13){
+			postComment($(e.target).parents('[id]:last').attr('id'),$(e.target).val(),currentUser.userName)
+			return false;
 		}
 	});
 }
@@ -283,21 +293,22 @@ $(function () {
 		
 		reader.readAsDataURL(file)
 	});
-	//Enter Comment
-	//Key 13 is enter key
-	$(this).keypress(function(e){
+	$("#update-user-status").on('focus',function(e){
+		$(this).keypress(function(e){
 		var key = e.which;
 		if(key==13){
-			postComment($(e.target).parents('[id]:last').attr('id'),$(e.target).val(),currentUser.userName)
+			post();
 			return false;
 		}
 	});
+	})
+
 	
 	httpRequest.get("/dashboard/getPosts",null,function(response){
 		response = JSON.parse(response);
 		var dashboard_response = '';
 		response.some(function(resp){
-			if(resp.post.isStatus){
+			if(!resp.post.isStatus){
 				dashboard_response = dashboard_response +"<div class='title-content user-content' id='"+resp.post.id+"'>"+
 				"<div class='post-content-header'>"+
 					"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
@@ -317,7 +328,7 @@ $(function () {
 					"</div>"+
 					"</div>"+
 					"<div class='comment-write-box'>"+
-						"<div class='horizontal'><input type='text' placeholder='Add a comment'  class='chat-text-box comment-box'/></div>"+
+						"<div class='horizontal'><input type='text' placeholder='Add a comment' onfocus='comment()' class='chat-text-box comment-box'/></div>"+
 					"</div>"+
 						
 						"</div>"+
@@ -363,7 +374,7 @@ $(function () {
 				"</div>"+
 				"</div>"+
 				"<div class='comment-write-box'>"+
-					"<div class='horizontal'><input type='text' placeholder='Add a comment'  class='chat-text-box comment-box'/></div>"+
+					"<div class='horizontal'><input type='text' placeholder='Add a comment' onfocus='comment()' class='chat-text-box comment-box'/></div>"+
 					"<p align='left' style='margin: 15px;line-height: 0px;'>View All Comments</p>"+
 				"</div>"+
 				"</div>";
@@ -377,7 +388,8 @@ $(function () {
 							"</div>"+
 						"</div>"+
 						"<div>"+
-						"<p class=''><b>"+comment_res.userName+"</b>&nbsp"+comment_res.message+"</p>"+
+						"<p class=''><b>"+comment_res.userName+"</b>&nbsp"+comment_res.daysAgo+"</p>"+
+						"<p class=''>"+comment_res.message+"</p>"+
 						"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
 							"<img width=50% src='/views/images/heart-2.png'>"+
 						"</div>"+

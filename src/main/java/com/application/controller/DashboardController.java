@@ -47,7 +47,6 @@ public class DashboardController {
 						comments.stream()
 						.forEach(x->x.setDaysAgo(Utils.calculateTimeDifference(x.getDate())));
 				postResponse.setComments(comments);
-				post.setIsStatus(true);
 				postResponse.setPost(post);
 				
 				response.add(postResponse);

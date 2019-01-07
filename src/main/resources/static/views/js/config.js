@@ -85,8 +85,16 @@ function follow(){
 	}
 	$("#follow-user-btn").html("<img height=20px width=20px src='/views/images/loading-3.gif'>")
 }
+
 $(function(){
+	$("#profile-icon").on('click',function(){
+		window.location.href = env+"/user";
+	});
+	$("#message-icon").on('click',function(){
+		window.location.href = env+"/chat";
+	});
 	$('.display-options-box').hide();  
+	
 	$('#nav-bar-picture-icon').click(function(e) {                              
 	   $('.display-options-box').toggle();  
 	});
