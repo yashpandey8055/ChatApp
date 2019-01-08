@@ -23,7 +23,7 @@ function displayUserInformation(user){
 				if(user==currentUser){
 					displayInfo = displayInfo + "<button type='button' class='btn simple-btn full-width-btn'>Followers ("+user.followers+")</button>";
 				}else{
-					displayInfo = displayInfo +"<button type='button' class='btn purple-button full-width-btn' id='follow-user-btn' onclick='follow()'><img height=20px width=20px src='/views/images/loading-3.gif'></button>"
+					displayInfo = displayInfo +"<button type='button' class='btn purple-button full-width-btn' id='follow-user-btn' onclick='follow()'><img height=20px width=20px src='/views/images/loading.gif'></button>"
 					httpRequest.get("/users/follow/isfollowing/"+currentChattingWithUser,null,function(response){
 						if(response == 'true'){
 							$("#follow-user-btn").html("Unfollow");

@@ -21,14 +21,11 @@ function post(){
 			"</div>"+ 
 			"<div class='post-content'>"+
 			"<div class='post-content-container'>"+
-					"<div class='status-content-box'><div align='left' style='margin: 15px;'>"+response.post.status+"</div>"+
+					"<div class='status-content-box'><div align='left' style='margin: 15px;font-size:20px;'>"+response.post.status+"</div>"+
 					"<div class='post-content-footer'>"+
 						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-						"<img width=100% src='/views/images/heart-2.png'>"+
+						"<button class='like-button' onclick='like()'><img alt='like' width=80% src='/views/images/like.png'></button>"+
 					"</div>"+
-				"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-					"<img width=100% src='/views/images/message-icon.png'>"+
-				"</div>"+
 				"</div>"+
 				"<div class='comment-write-box'>"+
 					"<div class='horizontal'><input type='text' placeholder='Add a comment'  class='chat-text-box comment-box'/></div>"+
@@ -109,11 +106,8 @@ function uploadImage(){
 						"<div class='post-content-box'><img alt='' src="+response.post.postImageUrl+" >"+
 						"<div class='post-content-footer'>"+
 							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-							"<img width=100% src='/views/images/heart-2.png'>"+
+							"<img width=80% src='/views/images/like.png'>"+
 						"</div>"+
-					"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-						"<img width=100% src='/views/images/message-icon.png'>"+
-					"</div>"+
 					"</div>"+
 					"<div class='comment-write-box'>"+
 						"<div class='horizontal'><input type='text' placeholder='Add a comment'  class='chat-text-box comment-box'/></div>"+
@@ -156,11 +150,8 @@ function uploadVideo(){
 								"<div class='post-content-box'><video controls='controls'><source src='"+response.post.postImageUrl+"' type='video/mp4'></video>" +
 								"<div class='post-content-footer'>"+
 									"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-									"<img width=100% src='/views/images/heart-2.png'>"+
+									"<img width=80% src='/views/images/like.png'>"+
 								"</div>"+
-							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-								"<img width=100% src='/views/images/message-icon.png'>"+
-							"</div>"+
 							"</div>"+
 							"<div class='comment-write-box'>"+
 								"<div class='horizontal'><input type='text' placeholder='Add a comment'  class='chat-text-box comment-box'/></div>"+
@@ -174,7 +165,7 @@ function uploadVideo(){
 						"</div>"+
 					"</div>");
 		}else if(xhr.readyState == 4 &&xhr.status !== 200){
-			 display_notification_popup("Suck My dick");
+			 display_notification_popup("Cant upload");
 		}
 	}
 	xhr.open("POST", "/upload/uploadVideo");
@@ -201,7 +192,7 @@ function postComment(postId,comment,userName){
 					"<div>"+
 					"<p class=''><b>"+response.userName+"</b>&nbsp"+response.message+"</p>"+
 					"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
-						"<img width=50% src='/views/images/heart-2.png'>"+
+						"<img width=70% src='/views/images/like.png'>"+
 						"<p>Just Now</p>"+
 					"</div>"+
 					"</div>"+
@@ -222,7 +213,7 @@ function postComment(postId,comment,userName){
 					"<p>"+response.message+"</p>"+
 				"</div>"+
 				"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-				"<img width='50%' src='/views/images/heart-2.png'>"+
+				"<img width='70%' src='/views/images/like.png'>"+
 				"</div>"+
 			"</div>");
 		}
@@ -321,11 +312,8 @@ $(function () {
 						"<div class='post-content-box'><img alt='' id='post_1' src="+resp.post.postImageUrl+" >"+
 						"<div class='post-content-footer'>"+
 							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-							"<img width=100% src='/views/images/heart-2.png'>"+
+							"<button class='like-button' onclick='like()'><img alt='like' width=80% src='/views/images/like.png'></button>"+
 						"</div>"+
-					"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-						"<img width=100% src='/views/images/message-icon.png'>"+
-					"</div>"+
 					"</div>"+
 					"<div class='comment-write-box'>"+
 						"<div class='horizontal'><input type='text' placeholder='Add a comment' onfocus='comment()' class='chat-text-box comment-box'/></div>"+
@@ -348,8 +336,8 @@ $(function () {
 								"</div>"+
 								"<p>"+comment_res.message+"</p>"+
 							"</div>"+
-							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-							"<img width='50%' src='/views/images/heart-2.png'>"+
+							"<div class='navbar-element-icon like-post' id='nav-bar-picture-icon'>"+
+							"<img class='like-post' width='70%' src='/views/images/heart.png'>"+
 							"</div>"+
 						"</div>"
 					});
@@ -364,14 +352,11 @@ $(function () {
 			"</div>"+ 
 			"<div class='post-content'>"+
 			"<div class='post-content-container'>"+
-					"<div class='status-content-box'><div align='left' style='margin: 15px;'>"+resp.post.status+"</div>"+
+					"<div class='status-content-box'><div align='left' style='margin: 15px;font-size:20px;'>"+resp.post.status+"</div>"+
 					"<div class='post-content-footer'>"+
 						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-						"<img width=100% src='/views/images/heart-2.png'>"+
+						"<button class='like-button' onclick='like()'><img  class='like-post' alt='like' width=80% src='/views/images/like.png'></button>"+
 					"</div>"+
-				"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-					"<img width=100% src='/views/images/message-icon.png'>"+
-				"</div>"+
 				"</div>"+
 				"<div class='comment-write-box'>"+
 					"<div class='horizontal'><input type='text' placeholder='Add a comment' onfocus='comment()' class='chat-text-box comment-box'/></div>"+
@@ -391,7 +376,7 @@ $(function () {
 						"<p class=''><b>"+comment_res.userName+"</b>&nbsp"+comment_res.daysAgo+"</p>"+
 						"<p class=''>"+comment_res.message+"</p>"+
 						"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
-							"<img width=50% src='/views/images/heart-2.png'>"+
+							"<img width=70% src='/views/images/heart.png'>"+
 						"</div>"+
 						"</div>"+
 					"</div>"+

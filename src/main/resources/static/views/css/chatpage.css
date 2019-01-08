@@ -477,6 +477,14 @@ h5{
 	z-index: 2;
 	transform: rotateY(0deg);
 }
+.like-button{
+	display: block;
+    margin: 0px;
+    padding: 0px;
+    background: white;
+    border: 0px;
+}
+.like-button:focus { outline: none; }
 
 @media screen and (max-width:600px){
 	.center{

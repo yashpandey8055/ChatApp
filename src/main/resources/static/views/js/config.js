@@ -83,22 +83,33 @@ function follow(){
 			$("#follow-user-btn").html("Follow");
 		});
 	}
-	$("#follow-user-btn").html("<img height=20px width=20px src='/views/images/loading-3.gif'>")
+	$("#follow-user-btn").html("<img height=20px width=20px src='/views/images/loading.gif'>")
+}
+
+function like(){
+	var params = new Map();
+	params.set("postId", $(event.target).parents('[id]:last').attr('id'));
+	if(event.target.alt== 'like'){
+		event.target.src= '/views/images/liked.png';
+		event.target.alt= 'unlike';
+		httpRequest.get("/posts/like",params,function(response){
+			console.log(response);
+		});
+	}else{
+		event.target.src= '/views/images/like.png';
+		event.target.alt= 'like';
+		httpRequest.get("/posts/unlike",params,function(response){
+			console.log(response);
+		});
+	}
 }
 
 $(function(){
-	$("#profile-icon").on('click',function(){
-		window.location.href = env+"/user";
-	});
-	$("#message-icon").on('click',function(){
-		window.location.href = env+"/chat";
-	});
-	$('.display-options-box').hide();  
+	$(".navbar-nav").load("/views/navbar.html");
 	
-	$('#nav-bar-picture-icon').click(function(e) {                              
-	   $('.display-options-box').toggle();  
-	});
-
+	$("#nav-bar-picture-icon").on('click',function(){
+		console.log('clicked');
+	})
 	if(token!=""){
 		httpRequest.get("/users/current",null,function(response){
 			currentUser = JSON.parse(response);

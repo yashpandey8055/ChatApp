@@ -99,11 +99,8 @@ $(function () {
 						"<div class='post-content-box'><img alt='' id='post_1' src="+resp.post.postImageUrl+" >"+
 						"<div class='post-content-footer'>"+
 							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-							"<img width=100% src='/views/images/heart-2.png'>"+
+							"<img class='like-post' width=80% src='/views/images/like.png'>"+
 						"</div>"+
-					"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-						"<img width=100% src='/views/images/message-icon.png'>"+
-					"</div>"+
 					"</div>"+
 					"<div class='comment-write-box'>"+
 						"<div class='horizontal'><input type='text' placeholder='Add a comment' onfocus='comment()' class='chat-text-box comment-box'/></div>"+
@@ -127,7 +124,7 @@ $(function () {
 								"<p>"+comment_res.message+"</p>"+
 							"</div>"+
 							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-							"<img width='50%' src='/views/images/heart-2.png'>"+
+							"<img width='70%' src='/views/images/heart.png'>"+
 							"</div>"+
 						"</div>"
 					});
@@ -142,14 +139,11 @@ $(function () {
 			"</div>"+ 
 			"<div class='post-content'>"+
 			"<div class='post-content-container'>"+
-					"<div class='status-content-box'><div align='left' style='margin: 15px;'>"+resp.post.status+"</div>"+
+					"<div class='status-content-box'><div align='left' style='margin: 15px;font-size:20px;'>"+resp.post.status+"</div>"+
 					"<div class='post-content-footer'>"+
-						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-						"<img width=100% src='/views/images/heart-2.png'>"+
+						"<div class='like-post navbar-element-icon' id='nav-bar-picture-icon'>"+
+						"<img class='like-post' width=80% src='/views/images/like.png'>"+
 					"</div>"+
-				"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-					"<img width=100% src='/views/images/message-icon.png'>"+
-				"</div>"+
 				"</div>"+
 				"<div class='comment-write-box'>"+
 					"<div class='horizontal'><input type='text' placeholder='Add a comment' onfocus='comment()' class='chat-text-box comment-box'/></div>"+
@@ -169,7 +163,7 @@ $(function () {
 						"<p class=''><b>"+comment_res.userName+"</b>&nbsp"+comment_res.daysAgo+"</p>"+
 						"<p class=''>"+comment_res.message+"</p>"+
 						"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
-							"<img width=50% src='/views/images/heart-2.png'>"+
+							"<img width=70% src='/views/images/heart.png'>"+
 						"</div>"+
 						"</div>"+
 					"</div>"+

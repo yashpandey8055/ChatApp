@@ -14,6 +14,14 @@ public class PostResponse {
 	
 	List<CommentDocument> comments;
 	
+	private boolean liked;
+	
+	public boolean isLiked() {
+		return liked;
+	}
+	public void setLiked(boolean liked) {
+		this.liked = liked;
+	}
 	public List<CommentDocument> getComments() {
 		return comments;
 	}
