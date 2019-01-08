@@ -24,7 +24,7 @@ function post(){
 					"<div class='status-content-box'><div align='left' style='margin: 15px;font-size:20px;'>"+response.post.status+"</div>"+
 					"<div class='post-content-footer'>"+
 						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-						"<button class='like-button' onclick='like()'><img alt='like' width=80% src='/views/images/like.png'></button>"+
+						"<button class='like-button' onclick='like(event)'><img alt='like' width=80% src='/views/images/like.png'></button>"+
 					"</div>"+
 				"</div>"+
 				"<div class='comment-write-box'>"+
@@ -312,7 +312,7 @@ $(function () {
 						"<div class='post-content-box'><img alt='' id='post_1' src="+resp.post.postImageUrl+" >"+
 						"<div class='post-content-footer'>"+
 							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-							"<button class='like-button' onclick='like()'><img alt='like' width=80% src='/views/images/like.png'></button>"+
+							"<button class='like-button' onclick='like(event)'><img alt='like' width=80% src='/views/images/like.png'></button>"+
 						"</div>"+
 					"</div>"+
 					"<div class='comment-write-box'>"+
@@ -355,7 +355,7 @@ $(function () {
 					"<div class='status-content-box'><div align='left' style='margin: 15px;font-size:20px;'>"+resp.post.status+"</div>"+
 					"<div class='post-content-footer'>"+
 						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-						"<button class='like-button' onclick='like()'><img  class='like-post' alt='like' width=80% src='/views/images/like.png'></button>"+
+						"<button class='like-button' onclick='like(event)'><img  class='like-post' alt='like' width=80% src='/views/images/like.png'></button>"+
 					"</div>"+
 				"</div>"+
 				"<div class='comment-write-box'>"+

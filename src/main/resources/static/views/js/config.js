@@ -86,17 +86,17 @@ function follow(){
 	$("#follow-user-btn").html("<img height=20px width=20px src='/views/images/loading.gif'>")
 }
 
-function like(){
+function like(event){
 	var params = new Map();
 	params.set("postId", $(event.target).parents('[id]:last').attr('id'));
 	if(event.target.alt== 'like'){
-		event.target.src= '/views/images/liked.png';
+		event.target.firstElementChild.outerHTML = "<img alt='like' src='/views/images/liked.png' width=80%>"
 		event.target.alt= 'unlike';
 		httpRequest.get("/posts/like",params,function(response){
 			console.log(response);
 		});
 	}else{
-		event.target.src= '/views/images/like.png';
+		event.target.firstElementChild.outerHTML = "<img alt='unlike' src='/views/images/like.png' width=80%>"
 		event.target.alt= 'like';
 		httpRequest.get("/posts/unlike",params,function(response){
 			console.log(response);
