@@ -483,6 +483,7 @@ h5{
     padding: 0px;
     background: white;
     border: 0px;
+    background: transparent;
 }
 .like-button:focus { outline: none; }
 

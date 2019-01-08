@@ -237,8 +237,8 @@ $(function () {
 		file = e.target.files[0];
 		var reader = new FileReader();
 		console.log(file.type);
-		previewAndUpload();
 		reader.onloadend = function(){
+			previewAndUpload();
 			var _img_preview = document.getElementById('upload_image_src');
 			var img = document.createElement("img");
 			var canvas = document.createElement("canvas");
@@ -337,7 +337,7 @@ $(function () {
 								"<p>"+comment_res.message+"</p>"+
 							"</div>"+
 							"<div class='navbar-element-icon like-post' id='nav-bar-picture-icon'>"+
-							"<img class='like-post' width='70%' src='/views/images/heart.png'>"+
+							"<button class='like-button' onclick='commentlike(event)'><img alt='like' width=80% src='/views/images/heart.png'></button>"+
 							"</div>"+
 						"</div>"
 					});
@@ -376,7 +376,7 @@ $(function () {
 						"<p class=''><b>"+comment_res.userName+"</b>&nbsp"+comment_res.daysAgo+"</p>"+
 						"<p class=''>"+comment_res.message+"</p>"+
 						"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
-							"<img width=70% src='/views/images/heart.png'>"+
+						"<button class='like-button' onclick='commentlike(event)'><img alt='like' width=80% src='/views/images/heart.png'></button>"+
 						"</div>"+
 						"</div>"+
 					"</div>"+

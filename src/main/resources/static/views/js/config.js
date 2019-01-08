@@ -91,19 +91,31 @@ function like(event){
 	params.set("postId", $(event.target).parents('[id]:last').attr('id'));
 	if(event.target.alt== 'like'){
 		event.target.firstElementChild.outerHTML = "<img alt='like' src='/views/images/liked.png' width=80%>"
-		event.target.alt= 'unlike';
 		httpRequest.get("/posts/like",params,function(response){
 			console.log(response);
 		});
 	}else{
 		event.target.firstElementChild.outerHTML = "<img alt='unlike' src='/views/images/like.png' width=80%>"
-		event.target.alt= 'like';
 		httpRequest.get("/posts/unlike",params,function(response){
 			console.log(response);
 		});
 	}
 }
-
+function commentlike(event){
+	var params = new Map();
+	params.set("postId", $(event.target).parents('[id]:last').attr('id'));
+	if(event.target.firstElementChild.alt== 'like'){
+		event.target.firstElementChild.outerHTML = "<img alt='unlike' src='/views/images/heart-like.png' width=80%>"
+		httpRequest.get("/comment/unlike",params,function(response){
+			console.log(response);
+		});
+	}else{
+		event.target.firstElementChild.outerHTML = "<img alt='like' src='/views/images/heart.png' width=80%>"
+		httpRequest.get("/comment/like",params,function(response){
+			console.log(response);
+		});
+	}
+}
 $(function(){
 	$(".navbar-nav").load("/views/navbar.html");
 	
