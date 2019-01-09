@@ -8,20 +8,11 @@ import com.application.service.dao.documents.CommentDocument;
 import com.application.service.dao.documents.UserDocument;
 
 public class PostResponse {
-	PostDocument post;
+	private PostDocument post;
+	private UserDocument user;
+	private Boolean likedByUser;
+	private List<CommentDocument> comments;
 
-	UserDocument user;
-	
-	List<CommentDocument> comments;
-	
-	private boolean liked;
-	
-	public boolean isLiked() {
-		return liked;
-	}
-	public void setLiked(boolean liked) {
-		this.liked = liked;
-	}
 	public List<CommentDocument> getComments() {
 		return comments;
 	}
@@ -39,5 +30,11 @@ public class PostResponse {
 	}
 	public void setUser(UserDocument user) {
 		this.user = user;
+	}
+	public Boolean getLikedByUser() {
+		return likedByUser;
+	}
+	public void setLikedByUser(Boolean likedByUser) {
+		this.likedByUser = likedByUser;
 	}
 }

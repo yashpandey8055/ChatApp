@@ -13,11 +13,13 @@ public class CommentDocument {
 	private String profileUrl;
 	private String message;
 	private List<String> replies;
+	private boolean likedByUser;
 	private long likes;
-	private Date date;
 	private String daysAgo;
 	private Boolean isStatus;
 	private long repliesCount;
+	private Date creationDate;
+	private Date updationDate;
 	public String getId() {
 		return id;
 	}
@@ -60,6 +62,12 @@ public class CommentDocument {
 	public void setRepliesCount(long repliesCount) {
 		this.repliesCount = repliesCount;
 	}
+	public boolean isLikedByUser() {
+		return likedByUser;
+	}
+	public void setLikedByUser(boolean likedByUser) {
+		this.likedByUser = likedByUser;
+	}
 	public String getPostId() {
 		return postId;
 	}
@@ -72,17 +80,23 @@ public class CommentDocument {
 	public void setIsStatus(Boolean isStatus) {
 		this.isStatus = isStatus;
 	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
 	public String getDaysAgo() {
 		return daysAgo;
 	}
 	public void setDaysAgo(String daysAgo) {
 		this.daysAgo = daysAgo;
+	}
+	public Date getCreationDate() {
+		return creationDate;
+	}
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+	public Date getUpdationDate() {
+		return updationDate;
+	}
+	public void setUpdationDate(Date updationDate) {
+		this.updationDate = updationDate;
 	}
 	
 }

@@ -1,6 +1,6 @@
 var urlParams = new URLSearchParams(window.location.search);
 var user = urlParams.get('user');
-
+var currentChattingWithUser;
 function displayUser(user){
 	var displayInfo = "<div class='selected-user-info'>"+
 	"<div class='user-selected-profile-picture'><img id='user-selected-profile-picture' alt=''></div>"+
@@ -82,7 +82,7 @@ $(function () {
 		console.log(JSON.stringify(response));
 	})
 	
-	httpRequest.get("/dashboard/getPosts",null,function(response){
+		httpRequest.get("/dashboard/getPosts",null,function(response){
 		response = JSON.parse(response);
 		var dashboard_response = '';
 		response.some(function(resp){
@@ -98,8 +98,13 @@ $(function () {
 					"<div class='post-content-container horizontal'>"+
 						"<div class='post-content-box'><img alt='' id='post_1' src="+resp.post.postImageUrl+" >"+
 						"<div class='post-content-footer'>"+
-							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-							"<img class='like-post' width=80% src='/views/images/like.png'>"+
+							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>";
+							if(resp.likedByUser){
+								dashboard_response = dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='like' width=80% src='/views/images/liked.png'></button>";
+							}else{
+								dashboard_response= dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='unlike' width=80% src='/views/images/like.png'></button>";
+							}
+							dashboard_response= dashboard_response+
 						"</div>"+
 					"</div>"+
 					"<div class='comment-write-box'>"+
@@ -123,10 +128,13 @@ $(function () {
 								"</div>"+
 								"<p>"+comment_res.message+"</p>"+
 							"</div>"+
-							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-							"<img width='70%' src='/views/images/heart.png'>"+
-							"</div>"+
-						"</div>"
+							"<div class='navbar-element-icon like-post' id='nav-bar-picture-icon'>";
+						if(comment_res.likedByUser){
+							dashboard_response = dashboard_response +"<button class='like-button' onclick='commentlike(event)'><img alt='unlike' width=50% src='/views/images/heart-like.png'></button>";
+						}else{
+							dashboard_response = dashboard_response +	"<button class='like-button' onclick='commentlike(event)'><img alt='like' width=50% src='/views/images/heart.png'></button>";
+						}
+						dashboard_response = dashboard_response +	"</div></div>";
 					});
 					dashboard_response = dashboard_response +	"</div></div></div></div>";
 			}else{
@@ -141,8 +149,14 @@ $(function () {
 			"<div class='post-content-container'>"+
 					"<div class='status-content-box'><div align='left' style='margin: 15px;font-size:20px;'>"+resp.post.status+"</div>"+
 					"<div class='post-content-footer'>"+
-						"<div class='like-post navbar-element-icon' id='nav-bar-picture-icon'>"+
-						"<img class='like-post' width=80% src='/views/images/like.png'>"+
+						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>";
+						if(resp.likedByUser){
+							dashboard_response = dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='like' width=80% src='/views/images/liked.png'></button>";
+						}else{
+							dashboard_response= dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='unlike' width=80% src='/views/images/like.png'></button>";
+						}
+						dashboard_response= dashboard_response+
+						
 					"</div>"+
 				"</div>"+
 				"<div class='comment-write-box'>"+
@@ -151,7 +165,7 @@ $(function () {
 				"</div>"+
 				"</div>";
 				resp.comments.some(function(comment_res){
-					dashboard_response = dashboard_response + "<div class='status-comment-display-box'>"+
+					dashboard_response = dashboard_response + "<div class='status-comment-display-box' id="+comment_res.id+">"+
 					"<div class='' align='left'>"+
 					"<div class='post-content-header'>"+
 						"<div class='comment-header'>"+
@@ -162,13 +176,14 @@ $(function () {
 						"<div>"+
 						"<p class=''><b>"+comment_res.userName+"</b>&nbsp"+comment_res.daysAgo+"</p>"+
 						"<p class=''>"+comment_res.message+"</p>"+
-						"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
-							"<img width=70% src='/views/images/heart.png'>"+
-						"</div>"+
-						"</div>"+
-					"</div>"+
-						"</div>"+
-					"</div>"
+						"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>";
+						if(comment_res.likedByUser){
+							dashboard_response = dashboard_response +"<button class='like-button' onclick='commentlike(event)'><img alt='unlike' width=50% src='/views/images/heart-like.png'></button>";
+						}
+						else{
+							dashboard_response = dashboard_response +"<button class='like-button' onclick='commentlike(event)'><img alt='like' width=50% src='/views/images/heart.png'></button>";
+						}
+						dashboard_response = dashboard_response +"</div></div></div></div></div>";
 				});
 				dashboard_response = dashboard_response +"</div></div></div>"
 			}

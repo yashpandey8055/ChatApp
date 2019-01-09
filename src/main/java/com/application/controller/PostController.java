@@ -1,8 +1,11 @@
 package com.application.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +24,12 @@ import com.application.service.dao.UsersDao;
 import com.application.service.dao.documents.LikeDocument;
 import com.application.service.dao.documents.PostDocument;
 import com.application.service.dao.documents.UserDocument;
+import com.mongodb.MongoException;
 
 @RestController
 @RequestMapping("/posts")
 public class PostController {
+	private static final Logger LOG = LoggerFactory.getLogger(PostController.class);
 	
 	@Autowired
 	PostDao postDao;
@@ -38,6 +43,8 @@ public class PostController {
 	@PostMapping("/insert")
 	public ResponseEntity<PostResponse> insertPost(@AuthenticationPrincipal UserDocument currentUser, @RequestBody PostDocument post){
 		post.setUserName(currentUser.getUsername());
+		post.setCreationDate(new Date());
+		post.setUpdationDate(new Date());
 		UserDocument user = userDao.find(currentUser.getUsername());
 		user.getPosts().add(postDao.insert(post));
 		user.setPosts(user.getPosts());
@@ -52,32 +59,41 @@ public class PostController {
 	@GetMapping("/like")
 	public ResponseEntity<String> likePost(@AuthenticationPrincipal UserDocument currentUser, @RequestParam String postId){
 		LikeDocument document = likesDao.getLikePost(postId);
-		if(document!=null) {
+		try{
+			if(document!=null) {
 			document.getLikedBy().add(currentUser.getUserName());
 			document.setLikedBy(document.getLikedBy());
 			document.setNetCount(document.getNetCount()+1);
 		}else {
-			List<String> likes = new ArrayList<>();
+			List<String> likes = new ArrayList<>(1);
 			likes.add(currentUser.getUsername());
 			document = new LikeDocument();
+			document.setType("post");
 			document.setLikedBy(likes);
 			document.setNetCount(1);
 			document.setPostId(postId);
 		}
 		likesDao.saveLikePost(document);
 		return new ResponseEntity<>("Success",HttpStatus.OK);
-		
+	}catch(MongoException e) {
+		LOG.error("Erro while liking comment with id "+postId+" by user "+currentUser.getUsername(),e);
+	}
+		return new ResponseEntity<>("Fail",HttpStatus.OK);
 	}
 	@GetMapping("/unlike")
 	public ResponseEntity<String> unlikePost(@AuthenticationPrincipal UserDocument currentUser, @RequestParam String postId){
 		LikeDocument document = likesDao.getLikePost(postId);
-		if(document!=null) {
-			document.getLikedBy().remove(currentUser.getUserName());
-			document.setLikedBy(document.getLikedBy());
-			document.setNetCount(document.getNetCount()-1);
-			likesDao.saveLikePost(document);
+		try{
+			if(document!=null) {
+				document.getLikedBy().remove(currentUser.getUserName());
+				document.setLikedBy(document.getLikedBy());
+				document.setNetCount(document.getNetCount()-1);
+				likesDao.saveLikePost(document);
+			}
+			return new ResponseEntity<>("Success",HttpStatus.OK);
+		}catch(MongoException e) {
+			LOG.error("Erro while unliking comment with id "+postId+" by user "+currentUser.getUsername(),e);
 		}
 		return new ResponseEntity<>("fail",HttpStatus.OK);
-		
 	}
 }

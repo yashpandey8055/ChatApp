@@ -24,6 +24,10 @@ public class LikesDao {
 		return template.findOne(query, LikeDocument.class);
 	}
 	
+	public LikeDocument getLikePostByQuery(Query query) {
+		return template.findOne(query, LikeDocument.class);
+	}
+	
 	public void saveLikePost(LikeDocument document) {
 		template.save(document);
 	}

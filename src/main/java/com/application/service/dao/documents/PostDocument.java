@@ -1,6 +1,7 @@
 package com.application.service.dao.documents;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,7 +17,8 @@ public class PostDocument {
 	private List<String> comments;
 	private Boolean isStatus;
 	private String postImageUrl;
-	
+	private Date creationDate;
+	private Date updationDate;
 	public String getId() {
 		return id;
 	}
@@ -68,5 +70,18 @@ public class PostDocument {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	public Date getCreationDate() {
+		return creationDate;
+	}
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+	public Date getUpdationDate() {
+		return updationDate;
+	}
+	public void setUpdationDate(Date updationDate) {
+		this.updationDate = updationDate;
+	}
+
 	
 }

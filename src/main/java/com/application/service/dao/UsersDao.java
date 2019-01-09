@@ -28,6 +28,11 @@ public class UsersDao {
 
 	}
 
+	public List<UserDocument> findByQuery(Query query) {
+		return template.find(query, UserDocument.class);
+
+	}
+
 	public List<UserDocument> findAll(Collection<String> userName) {
 		Query query = Query.query(Criteria.where("userName").in(userName));
 		query.fields().include("userName").include("firstName").include("lastName").include("bio").include("profileUrl");

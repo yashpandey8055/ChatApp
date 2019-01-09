@@ -18,18 +18,18 @@ public class PostDao {
 	
 	public String insert(PostDocument document) {
 		template.save(document);
-		return  document.getId();
+		return document.getId();
 	}
 	
-	
-	public PostDocument findOnes(String id) {
-		return template.findOne(Query.query(Criteria.where("_id").is(id)), PostDocument.class);
+	public PostDocument findOne(String key,String value) {
+		return template.findOne(Query.query(Criteria.where(key).is(value)), PostDocument.class);
 	}
 	
-	public List<PostDocument> findByOneUserName(String userName) {
-		return template.find(Query.query(Criteria.where("userName").is(userName)).limit(10), PostDocument.class);
+	public PostDocument findList(String key,String value) {
+		return template.findOne(Query.query(Criteria.where(key).is(value)), PostDocument.class);
 	}
-	public List<PostDocument> findByUserNames(List<String> userNames) {
-		return template.find(Query.query(Criteria.where("userName").in(userNames)), PostDocument.class);
+	public List<PostDocument> findByQuery(Query query) {
+		return template.find(query, PostDocument.class);
 	}
+
 }
