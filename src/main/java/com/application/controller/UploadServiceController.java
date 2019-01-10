@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.application.bean.PostResponse;
+import com.application.constants.Constants;
 import com.application.service.UploadService;
 import com.application.service.dao.documents.PostDocument;
 import com.application.service.dao.documents.UserDocument;
@@ -27,9 +28,9 @@ import com.application.service.dao.documents.UserDocument;
 @RestController
 @RequestMapping("/upload")
 public class UploadServiceController {
+
 	private static final Logger log = LoggerFactory.getLogger(UploadServiceController.class);
-	private static final String MP4 = "mp4";
-	private static final String PNG = "png";
+
 	@Autowired
 	@Qualifier("localSystem")
 	UploadService s3UploadService;
@@ -54,10 +55,11 @@ public class UploadServiceController {
 			PostDocument document = new PostDocument();
 			document.setUserName(user.getUsername());
 			document.setIsStatus(false);
+			document.setType(Constants.IMAGE);
 			document.setStatus(status);
 			document.setLikes(0);
 			document.setCommentCount(0);
-			document.setPostImageUrl(s3UploadService.upload(new ByteArrayInputStream(byteStream.toByteArray()), randomStringGenerate(PNG), null));
+			document.setPostImageUrl(s3UploadService.upload(new ByteArrayInputStream(byteStream.toByteArray()), randomStringGenerate(Constants.PNG), null));
 			return postController.insertPost(user, document);
 		} catch (IOException e) {
 			log.error(e.getMessage());
@@ -72,10 +74,11 @@ public class UploadServiceController {
 			PostDocument document = new PostDocument();
 			document.setUserName(user.getUsername());
 			document.setIsStatus(false);
+			document.setType(Constants.VIDEO);
 			document.setStatus(status);
 			document.setLikes(0);
 			document.setCommentCount(0);
-			document.setPostImageUrl(s3UploadService.upload(multi.getInputStream(),randomStringGenerate(MP4),null));
+			document.setPostImageUrl(s3UploadService.upload(multi.getInputStream(),randomStringGenerate(Constants.MP4),null));
 			return postController.insertPost(user, document);
 		} catch (IOException e) {
 			log.error(e.getMessage());

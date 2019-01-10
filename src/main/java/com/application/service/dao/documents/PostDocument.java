@@ -16,6 +16,7 @@ public class PostDocument {
 	private String userName;
 	private List<String> comments;
 	private Boolean isStatus;
+	private String type;
 	private String postImageUrl;
 	private Date creationDate;
 	private Date updationDate;
@@ -81,6 +82,12 @@ public class PostDocument {
 	}
 	public void setUpdationDate(Date updationDate) {
 		this.updationDate = updationDate;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	

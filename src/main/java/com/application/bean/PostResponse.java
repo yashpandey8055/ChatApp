@@ -11,6 +11,8 @@ public class PostResponse {
 	private PostDocument post;
 	private UserDocument user;
 	private Boolean likedByUser;
+	private long likesCount;
+	private String daysAgo;
 	private List<CommentDocument> comments;
 
 	public List<CommentDocument> getComments() {
@@ -36,5 +38,17 @@ public class PostResponse {
 	}
 	public void setLikedByUser(Boolean likedByUser) {
 		this.likedByUser = likedByUser;
+	}
+	public long getLikesCount() {
+		return likesCount;
+	}
+	public void setLikesCount(long likesCount) {
+		this.likesCount = likesCount;
+	}
+	public String getDaysAgo() {
+		return daysAgo;
+	}
+	public void setDaysAgo(String daysAgo) {
+		this.daysAgo = daysAgo;
 	}
 }

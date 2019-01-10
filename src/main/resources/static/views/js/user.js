@@ -21,7 +21,7 @@ function displayUser(user){
 			if(user==currentUser){
 				displayInfo = displayInfo + "<button type='button' class='btn simple-btn full-width-btn'>Followers ("+user.followers+")</button>";
 			}else{
-				displayInfo = displayInfo +"<button type='button' class='btn purple-button full-width-btn' id='follow-user-btn' onclick='follow()'><img height=20px width=20px src='/views/images/loading-3.gif'></button>"
+				displayInfo = displayInfo +"<button type='button' class='btn purple-button full-width-btn' id='follow-user-btn' onclick='follow()'><img height=20px width=20px src='/views/images/loading.gif'></button>"
 				httpRequest.get("/users/follow/isfollowing/"+user.username,null,function(response){
 					if(response == 'true'){
 						$("#follow-user-btn").html("Unfollow");
@@ -82,88 +82,89 @@ $(function () {
 		console.log(JSON.stringify(response));
 	})
 	
-		httpRequest.get("/dashboard/getPosts",null,function(response){
+			httpRequest.get("/dashboard/getPosts",null,function(response){
 		response = JSON.parse(response);
 		var dashboard_response = '';
 		response.some(function(resp){
 			if(!resp.post.isStatus){
-				dashboard_response = dashboard_response +"<div class='title-content user-content' id='"+resp.post.id+"'>"+
+				dashboard_response = dashboard_response + "<div class='title-content user-content' id='"+resp.post.id+"'>"+
 				"<div class='post-content-header'>"+
 					"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-						"<img height=100% id='nav-bar-profile-picture' width=100% src="+resp.user.profileUrl+">"+
+						"<img height=100% id='nav-bar-profile-picture' width=100% src='"+resp.user.profileUrl+"'>"+
 					"</div>"+
-					"<div><h5><b>"+resp.user.firstName+"</b></h5></div>"+
-				"</div>"+
+					"<div><h5><b>"+resp.user.firstName+"</b></h5><h6>"+resp.daysAgo+"</h6></div>"+
+				"</div>"+ 
 				"<div class='post-content'>"+
-					"<div class='post-content-container horizontal'>"+
-						"<div class='post-content-box'><img alt='' id='post_1' src="+resp.post.postImageUrl+" >"+
-						"<div class='post-content-footer'>"+
-							"<div class='navbar-element-icon' id='nav-bar-picture-icon'>";
-							if(resp.likedByUser){
-								dashboard_response = dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='like' width=80% src='/views/images/liked.png'></button>";
+				"<div class='post-content-container'>"+
+						"<div class='status-content-box'><div align='left' style='margin: 15px;font-size:20px;'>"+resp.post.status+"</div>";
+								if(resp.post.type == 'video'){
+								dashboard_response = dashboard_response+"<video controls='controls'><source src='"+resp.post.postImageUrl+"' type='video/mp4'></video>";
 							}else{
-								dashboard_response= dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='unlike' width=80% src='/views/images/like.png'></button>";
+								dashboard_response = dashboard_response+"<img alt='' src="+resp.post.postImageUrl+" >";
+							}
+				dashboard_response = dashboard_response+	"<div class='post-content-footer'>"+
+							"<div class='navbar-element-icon' id='nav-bar-picture-icon' style='margin:0px'>";
+							if(resp.likedByUser){
+								dashboard_response = dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='unlike' width=80% src='/views/images/liked.png'></button>";
+							}else{
+								dashboard_response= dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='like' width=80% src='/views/images/like.png'></button>";
 							}
 							dashboard_response= dashboard_response+
 						"</div>"+
+						"<div class='likes-count'><b><p class='like-count-number'>"+resp.likesCount+"</p></b>&nbsp<b><p>Likes</p></b></div>"+
 					"</div>"+
 					"<div class='comment-write-box'>"+
 						"<div class='horizontal'><input type='text' placeholder='Add a comment' onfocus='comment()' class='chat-text-box comment-box'/></div>"+
-					"</div>"+
-						
-						"</div>"+
-						"<div class='comment-display-box'>";
+						"<p align='left' style='margin: 15px;line-height: 0px;'>View All Comments</p>"+
+					"</div>"+"</div>";
 					resp.comments.some(function(comment_res){
-						dashboard_response = dashboard_response +
-						"<div align='left'>"+
-							"<div>"+
-								"<div class='post-content-header'>"+
-									"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-										"<img height='100%' id='nav-bar-profile-picture' width='100%' src='"+comment_res.profileUrl+"'>"+
-									"</div>"+
-									"<div>"+
-										"<h5><b>"+comment_res.userName+"</b></h5>"+
-										"<p class='time-ago'>"+comment_res.daysAgo+"</p>"+
-									"</div>"+
+						dashboard_response = dashboard_response + "<div class='status-comment-display-box' id="+comment_res.id+">"+
+						"<div class='' align='left'>"+
+						"<div class='post-content-header'>"+
+							"<div class='comment-header'>"+
+								"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+									"<img height=100% id='nav-bar-profile-picture' width=100% src='"+comment_res.profileUrl+"'>"+
 								"</div>"+
-								"<p>"+comment_res.message+"</p>"+
 							"</div>"+
-							"<div class='navbar-element-icon like-post' id='nav-bar-picture-icon'>";
-						if(comment_res.likedByUser){
-							dashboard_response = dashboard_response +"<button class='like-button' onclick='commentlike(event)'><img alt='unlike' width=50% src='/views/images/heart-like.png'></button>";
-						}else{
-							dashboard_response = dashboard_response +	"<button class='like-button' onclick='commentlike(event)'><img alt='like' width=50% src='/views/images/heart.png'></button>";
-						}
-						dashboard_response = dashboard_response +	"</div></div>";
+							"<div>"+
+							"<p class=''><b>"+comment_res.userName+"</b>&nbsp"+comment_res.daysAgo+"</p>"+
+							"<p class=''>"+comment_res.message+"</p>"+
+							"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>";
+							if(comment_res.likedByUser){
+								dashboard_response = dashboard_response +"<button class='like-button' onclick='commentlike(event)'><img alt='unlike' width=50% src='/views/images/heart-like.png'></button>";
+							}
+							else{
+								dashboard_response = dashboard_response +"<button class='like-button' onclick='commentlike(event)'><img alt='like' width=50% src='/views/images/heart.png'></button>";
+							}
+							dashboard_response = dashboard_response +"</div></div></div></div></div>";
 					});
-					dashboard_response = dashboard_response +	"</div></div></div></div>";
+					dashboard_response = dashboard_response +"</div></div></div>"
 			}else{
 			dashboard_response = dashboard_response + "<div class='title-content user-content' id='"+resp.post.id+"'>"+
 			"<div class='post-content-header'>"+
 				"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
 					"<img height=100% id='nav-bar-profile-picture' width=100% src='"+resp.user.profileUrl+"'>"+
 				"</div>"+
-				"<div><h5><b>"+resp.user.username+"</b></h5></div>"+
+				"<div><h5><b>"+resp.user.firstName+"</b></h5><h6>"+resp.daysAgo+"</h6></div>"+
 			"</div>"+ 
 			"<div class='post-content'>"+
 			"<div class='post-content-container'>"+
 					"<div class='status-content-box'><div align='left' style='margin: 15px;font-size:20px;'>"+resp.post.status+"</div>"+
 					"<div class='post-content-footer'>"+
-						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>";
+						"<div class='navbar-element-icon' id='nav-bar-picture-icon' style='margin:0px'>";
 						if(resp.likedByUser){
-							dashboard_response = dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='like' width=80% src='/views/images/liked.png'></button>";
+							dashboard_response = dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='unlike' width=80% src='/views/images/liked.png'></button>";
 						}else{
-							dashboard_response= dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='unlike' width=80% src='/views/images/like.png'></button>";
+							dashboard_response= dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='like' width=80% src='/views/images/like.png'></button>";
 						}
 						dashboard_response= dashboard_response+
-						
 					"</div>"+
+					"<div class='likes-count'><b><p class='like-count-number'>"+resp.likesCount+"</p></b>&nbsp<b><p>Likes</p></b></div>"+
 				"</div>"+
 				"<div class='comment-write-box'>"+
 					"<div class='horizontal'><input type='text' placeholder='Add a comment' onfocus='comment()' class='chat-text-box comment-box'/></div>"+
 					"<p align='left' style='margin: 15px;line-height: 0px;'>View All Comments</p>"+
-				"</div>"+
-				"</div>";
+				"</div>"+"</div>";
 				resp.comments.some(function(comment_res){
 					dashboard_response = dashboard_response + "<div class='status-comment-display-box' id="+comment_res.id+">"+
 					"<div class='' align='left'>"+

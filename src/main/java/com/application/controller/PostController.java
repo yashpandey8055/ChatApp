@@ -53,7 +53,6 @@ public class PostController {
 		response.setPost(post);
 		response.setUser(user);
 		return new ResponseEntity<>(response,HttpStatus.OK);
-		
 	}
 	
 	@GetMapping("/like")
@@ -63,14 +62,12 @@ public class PostController {
 			if(document!=null) {
 			document.getLikedBy().add(currentUser.getUserName());
 			document.setLikedBy(document.getLikedBy());
-			document.setNetCount(document.getNetCount()+1);
 		}else {
 			List<String> likes = new ArrayList<>(1);
 			likes.add(currentUser.getUsername());
 			document = new LikeDocument();
 			document.setType("post");
 			document.setLikedBy(likes);
-			document.setNetCount(1);
 			document.setPostId(postId);
 		}
 		likesDao.saveLikePost(document);
@@ -87,7 +84,6 @@ public class PostController {
 			if(document!=null) {
 				document.getLikedBy().remove(currentUser.getUserName());
 				document.setLikedBy(document.getLikedBy());
-				document.setNetCount(document.getNetCount()-1);
 				likesDao.saveLikePost(document);
 			}
 			return new ResponseEntity<>("Success",HttpStatus.OK);

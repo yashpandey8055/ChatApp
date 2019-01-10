@@ -10,7 +10,6 @@ public class LikeDocument {
 	private String postId;
 	private List<String> likedBy;
 	private String type;
-	private long netCount;
 	public String get_id() {
 		return _id;
 	}
@@ -34,11 +33,5 @@ public class LikeDocument {
 	}
 	public void setLikedBy(List<String> likedBy) {
 		this.likedBy = likedBy;
-	}
-	public long getNetCount() {
-		return netCount;
-	}
-	public void setNetCount(long netCount) {
-		this.netCount = netCount;
 	}
 }

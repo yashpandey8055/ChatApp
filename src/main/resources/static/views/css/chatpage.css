@@ -16,7 +16,7 @@ ul{
 p{
 	margin-bottom:0px;
 }
-h5{
+h5,h6{
 	margin:0px;
 }
 
@@ -486,6 +486,13 @@ h5{
     background: transparent;
 }
 .like-button:focus { outline: none; }
+
+.likes-count{
+	font-size: 11px;
+	display:flex;
+	margin-left:0px;
+	padding-top: 2px;
+}
 
 @media screen and (max-width:600px){
 	.center{

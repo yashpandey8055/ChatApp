@@ -73,14 +73,12 @@ public class CommentController {
 		if(document!=null) {
 			document.getLikedBy().add(currentUser.getUserName());
 			document.setLikedBy(document.getLikedBy());
-			document.setNetCount(document.getNetCount()+1);
 		}else {
 			List<String> likes = new ArrayList<>(1);
 			likes.add(currentUser.getUsername());
 			document = new LikeDocument();
 			document.setType("comment");
 			document.setLikedBy(likes);
-			document.setNetCount(1);
 			document.setPostId(postId);
 		}
 		likesDao.saveLikePost(document);
@@ -99,7 +97,6 @@ public class CommentController {
 		if(document!=null) {
 			document.getLikedBy().remove(currentUser.getUserName());
 			document.setLikedBy(document.getLikedBy());
-			document.setNetCount(document.getNetCount()-1);
 			likesDao.saveLikePost(document);
 			return new ResponseEntity<>("success",HttpStatus.OK);
 		}

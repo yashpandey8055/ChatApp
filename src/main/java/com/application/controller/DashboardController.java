@@ -63,7 +63,9 @@ public class DashboardController {
 		for(PostDocument post:posts) {
 			LikeDocument postLikeDocument = likesDao.getLikePostByQuery(Query.query(Criteria.where("postId").is(post.getId()).and("likedBy").all(currentUser.getUsername())));
 			PostResponse postResponse = new PostResponse();
+			postResponse.setDaysAgo(Utils.calculateTimeDifference(post.getCreationDate()));
 			postResponse.setLikedByUser(postLikeDocument!=null);
+			postResponse.setLikesCount(postLikeDocument!=null?postLikeDocument.getLikedBy().size():0);
 			postResponse.setUser(usersMap.get(post.getUserName()));
 			List<CommentDocument> comments = commentDao.find(post.getId());
 			comments.stream().forEach(x->{x.setDaysAgo(Utils.calculateTimeDifference(x.getCreationDate()));

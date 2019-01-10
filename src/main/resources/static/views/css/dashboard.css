@@ -17,8 +17,8 @@ body{
 .center{
 	border-radius:3px;
 	height:auto;
-	left:20%;
-	right:15%;
+    left: 20%;
+	right:25%;
 }
 .dashboard-header{
 	padding:20px;

@@ -90,16 +90,18 @@ function like(event){
 	var params = new Map();
 	params.set("postId", $(event.target).parents('[id]:last').attr('id'));
 	if($(event.target).attr('alt')== 'like'){
+		$(event.target).parent().parent().next().find('.like-count-number').text(
+				parseInt($(event.target).parent().parent().next().find('.like-count-number').text())+1);
 		$(event.target).attr('alt','unlike'); 
 		$(event.target).attr('src','/views/images/liked.png');
 		httpRequest.get("/posts/like",params,function(response){
-			console.log(response);
 		});
 	}else{
+		$(event.target).parent().parent().next().find('.like-count-number').text(
+				parseInt($(event.target).parent().parent().next().find('.like-count-number').text())-1);
 		$(event.target).attr('alt','like'); 
 		$(event.target).attr('src','/views/images/like.png');
 		httpRequest.get("/posts/unlike",params,function(response){
-			console.log(response);
 		});
 	}
 }
@@ -121,6 +123,14 @@ function commentlike(event){
 		});
 	}
 }
+function _websocket_connect(){
+    var socket = new SockJS(env+'/gs-guide-websocket?token='+token);
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+       stompClient.subscribe('/user/queue/notification', function (response){
+    	   
+       });
+}
 $(function(){
 	$(".navbar-nav").load("/views/navbar.html");
 	
@@ -129,6 +139,7 @@ $(function(){
 	})
 	if(token!=""){
 		httpRequest.get("/users/current",null,function(response){
+			_websocket_connect();
 			currentUser = JSON.parse(response);
 				var downloadingImage = new Image();
 				downloadingImage.onload = function(){
