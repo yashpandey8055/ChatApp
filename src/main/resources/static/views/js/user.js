@@ -82,7 +82,7 @@ $(function () {
 		console.log(JSON.stringify(response));
 	})
 	
-			httpRequest.get("/dashboard/getPosts",null,function(response){
+		httpRequest.get("/users/getPosts/"+user,null,function(response){
 		response = JSON.parse(response);
 		var dashboard_response = '';
 		response.some(function(resp){

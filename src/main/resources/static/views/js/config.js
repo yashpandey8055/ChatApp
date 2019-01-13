@@ -1,7 +1,6 @@
 var env = "http://localhost:8080"
 var token = getCookie();
 var currentUser = null;
-var currentChattingWithUser = null;
 const httpRequest = new HttpRequest();
 function getCookie(){
 	 var name = "token=";
@@ -123,14 +122,15 @@ function commentlike(event){
 		});
 	}
 }
-function _websocket_connect(){
-    var socket = new SockJS(env+'/gs-guide-websocket?token='+token);
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-       stompClient.subscribe('/user/queue/notification', function (response){
-    	   
-       });
-}
+//function _websocket_connect(){
+//    var socket = new SockJS(env+'/gs-guide-websocket?token='+token);
+//    stompClient = Stomp.over(socket);
+//    stompClient.connect({}, function (frame) {
+//       stompClient.subscribe('/user/queue/notification', function (response){
+//    	   
+//       });
+//    });
+//}
 $(function(){
 	$(".navbar-nav").load("/views/navbar.html");
 	
@@ -139,7 +139,7 @@ $(function(){
 	})
 	if(token!=""){
 		httpRequest.get("/users/current",null,function(response){
-			_websocket_connect();
+//			_websocket_connect();
 			currentUser = JSON.parse(response);
 				var downloadingImage = new Image();
 				downloadingImage.onload = function(){

@@ -43,7 +43,12 @@ public class MessageDao {
 		query.limit(1);
 		query.addCriteria(Criteria.where("participants").all(participants));
 		MessageDocument maxIndex = template.findOne(query, MessageDocument.class);
-		Query messageQuery = Query.query(Criteria.where("participants").all(participants).and("index").lte(maxIndex.getIndex()-(bucket*10-10)).gt(maxIndex.getIndex()-(bucket*10)));
+		if(maxIndex==null) {
+			return new ArrayList<>(1);
+		}
+		Query messageQuery = Query.query(Criteria.where("participants").all(participants)
+				.and("index").lte(maxIndex.getIndex()-(bucket*10-10))
+				.gt(maxIndex.getIndex()-(bucket*10)));
 		return template.find(messageQuery, MessageDocument.class);
 	}
 	

@@ -32,7 +32,7 @@ public class AmazonS3UploadServiceImpl implements UploadService{
 	                .build();
 
 			s3Client.putObject(new PutObjectRequest(Optional.ofNullable(bucketname).orElse(IMAGE_UPLOAD_BUCKET_NAME),fileName, in, null ));	
-			return "https://s3.ap-south-1.amazonaws.com/"+bucketname+"/"+fileName;
+			return "https://s3.ap-south-1.amazonaws.com/"+IMAGE_UPLOAD_BUCKET_NAME+"/"+fileName;
 			}catch(Exception e) {
 				log.error("Unable to upload file "+fileName+" into the bucket "+IMAGE_UPLOAD_BUCKET_NAME,e.getMessage());
 		}

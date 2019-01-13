@@ -1,9 +1,6 @@
 package com.application.controller;
 
 import java.security.Principal;
-import java.util.Date;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -18,10 +15,10 @@ public class NotificationController {
 	private SimpMessageSendingOperations  template ;
 
 	
-    @MessageMapping("/message")
+    @MessageMapping("/notification")
     public void greeting(@Payload MessageBean message, 
     	      Principal principal){
-		template.convertAndSendToUser(message.getReceiver(),"/queue/message",message);
+		template.convertAndSendToUser(message.getReceiver(),"/queue/notification",message);
     }
 
 }
