@@ -8,6 +8,7 @@ public class Utils {
 	private Utils() {
 		
 	}
+
 	public static String calculateTimeDifference(Date date) {
     	Calendar cal = Calendar.getInstance();
     	

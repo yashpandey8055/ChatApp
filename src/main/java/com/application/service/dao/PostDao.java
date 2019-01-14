@@ -22,9 +22,10 @@ public class PostDao {
 	}
 	
 	public PostDocument findOne(String key,String value) {
-		return template.findOne(Query.query(Criteria.where(key).is(value)), PostDocument.class);
+		Query q =Query.query(Criteria.where(key).is(value));
+		return template.findOne(q, PostDocument.class);
 	}
-	
+
 	public PostDocument findList(String key,String value) {
 		return template.findOne(Query.query(Criteria.where(key).is(value)), PostDocument.class);
 	}

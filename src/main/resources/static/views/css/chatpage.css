@@ -185,6 +185,11 @@ h5,h6{
     top: 81%;
     left: 75%;
 }
+.notification-nav-bar{
+	position:relative;
+	top:-10px;
+	left:-10px;
+}
 .users-online>img{
 	box-shadow:1px 1px 3px black;
 }

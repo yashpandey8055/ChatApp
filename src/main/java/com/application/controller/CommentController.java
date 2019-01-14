@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.application.bean.CommentInsertBean;
+import com.application.bean.MessageBean;
 import com.application.service.dao.CommentDao;
 import com.application.service.dao.LikesDao;
 import com.application.service.dao.PostDao;
@@ -32,6 +33,10 @@ import com.mongodb.MongoException;
 @RequestMapping("/comment")
 public class CommentController {
 	private static final Logger LOG = LoggerFactory.getLogger(CommentController.class);
+	
+	@Autowired
+	NotificationController notification;
+	
 	@Autowired
 	PostDao postDao;
 	
@@ -62,6 +67,12 @@ public class CommentController {
 		post.getComments().add(commentDao.insert(commentDocument));
 		post.setComments(post.getComments());
 		postDao.insert(post);
+		
+		MessageBean message = new MessageBean();
+		message.setSender(currentUser.getUsername());
+		message.setReceiver(post.getUserName());
+		message.setCommentNotification(message.getSender(), comment.getComment());
+		notification.sendNotification(message,comment.getPostId(),currentUser);
 		return new ResponseEntity<>(commentDocument,HttpStatus.OK);
 		
 	}
@@ -69,6 +80,7 @@ public class CommentController {
 	@GetMapping("/like")
 	public ResponseEntity<String> likePost(@AuthenticationPrincipal UserDocument currentUser, @RequestParam String postId){
 		LikeDocument document = likesDao.getLikePost(postId);
+		
 		try {
 		if(document!=null) {
 			document.getLikedBy().add(currentUser.getUserName());
@@ -81,7 +93,13 @@ public class CommentController {
 			document.setLikedBy(likes);
 			document.setPostId(postId);
 		}
+		CommentDocument postDocument = commentDao.findOne("_id",document.getPostId());
+		MessageBean message = new MessageBean();
+		message.setSender(currentUser.getUsername());
+		message.setReceiver(postDocument.getUserName());
+		message.setLikeNotification(currentUser.getUsername());
 		likesDao.saveLikePost(document);
+		notification.sendNotification(message,document.getPostId(),currentUser);
 		return new ResponseEntity<>("Success",HttpStatus.OK);
 		}catch(MongoException e) {
 			LOG.error("Erro while liking post with id "+postId+" by user "+currentUser.getUsername(),e);

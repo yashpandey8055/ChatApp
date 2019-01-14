@@ -32,4 +32,18 @@ public class MessageBean {
 	public void setSenderProfileUrl(String senderProfileUrl) {
 		this.senderProfileUrl = senderProfileUrl;
 	}
+	
+	public void setCommentNotification(String sender,String message) {
+		setMessage(sender+" commented on your post \""+message+"\"");
+	}
+	
+	public void setLikeNotification(String sender) {
+		setMessage(sender+" liked your post");
+	}
+	
+	public void setCommentLikeNotification(String sender) {
+		setMessage(sender+" liked your comment");
+	}
 }
+
+

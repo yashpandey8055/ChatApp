@@ -1,4 +1,4 @@
-var env = "https://ketu.herokuapp.com"
+var env = "http://localhost:8080"
 var token = getCookie();
 var currentUser = null;
 const httpRequest = new HttpRequest();
@@ -122,15 +122,19 @@ function commentlike(event){
 		});
 	}
 }
-//function _websocket_connect(){
-//    var socket = new SockJS(env+'/gs-guide-websocket?token='+token);
-//    stompClient = Stomp.over(socket);
-//    stompClient.connect({}, function (frame) {
-//       stompClient.subscribe('/user/queue/notification', function (response){
-//    	   
-//       });
-//    });
-//}
+function _websocket_connect(){
+    var socket = new SockJS(env+'/gs-guide-websocket?token='+token);
+    var stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+       stompClient.subscribe('/user/queue/notification', function (response){
+    	   response = JSON.parse(response.body);
+    	   var count = $("#notification-nav-bar").text();
+ 		  $("#notification-nav-bar").text(parseInt(count)+1);
+ 		  $("#notification-nav-bar").css({"background-color":"red","color":"white"});
+    	   $(".notification-box-display").prepend(response.message);
+       });
+    });
+}
 $(function(){
 	$(".navbar-nav").load("/views/navbar.html");
 	
@@ -139,7 +143,7 @@ $(function(){
 	})
 	if(token!=""){
 		httpRequest.get("/users/current",null,function(response){
-//			_websocket_connect();
+			_websocket_connect();
 			currentUser = JSON.parse(response);
 				var downloadingImage = new Image();
 				downloadingImage.onload = function(){

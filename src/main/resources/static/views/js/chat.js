@@ -48,7 +48,7 @@ function displayUserInformation(user){
 //	}
 }
 
-var stompClient = null;
+
 var currentChattingWithUser = null;
 var isConversationLoadComplete = false;
 var currentOnlineUsers = new Map();

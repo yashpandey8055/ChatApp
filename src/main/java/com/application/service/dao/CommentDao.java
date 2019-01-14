@@ -20,7 +20,9 @@ public class CommentDao {
 		template.save(document);
 		return  document.getId();
 	}
-	
+	public CommentDocument findOne(String key,String value) {
+		return template.findOne(Query.query(Criteria.where(key).is(value)), CommentDocument.class);
+	}
 	public List<CommentDocument> find(String postId) {
 		return template.find(Query.query(Criteria.where("postId").is(postId)).limit(3), CommentDocument.class);
 	}

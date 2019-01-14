@@ -77,7 +77,15 @@
     width: 200px;
 	background:white;
 	border:1px solid #DCDCDC;
-	margin-top:10px;
+}
+.display-notification-box{
+	display:inline-block;
+	display:-moz-deck;
+	z-index:100;
+    height: auto;
+    width: 200px;
+	background:white;
+	border:1px solid #DCDCDC;
 }
 .settings-box{
 	padding:0px;
