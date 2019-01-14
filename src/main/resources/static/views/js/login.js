@@ -1,5 +1,5 @@
 
-var env = "https://ketu.herokuapp.com/";
+var env = "https://ketu.herokuapp.com";
 const httpRequest = new HttpRequest();
 var login = function(){
 	var param = new Map();
