@@ -1,4 +1,4 @@
-var env = "http://localhost:8080"
+var env = "https://ketu.herokuapp.com"
 var token = getCookie();
 var currentUser = null;
 const httpRequest = new HttpRequest();
