@@ -122,5 +122,8 @@ h5{
 		height:8%;
 		margin:0px;
 	}
+	.logo{
+	display:none;
+	}
 	
 }
