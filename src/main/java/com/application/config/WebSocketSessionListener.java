@@ -8,7 +8,7 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import com.application.bean.OnlineNotification;
 import com.application.controller.MessageController;
-import com.application.service.UserCrudService;
+import com.application.service.OnlineUserPersistenceService;
 import com.application.service.dao.UsersDao;
 import com.application.service.dao.documents.UserDocument;
 
@@ -17,12 +17,12 @@ public class WebSocketSessionListener {
 
 	@Autowired
 	MessageController controller;
-
+	
 	@Autowired
 	UsersDao userDao;
 	
 	@Autowired
-	UserCrudService userService;
+	OnlineUserPersistenceService onlineUser;
 	
 	private static final String CONNECTED = "CONNECTED";
 	private static final String DISCONNECTED = "DISCONNECTED";
@@ -31,15 +31,14 @@ public class WebSocketSessionListener {
 	public void sessionConnection(SessionConnectedEvent sce) {
 		String user = sce.getUser().getName();
 		UserDocument userDocument = userDao.find(user);
-		userService.add(userDocument);
+		onlineUser.add(userDocument);
 		sendNotification(userDocument,CONNECTED);
 	}
 
 	@EventListener(SessionDisconnectEvent.class)
 	public void sessionDisconnection(SessionDisconnectEvent sde) {
 		String user = sde.getUser().getName();
-		UserDocument userDocument = userService.findWithUsername(user);
-		userService.remove(user);
+		UserDocument userDocument= onlineUser.remove(user);
 		sendNotification(userDocument,DISCONNECTED);
 	}
 	private void sendNotification(UserDocument user, String action) {

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.application.bean.MessageBean;
 import com.application.bean.OnlineNotification;
 import com.application.bean.PastConversations;
-import com.application.service.UserCrudService;
+import com.application.service.OnlineUserPersistenceService;
 import com.application.service.dao.MessageDao;
 import com.application.service.dao.UsersDao;
 import com.application.service.dao.documents.MessageDocument;
@@ -39,7 +39,7 @@ public class MessageController {
 	@Autowired
 	private MessageDao messagedDao;
 	@Autowired
-	private UserCrudService userCrudService;
+	private OnlineUserPersistenceService onlineUser;
 	
 	@Autowired
 	private UsersDao userDao;
@@ -52,7 +52,7 @@ public class MessageController {
     	document.setReceiver(message.getReceiver());
     	document.setSender(message.getSender());
     	document.setDate(new Date());
-    	message.setSenderProfileUrl(Optional.ofNullable(userCrudService.findWithUsername(message.getSender()))
+    	message.setSenderProfileUrl(Optional.ofNullable(onlineUser.findWithUsername(message.getSender()))
     			.orElse(userDao.find(message.getSender())).getProfileUrl());
     	messagedDao.save(document);
 		template.convertAndSendToUser(message.getReceiver(),"/queue/message",message);
@@ -74,7 +74,7 @@ public class MessageController {
     	Collections.sort(messageDocuments,Collections.reverseOrder());
     	Map<String, PastConversations> pastConversation = new HashMap<>();
     	for(MessageDocument document: messageDocuments) {
-    		String userName = document.getReceiver().equals(user.getUsername())?document.getSender():document.getReceiver();
+    		String userName = user.getUsername().equals(document.getReceiver())?document.getSender():document.getReceiver();
     		pastConversation.computeIfAbsent(userName, k->insertNewConversation(new PastConversations(), document)).setSender(userName);
     		
     	}

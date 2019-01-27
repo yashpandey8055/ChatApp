@@ -1,4 +1,4 @@
-var env = "https://ketu.herokuapp.com"
+var env = "http://localhost:8080"
 var token = getCookie();
 var currentUser = null;
 const httpRequest = new HttpRequest();
@@ -89,17 +89,31 @@ function like(event){
 	var params = new Map();
 	params.set("postId", $(event.target).parents('[id]:last').attr('id'));
 	if($(event.target).attr('alt')== 'like'){
-		$(event.target).parent().parent().next().find('.like-count-number').text(
-				parseInt($(event.target).parent().parent().next().find('.like-count-number').text())+1);
+		if($(event.target).parent().parent().next().find('.like-count-number').text()){
+			$(event.target).parent().parent().next().find('.like-count-number').text(
+					parseInt($(event.target).parent().parent().next().find('.like-count-number').text())+1);
+			$(event.target).attr('src','/views/images/liked.png');
+			$(event.target).children().attr('alt','unlike');
+		}else{
+			$(event.target).parent().next().find('.like-count-number').text(
+				parseInt($(event.target).parent().next().find('.like-count-number').text())+1);
+			$(event.target).children().attr('src','/views/images/liked.png');
+		}
 		$(event.target).attr('alt','unlike'); 
-		$(event.target).attr('src','/views/images/liked.png');
 		httpRequest.get("/posts/like",params,function(response){
 		});
 	}else{
-		$(event.target).parent().parent().next().find('.like-count-number').text(
-				parseInt($(event.target).parent().parent().next().find('.like-count-number').text())-1);
+		if($(event.target).parent().parent().next().find('.like-count-number').text()){
+			$(event.target).parent().parent().next().find('.like-count-number').text(
+					parseInt($(event.target).parent().parent().next().find('.like-count-number').text())-1);
+			$(event.target).attr('src','/views/images/like.png');
+			$(event.target).children().attr('alt','like');
+		}else{
+			$(event.target).parent().next().find('.like-count-number').text(
+				parseInt($(event.target).parent().next().find('.like-count-number').text())-1);
+			$(event.target).children().attr('src','/views/images/like.png');
+		}
 		$(event.target).attr('alt','like'); 
-		$(event.target).attr('src','/views/images/like.png');
 		httpRequest.get("/posts/unlike",params,function(response){
 		});
 	}

@@ -184,7 +184,11 @@ body{
 .time-ago{
 	font-size: 11px;
 }
-@media screen and (max-width:600px){
+@media screen and (max-width:800px){
+	body{
+	overflow:auto
+	background-color:	#f2f2f2;
+	}
 	.center{
 		width:100%;
 		height:100%;
@@ -196,9 +200,11 @@ body{
 	}
 	
 	.content-container{
-		position:fixed;
+		position:absolute;
 		width:100%;
 		margin:0px;
 		height:92%;
 	}
+}
+
 }

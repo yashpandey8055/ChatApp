@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.application.bean.PostResponse;
 import com.application.config.UUIDAuthenticationService;
+import com.application.service.OnlineUserPersistenceService;
 import com.application.service.UserCrudService;
 import com.application.service.dao.CommentDao;
 import com.application.service.dao.LikesDao;
@@ -47,7 +48,7 @@ public class UserController {
 	LikesDao likesDao;
 	
 	@Autowired
-	UserCrudService userService;
+	OnlineUserPersistenceService onlineUser;
 	
 	UUIDAuthenticationService authentication;
 	
@@ -84,7 +85,7 @@ public class UserController {
 
 	  @GetMapping("/connected")
 	  public Collection<UserDocument> connectedNotification(@AuthenticationPrincipal final UserDocument currentUser) {
-		 return  userService.getAllUsers();
+		 return  onlineUser.getAllUsers();
 	  }
 	
 	  @GetMapping("/follow/isfollowing/{user}")

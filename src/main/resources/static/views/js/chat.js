@@ -93,6 +93,7 @@ function connect() {
         
     });
     httpRequest.get(env+"/users/connected",null,function(response){
+    	console.log(response);
 		  var connectedusers = JSON.parse(response);
 				 connectedusers.some(function(user){
 					 if(currentUser.id != user.id){

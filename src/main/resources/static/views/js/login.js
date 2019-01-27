@@ -1,4 +1,4 @@
-var env = "https://ketu.herokuapp.com"
+var env = "http://localhost:8080"
 const httpRequest = new HttpRequest();
 var login = function(){
 	var param = new Map();
