@@ -33,9 +33,7 @@ import com.mongodb.MongoException;
 @RequestMapping("/comment")
 public class CommentController {
 	private static final Logger LOG = LoggerFactory.getLogger(CommentController.class);
-	
-	@Autowired
-	NotificationController notification;
+
 	
 	@Autowired
 	PostDao postDao;
@@ -72,7 +70,6 @@ public class CommentController {
 		message.setSender(currentUser.getUsername());
 		message.setReceiver(post.getUserName());
 		message.setCommentNotification(message.getSender(), comment.getComment());
-		notification.sendNotification(message,comment.getPostId(),currentUser);
 		return new ResponseEntity<>(commentDocument,HttpStatus.OK);
 		
 	}
@@ -99,7 +96,6 @@ public class CommentController {
 		message.setReceiver(postDocument.getUserName());
 		message.setLikeNotification(currentUser.getUsername());
 		likesDao.saveLikePost(document);
-		notification.sendNotification(message,document.getPostId(),currentUser);
 		return new ResponseEntity<>("Success",HttpStatus.OK);
 		}catch(MongoException e) {
 			LOG.error("Erro while liking post with id "+postId+" by user "+currentUser.getUsername(),e);
