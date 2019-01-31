@@ -52,6 +52,7 @@ function displayUserInformation(user){
 var currentChattingWithUser = null;
 var isConversationLoadComplete = false;
 var currentOnlineUsers = new Map();
+var stompClient;
 function connect() {
     var socket = new SockJS(env+'/gs-guide-websocket?token='+token);
     stompClient = Stomp.over(socket);

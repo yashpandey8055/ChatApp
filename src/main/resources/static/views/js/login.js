@@ -1,4 +1,4 @@
-var env = "https://ketu.herokuapp.com"
+var env = "http://localhost:8080"
 const httpRequest = new HttpRequest();
 var login = function(){
 	var param = new Map();
@@ -6,7 +6,7 @@ var login = function(){
 	httpRequest.get("/public/users/login",param,null,function(response){
 		if (response!==null){
 	        document.cookie="token="+ response;
-	        window.location.href = env+"/chat";
+	        window.location.href = env+"/views/navbar.html";
         }else {
         	$(".error-message").text(response);
         	$(".error-message").css({"color":"#b30000"});

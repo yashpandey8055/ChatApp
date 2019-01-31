@@ -1,4 +1,4 @@
-var env = "https://ketu.herokuapp.com"
+var env = "http://localhost:8080"
 var token = getCookie();
 var currentUser = null;
 const httpRequest = new HttpRequest();
@@ -141,11 +141,7 @@ function _websocket_connect(){
     var stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
        stompClient.subscribe('/user/queue/notification', function (response){
-    	   response = JSON.parse(response.body);
-    	   var count = $("#notification-nav-bar").text();
- 		  $("#notification-nav-bar").text(parseInt(count)+1);
- 		  $("#notification-nav-bar").css({"background-color":"red","color":"white"});
-    	   $(".notification-box-display").prepend(response.message);
+    	   console.log(response.body);
        });
     });
 }

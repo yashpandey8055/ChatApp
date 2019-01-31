@@ -46,6 +46,9 @@ public class CommentController {
 	
 	@Autowired
 	UsersDao userDao;
+	
+	@Autowired
+	NotificationController notification;
 
 	@PostMapping("/insert")
 	public ResponseEntity<CommentDocument> insertPost(@AuthenticationPrincipal UserDocument currentUser, @RequestBody CommentInsertBean comment){
@@ -70,6 +73,7 @@ public class CommentController {
 		message.setSender(currentUser.getUsername());
 		message.setReceiver(post.getUserName());
 		message.setCommentNotification(message.getSender(), comment.getComment());
+		notification.sendNotification(post.getUserName(),NotificationController.Action.COMMENT.name(), post.getId(), currentUser.getUsername());
 		return new ResponseEntity<>(commentDocument,HttpStatus.OK);
 		
 	}
@@ -91,11 +95,8 @@ public class CommentController {
 			document.setPostId(postId);
 		}
 		CommentDocument postDocument = commentDao.findOne("_id",document.getPostId());
-		MessageBean message = new MessageBean();
-		message.setSender(currentUser.getUsername());
-		message.setReceiver(postDocument.getUserName());
-		message.setLikeNotification(currentUser.getUsername());
 		likesDao.saveLikePost(document);
+		notification.sendNotification(postDocument.getUserName(),NotificationController.Action.COMMENT_LIKE.name(), postId, currentUser.getUsername());
 		return new ResponseEntity<>("Success",HttpStatus.OK);
 		}catch(MongoException e) {
 			LOG.error("Erro while liking post with id "+postId+" by user "+currentUser.getUsername(),e);

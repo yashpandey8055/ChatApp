@@ -108,8 +108,27 @@
 	margin-bottom:8px;
 }
 
+.large-display{
+	width: 400px;
+}
 ul{
 	list-style:none;
+}
+.notification-box-display{
+	padding:0px;
+	margin:0px;
+}
+.notification-box-display>li{
+	display:flex;
+	flex-direction: row;
+	padding:10px;
+	padding-left:20px;
+}
+.unread-notification{
+	background:	#E6E6FA;
+}
+.read-notification{
+	background:	white;
 }
 p{
 	margin-bottom:0px;
