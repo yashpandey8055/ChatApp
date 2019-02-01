@@ -2,6 +2,8 @@ package com.application.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -38,9 +40,15 @@ public class NotificationController {
     
     public void sendNotification(String receiver,String action,String postId,String sender) {
     	NotificationDocument document = notificationDao.find("postId", postId);
-    	NotificationBean notificationBean = new NotificationBean();
-    	StringBuilder builder = new StringBuilder(document.getLastSender()+","+sender+document.getCount()+" others");
     	
+    	NotificationBean notificationBean = new NotificationBean();
+    	StringBuilder builder = new StringBuilder(sender);
+    	if(document.getLastSender()!=null) {
+    		builder.append(","+document.getLastSender());
+    	}
+    	if(document.getCount()>2) {
+    		builder.append(" and "+document.getCount()+" others");
+    	}
     	if(action.equalsIgnoreCase(Action.COMMENT_LIKE.name())) {
     		builder.append(" liked you comment.");
     	}
@@ -61,10 +69,14 @@ public class NotificationController {
     	document.setCount(document.getCount()+1);
     	document.setDate(new Date());
     	document.setLastSender(sender);
+    	document.setPostId(postId);
+    	document.setRead(false);
+    	document.setReceiver(receiver);
     	notificationDao.save(document);
     	notificationBean.setMessage(builder.toString());
     	notificationBean.setTimeAgo("Just Now");
-    	notificationBean.setPictureUrls(Lists.newArrayList(users.get(0).getProfileUrl(),users.get(0).getProfileUrl()));	
+    	notificationBean.setPictureUrls(users.stream().map(UserDocument::getProfileUrl).collect(Collectors.toSet()));	
+    	notificationBean.setPostId(postId);
     	sendNotification(receiver, notificationBean);
     }
 }

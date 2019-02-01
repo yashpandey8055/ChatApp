@@ -8,7 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="notification")
 public class NotificationDocument {
-
+	
+	private String _id;
 	private String postId;
 	private long count = 0;
 	private String receiver;
@@ -17,6 +18,13 @@ public class NotificationDocument {
 	private Date date;
 	private String lastSender;
 	private String linkToPost;
+	private Boolean read = false;
+	public String get_id() {
+		return _id;
+	}
+	public void set_id(String _id) {
+		this._id = _id;
+	}
 	public String getPostId() {
 		return postId;
 	}
@@ -64,5 +72,11 @@ public class NotificationDocument {
 	}
 	public void setLinkToPost(String linkToPost) {
 		this.linkToPost = linkToPost;
+	}
+	public Boolean getRead() {
+		return read;
+	}
+	public void setRead(Boolean read) {
+		this.read = read;
 	}
 }

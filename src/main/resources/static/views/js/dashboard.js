@@ -184,11 +184,10 @@ function postComment(postId,comment,userName){
 						"</div>"+
 					"</div>"+
 					"<div>"+
-					"<p class=''><b>"+response.userName+"</b>&nbsp"+response.daysAgo+"</p>"+
+					"<p class=''><b>"+response.userName+"</b>&nbsp Just Now</p>"+
 					"<p class=''>"+response.message+"</p>"+
 					"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
 					"<button class='like-button' alt='like' onclick='commentlike(event)'><img alt='like' width=50% src='/views/images/heart.png'></button>"+
-						"<p>Just Now</p>"+
 					"</div>"+
 					"</div>"+
 				"</div>"+

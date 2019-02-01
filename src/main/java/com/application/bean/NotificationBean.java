@@ -1,12 +1,14 @@
 package com.application.bean;
 
 import java.util.List;
+import java.util.Set;
 
 public class NotificationBean {
 
 	private String message;
 	private String timeAgo;
-	private List<String> pictureUrls;
+	private Set<String> pictureUrls;
+	private String postId;
 	public String getMessage() {
 		return message;
 	}
@@ -19,10 +21,16 @@ public class NotificationBean {
 	public void setTimeAgo(String timeAgo) {
 		this.timeAgo = timeAgo;
 	}
-	public List<String> getPictureUrls() {
+	public Set<String> getPictureUrls() {
 		return pictureUrls;
 	}
-	public void setPictureUrls(List<String> pictureUrls) {
+	public void setPictureUrls(Set<String> pictureUrls) {
 		this.pictureUrls = pictureUrls;
+	}
+	public String getPostId() {
+		return postId;
+	}
+	public void setPostId(String postId) {
+		this.postId = postId;
 	}
 }

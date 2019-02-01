@@ -136,12 +136,32 @@ function commentlike(event){
 		});
 	}
 }
+
+function add_notification(response){
+	var notification= "<li class='unread-notification' id='notification-"+response.postId+"'>"
+			+"<div  id='nav-bar-picture-icon' style='position:relative;width: 40px;' >"
+			+"<img id='nav-bar-profile-picture'  alt=''"
+				+" src='"+response.pictureUrls[0]+"' style='border-radius:50%;position:absolute;display: inline;'>";
+			if(response.pictureUrls[1]){
+			notification = notification+"	<img id='nav-bar-profile-picture'  alt=''"
+			 				+" src='"+response.pictureUrls[1]+"' style='border-radius:50%;position:absolute;display: inline;margin-left:-10px;'>"
+			}
+			notification = notification + "</div>"
+			+"<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>"+response.message+"</b></h5><h6>"+response.timeAgo+"</h6></div>"
+		+"</li>";
+		if($("#notification-"+response.postId)){
+			$("#notification-"+response.postId).remove()
+		}
+		$("#notification-box-display").prepend(notification);
+	  $("#notification-nav-bar").text( parseInt($('#notification-nav-bar').text())+1);
+	  $("#notification-nav-bar").css({"background-color":"red","color":"white"});
+}
 function _websocket_connect(){
     var socket = new SockJS(env+'/gs-guide-websocket?token='+token);
     var stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
        stompClient.subscribe('/user/queue/notification', function (response){
-    	   console.log(response.body);
+    	   add_notification(JSON.parse(response.body));
        });
     });
 }

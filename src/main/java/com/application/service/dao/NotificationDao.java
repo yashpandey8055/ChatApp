@@ -15,8 +15,11 @@ public class NotificationDao {
 	private MongoTemplate template;
 	
 	public NotificationDocument find(String key,String value) {
-		return template.findOne(Query.query(Criteria.where(key).is(value)), NotificationDocument.class);
-		
+		NotificationDocument document =  template.findOne(Query.query(Criteria.where(key).is(value)), NotificationDocument.class);
+		if(document==null) {
+			return new NotificationDocument();
+		}
+		return document;
 	}
 	
 	public NotificationDocument save(NotificationDocument notification) {
