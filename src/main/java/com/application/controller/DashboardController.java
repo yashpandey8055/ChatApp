@@ -61,16 +61,16 @@ public class DashboardController {
 		List<PostDocument> posts = postDao.findByQuery(query);
 		
 		for(PostDocument post:posts) {
-			LikeDocument postLikeDocument = likesDao.getLikePostByQuery(Query.query(Criteria.where("postId").is(post.getId()).and("likedBy").all(currentUser.getUsername())));
+			LikeDocument postLikeDocument = likesDao.getLikePostByQuery(Query.query(Criteria.where("postId").is(post.getId())));
 			PostResponse postResponse = new PostResponse();
 			postResponse.setDaysAgo(Utils.calculateTimeDifference(post.getCreationDate()));
-			postResponse.setLikedByUser(postLikeDocument!=null);
+			postResponse.setLikedByUser(postLikeDocument!=null?postLikeDocument.getLikedBy().contains(currentUser.getUsername()):false);
 			postResponse.setLikesCount(postLikeDocument!=null?postLikeDocument.getLikedBy().size():0);
 			postResponse.setUser(usersMap.get(post.getUserName()));
 			List<CommentDocument> comments = commentDao.find(post.getId());
 			comments.stream().forEach(x->{x.setDaysAgo(Utils.calculateTimeDifference(x.getCreationDate()));
-			LikeDocument commentLikeDocument = likesDao.getLikePostByQuery(Query.query(Criteria.where("postId").is(x.getId()).and("likedBy").all(currentUser.getUsername())));
-				x.setLikedByUser(commentLikeDocument!=null);
+			LikeDocument commentLikeDocument = likesDao.getLikePostByQuery(Query.query(Criteria.where("postId").is(x.getId())));
+				x.setLikedByUser(commentLikeDocument!=null?commentLikeDocument.getLikedBy().contains(currentUser.getUsername()):false);
 			});
 			postResponse.setComments(comments);
 			postResponse.setPost(post);

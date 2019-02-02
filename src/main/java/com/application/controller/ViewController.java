@@ -28,4 +28,9 @@ public class ViewController {
 	public String  userPage(Map<String, Object> model){
 		return "/views/user.html";
 	}
+	
+	@GetMapping("/post")
+	public String  postViewPage(Map<String, Object> model){
+		return "/views/post.html";
+	}
 }

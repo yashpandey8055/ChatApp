@@ -1,5 +1,7 @@
 package com.application.service.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -23,7 +25,10 @@ public class LikesDao {
 		Query query = Query.query(Criteria.where("postId").is(postId));
 		return template.findOne(query, LikeDocument.class);
 	}
-	
+	public List<LikeDocument> getLikesPost(String postId) {
+		Query query = Query.query(Criteria.where("postId").is(postId));
+		return template.find(query, LikeDocument.class);
+	}
 	public LikeDocument getLikePostByQuery(Query query) {
 		return template.findOne(query, LikeDocument.class);
 	}

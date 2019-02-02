@@ -123,6 +123,7 @@ ul{
 	flex-direction: row;
 	padding:10px;
 	padding-left:20px;
+	cursor:pointer;
 }
 .unread-notification{
 	background:	#E6E6FA;

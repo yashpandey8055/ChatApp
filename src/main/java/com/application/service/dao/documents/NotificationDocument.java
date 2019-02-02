@@ -1,8 +1,8 @@
 package com.application.service.dao.documents;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,8 +14,10 @@ public class NotificationDocument {
 	private long count = 0;
 	private String receiver;
 	private String message;
-	private List<String> pictureUrl = new ArrayList<>(2);
+	private Set<String> pictureUrl = new HashSet<>(2);
 	private Date date;
+	private String type;
+	private String currentSender;
 	private String lastSender;
 	private String linkToPost;
 	private Boolean read = false;
@@ -49,10 +51,10 @@ public class NotificationDocument {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public List<String> getPictureUrl() {
+	public Set<String> getPictureUrl() {
 		return pictureUrl;
 	}
-	public void setPictureUrl(List<String> pictureUrl) {
+	public void setPictureUrl(Set<String> pictureUrl) {
 		this.pictureUrl = pictureUrl;
 	}
 	public Date getDate() {
@@ -78,5 +80,23 @@ public class NotificationDocument {
 	}
 	public void setRead(Boolean read) {
 		this.read = read;
+	}
+	public String getCurrentSender() {
+		return currentSender;
+	}
+	public void setCurrentSender(String currentSender) {
+		this.currentSender = currentSender;
+	}
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
 	}
 }

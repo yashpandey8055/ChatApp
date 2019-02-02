@@ -136,9 +136,11 @@ function commentlike(event){
 		});
 	}
 }
-
+function open_post(postId){
+	document.location.href = env+"/post?postId="+postId;
+}
 function add_notification(response){
-	var notification= "<li class='unread-notification' id='notification-"+response.postId+"'>"
+	var notification= "<li onclick= open_post('"+response.postId+"') class='unread-notification' id='notification-"+response.postId+"-"+response.type+"'>"
 			+"<div  id='nav-bar-picture-icon' style='position:relative;width: 40px;' >"
 			+"<img id='nav-bar-profile-picture'  alt=''"
 				+" src='"+response.pictureUrls[0]+"' style='border-radius:50%;position:absolute;display: inline;'>";
@@ -149,12 +151,10 @@ function add_notification(response){
 			notification = notification + "</div>"
 			+"<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>"+response.message+"</b></h5><h6>"+response.timeAgo+"</h6></div>"
 		+"</li>";
-		if($("#notification-"+response.postId)){
+		if($("#notification-"+response.postId+"-"+response.type)){
 			$("#notification-"+response.postId).remove()
 		}
 		$("#notification-box-display").prepend(notification);
-	  $("#notification-nav-bar").text( parseInt($('#notification-nav-bar').text())+1);
-	  $("#notification-nav-bar").css({"background-color":"red","color":"white"});
 }
 function _websocket_connect(){
     var socket = new SockJS(env+'/gs-guide-websocket?token='+token);
@@ -162,6 +162,8 @@ function _websocket_connect(){
     stompClient.connect({}, function (frame) {
        stompClient.subscribe('/user/queue/notification', function (response){
     	   add_notification(JSON.parse(response.body));
+    	   $("#notification-nav-bar").text( parseInt($('#notification-nav-bar').text())+1);
+    	   $("#notification-nav-bar").css({"background-color":"red","color":"white"});
        });
     });
 }
@@ -174,6 +176,12 @@ $(function(){
 	if(token!=""){
 		httpRequest.get("/users/current",null,function(response){
 			_websocket_connect();
+			httpRequest.get("/get/notification",null,function(response){
+				response = JSON.parse(response);
+				response.some(function(res){
+					add_notification(res);
+				})
+			})
 			currentUser = JSON.parse(response);
 				var downloadingImage = new Image();
 				downloadingImage.onload = function(){

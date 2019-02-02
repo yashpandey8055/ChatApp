@@ -9,6 +9,7 @@ public class NotificationBean {
 	private String timeAgo;
 	private Set<String> pictureUrls;
 	private String postId;
+	private String type;
 	public String getMessage() {
 		return message;
 	}
@@ -32,5 +33,17 @@ public class NotificationBean {
 	}
 	public void setPostId(String postId) {
 		this.postId = postId;
+	}
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
 	}
 }
