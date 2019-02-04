@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ViewController {
@@ -32,5 +31,10 @@ public class ViewController {
 	@GetMapping("/post")
 	public String  postViewPage(Map<String, Object> model){
 		return "/views/post.html";
+	}
+	
+	@GetMapping("/register")
+	public String  registerPage(Map<String, Object> model){
+		return "/views/register.html";
 	}
 }

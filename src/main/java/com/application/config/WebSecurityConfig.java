@@ -35,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		    new AntPathRequestMatcher("/webjars/**"),
 		    new AntPathRequestMatcher("/favicon.ico"),
 		    new AntPathRequestMatcher("/"),
+		    new AntPathRequestMatcher("/register"),
 		    new AntPathRequestMatcher("/login")
 		    );
 

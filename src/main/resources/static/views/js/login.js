@@ -1,14 +1,16 @@
 var env = "http://localhost:8080"
+const ERROR = "Not found";
+const ERROR_MESSAGE = "No user found with Id"
 const httpRequest = new HttpRequest();
 var login = function(){
 	var param = new Map();
 	param.set("userName",$("#username").val());
 	httpRequest.get("/public/users/login",param,null,function(response){
-		if (response!==null){
+		if (response!==ERROR){
 	        document.cookie="token="+ response;
 	        window.location.href = env+"/views/navbar.html";
         }else {
-        	$(".error-message").text(response);
+        	$(".error-message").html("<p>"+ERROR_MESSAGE+"</p>" );
         	$(".error-message").css({"color":"#b30000"});
         }
 });

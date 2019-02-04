@@ -36,7 +36,7 @@ function HttpRequest(){
 			 if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
 				 callback(this.responseText);
 			}else if(xmlHttp.readyState == 4 &&xmlHttp.status !== 200){
-				callback(this.responseText);
+				callback();
 			}
 		}
 		
@@ -122,17 +122,18 @@ function commentlike(event){
 	var params = new Map();
 	params.set("postId", $(event.target).parents('.status-comment-display-box').attr('id'));
 	
-	if($(event.target).attr('alt')== 'like'){
+	if($(event.target).attr('alt')== 'like'||$(event.target).child().attr('alt')){
 		$(event.target).attr('alt','unlike'); 
-		$(event.target).attr('src','/views/images/heart-like.png');
+		$(event.target).child().attr('alt','like')
+		$(event.target).child().attr('src','/views/images/heart-like.png');
 		httpRequest.get("/comment/like",params,function(response){
-			console.log(response);
 		});
 	}else{
 		$(event.target).attr('alt','like'); 
+		$(event.target).child().attr('alt','like'); 
 		$(event.target).attr('src','/views/images/heart.png');
+		$(event.target).child().attr('src','/views/images/heart.png')
 		httpRequest.get("/comment/unlike",params,function(response){
-			console.log(response);
 		});
 	}
 }

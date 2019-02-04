@@ -17,12 +17,14 @@ body{
 
 .login-box{
     width: 500px;
-    height:500px;
+    height:auto;
+    padding:10px;
 	background-color:whitesmoke;
 	diplay:block;
 	position: absolute;
     top: 50%;
     left: 50%;
+    padding-bottom:15px;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%); /* IE 9 */
     -webkit-transform: translate(-50%, -50%); /
@@ -32,9 +34,15 @@ body{
 	border-radius:5px;
 	text-align:center;
 }
-
+.register-box{
+	 width: 800px;
+	 text-align:left;
+}
 .input-group{
 	text-align:center;
+}
+.row{
+	margin-bottom:10px;
 }
 .login-form{
     width: 100%;
@@ -43,7 +51,7 @@ body{
     padding-bottom:5px;
 }
 .input-group{
-	margin:15px;
+	margin:5px;
 	font-family:BloggerSans;
 }
 .input-group>input:focus{
