@@ -2,6 +2,7 @@ package com.application.service.dao.documents;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -41,9 +42,13 @@ public class UserDocument implements UserDetails{
 	@JsonInclude(Include.NON_NULL)
 	String gender;
 	@JsonInclude(Include.NON_NULL)
+	String dob;
+	@JsonInclude(Include.NON_NULL)
 	int age;
 	@JsonInclude(Include.NON_NULL)
 	private List<String> following = new ArrayList<>(1);
+	@JsonInclude(Include.NON_NULL)
+	int yearOfBirth;
 	
 	@JsonInclude(Include.NON_NULL)
 	private boolean isFollowing;
@@ -53,6 +58,9 @@ public class UserDocument implements UserDetails{
 	String state;
 	@JsonInclude(Include.NON_NULL)
 	String country;
+	
+	@JsonInclude(Include.NON_NULL)
+	String email;
 
 	private List<String> posts = new ArrayList<>(1);
 	@Override
@@ -139,11 +147,26 @@ public class UserDocument implements UserDetails{
 	public long getFollowers() {
 		return followers;
 	}
+	public String getDob() {
+		return dob;
+	}
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+	public void setFollowing(boolean isFollowing) {
+		this.isFollowing = isFollowing;
+	}
 	public void setFollowers(long followers) {
 		this.followers = followers;
 	}
 	public long getApprovals() {
 		return approvals;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public void setApprovals(long approvals) {
 		this.approvals = approvals;
@@ -202,6 +225,12 @@ public class UserDocument implements UserDetails{
 	}
 	public List<String> getPosts() {
 		return posts;
+	}
+	public int getYearOfBirth() {
+		return yearOfBirth;
+	}
+	public void setYearOfBirth(int yearOfBirth) {
+		this.yearOfBirth = yearOfBirth;
 	}
 	public void setPosts(List<String> posts) {
 		this.posts = posts;

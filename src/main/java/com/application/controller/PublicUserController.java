@@ -1,5 +1,6 @@
 package com.application.controller;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,9 @@ public class PublicUserController {
 	UsersDao userDao;
 	
 	@PostMapping("/users/register")
-	public ResponseEntity<Object> register(@RequestBody String request){
-		UserDocument document = HttpUtils.unwrap(request, UserDocument.class);
+	public ResponseEntity<Object> register(@RequestBody UserDocument document){
+		document.setAge(Calendar.getInstance().get(Calendar.YEAR)-document.getYearOfBirth());
+		document.setProfileUrl("https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/default.jpg");
 		userDao.save(document);
 		return login(document.getUsername());
 	}
@@ -43,9 +45,9 @@ public class PublicUserController {
 	}
 
 	@GetMapping("/users/getUser")
-	public ResponseEntity<Object> getUser(@RequestParam String userName){
+	public ResponseEntity<UserDocument> getUser(@RequestParam String token){
 		
-		return new ResponseEntity<>("Hello",HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(userService.findByToken(token),HttpStatus.ACCEPTED);
 	}
 	
 	@PostMapping("/users/pushUsers")
