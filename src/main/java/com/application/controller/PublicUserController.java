@@ -46,8 +46,8 @@ public class PublicUserController {
 
 	@GetMapping("/users/getUser")
 	public ResponseEntity<UserDocument> getUser(@RequestParam String token){
-		
-		return new ResponseEntity<>(userService.findByToken(token),HttpStatus.ACCEPTED);
+		UserDocument document = userService.findByToken(token);
+		return new ResponseEntity<>(document,HttpStatus.OK);
 	}
 	
 	@PostMapping("/users/pushUsers")

@@ -21,7 +21,8 @@ public class UUIDAuthenticationService {
 	    return Optional.of(uuid);
 	  }
 
-	  public UserDocument findByToken(final String token) {
+	  public UserDocument findByToken(String token) {
+		  token = token.replaceAll("\"","");
 		  return users.findWithToken(token);
 	  }
 
