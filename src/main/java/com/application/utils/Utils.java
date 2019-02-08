@@ -30,4 +30,13 @@ public class Utils {
     	}
     	return ((int)(seconds*timeCount[count]))+""+time[count]+" ago";
     }
+	
+	public static Boolean isNumeric(String number) {
+    	try {
+    		Long.parseLong(number);
+    		return true;
+    	}catch(NumberFormatException e) {
+    		return false;
+    	}
+    }	
 }

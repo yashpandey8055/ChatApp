@@ -49,7 +49,8 @@ public class UserDocument implements UserDetails{
 	private List<String> following = new ArrayList<>(1);
 	@JsonInclude(Include.NON_NULL)
 	int yearOfBirth;
-	
+	@JsonInclude(Include.NON_NULL)
+	long phoneNumber;
 	@JsonInclude(Include.NON_NULL)
 	private boolean isFollowing;
 	@JsonInclude(Include.NON_NULL)
@@ -228,6 +229,12 @@ public class UserDocument implements UserDetails{
 	}
 	public int getYearOfBirth() {
 		return yearOfBirth;
+	}
+	public long getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(long phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 	public void setYearOfBirth(int yearOfBirth) {
 		this.yearOfBirth = yearOfBirth;

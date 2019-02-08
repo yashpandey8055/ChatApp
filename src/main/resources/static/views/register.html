@@ -47,6 +47,9 @@
 .error-message-display{
 	color:#b30000;
 }
+.success-message-display{
+	color:teal;
+}
 </style>
 <body>
 <nav class="navbar-nav">
@@ -118,6 +121,7 @@
 		     <input type="text" class="form-control" id="countrycode" value="+91" style="width:20%;margin-right:2px">
 		     <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number">
 		  </div>
+		  <small></small>
 	    </div>
   	</div>
   	<div class="row">
@@ -128,7 +132,7 @@
 	    </div>
   	</div>
 	</form>
-	<div style="width:70%;margin:auto;"><button class="btn btnfull" onclick="register()">Create Account</button></div>
+	<div style="width:70%;margin:auto;"><button class="btn btnfull" id="register-button" onclick="register()">Create Account</button></div>
 	</div>
 </div>
 </body>

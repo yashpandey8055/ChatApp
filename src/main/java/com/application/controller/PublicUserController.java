@@ -4,8 +4,11 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.application.config.UUIDAuthenticationService;
 import com.application.service.dao.UsersDao;
 import com.application.service.dao.documents.UserDocument;
-import com.application.utils.HttpUtils;
+import com.application.utils.Utils;
 
 @RestController
 @RequestMapping("/public")
@@ -55,4 +58,19 @@ public class PublicUserController {
 		userDao.pushList(documents);
 		return new ResponseEntity<>("Hello",HttpStatus.ACCEPTED);
 	}
+	
+	  @GetMapping("/exist")
+	  public boolean fieldExist(@RequestParam("key") String key, @RequestParam("value") String value) {
+		  List<UserDocument> userDocument;
+		  if(Utils.isNumeric(value)) {
+			  userDocument =  userDao.findByQuery(Query.query(Criteria.where(key).is(Long.parseLong(value))));
+		  }else {
+			 userDocument =  userDao.findByQuery(Query.query(Criteria.where(key).is(value))); 
+		  }
+		 
+		  if(userDocument!=null&&!userDocument.isEmpty()) {
+			  return true;
+		  }
+		return false;
+	  }
 }
