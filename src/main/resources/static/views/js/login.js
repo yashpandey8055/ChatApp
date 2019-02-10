@@ -1,10 +1,11 @@
 var env = "http://localhost:8080"
 const ERROR = "Not found";
-const ERROR_MESSAGE = "No user found with Id"
+const ERROR_MESSAGE = "Username/password incorrect"
 const httpRequest = new HttpRequest();
 var login = function(){
 	var param = new Map();
 	param.set("userName",$("#username").val());
+	param.set("password",$("#password").val());
 	httpRequest.get("/public/users/login",param,null,function(response){
 		if (response!==ERROR){
 	        document.cookie="token="+ response;

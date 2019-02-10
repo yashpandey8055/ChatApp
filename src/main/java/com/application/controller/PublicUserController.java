@@ -8,7 +8,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,17 +35,20 @@ public class PublicUserController {
 	@PostMapping("/users/register")
 	public ResponseEntity<Object> register(@RequestBody UserDocument document){
 		document.setAge(Calendar.getInstance().get(Calendar.YEAR)-document.getYearOfBirth());
-		document.setProfileUrl("https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/default.jpg");
+		document.setProfileUrl("https://s3.ap-south-1.amazonaws.com/ketu-user-profile-pictures/lonely-"+document.getGender().toLowerCase()+".jpg");
+		String pass = document.getPassword();
+		document.setPassword(BCrypt.hashpw(document.getPassword(), BCrypt.gensalt()));
 		userDao.save(document);
-		return login(document.getUsername());
+		return login(document.getUsername(),pass);
 	}
 	
 	@GetMapping("/users/login")
-	public ResponseEntity<Object> login(@RequestParam String userName){
-		if(userDao.find(userName) == null) {
-			return new ResponseEntity<>("Not found",HttpStatus.NOT_FOUND);
+	public ResponseEntity<Object> login(@RequestParam String userName,@RequestParam String password){
+		UserDocument userDocument = userDao.find(userName);
+		if(userDocument != null&&BCrypt.checkpw(password, userDocument.getPassword())) {
+			return new ResponseEntity<>(userService.login(userName),HttpStatus.OK);
 		}
-		return new ResponseEntity<>(userService.login(userName),HttpStatus.OK);
+		return new ResponseEntity<>("Not found",HttpStatus.NOT_FOUND);
 	}
 
 	@GetMapping("/users/getUser")
