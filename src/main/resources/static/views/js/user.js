@@ -45,6 +45,64 @@ function displayUser(user){
 			downloadingImage.src = user.profileUrl;
 			
 }
+
+function edit_profile(){
+	$(".content-container").css({"opacity":"0.1"});
+		$("body").prepend("<div class='pop-up-box  vertical-align width-70' style='top:40%'>" +
+				"<div align=right><button type='button' id='close_button' class='close' onclick='close_this()'><span aria-hidden='true'>&times;</span></button></div>"+
+				"<h3>Update Profile</h3>"+
+			"<form>"+
+		"<div class='row'>"+
+		"<div class='col'>"+
+	    "<label for='firstName'>First Name</label>"+
+	      "<input type='text' class='form-control' id='firstName' placeholder='First name'>"+
+	      "</div>"+
+			"<div class='col'>"+
+			"<label for='lastName'>Last Name</label>"+
+	    " <input type='text' class='form-control' id='lastName' placeholder='Last name'>"+
+	    "</div>"+
+	    "</div>"+
+  	"<div class='row-full'>"+
+	   "<div class='col'>"+
+	   "<label for='Bio'>Bio</label>"+
+	   " <input type='text' class='form-control' id='bio' placeholder='bio'>"+
+	   "</div>"+
+  	"</div>" +
+  	"<div class='row'>"+
+	   "<div class='col'>"+
+	   "<label for='emailId'>Email</label>"+
+	   " <input type='text' class='form-control' id='email' placeholder='Email'>"+
+	   "</div>"+
+	   "<div class='col'>"+
+	   "<label for='emailId'>Phone</label>"+
+	   " <input type='text' class='form-control' id='phoneNumber' placeholder='Phone Number'>"+
+	   "</div>"+
+	"</div>" +
+	"<div class='row'>"+
+	   "<div class='col'>"+
+	   "<label for='select-date'>Date</label>"+
+	   " <input type='text' class='form-control' id='select-date' placeholder='Date'>"+
+	   "</div>"+
+	   "<div class='col'>"+
+	   "<label for='select-month'>Month</label>"+
+	   " <input type='text' class='form-control' id='select-month' placeholder='Month'>"+
+	   "</div>"+
+	   "<div class='col'>"+
+	   "<label for='select-year'>Year</label>"+
+	   " <input type='text' class='form-control' id='select-year' placeholder='year'>"+
+	   "</div>"+
+	"</div>" +
+	"</form>"+
+	"<div style='width:100%;margin:auto;'><button class='btn app-btn btnfull' id='register-button' onclick='update_profile()'>Update Account</button></div>");
+}
+
+function update_profile(){
+	close_this();
+}
+function close_this(){
+	$(".content-container").css({"opacity":"1"});
+	$('.pop-up-box').remove();
+}
 $(function () {
 	httpRequest.get(env+"/users/user/"+user,null,function(response){
 		response = JSON.parse(response);
@@ -70,12 +128,11 @@ $(function () {
 					"</table>"+
 					"<p>"+response.bio+"</p>";
 			if(user==currentUser.userName){
-				res = res +	"<button type='button' class='btn purple-button full-width-btn' id='edit-profile'>Edit Profile</button>";
+				res = res +	"<button type='button' class='btn purple-button full-width-btn' id='edit-profile' onclick='edit_profile()'>Edit Profile</button>";
 			}else{
 				res = res +	"<button type='button' class='btn purple-button full-width-btn' id='follow-user-btn' onclick='message()'>Message</button>";
 			}
-							
-				res = res +		"</div>"+
+			res = res +		"</div>"+
 				"</td>"+
 				"</tr>"+
 			"</tbody>"+

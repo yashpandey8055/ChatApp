@@ -76,6 +76,27 @@ body{
 		display:flex;
 	flex-direction:row;
 }
+.width-70{
+	width:40%;
+}
+.row{
+	display:flex;
+}
+.row-full,.row-full>.col{
+	width:100%;
+}
+.row-full-3{
+	display:flex;
+}
+.row-full-3>.col{
+		width:33%;
+}
+.row>.col{
+	width:50%;
+	display:flex;
+	flex-direction:column;
+	margin:5px;
+}
 .post-content-footer>div{
 	margin:5px;
 }

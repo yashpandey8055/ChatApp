@@ -414,6 +414,19 @@ h5,h6{
 	border:1px solid #8042f4;
 	border-radius:5px;
 }
+.btnfull{
+	width:100%;
+	color:whitesmoke;
+	font-family:BloggerSans;
+	background-image:linear-gradient(to left ,#46377b,#6f4e96);
+}
+.btnfull:focus,.btnfull:hover,.btnfull:active{
+	outline: none !important;
+	width:100%;
+	color:whitesmoke;
+	background-image:linear-gradient(to left ,#46377b,#6f4e96);
+	box-shadow:0px 0px 2px #6f4e96; 
+}
 .follow-btn{
 	color:white;
 	margin-right:5px;

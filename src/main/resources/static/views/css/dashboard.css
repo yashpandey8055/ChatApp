@@ -172,7 +172,7 @@ body{
 	background:white;
 	border-radius:5px;
 	margin:auto;
-	z-index: 2;
+	z-index: 10;
 	margin-top: 10%;
 	text-align: center;
 	border:1px solid #dcdcdc;
