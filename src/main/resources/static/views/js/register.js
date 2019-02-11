@@ -78,7 +78,7 @@ function register(){
     	}else{
     		$("#select-year").css({"border":"1px solid #008080"})
     	}
-    	if(!$('#password').val().match('^(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d]).{9,}$')){
+    	if($("#password").val()&&!$('#password').val().match('^(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d]).{9,}$')){
     		$('#password').next().css({"color":"#b30000"})
     		$("#password").css({"border":"1px solid #b30000"})
     		validated = false;
@@ -132,7 +132,7 @@ function register(){
     		param.set("key","userName");
     		param.set("value",$("#userName").val());
     		httpRequest.get("/public/exist",param,null,function(response){
-    			if (response=='true'){
+    			if (response=='true'||$("#userName").val()!==currentUser.userName){
     				validateField.setUserName(false);
     	    		$("#userName").css({"border":"1px solid #b30000"})
     	    		$("#userName").next().html("<small class='error-message-display'>Username already taken. Try another<small>")
@@ -150,7 +150,7 @@ function register(){
     		param.set("key","email");
     		param.set("value",$("#emailId").val());
     		httpRequest.get("/public/exist",param,null,function(response){
-    			if (response=='true'){
+    			if (response=='true'||$("#emailId").val()!==currentUser.email){
     				validateField.setEmail(false);
     	    		$("#emailId").css({"border":"1px solid #b30000"})
     	    		$("#emailId").next().html("<small class='error-message-display'>Email Id Already Registered<small>")
@@ -167,7 +167,7 @@ function register(){
     		param.set("key","phoneNumber");
     		param.set("value",$("#phoneNumber").val());
     		httpRequest.get("/public/exist",param,null,function(response){
-    			if (response=='true'){
+    			if (response=='true'||$("#phoneNumber").val()!==currentUser.phoneNumber){
     				validateField.setPhoneNumber(false);
     	    		$("#phoneNumber").css({"border":"1px solid #b30000"})
     	    		$("#phoneNumber").next().html("<small class='error-message-display'>Phone Number Already Registered<small>")

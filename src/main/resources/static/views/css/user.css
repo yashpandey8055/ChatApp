@@ -87,6 +87,7 @@ body{
 }
 .row-full-3{
 	display:flex;
+	flex-direction:row;
 }
 .row-full-3>.col{
 		width:33%;

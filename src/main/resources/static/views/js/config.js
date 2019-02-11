@@ -168,15 +168,11 @@ function _websocket_connect(){
        });
     });
 }
-$(function(){
-	$(".navbar-nav").load("/views/navbar.html");
-	
-	$("#nav-bar-picture-icon").on('click',function(){
-		console.log('clicked');
-	})
+function load_CurrentUser(callback){
 	if(token!=""){
 		httpRequest.get("/users/current",null,function(response){
 			_websocket_connect();
+			callback();
 			httpRequest.get("/get/notification",null,function(response){
 				response = JSON.parse(response);
 				response.some(function(res){
@@ -194,4 +190,10 @@ $(function(){
 	}else{
 		document.location.href = env+"/views/login.html";
 	}
+}
+$(function(){
+	$(".navbar-nav").load("/views/navbar.html");
+	
+	load_CurrentUser(function(){});
+	
 })

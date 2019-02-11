@@ -28,6 +28,7 @@ import com.application.service.dao.documents.UserDocument;
 import com.application.utils.Utils;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/users")
@@ -41,7 +42,6 @@ public class UserController {
 	
 	@Autowired
 	PostDao postDao;
-	
 	
 	@Autowired
 	LikesDao likesDao;
@@ -99,6 +99,13 @@ public class UserController {
 	  @GetMapping("/user/{user}")
 	  public ResponseEntity<UserDocument> getUser(@AuthenticationPrincipal final UserDocument currentUser,@PathVariable("user") String user) {
 		  return new ResponseEntity<>(userDao.find(user),HttpStatus.OK);
+	  }
+	  
+	  @GetMapping("/user/update")
+	  public ResponseEntity<UserDocument> updateUser(@AuthenticationPrincipal final UserDocument currentUser,@RequestBody UserDocument updateUser) {
+		  updateUser.setId(currentUser.getId());
+		  userDao.save(updateUser);
+		  return new ResponseEntity<>(updateUser,HttpStatus.OK);
 	  }
 	  
 		@GetMapping("/getPosts/{user}")

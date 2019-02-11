@@ -48,34 +48,40 @@ function displayUser(user){
 
 function edit_profile(){
 	$(".content-container").css({"opacity":"0.1"});
-		$("body").prepend("<div class='pop-up-box  vertical-align width-70' style='top:40%'>" +
+		$("body").prepend("<div class='pop-up-box  vertical-align' style='top:40%;width:40%;'>" +
 				"<div align=right><button type='button' id='close_button' class='close' onclick='close_this()'><span aria-hidden='true'>&times;</span></button></div>"+
 				"<h3>Update Profile</h3>"+
 			"<form>"+
 		"<div class='row'>"+
 		"<div class='col'>"+
 	    "<label for='firstName'>First Name</label>"+
-	      "<input type='text' class='form-control' id='firstName' placeholder='First name'>"+
+	      "<input type='text' class='form-control' id='firstName' placeholder='First name' value="+currentUser.firstName+">"+
 	      "</div>"+
 			"<div class='col'>"+
 			"<label for='lastName'>Last Name</label>"+
-	    " <input type='text' class='form-control' id='lastName' placeholder='Last name'>"+
+	    " <input type='text' class='form-control' id='lastName' placeholder='Last name' value="+currentUser.lastName+">"+
 	    "</div>"+
 	    "</div>"+
+	    "<div class='row-full'>"+
+		   "<div class='col'>"+
+		   "<label for='Bio'>UserName</label>"+
+		   " <input type='text'  class='form-control' id='userName' placeholder='userName' value='"+currentUser.userName+"'>"+
+		   "</div>"+
+	  	"</div>" +
   	"<div class='row-full'>"+
 	   "<div class='col'>"+
 	   "<label for='Bio'>Bio</label>"+
-	   " <input type='text' class='form-control' id='bio' placeholder='bio'>"+
+	   " <input type='text'  class='form-control' id='bio' placeholder='bio' value='"+currentUser.bio+"'>"+
 	   "</div>"+
   	"</div>" +
   	"<div class='row'>"+
 	   "<div class='col'>"+
 	   "<label for='emailId'>Email</label>"+
-	   " <input type='text' class='form-control' id='email' placeholder='Email'>"+
+	   " <input type='text' class='form-control' id='emailId' placeholder='Email' value="+currentUser.email+">"+
 	   "</div>"+
 	   "<div class='col'>"+
 	   "<label for='emailId'>Phone</label>"+
-	   " <input type='text' class='form-control' id='phoneNumber' placeholder='Phone Number'>"+
+	   " <input type='text' class='form-control' id='phoneNumber' placeholder='Phone Number' value="+currentUser.phoneNumber+">"+
 	   "</div>"+
 	"</div>" +
 	"<div class='row'>"+
@@ -97,13 +103,46 @@ function edit_profile(){
 }
 
 function update_profile(){
+	if(validate_fields()){
+	currentUser.firstName = $("#firstName").val();
+	currentUser.lastName = $("#lastName").val();
+	currentUser.bio = $("#bio").val();
+	currentUser.phoneNumber = $("#phoneNumber").val();
+	currentUser.userName = $("#userName").val();
+	currentUser.email = $("#emailId").val();
+	currentUser.dob=$('#select-date').val()+"/"+$('#select-month').val()+"/"+$('#select-year').val();
+	currentUser.yearOfBirth=$('#select-year').val();
+	httpRequest.post("/users/update/",currentUser,function(response){
+		var response = JSON.parse(this.responseText);
+		currentUser= response;
+		document.location.href = env+"/user?user="+response.userName;
+	});
 	close_this();
+	}
 }
 function close_this(){
 	$(".content-container").css({"opacity":"1"});
 	$('.pop-up-box').remove();
 }
 $(function () {
+	$("#userName").on("focus",function(){
+		var param = new Map();
+		param.set("key","userName");
+		param.set("value",$("#userName").val());
+		httpRequest.get("/public/exist",param,null,function(response){
+			if (response=='true'||$("#userName").val()!==currentUser.userName){
+				validateField.setUserName(false);
+	    		$("#userName").css({"border":"1px solid #b30000"})
+	    		$("#userName").next().html("<small class='error-message-display'>Username already taken. Try another<small>")
+	        }else {
+				validateField.setUserName(true);
+				$("#register-button").attr({'disabled':false})
+	        	$("#userName").css({"border":"1px solid #008080"})
+	    		$("#userName").next().html("<small class='success-message-display'>valid UserName<small>");
+	        }
+	});
+	})
+	load_CurrentUser(function(){
 	httpRequest.get(env+"/users/user/"+user,null,function(response){
 		response = JSON.parse(response);
 		displayUser(response);
@@ -254,4 +293,5 @@ $(function () {
 		});
 		$(".center").append(dashboard_response);
 	})
+});
 });
