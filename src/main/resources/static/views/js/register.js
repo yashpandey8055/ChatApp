@@ -1,3 +1,4 @@
+var currentUser
 var validateField ={	
 		userName : false,
 		phoneNumber : false,
@@ -60,7 +61,14 @@ function register(){
 		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xmlHttp.send(null);
     }
-    
+   function fill_Date_and_year(){
+	   	for(var i=1;i<=31;i++){
+    		$(".select-date").append("<option>"+i+"</option>");
+    	}
+    	for(var i=1;i<=12;i++){
+    		$(".select-month").append("<option>"+i+"</option>");
+    	}
+   } 
     function validate_fields(){
     	var d = new Date();
     	var validated = true;
@@ -120,6 +128,7 @@ function register(){
     	return validated;
     }
     $(function(){
+    	fill_Date_and_year();
     	$(".form-control").on("focus",function(){
     		$(this).css({"border":"1px solid #46377b"})
     	})
@@ -127,12 +136,12 @@ function register(){
     		$(this).css({"border":"1px solid #ced4da"})
     	})
     	
-    	$("#userName").on("focusout",function(){
+    	$(document).on("focusout","#userName",function(){
     		var param = new Map();
     		param.set("key","userName");
     		param.set("value",$("#userName").val());
-    		httpRequest.get("/public/exist",param,null,function(response){
-    			if (response=='true'||$("#userName").val()!==currentUser.userName){
+    		httpRequest.get("/public/exist",param,function(response){
+    			if (response=='true'&&(currentUser&&$("#userName").val()!==currentUser.userName)){
     				validateField.setUserName(false);
     	    		$("#userName").css({"border":"1px solid #b30000"})
     	    		$("#userName").next().html("<small class='error-message-display'>Username already taken. Try another<small>")
@@ -145,12 +154,12 @@ function register(){
     	});
     	})
     	
-    	$("#emailId").on("focusout",function(){
+    	$(document).on("focusout","#emailId",function(){
     		var param = new Map();
     		param.set("key","email");
     		param.set("value",$("#emailId").val());
-    		httpRequest.get("/public/exist",param,null,function(response){
-    			if (response=='true'||$("#emailId").val()!==currentUser.email){
+    		httpRequest.get("/public/exist",param,function(response){
+    			if (response=='true'&&(currentUser&&$("#emailId").val()!==currentUser.email)){
     				validateField.setEmail(false);
     	    		$("#emailId").css({"border":"1px solid #b30000"})
     	    		$("#emailId").next().html("<small class='error-message-display'>Email Id Already Registered<small>")
@@ -162,12 +171,12 @@ function register(){
     	});
     	})
     	
-    	$("#phoneNumber").on("focusout",function(){
+    	$(document).on("focusout","#phoneNumber",function(){
     		var param = new Map();
     		param.set("key","phoneNumber");
     		param.set("value",$("#phoneNumber").val());
-    		httpRequest.get("/public/exist",param,null,function(response){
-    			if (response=='true'||$("#phoneNumber").val()!==currentUser.phoneNumber){
+    		httpRequest.get("/public/exist",param,function(response){
+    			if ((response=='true')&&(currentUser&&parseInt($("#phoneNumber").val())!==currentUser.phoneNumber)){
     				validateField.setPhoneNumber(false);
     	    		$("#phoneNumber").css({"border":"1px solid #b30000"})
     	    		$("#phoneNumber").next().html("<small class='error-message-display'>Phone Number Already Registered<small>")
@@ -175,14 +184,9 @@ function register(){
     				validateField.setPhoneNumber(true);
     	        	$("#phoneNumber").css({"border":"1px solid #008080"})
     	    		$("#phoneNumber").parent().next().html("<small class='success-message-display'>valid Phone Number<small>");
+    	        	$("#phoneNumber").next().html("<small class='success-message-display'>valid Phone Number<small>");
     	        }
     	});
     	})
     	
-    	for(var i=1;i<=31;i++){
-    		$(".select-date").append("<option>"+i+"</option>");
-    	}
-    	for(var i=1;i<=12;i++){
-    		$(".select-month").append("<option>"+i+"</option>");
-    	}
     })

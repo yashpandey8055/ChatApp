@@ -47,6 +47,9 @@ function displayUser(user){
 }
 
 function edit_profile(){
+	validateField.setEmail(true);
+	validateField.setUserName(true);
+	validateField.setPhoneNumber(true);
 	$(".content-container").css({"opacity":"0.1"});
 		$("body").prepend("<div class='pop-up-box  vertical-align' style='top:40%;width:40%;'>" +
 				"<div align=right><button type='button' id='close_button' class='close' onclick='close_this()'><span aria-hidden='true'>&times;</span></button></div>"+
@@ -65,7 +68,8 @@ function edit_profile(){
 	    "<div class='row-full'>"+
 		   "<div class='col'>"+
 		   "<label for='Bio'>UserName</label>"+
-		   " <input type='text'  class='form-control' id='userName' placeholder='userName' value='"+currentUser.userName+"'>"+
+		   " <input type='text'  class='form-control' id='userName'  placeholder='userName' value='"+currentUser.userName+"'>"+
+		   "<small></small>"+
 		   "</div>"+
 	  	"</div>" +
   	"<div class='row-full'>"+
@@ -77,21 +81,27 @@ function edit_profile(){
   	"<div class='row'>"+
 	   "<div class='col'>"+
 	   "<label for='emailId'>Email</label>"+
-	   " <input type='text' class='form-control' id='emailId' placeholder='Email' value="+currentUser.email+">"+
+	   " <input type='text' class='form-control' id='emailId' placeholder='Email' value='"+currentUser.email+"'>"+
+	   "<small></small>"+
 	   "</div>"+
 	   "<div class='col'>"+
-	   "<label for='emailId'>Phone</label>"+
+	   "<label for='phoneNumber'>Phone</label>"+
 	   " <input type='text' class='form-control' id='phoneNumber' placeholder='Phone Number' value="+currentUser.phoneNumber+">"+
+	   "<small></small>"+
 	   "</div>"+
 	"</div>" +
 	"<div class='row'>"+
 	   "<div class='col'>"+
 	   "<label for='select-date'>Date</label>"+
-	   " <input type='text' class='form-control' id='select-date' placeholder='Date'>"+
+	   "<select  class='form-control select-date' id='select-date'>"+
+	     "<option selected>Date</option>"+
+	      "</select>"+
 	   "</div>"+
 	   "<div class='col'>"+
 	   "<label for='select-month'>Month</label>"+
-	   " <input type='text' class='form-control' id='select-month' placeholder='Month'>"+
+	   "<select  class='form-control select-month' id='select-month'>"+
+	     "<option selected>Month</option>"+
+	      "</select>"+
 	   "</div>"+
 	   "<div class='col'>"+
 	   "<label for='select-year'>Year</label>"+
@@ -100,10 +110,12 @@ function edit_profile(){
 	"</div>" +
 	"</form>"+
 	"<div style='width:100%;margin:auto;'><button class='btn app-btn btnfull' id='register-button' onclick='update_profile()'>Update Account</button></div>");
+    	fill_Date_and_year();
 }
 
 function update_profile(){
-	if(validate_fields()){
+
+	if(validateField.checkValidation()&&validate_fields()){
 	currentUser.firstName = $("#firstName").val();
 	currentUser.lastName = $("#lastName").val();
 	currentUser.bio = $("#bio").val();
@@ -112,8 +124,8 @@ function update_profile(){
 	currentUser.email = $("#emailId").val();
 	currentUser.dob=$('#select-date').val()+"/"+$('#select-month').val()+"/"+$('#select-year').val();
 	currentUser.yearOfBirth=$('#select-year').val();
-	httpRequest.post("/users/update/",currentUser,function(response){
-		var response = JSON.parse(this.responseText);
+	httpRequest.put("/users/user/update",currentUser,function(response){
+		var response = JSON.parse(response);
 		currentUser= response;
 		document.location.href = env+"/user?user="+response.userName;
 	});
@@ -125,23 +137,6 @@ function close_this(){
 	$('.pop-up-box').remove();
 }
 $(function () {
-	$("#userName").on("focus",function(){
-		var param = new Map();
-		param.set("key","userName");
-		param.set("value",$("#userName").val());
-		httpRequest.get("/public/exist",param,null,function(response){
-			if (response=='true'||$("#userName").val()!==currentUser.userName){
-				validateField.setUserName(false);
-	    		$("#userName").css({"border":"1px solid #b30000"})
-	    		$("#userName").next().html("<small class='error-message-display'>Username already taken. Try another<small>")
-	        }else {
-				validateField.setUserName(true);
-				$("#register-button").attr({'disabled':false})
-	        	$("#userName").css({"border":"1px solid #008080"})
-	    		$("#userName").next().html("<small class='success-message-display'>valid UserName<small>");
-	        }
-	});
-	})
 	load_CurrentUser(function(){
 	httpRequest.get(env+"/users/user/"+user,null,function(response){
 		response = JSON.parse(response);

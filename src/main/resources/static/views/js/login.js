@@ -6,7 +6,7 @@ var login = function(){
 	var param = new Map();
 	param.set("userName",$("#username").val());
 	param.set("password",$("#password").val());
-	httpRequest.get("/public/users/login",param,null,function(response){
+	httpRequest.get("/public/users/login",param,function(response){
 		if (response!==ERROR){
 	        document.cookie="token="+ response;
 	        window.location.href = env+"/views/navbar.html";
@@ -20,7 +20,7 @@ var login = function(){
 function HttpRequest(){
 	var obj = {};
 	
-	obj.get = function(url,params,token,callback){
+	obj.get = function(url,params,callback){
 		
 		if(params!==null){
 			var requestParam = '' ;
@@ -40,9 +40,6 @@ function HttpRequest(){
 		}
 		
 		xmlHttp.open("GET",url);
-		if(token){
-			xmlHttp.setRequestHeader("Authorization","Bearer "+token);
-		}
 		xmlHttp.send(null);
 	}
 	
@@ -58,6 +55,22 @@ function HttpRequest(){
 			}
 		}
 		xmlHttp.open("POST",env+url,true);
+		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		xmlHttp.send(JSON.stringify(request));
+	}
+	
+	//Post Request
+	obj.put = function(url,request,callback){
+		
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.onreadystatechange =function(){
+			if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+				 callback(this.responseText);
+			}else if(xmlHttp.readyState == 4 &&xmlHttp.status !== 200){
+				callback(this.responseText);
+			}
+		}
+		xmlHttp.open("PUT",env+url,true);
 		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xmlHttp.send(JSON.stringify(request));
 	}

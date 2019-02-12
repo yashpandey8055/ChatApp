@@ -154,9 +154,6 @@ public class UserDocument implements UserDetails{
 	public void setDob(String dob) {
 		this.dob = dob;
 	}
-	public void setFollowing(boolean isFollowing) {
-		this.isFollowing = isFollowing;
-	}
 	public void setFollowers(long followers) {
 		this.followers = followers;
 	}
