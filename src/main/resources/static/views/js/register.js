@@ -141,7 +141,7 @@ function register(){
     		param.set("key","userName");
     		param.set("value",$("#userName").val());
     		httpRequest.get("/public/exist",param,function(response){
-    			if (response=='true'&&(currentUser&&$("#userName").val()!==currentUser.userName)){
+    			if (response=='true'){
     				validateField.setUserName(false);
     	    		$("#userName").css({"border":"1px solid #b30000"})
     	    		$("#userName").next().html("<small class='error-message-display'>Username already taken. Try another<small>")
@@ -151,6 +151,18 @@ function register(){
     	        	$("#userName").css({"border":"1px solid #008080"})
     	    		$("#userName").next().html("<small class='success-message-display'>valid UserName<small>");
     	        }
+    			if(currentUser){
+    			if (currentUser.userName !==$("#userName").val()&&response=='true'){
+    				validateField.setUserName(false);
+    	    		$("#userName").css({"border":"1px solid #b30000"})
+    	    		$("#userName").next().html("<small class='error-message-display'>Username already taken. Try another<small>")
+    	        }else {
+    				validateField.setUserName(true);
+    				$("#register-button").attr({'disabled':false})
+    	        	$("#userName").css({"border":"1px solid #008080"})
+    	    		$("#userName").next().html("<small class='success-message-display'>valid UserName<small>");
+    	        }
+    			}
     	});
     	})
     	
@@ -159,7 +171,7 @@ function register(){
     		param.set("key","email");
     		param.set("value",$("#emailId").val());
     		httpRequest.get("/public/exist",param,function(response){
-    			if (response=='true'&&(currentUser&&$("#emailId").val()!==currentUser.email)){
+    			if (response=='true'){
     				validateField.setEmail(false);
     	    		$("#emailId").css({"border":"1px solid #b30000"})
     	    		$("#emailId").next().html("<small class='error-message-display'>Email Id Already Registered<small>")
@@ -168,6 +180,17 @@ function register(){
     	        	$("#emailId").css({"border":"1px solid #008080"})
     	    		$("#emailId").next().html("<small class='success-message-display'>valid email<small>");
     	        }
+    			if(currentUser){
+	    			if (currentUser.email !==$("#emailId").val()&&response=='true'){
+	    				validateField.setEmail(false);
+	    	    		$("#emailId").css({"border":"1px solid #b30000"})
+	    	    		$("#emailId").next().html("<small class='error-message-display'>Email Id Already Registered<small>")
+	    	        }else {
+	    				validateField.setEmail(true);
+	    	        	$("#emailId").css({"border":"1px solid #008080"})
+	    	    		$("#emailId").next().html("<small class='success-message-display'>valid email<small>");
+	    	        }
+    			}
     	});
     	})
     	
@@ -176,16 +199,29 @@ function register(){
     		param.set("key","phoneNumber");
     		param.set("value",$("#phoneNumber").val());
     		httpRequest.get("/public/exist",param,function(response){
-    			if ((response=='true')&&(currentUser&&parseInt($("#phoneNumber").val())!==currentUser.phoneNumber)){
+    			if (response=='true'){
     				validateField.setPhoneNumber(false);
     	    		$("#phoneNumber").css({"border":"1px solid #b30000"})
     	    		$("#phoneNumber").next().html("<small class='error-message-display'>Phone Number Already Registered<small>")
+    	    		$("#phoneNumber").parent().next().html("<small class='error-message-display'>Phone Number Already Registered<small>")
     	        }else {
     				validateField.setPhoneNumber(true);
     	        	$("#phoneNumber").css({"border":"1px solid #008080"})
     	    		$("#phoneNumber").parent().next().html("<small class='success-message-display'>valid Phone Number<small>");
     	        	$("#phoneNumber").next().html("<small class='success-message-display'>valid Phone Number<small>");
     	        }
+    			if(currentUser){
+        			if (currentUser.phoneNumber !==$("#phoneNumber").val()&&response=='true'){
+		    				validateField.setPhoneNumber(false);
+		    	    		$("#phoneNumber").css({"border":"1px solid #b30000"})
+		    	    		$("#phoneNumber").next().html("<small class='error-message-display'>Phone Number Already Registered<small>")
+		    	        }else {
+		    				validateField.setPhoneNumber(true);
+		    	        	$("#phoneNumber").css({"border":"1px solid #008080"})
+		    	    		$("#phoneNumber").parent().next().html("<small class='success-message-display'>valid Phone Number<small>");
+		    	        	$("#phoneNumber").next().html("<small class='success-message-display'>valid Phone Number<small>");
+		    	        }
+        		}
     	});
     	})
     	
