@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.application.bean.PostResponse;
 import com.application.constants.Constants;
 import com.application.service.UploadService;
+import com.application.service.dao.UsersDao;
 import com.application.service.dao.documents.PostDocument;
 import com.application.service.dao.documents.UserDocument;
 
@@ -32,11 +34,14 @@ public class UploadServiceController {
 	private static final Logger log = LoggerFactory.getLogger(UploadServiceController.class);
 
 	@Autowired
-	@Qualifier("s3Upload")
+	@Qualifier("localSystem")
 	UploadService s3UploadService;
 	
 	@Autowired
 	PostController postController;
+	
+	@Autowired
+	UsersDao userDao;
 	
 	private static final Random RANDOM = new Random();
 	
@@ -47,8 +52,8 @@ public class UploadServiceController {
 		try {
 			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 			BufferedImage originalImage = ImageIO.read(multi.getInputStream());
-			BufferedImage dst =originalImage.getSubimage(0, 
-					0, cropWidth, 
+			BufferedImage dst =originalImage.getSubimage(startX, 
+					startY, cropWidth, 
 					cropHeight);	
 
 			ImageIO.write(dst, "png", byteStream);
@@ -61,6 +66,28 @@ public class UploadServiceController {
 			document.setCommentCount(0);
 			document.setPostImageUrl(s3UploadService.upload(new ByteArrayInputStream(byteStream.toByteArray()), randomStringGenerate(Constants.PNG), null));
 			return postController.insertPost(user, document);
+		} catch (IOException e) {
+			log.error(e.getMessage());
+		}
+		return null;
+	}
+	
+	@PostMapping(value="/changeprofilepicture",consumes = MediaType.MULTIPART_FORM_DATA_VALUE ,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> changeProfilePicture(@AuthenticationPrincipal UserDocument user,@RequestParam("file") MultipartFile multi,
+			@RequestParam("startX") Integer startX,@RequestParam("startY") Integer startY,
+			@RequestParam("cropHeight") Integer cropHeight,@RequestParam("cropWidth") Integer cropWidth){
+		try {
+			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+			BufferedImage originalImage = ImageIO.read(multi.getInputStream());
+			BufferedImage dst =originalImage.getSubimage(startX, 
+					startY, cropWidth, 
+					cropHeight);	
+
+			ImageIO.write(dst, "png", byteStream);
+			String path = s3UploadService.upload(new ByteArrayInputStream(byteStream.toByteArray()), randomStringGenerate(Constants.PNG), null);
+			user.setProfileUrl(path);
+			userDao.save(user);
+			return new ResponseEntity<>(path,HttpStatus.OK);
 		} catch (IOException e) {
 			log.error(e.getMessage());
 		}

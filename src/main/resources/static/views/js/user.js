@@ -47,6 +47,29 @@ function displayUser(user){
 			downloadingImage.src = user.profileUrl;
 			
 }
+function uploadImage(){
+	var img = document.getElementById("upload_image_src");
+	var formData = new FormData();
+	formData.append("file",file);
+	formData.append("startX",cropper?cropper.offsetLeft:0);
+	formData.append("startY",cropper?cropper.offsetTop:0)
+	formData.append("cropHeight",cropper?cropper.offsetHeight:img.offsetHeight)
+	formData.append("cropWidth",cropper?cropper.offsetWidth:img.offsetWidth)
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function(){
+		 if (xhr.readyState == 4 && xhr.status == 200){
+			 display_notification_popup("uploaded Succesfully");
+				currentUser.profileUrl=this.responseText;
+					$("#edit-profile-picture").attr("src",currentUser.profileUrl)
+					$("#edit-profile-picture").css({"display":"inline"});
+				
+		}else if(xhr.readyState == 4 &&xhr.status !== 200){
+			 display_notification_popup("Failed");
+		}
+	}
+	xhr.open("POST", "/upload/changeprofilepicture");
+	xhr.send(formData);
+}
 function previewAndUpload(dataUrl){
 	$("body").append("<div class='pop-up-box split vertical-align'>"+
 	"<div align=right><button type='button' id='close_button' class='close' onclick='close_this(event)'><span aria-hidden='true'>&times;</span></button></div>"+
@@ -147,7 +170,7 @@ function update_profile(){
 	currentUser.dob=$('#select-date').val()+"/"+$('#select-month').val()+"/"+$('#select-year').val();
 	currentUser.yearOfBirth=$('#select-year').val();
 	httpRequest.put("/users/user/update",currentUser,function(response){
-		var response = JSON.parse(response);
+		response = JSON.parse(response);
 		currentUser= response;
 		document.location.href = env+"/user?user="+response.userName;
 	});
