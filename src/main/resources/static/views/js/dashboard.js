@@ -271,6 +271,14 @@ $(function () {
 	httpRequest.get("/dashboard/getPosts",null,function(response){
 		response = JSON.parse(response);
 		var dashboard_response = '';
+		if(response.length<1){
+			dashboard_response  = dashboard_response +"<div class='title-content user-content' style='border:none;background-color:#f2f2f2;height:400px;'>" +
+					"<div style='margin:auto;margin-top:15px;margin-bottom:15px;' class='vertical-align'><img id='edit-profile-picture' " +
+				"style='display: inline;' src='/views/images/empty-icon.png' alt=''><h3>Its so Empty In here. Talk to some people to get updates on them :)"+
+		   "</h3></div>"+
+		   
+		   "</div>";
+		}
 		response.some(function(resp){
 			if(!resp.post.isStatus){
 				dashboard_response = dashboard_response + "<div class='title-content user-content' id='"+resp.post.id+"'>"+

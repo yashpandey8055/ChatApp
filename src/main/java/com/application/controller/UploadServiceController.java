@@ -34,7 +34,7 @@ public class UploadServiceController {
 	private static final Logger log = LoggerFactory.getLogger(UploadServiceController.class);
 
 	@Autowired
-	@Qualifier("localSystem")
+	@Qualifier("s3Upload")
 	UploadService s3UploadService;
 	
 	@Autowired

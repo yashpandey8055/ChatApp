@@ -1,26 +1,6 @@
 
-	<script>
-		$("#profile-icon").on('click',function(){
-			window.location.href = env+"/user?user="+currentUser.userName;
-		});
-		$("#message-icon").on('click',function(){
-			window.location.href = env+"/chat";
-		});
-		$("#dashboard-icon").on('click',function(){
-			window.location.href = env+"/dashboard";
-		});
-		$('.display-options-box').hide(); 
-		
-		$('#nav-bar-picture-icon').click(function(e) {                              
-		   $('#options-pop-box').toggle();  
-		});
-		$('#notification-icon').click(function(e) {                              
-			   $('#notification-pop-box').toggle(); 
-			   $('#notification-nav-bar').text(0);
-			   $('#notification-nav-bar').css({"background":"transparent","color":"transparent"});
-			});
-	</script>
-	
+	<script src="/views/js/navbar.js"></script>
+	<div></div>
 	<div class="logo">Ketu</div>
 	<div class="navbar-element">
 	<div class="icons">
@@ -44,11 +24,8 @@
 	</div>
 	<div class="display-options-box small-display" id="options-pop-box">
 	<ul class="settings-box">
-		<li>Account Settings<hr></li>
-		<li>General Settings<hr></li>
-		<li>Privacy Concerns<hr></li>
-		<li>Activity<hr></li>
-		<li>Logout</li>
+		<li id="change_password">Change Password</li>
+		<li id="logout">Logout</li>
 	</ul>
 	</div>
 	<div class="display-options-box large-display" id="notification-pop-box">

@@ -86,7 +86,6 @@ function HttpRequest(){
 	return obj;
 }
 function follow(){
-	console.log($("#follow-user-btn").text())
 	if($("#follow-user-btn").text()=='Follow'){
 		httpRequest.get("/users/follow/"+currentChattingWithUser,null,function(response){
 			console.log(response);

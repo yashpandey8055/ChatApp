@@ -9,7 +9,7 @@ var login = function(){
 	httpRequest.get("/public/users/login",param,function(response){
 		if (response!==ERROR){
 	        document.cookie="token="+ response;
-	        window.location.href = env+"/views/navbar.html";
+	        window.location.href = env+"/dashboard";
         }else {
         	$(".error-message").html("<p>"+ERROR_MESSAGE+"</p>" );
         	$(".error-message").css({"color":"#b30000"});

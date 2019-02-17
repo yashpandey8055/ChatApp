@@ -10,13 +10,16 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.application.bean.PWDChangeDocument;
 import com.application.bean.PostResponse;
 import com.application.config.UUIDAuthenticationService;
 import com.application.service.OnlineUserPersistenceService;
+import com.application.service.UserCrudService;
 import com.application.service.dao.CommentDao;
 import com.application.service.dao.LikesDao;
 import com.application.service.dao.PostDao;
@@ -28,6 +31,7 @@ import com.application.service.dao.documents.UserDocument;
 import com.application.utils.Utils;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -46,7 +50,8 @@ public class UserController {
 	
 	@Autowired
 	LikesDao likesDao;
-	
+	@Autowired
+	UserCrudService userCrudService;
 	@Autowired
 	OnlineUserPersistenceService onlineUser;
 	
@@ -82,6 +87,17 @@ public class UserController {
 	  public UserDocument getCurrent(@AuthenticationPrincipal final UserDocument user) {
 	    return user;
 	  }
+	  
+	  @PostMapping(path = "/changepwd",consumes = "application/json", produces = "application/json")
+	  public ResponseEntity<String> getChangePwd(@AuthenticationPrincipal final UserDocument user,@RequestBody PWDChangeDocument pwdChange) {
+		  if(BCrypt.checkpw(pwdChange.getOldPassword(), user.getPassword())) {
+			  user.setPassword(BCrypt.hashpw(pwdChange.getNewPassword(), BCrypt.gensalt()));
+			  userDao.save(user);
+			  return new ResponseEntity<>("Password Changed Successfully!", HttpStatus.OK);
+		  }
+		  return new ResponseEntity<>("Incorrect Password", HttpStatus.BAD_REQUEST);
+	  }
+
 
 	  @GetMapping("/connected")
 	  public Collection<UserDocument> connectedNotification(@AuthenticationPrincipal final UserDocument currentUser) {
@@ -104,8 +120,11 @@ public class UserController {
 	  
 	  @PutMapping("/user/update")
 	  public ResponseEntity<UserDocument> updateUser(@AuthenticationPrincipal final UserDocument currentUser,@RequestBody UserDocument updateUser) {
+		  userCrudService.updateUserName(currentUser.getUsername(), updateUser.getUsername());
 		  updateUser.setId(currentUser.getId());
 		  userDao.save(updateUser);
+		  onlineUser.remove(currentUser.getUsername());
+		  onlineUser.add(updateUser);
 		  return new ResponseEntity<>(updateUser,HttpStatus.OK);
 	  }
 	  

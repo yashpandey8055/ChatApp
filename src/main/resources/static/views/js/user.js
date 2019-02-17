@@ -48,6 +48,7 @@ function displayUser(user){
 			
 }
 function uploadImage(){
+	$("#upload_button").html("<img height=20px width=20px src='/views/images/loading.gif'>")
 	var img = document.getElementById("upload_image_src");
 	var formData = new FormData();
 	formData.append("file",file);
@@ -62,6 +63,7 @@ function uploadImage(){
 				currentUser.profileUrl=this.responseText;
 					$("#edit-profile-picture").attr("src",currentUser.profileUrl)
 					$("#edit-profile-picture").css({"display":"inline"});
+					$('#edit-profile-picture-box').remove();
 				
 		}else if(xhr.readyState == 4 &&xhr.status !== 200){
 			 display_notification_popup("Failed");
@@ -71,7 +73,7 @@ function uploadImage(){
 	xhr.send(formData);
 }
 function previewAndUpload(dataUrl){
-	$("body").append("<div class='pop-up-box split vertical-align'>"+
+	$("body").append("<div class='pop-up-box split vertical-align' id='edit-profile-picture-box'>"+
 	"<div align=right><button type='button' id='close_button' class='close' onclick='close_this(event)'><span aria-hidden='true'>&times;</span></button></div>"+
 	"<div class='cropper-container' id='cropper-container'>"+	
 	"<img src='"+dataUrl+"' id='upload_image_src'/>"+
@@ -159,7 +161,6 @@ function edit_profile(){
 }
 
 function update_profile(){
-
 	if(validateField.checkValidation()&&validate_fields()){
 	currentUser.firstName = $("#firstName").val();
 	currentUser.lastName = $("#lastName").val();
@@ -170,9 +171,10 @@ function update_profile(){
 	currentUser.dob=$('#select-date').val()+"/"+$('#select-month').val()+"/"+$('#select-year').val();
 	currentUser.yearOfBirth=$('#select-year').val();
 	httpRequest.put("/users/user/update",currentUser,function(response){
+		display_notification_popup("Updated Succesfully");
 		response = JSON.parse(response);
 		currentUser= response;
-		document.location.href = env+"/user?user="+response.userName;
+		$("#profile-icon").trigger('click');
 	});
 	close_this();
 	}
@@ -236,6 +238,15 @@ $(function () {
 		httpRequest.get("/users/getPosts/"+user,null,function(response){
 		response = JSON.parse(response);
 		var dashboard_response = '';
+		if(response.length<1){
+			dashboard_response  = dashboard_response +"<div class='title-content user-content' style='border:none;background-color:#f2f2f2;height:400px;'>" +
+					"<div style='margin:auto;margin-top:15px;margin-bottom:15px;' class='vertical-align'><img id='edit-profile-picture' " +
+				"style='display: inline;' src='/views/images/empty-icon.png' alt=''><h3>Its so Empty In here"+
+		   "</h3></div>"+
+		   
+		   "</div>";
+		}
+
 		response.some(function(resp){
 			if(!resp.post.isStatus){
 				dashboard_response = dashboard_response + "<div class='title-content user-content' id='"+resp.post.id+"'>"+

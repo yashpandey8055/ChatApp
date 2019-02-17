@@ -211,7 +211,7 @@ function register(){
     	        	$("#phoneNumber").next().html("<small class='success-message-display'>valid Phone Number<small>");
     	        }
     			if(currentUser){
-        			if (currentUser.phoneNumber !==$("#phoneNumber").val()&&response=='true'){
+        			if (currentUser.phoneNumber !==parseInt($("#phoneNumber").val())&&response=='true'){
 		    				validateField.setPhoneNumber(false);
 		    	    		$("#phoneNumber").css({"border":"1px solid #b30000"})
 		    	    		$("#phoneNumber").next().html("<small class='error-message-display'>Phone Number Already Registered<small>")
