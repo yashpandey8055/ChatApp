@@ -5,5 +5,7 @@ mongo:
   port: 27017
   userName: ketu_dev_user
 
+management:  endpoint:    health:      enabled: true
+     
   
 spring:  servlet:    multipart:      max-file-size: 10MB
