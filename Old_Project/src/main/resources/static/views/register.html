@@ -1,57 +1,139 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <title>Hello WebSocket</title>
-    <link href="../webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <script src="../webjars/jquery/jquery.min.js"></script>
-    <script src="../webjars/sockjs-client/sockjs.min.js"></script>
-    <script src="../webjars/stomp-websocket/stomp.min.js"></script>
+    <title>Register Yourself</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	    <script src="../webjars/jquery/jquery.min.js"></script>
+	    <script src="../webjars/sockjs-client/sockjs.min.js"></script>
+	    <script src="../webjars/stomp-websocket/stomp.min.js"></script>
+   		<script src="/views/js/login.js"></script>
+  		<script src="/views/js/register.js"></script>
+    	<link href="/views/css/loginpage.css" rel="stylesheet"></link>
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
     <script>
-    	function register(){
-    		var request = {
-    				'userName':document.getElementById("userName").value,
-    				'firstName':document.getElementById("firstName").value,
-    				'lastName':document.getElementById("lastName").value,
-    				'bio':document.getElementById("bio").value,
-    				'password':document.getElementById("password").value
-    		}
-    		var xmlHttp = new XMLHttpRequest();
-    		xmlHttp.onreadystatechange =function(){
-    			if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
-    				console.log(this.responseText);
-    			}
-    		}
-    		xmlHttp.open("POST","http://localhost:8080/public/users/login?username=yash&password=123",true)
-    		xmlHttp.send(JSON.stringify(request));
-    	}
-    </script>
+    
+     </script>
 </head>
+<style>
+.navbar-nav{
+	position:fixed;
+	top:0px;
+	margin-top:0px;
+	background-image: linear-gradient(to right ,#46377b,#6f4e96);
+	margin-left:auto;
+	margin-right:auto;
+	width:100%;
+	height:50px;
+	box-shadow:0px 0px 10px #8042f4;
+    z-index: 10;
+}
+.logo{
+    float: left;
+    font-size: 25px;
+    height: 80%;
+    width: 100px;
+    margin-left: 20px;
+    margin-top: 5px;
+    text-align: center;
+    color: whitesmoke;
+    border-radius: 5px;
+    font-family: Spantaran;
+    background-image: linear-gradient(to left ,#46377b,#6f4e96);
+}
+.form-control:focus{
+	border:1px solid #46377b;
+	box-shadow:0px 0px 3px #46377b;
+}
+.error-message-display{
+	color:#b30000;
+}
+.success-message-display{
+	color:teal;
+}
+</style>
 <body>
+<nav class="navbar-nav">
+		<div class="logo">Ketu</div>
+</nav>
 <div class="main container">
+	<div class="login-box register-box">
 	<form>
-	  <div class="form-group">
-	    <label for="email">UserId</label>
-	    <input type="email" class="form-control" id="userName"  placeholder="Enter username">
-	    <small id="emailHelp" class="form-text text-muted">Select a username eg- joeSmith</small>
-	  </div>
-	  <div class="form-group">
-	    <label for="password">Password</label>
-	    <input type="password" class="form-control" id="password" placeholder="Password">
-	  </div>
-	 <div class="form-group">
+	<div class="row">
+	    <div class="col">
 	    <label for="firstName">First Name</label>
-	    <input type="text" class="form-control" id="firstName" placeholder="Your first Name">
-	  </div>
-	  <div class="form-group">
+	      <input type="text" class="form-control" id="firstName" placeholder="First name">
+	    </div>
+	    <div class="col">
 	    <label for="lastName">Last Name</label>
-	    <input type="text" class="form-control" id="lastName" placeholder="Your Last Name">
-	  </div>
-	  <div class="form-group">
-	    <label for="bio">Add a bio here</label>
-	    <input type="text" class="form-control" id="bio" placeholder="What you do / introduce yourself">
-	  </div>
-	  <button type="button" class="btn btn-primary" onclick="register()">Register</button>
+	      <input type="text" class="form-control" id="lastName" placeholder="Last name">
+	    </div>
+  	</div>
+  	<div class="row">
+	    <div class="col">
+	    <label for="userName">User Name</label>
+	      <input type="text" class="form-control" id="userName" placeholder="Username">
+	      <small>Any username you want , like joe smith, anakinskywalker, professorX</small>
+	    </div>
+	     <div class="col">
+	    <label for="password">Select a Password</label>
+	      <input type="password" class="form-control" id="password" placeholder="Password">
+	      <small>Password should contain atleast one lower, one upper, one special character and should be minimum 9 characters long </small>
+	    </div>
+  	</div>
+  	<div class="row">
+	    <div class="col">
+	    <label>Gender</label>
+	      <select id="gender" class="form-control">
+	      	<option>Male</option>
+	      	<option>Female</option>
+	      	<option>Others</option>
+	      	<option>I want to skip this</option>
+	      </select>
+	    </div>
+	    <div class="col">
+	    <label>Date of Birth</label>
+	    <div class="row">
+	    <div class="col">
+	      <select  class="form-control select-date" id="select-date">
+	      <option selected>Date</option>
+	      </select>
+	      </div>
+	      <div class="col">
+	      <select  class="form-control select-month" id="select-month">
+	      	<option selected>Month</option>
+	      </select>
+	      </div>
+	      <div class="col">
+	      <input type="text" class="form-control" id="select-year" placeholder="Year">
+	      </div>
+	      </div>
+	    </div>
+  	</div>
+  	<div class="row">
+	    <div class="col">
+	    <label for="emailId">Email</label>
+	      <input type="text" class="form-control" id="emailId" placeholder="Email Address" >
+	      <small>Mandatory emailId so we know you aint no bot</small>
+	    </div>
+	    <div class="col">
+	    <label for="phone">Phone Number</label>
+	    <div style="display:flex">
+		     <input type="text" class="form-control" id="countrycode" value="+91" style="width:20%;margin-right:2px">
+		     <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number">
+		  </div>
+		  <small></small>
+	    </div>
+  	</div>
+  	<div class="row">
+	    <div class="col">
+	    <label for="bio">Bio</label>
+	      <input type="text" class="form-control" id="bio" placeholder="bio">
+	      <small>One line about you. Dont put smileys, they made bad impact.</small>
+	    </div>
+  	</div>
 	</form>
+	<div style="width:70%;margin:auto;"><button class="btn btnfull" id="register-button" onclick="register()">Create Account</button></div>
+	</div>
 </div>
 </body>
 </html>

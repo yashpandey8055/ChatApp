@@ -6,13 +6,8 @@ public class MessageBean {
 	private String message;
 	private String receiver;
 	private String sender;
-	private String online;
-	public String getOnline() {
-		return online;
-	}
-	public void setOnline(String online) {
-		this.online = online;
-	}
+	private String senderProfileUrl;
+	
 	public String getSender() {
 		return sender;
 	}
@@ -31,4 +26,24 @@ public class MessageBean {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	public String getSenderProfileUrl() {
+		return senderProfileUrl;
+	}
+	public void setSenderProfileUrl(String senderProfileUrl) {
+		this.senderProfileUrl = senderProfileUrl;
+	}
+	
+	public void setCommentNotification(String sender,String message) {
+		setMessage(sender+" commented on your post \""+message+"\"");
+	}
+	
+	public void setLikeNotification(String sender) {
+		setMessage(sender+" liked your post");
+	}
+	
+	public void setCommentLikeNotification(String sender) {
+		setMessage(sender+" liked your comment");
+	}
 }
+
+

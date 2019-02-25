@@ -1,24 +1,42 @@
 package com.application.utils;
 
-import java.io.IOException;
-
-
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Utils {
 
-	public static class Wrapper{
+	private Utils() {
 		
-		public static <T> T wrap(String request,Class<T> className) {
-			   ObjectMapper mapper = new ObjectMapper();
-			   		try {
-						JavaType collectionType = mapper.getTypeFactory().constructType(className);
-			            return mapper.readValue(request, collectionType);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					return null;
-		        }
 	}
+
+	public static String calculateTimeDifference(Date date) {
+    	Calendar cal = Calendar.getInstance();
+    	
+    	long[] timeCount = {60,60,24,30,365};
+    	String[] time = {"s","m","h","d","mon","y"};
+    	
+    	float seconds = (cal.getTimeInMillis() - date.getTime())/1000;
+    	int count=0;
+    	while(true) {
+    		if((seconds=seconds/timeCount[count])<=1) {
+    			break;
+    		}else {
+    			count++;
+    		}
+    	}
+    	if(count>=2&&(seconds/24)>=1) {
+    		seconds = seconds/24;
+    		return (int)seconds+" "+time[count]+" ago";
+    	}
+    	return ((int)(seconds*timeCount[count]))+""+time[count]+" ago";
+    }
+	
+	public static Boolean isNumeric(String number) {
+    	try {
+    		Long.parseLong(number);
+    		return true;
+    	}catch(NumberFormatException e) {
+    		return false;
+    	}
+    }	
 }

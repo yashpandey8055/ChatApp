@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+    <link href="../webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../webjars/jquery/jquery.min.js"></script>
+    <script src="../webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="../webjars/stomp-websocket/stomp.min.js"></script>
+   	<script src="/views/js/config.js"></script>
+    <script src="/views/js/chat.js"></script>
+    <link href="/views/css/chatpage.css" rel="stylesheet"></link>
+    <link href="/views/css/nav-bar.css" rel="stylesheet"></link>
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+
+<body>
+	<nav class="navbar-nav">
+	</nav>
+	<div class="content-container" align="center">
+		<div class="split right">
+			<div class="box center-text">
+				<h4>Recent Conversations</h4>
+			</div>
+			
+			<!--  <div class="box search-box-container">
+				<div class="form-group has-feedback">
+					<i class="glyphicon glyphicon-search form-control-feedback" style="z-index:0"></i>
+					<input type="text" placeholder="Search Conversations" class="search-box">
+				</div>
+			</div>-->
+			<div class="conversations" id="conversations">
+			
+			</div>
+			
+		</div>
+		<div class="split center">
+			<div class="box user-info">
+				<div class="user-info-container">
+					<div style="font-size:120%" id="heading-name"></div>
+					<div id="heading-username"></div>
+				</div>
+			</div>
+			<div class="side-box user-display-box" id="online_users">
+				<div class="box center-text"><p><b>Online</b></p></div>
+			</div>
+			<div class="box chat-box">
+			<div class='box chat-display-box' >
+				<p style="margin-top:40%">You have no current conversations</p>
+			</div>
+			
+			</div>
+				<div class="box chat-action-box">
+					<div><input  class="chat-text-box" id ="chat-text-box" type="text" placeholder="Write you message"></div>
+					<div class="chat-options-container"><button type='button' class='btn purple-button' id="send_button" onclick="send()" disabled>Send</button></div>
+				</div>
+			
+		</div>
+		<div class="flip-container left">
+			<div class="flipper">
+				<div class="front">
+					<div class="selected-user-info">
+						
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>
