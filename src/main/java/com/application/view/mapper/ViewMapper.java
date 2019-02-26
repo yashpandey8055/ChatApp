@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ViewMapper {
-
+	
 	@GetMapping({"/secure/login","/"})
 	public String  loginPage(Map<String, Object> model){
 		return "/ui/login.html";
@@ -38,4 +38,5 @@ public class ViewMapper {
 	public String  registerPage(Map<String, Object> model){
 		return "/ui/register.html";
 	}
+	
 }
