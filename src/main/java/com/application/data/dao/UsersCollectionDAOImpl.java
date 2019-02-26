@@ -2,9 +2,10 @@ package com.application.data.dao;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.application.data.dao.documents.UserDocument;
@@ -12,38 +13,50 @@ import com.mongodb.client.result.DeleteResult;
 
 
 @Repository
-public class UsersCollectionDAOImpl implements MongoCollectionDAO<UserDocument>{
+public class  UsersCollectionDAOImpl implements MongoCollectionDAO<UserDocument>{
 
+	@Autowired
+	AbstractMongoCollectionFactory<UsersCollectionDAOImpl,UserDocument> factory;
+	
 	private MongoTemplate template;
-
+	
+	@PostConstruct
+	public void init() {
+		
+	}
+	@Autowired
 	public UsersCollectionDAOImpl(MongoTemplate template){
 		this.template = template;
 	}
+
 	@Override
-	public <T> UserDocument findOne(String key, T value) {
-		return template.findOne(Query.query(Criteria.where(key).is(value)), UserDocument.class);
+	public UserDocument findOne(String key, Object value) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public <T> List<UserDocument> findList(String key, T value) {
-		return template.find(Query.query(Criteria.where(key).is(value)), UserDocument.class);
+	public List<UserDocument> findList(String key, Object value) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public UserDocument insert(UserDocument document) {
-		template.insert(document);
-		return document;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public UserDocument update(UserDocument documents) {
-		template.save(documents);
-		return documents;
+	public UserDocument update(UserDocument document) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public <T> DeleteResult delete(String key, T value) {
-		return template.remove(Query.query(Criteria.where(key).is(value)), UserDocument.class);
+	public DeleteResult delete(String key, Object value) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
+
 }

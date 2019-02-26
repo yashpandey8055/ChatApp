@@ -1,6 +1,7 @@
 package com.application.data.dao;
 
 import java.util.List;
+
 import com.mongodb.client.result.DeleteResult;
 
 public interface MongoCollectionDAO<E> {
@@ -19,7 +20,7 @@ public interface MongoCollectionDAO<E> {
 	 * @param value
 	 * @return Document
 	 */
-	public <T> E findOne(String key,T value);
+	public E findOne(String key,Object value);
 	
 	/**
 	 * Find a list of  document from the MongoDB Collection specified by the document type in generic E.
@@ -34,11 +35,12 @@ public interface MongoCollectionDAO<E> {
 	 * List of specified document is returned if the Key-Value pair matches with any document and the first match is returned. 
 	 * 
 	 * For a unique document with unique key-pair of document , See find(String key,T value) method
+	 * @param <E>
 	 * @param key
 	 * @param value
 	 * @return Document
 	 */
-	public <T> List<E> findList(String key,T value);
+	public List<E> findList(String key,Object value);
 	
 	/**
 	 * Insert a document into the MongoDB Collection.
@@ -48,6 +50,7 @@ public interface MongoCollectionDAO<E> {
 	 * class referring to the collection needed;
 	 * 
 	 * The document is returned with Mongo ObjectId created after inserting.   
+	 * @param <E>
 
 	 * @param Object of Document of Generic parameter E
 	 * @return Object of Document of Generic parameter E with ObjectId Included
@@ -63,6 +66,7 @@ public interface MongoCollectionDAO<E> {
 	 * 
 	 * The document is updated based upon the ObjectId of the document. If document needs to be updated 
 	 * with another property, annotate it with @Id.   
+	 * @param <E>
 	 * @param Object of Document of Generic parameter E with ObjectId( or Other Id) Included
 	 * @return Object of Document of Generic parameter E with ObjectId Included
 	 */
@@ -80,7 +84,7 @@ public interface MongoCollectionDAO<E> {
 	 * @param value
 	 * @return DeleteResult
 	 */
-	public <T> DeleteResult delete(String key, T value);
+	public  DeleteResult delete(String key, Object value);
 	
 	
 }
