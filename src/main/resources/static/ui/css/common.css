@@ -1,0 +1,60 @@
+@font-face {
+    font-family: btxitally;
+    src: url(/ui/fonts/btxitally.otf);
+}
+@font-face {
+    font-family: BloggerSans;
+    src: url(/ui/fonts/BloggerSans-Light.otf);
+}
+@font-face {
+    font-family: EuropeUnderground;
+    src: url(/ui/fonts/EuropeUnderground.ttf);
+}
+body{
+	overflow:scroll;
+	background-color:#f2f2f2;
+}
+ul{
+	list-style:none;
+}
+p{
+	margin-bottom:0px;
+}
+h5,h6{
+	margin:0px;
+}
+
+.split{
+	position:absolute;
+	height:100%;
+	border-radius:4px;
+	background-color:white;
+	border:1px solid #d9d9d9;
+}
+.left{
+	position:absolute;
+	width:25%;
+	height:0px;
+	min-height:60%;
+	left:0%;
+}
+.center{
+	left:25%;
+	right:30%;
+	border-radius: 0px 8px 8px 0px;
+	margin-left:5px;
+	margin-right:0px;
+	
+}
+.vertical-align{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%); /* IE 9 */
+    -webkit-transform: translate(-50%, -50%); /* Chrome, Safari, Opera */
+}
+.right{
+	width:25%;
+	right:5%;
+}

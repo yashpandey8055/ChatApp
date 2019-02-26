@@ -32,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
 		    new AntPathRequestMatcher("/webjars/**"),
+		    new AntPathRequestMatcher("/ui/**"),
 		    new AntPathRequestMatcher("/favicon.ico"),
 		    new AntPathRequestMatcher("/"),
 		    new AntPathRequestMatcher("/secure/**")

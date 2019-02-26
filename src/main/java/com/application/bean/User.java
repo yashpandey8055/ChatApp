@@ -62,8 +62,7 @@ public class User implements UserDetails{
 	
 	@Override
 	public String toString() {
-	//	"{\"userName":""}"
-		return id;
+		return "{\"userName\": \""+getUsername()+"\","+"\"id\":\""+getId()+"\"}";
 		
 	}
 
