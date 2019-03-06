@@ -3,7 +3,6 @@ package com.application.request.response.bean;
 
 public class UserActivityReqResBean {
 
-	private String id ;
 	private String userName ;
 	private String firstName;
 	private String lastName;
@@ -16,12 +15,7 @@ public class UserActivityReqResBean {
 	private String city;
 	private String state;
 	private String country;
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+
 	public String getUserName() {
 		return userName;
 	}

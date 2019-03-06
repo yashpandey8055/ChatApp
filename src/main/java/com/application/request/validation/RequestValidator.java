@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 
 
+
 @Aspect
 public class RequestValidator {
 	
@@ -18,8 +19,6 @@ public class RequestValidator {
 	
 	@Before("register()")
 	public void logRequestAdvice(JoinPoint joinPoint) {
-		/**
-		 * Empty for now 
-		 */
+		Validator.getNumericInstance(ValidatorType.AGE).validateField(18);
 	}
 }
