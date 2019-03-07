@@ -12,6 +12,8 @@ public class UserActivityReqResBean {
 	private float rating;
 	private String gender;
 	private int age;
+	private String email;
+	private String password;
 	private String city;
 	private String state;
 	private String country;
@@ -87,6 +89,18 @@ public class UserActivityReqResBean {
 	}
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

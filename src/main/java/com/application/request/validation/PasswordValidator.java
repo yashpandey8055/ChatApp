@@ -2,6 +2,8 @@ package com.application.request.validation;
 
 import java.util.regex.Pattern;
 
+import com.application.custom.exception.IllegalFieldException;
+
 
 public class PasswordValidator implements Validator<String>{
 
@@ -12,9 +14,9 @@ public class PasswordValidator implements Validator<String>{
 	private Pattern pattern = Pattern.compile(REGEX);
 	
 	@Override
-	public void validateField(String password) {
+	public void validateField(String password) throws IllegalFieldException{
 		if(Validator.isNullOrEmpty(password)||!pattern.matcher(password).matches()){
-			throw new IllegalArgumentException(FAILURE_MEESAGE);
+			throw new IllegalFieldException(FAILURE_MEESAGE);
 		}
 	}
 }

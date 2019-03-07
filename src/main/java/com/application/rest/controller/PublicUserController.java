@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.application.bean.User;
+import com.application.request.response.bean.UserRegisterReqResBean;
 
 
 @RestController
-@RequestMapping("/public")
+@RequestMapping("/secure")
 public class PublicUserController {
 
 	@PostMapping("/users/register")
-	public ResponseEntity<Object> register(@RequestBody User document){
+	public ResponseEntity<Object> register(@RequestBody UserRegisterReqResBean document){
 		return null;
 	}
 	
