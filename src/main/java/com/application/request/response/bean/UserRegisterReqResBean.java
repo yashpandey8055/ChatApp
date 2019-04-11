@@ -8,9 +8,10 @@ public class UserRegisterReqResBean {
 	private String bio;
 	private String password;
 	private String gender;
-	private String dob;
+	private int birthDate;
+	private String birthMonth;
+	private int birthYear;
 	private int age;
-	private int yearOfBirth;
 	private long phoneNumber;
 	private String city;
 	private String state;
@@ -53,23 +54,31 @@ public class UserRegisterReqResBean {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public String getDob() {
-		return dob;
-	}
-	public void setDob(String dob) {
-		this.dob = dob;
-	}
+
 	public int getAge() {
 		return age;
 	}
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public int getYearOfBirth() {
-		return yearOfBirth;
+
+	public int getBirthDate() {
+		return birthDate;
 	}
-	public void setYearOfBirth(int yearOfBirth) {
-		this.yearOfBirth = yearOfBirth;
+	public void setBirthDate(int birthDate) {
+		this.birthDate = birthDate;
+	}
+	public String getBirthMonth() {
+		return birthMonth;
+	}
+	public void setBirthMonth(String birthMonth) {
+		this.birthMonth = birthMonth;
+	}
+	public int getBirthYear() {
+		return birthYear;
+	}
+	public void setBirthYear(int birthYear) {
+		this.birthYear = birthYear;
 	}
 	public long getPhoneNumber() {
 		return phoneNumber;

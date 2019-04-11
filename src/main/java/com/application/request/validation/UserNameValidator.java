@@ -6,6 +6,7 @@ import com.application.custom.exception.IllegalFieldException;
 
 public class UserNameValidator implements Validator<String>{
 
+	
 	private static final String USERNAME_REGEX = "^[a-zA-Z\\d]{0,15}$";
 	private static final String FAILURE_MEESAGE = "Username should be max 15 Characters and "
 			+ " should contain letter lowercase/uppercase/numeric characters only.";

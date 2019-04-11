@@ -1,8 +1,8 @@
 mongo:
-  address: localhost
+  address: ds121716.mlab.com
   dbName: ketu
   password: Yashpandey@123
-  port: 27017
+  port: 21716
   userName: ketu_dev_user
 
 management:  endpoint:    health:      enabled: true

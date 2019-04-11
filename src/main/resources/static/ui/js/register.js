@@ -41,7 +41,7 @@ function register(){
     				logon(this.responseText);
     			}
     		}
-    		xmlHttp.open("POST",env+"/public/users/register",true);
+    		xmlHttp.open("POST",env+"/secure/users/register",true);
     		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     		xmlHttp.send(JSON.stringify(request));
     	}

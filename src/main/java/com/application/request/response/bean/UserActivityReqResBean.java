@@ -1,7 +1,7 @@
 package com.application.request.response.bean;
 
 
-public class UserActivityReqResBean {
+public class UserActivityReqResBean{
 
 	private String userName ;
 	private String firstName;
