@@ -14,7 +14,7 @@ import com.mongodb.client.result.DeleteResult;
 
 
 @Repository
-public class LikesCollectionDAOImpl implements MongoCollectionFactory {
+public class LikesCollectionDAOImpl implements IMongoCollectionFactory {
 
 	MongoTemplate template;
 	

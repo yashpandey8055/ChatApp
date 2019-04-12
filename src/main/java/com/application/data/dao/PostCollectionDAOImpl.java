@@ -12,7 +12,7 @@ import com.application.data.dao.documents.PostDocument;
 import com.mongodb.client.result.DeleteResult;
 
 @Repository
-public class PostCollectionDAOImpl implements MongoCollectionFactory {
+public class PostCollectionDAOImpl implements IMongoCollectionFactory {
 
 	MongoTemplate template;
 	

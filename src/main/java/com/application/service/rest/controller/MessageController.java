@@ -1,4 +1,4 @@
-package com.application.rest.controller;
+package com.application.service.rest.controller;
 
 import java.security.Principal;
 import java.util.Collection;

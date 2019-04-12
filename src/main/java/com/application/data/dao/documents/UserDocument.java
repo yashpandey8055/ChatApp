@@ -1,6 +1,6 @@
 package com.application.data.dao.documents;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -28,14 +28,12 @@ public class UserDocument extends MongoDocument{
 	
 	private String gender;
 	
-	private String dob;
-	
 	private int age;
 	
-	private List<String> following = new ArrayList<>(1);
+	private List<String> following ;
 	
-	private int yearOfBirth;
-	
+	private Date dateOfBirth;
+
 	private long phoneNumber;
 	
 	private String city;
@@ -46,7 +44,7 @@ public class UserDocument extends MongoDocument{
 	
 	private String email;
 
-	private List<String> posts = new ArrayList<>(1);
+	private List<String> posts;
 
 	public String getPassword() {
 		
@@ -82,7 +80,10 @@ public class UserDocument extends MongoDocument{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
+	public String getUserName() {
+		return userName;
+	}
 	public String getProfileUrl() {
 		return profileUrl;
 	}
@@ -97,12 +98,6 @@ public class UserDocument extends MongoDocument{
 	}
 	public long getFollowers() {
 		return followers;
-	}
-	public String getDob() {
-		return dob;
-	}
-	public void setDob(String dob) {
-		this.dob = dob;
 	}
 	public void setFollowers(long followers) {
 		this.followers = followers;
@@ -159,19 +154,25 @@ public class UserDocument extends MongoDocument{
 	public List<String> getPosts() {
 		return posts;
 	}
-	public int getYearOfBirth() {
-		return yearOfBirth;
-	}
+
 	public long getPhoneNumber() {
 		return phoneNumber;
 	}
 	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public void setYearOfBirth(int yearOfBirth) {
-		this.yearOfBirth = yearOfBirth;
+	
+	
+	public Date getDateOfBirth() {
+		return dateOfBirth;
 	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
 	public void setPosts(List<String> posts) {
 		this.posts = posts;
 	}
+	
 }

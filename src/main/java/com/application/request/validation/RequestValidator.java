@@ -34,15 +34,17 @@ public class RequestValidator {
 	@Around("execution(* com.application.rest.controller.PublicUserController.register(..)) && args(request)")
 	public  Object logRequestAdvice(ProceedingJoinPoint pjp,UserRegisterReqResBean request) throws Throwable {
 		try {
-			Validator.getNumericInstance(ValidatorType.AGE).validateField(request.getBirthYear());
+			FieldValidationFactory.getIntegerInstance(ValidatorType.AGE).validateField(request.getBirthYear());
 			request.setAge(Calendar.getInstance().get(Calendar.YEAR) - request.getBirthYear());
 			
+			FieldValidationFactory.getLongInstance(ValidatorType.PHONENUMBER).validateField(request.getPhoneNumber());
 			Validator.checkValidDate(request.getBirthDate(), request.getBirthMonth(),  request.getBirthYear());
-			Validator.getStringInstance(ValidatorType.PASSWORD).validateField(request.getPassword());
-			Validator.getStringInstance(ValidatorType.USERNAME).validateField(request.getUserName());
-			Validator.getStringInstance(ValidatorType.EMAIL).validateField(request.getEmail());
+			FieldValidationFactory.getStringInstance(ValidatorType.PASSWORD).validateField(request.getPassword());
+			FieldValidationFactory.getStringInstance(ValidatorType.USERNAME).validateField(request.getUserName());
+			FieldValidationFactory.getStringInstance(ValidatorType.EMAIL).validateField(request.getEmail());
 			Validator.stringFieldNotPresent(request.getGender(), "Gender");
-			Validator.stringFieldNotPresent(request.getGender(), "Date of Birth");
+			Validator.stringFieldNotPresent(request.getFirstName(), "First Name");
+			Validator.stringFieldNotPresent(request.getLastName(), "Last Name");
 			return pjp.proceed();
 		}catch(IllegalFieldException ex) {
 			LOG.error("Invalid Field in the request while registering for user:: {}. Error:: {}",request.getUserName(),ex.getMessage());

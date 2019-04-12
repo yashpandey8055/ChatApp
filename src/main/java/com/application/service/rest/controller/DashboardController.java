@@ -1,4 +1,4 @@
-package com.application.rest.controller;
+package com.application.service.rest.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

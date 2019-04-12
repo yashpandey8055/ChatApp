@@ -10,7 +10,7 @@ import com.application.data.dao.documents.UserDocument;
 import com.mongodb.client.result.DeleteResult;
 
 
-public class  UsersCollectionDAOImpl implements MongoCollectionFactory{
+public class  UsersCollectionDAOImpl implements IMongoCollectionFactory{
 
 	
 	public UsersCollectionDAOImpl(MongoTemplate template) {

@@ -13,7 +13,7 @@ import com.mongodb.client.result.DeleteResult;
 
 
 @Repository
-public class NotificationCollectionDAOImpl implements MongoCollectionFactory {
+public class NotificationCollectionDAOImpl implements IMongoCollectionFactory {
 
 	MongoTemplate template;
 	

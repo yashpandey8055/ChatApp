@@ -4,5 +4,6 @@ public enum ValidatorType {
     AGE,
     PASSWORD,
     USERNAME,  
-    EMAIL;
+    EMAIL,
+    PHONENUMBER;
 }

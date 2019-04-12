@@ -10,11 +10,15 @@ import com.application.data.dao.documents.CommentDocument;
 import com.application.data.dao.documents.MongoDocument;
 import com.mongodb.client.result.DeleteResult;
 
-public class CommentCollectionDAOImpl implements MongoCollectionFactory {
+public class CommentCollectionDAOImpl implements IMongoCollectionFactory {
 
 	MongoTemplate template;
 	
 	
+	public CommentCollectionDAOImpl(MongoTemplate template) {
+		this.template = template;
+	}
+
 	@Override
 	public MongoDocument findOne(String key, Object value) {
 		return template.findOne(Query.query(Criteria.where(key).is(value)), CommentDocument.class);
