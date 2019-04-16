@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="users")
 public class UserDocument extends MongoDocument{
 
-	private String userName ;
+	private String username ;
 	
 	private String firstName;
 	
@@ -20,11 +20,9 @@ public class UserDocument extends MongoDocument{
 	
 	private String profileUrl;
 	
-	private long conversationPts;
-	
 	private long followers;
 	
-	private double rating;
+	private float rating;
 	
 	private String gender;
 	
@@ -52,13 +50,13 @@ public class UserDocument extends MongoDocument{
 	}
 
 	public String getUsername() {
-		return userName;
+		return username;
 	}
 
-
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -81,20 +79,11 @@ public class UserDocument extends MongoDocument{
 		this.password = password;
 	}
 	
-	public String getUserName() {
-		return userName;
-	}
 	public String getProfileUrl() {
 		return profileUrl;
 	}
 	public void setProfileUrl(String profileUrl) {
 		this.profileUrl = profileUrl;
-	}
-	public long getConversationPts() {
-		return conversationPts;
-	}
-	public void setConversationPts(long conversationPts) {
-		this.conversationPts = conversationPts;
 	}
 	public long getFollowers() {
 		return followers;
@@ -108,10 +97,10 @@ public class UserDocument extends MongoDocument{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public void setRating(double rating) {
+	public void setRating(float rating) {
 		this.rating = rating;
 	}
-	public double getRating() {
+	public float getRating() {
 		return rating;
 	}
 	public String getGender() {

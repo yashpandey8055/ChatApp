@@ -40,16 +40,16 @@ public class RequestValidator {
 			FieldValidationFactory.getLongInstance(ValidatorType.PHONENUMBER).validateField(request.getPhoneNumber());
 			Validator.checkValidDate(request.getBirthDate(), request.getBirthMonth(),  request.getBirthYear());
 			FieldValidationFactory.getStringInstance(ValidatorType.PASSWORD).validateField(request.getPassword());
-			FieldValidationFactory.getStringInstance(ValidatorType.USERNAME).validateField(request.getUserName());
+			FieldValidationFactory.getStringInstance(ValidatorType.USERNAME).validateField(request.getUsername());
 			FieldValidationFactory.getStringInstance(ValidatorType.EMAIL).validateField(request.getEmail());
 			Validator.stringFieldNotPresent(request.getGender(), "Gender");
 			Validator.stringFieldNotPresent(request.getFirstName(), "First Name");
 			Validator.stringFieldNotPresent(request.getLastName(), "Last Name");
 			return pjp.proceed();
 		}catch(IllegalFieldException ex) {
-			LOG.error("Invalid Field in the request while registering for user:: {}. Error:: {}",request.getUserName(),ex.getMessage());
+			LOG.error("Invalid Field in the request while registering for user:: {}. Error:: {}",request.getUsername(),ex.getMessage());
 			return new ResponseEntity<>(new GenericResponseBean(
-					HttpStatus.BAD_REQUEST.value(),RequestResponseConstant.FAILURE_RESPONSE,ex.getMessage()
+					HttpStatus.BAD_REQUEST,RequestResponseConstant.FAILURE_RESPONSE,ex.getMessage()
 					),HttpStatus.BAD_REQUEST);
 		}
 		

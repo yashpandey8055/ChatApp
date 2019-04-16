@@ -19,48 +19,48 @@ public class UserDocument implements UserDetails{
 	String id ;
 
 	@JsonInclude(Include.NON_NULL)
-	String userName ;
+	private String userName ;
 	@JsonInclude(Include.NON_NULL)
-	String firstName;
+	private String firstName;
 	@JsonInclude(Include.NON_NULL)
-	String lastName;
+	private String lastName;
 	@JsonInclude(Include.NON_NULL)
-	String bio;
+	private String bio;
 	@JsonInclude(Include.NON_NULL)
-	String password ;
+	private String password ;
 	@JsonInclude(Include.NON_NULL)
-	String profileUrl;
+	private String profileUrl;
 	@JsonInclude(Include.NON_NULL)
-	long conversationPts;
+	private float rating;
 	@JsonInclude(Include.NON_NULL)
-	long followers;
+	private long followers;
 	@JsonInclude(Include.NON_NULL)
-	long approvals;
+	private long approvals;
 	@JsonInclude(Include.NON_NULL)
-	long disapprovals;
+	private long disapprovals;
 	@JsonInclude(Include.NON_NULL)
-	String gender;
+	private String gender;
 	@JsonInclude(Include.NON_NULL)
-	String dob;
+	private String dob;
 	@JsonInclude(Include.NON_NULL)
-	int age;
+	private int age;
 	@JsonInclude(Include.NON_NULL)
 	private List<String> following = new ArrayList<>(1);
 	@JsonInclude(Include.NON_NULL)
-	int yearOfBirth;
+	private int yearOfBirth;
 	@JsonInclude(Include.NON_NULL)
-	long phoneNumber;
+	private long phoneNumber;
 	@JsonInclude(Include.NON_NULL)
-	private boolean isFollowing;
+	private private boolean isFollowing;
 	@JsonInclude(Include.NON_NULL)
-	String city;
+	private String city;
 	@JsonInclude(Include.NON_NULL)
-	String state;
+	private String state;
 	@JsonInclude(Include.NON_NULL)
-	String country;
+	private String country;
 	
 	@JsonInclude(Include.NON_NULL)
-	String email;
+	private String email;
 
 	private List<String> posts = new ArrayList<>(1);
 	@Override
@@ -137,12 +137,6 @@ public class UserDocument implements UserDetails{
 	}
 	public void setProfileUrl(String profileUrl) {
 		this.profileUrl = profileUrl;
-	}
-	public long getConversationPts() {
-		return conversationPts;
-	}
-	public void setConversationPts(long conversationPts) {
-		this.conversationPts = conversationPts;
 	}
 	public long getFollowers() {
 		return followers;

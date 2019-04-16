@@ -18,6 +18,14 @@ public class UserActivityReqResBean{
 	private String state;
 	private String country;
 
+	public String getProfileUrl() {
+		return profileUrl;
+	}
+	public void setProfileUrl(String profileUrl) {
+		this.profileUrl = profileUrl;
+	}
+	private String profileUrl;
+
 	public String getUserName() {
 		return userName;
 	}

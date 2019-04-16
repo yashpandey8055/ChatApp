@@ -1,4 +1,4 @@
-package com.application.service.impl;
+package com.application.service;
 
 import com.application.request.response.bean.GenericResponseBean;
 

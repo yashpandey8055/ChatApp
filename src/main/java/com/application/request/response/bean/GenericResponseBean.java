@@ -1,20 +1,26 @@
 package com.application.request.response.bean;
 
-public class GenericResponseBean {
+import org.springframework.http.HttpStatus;
 
-	public GenericResponseBean(int code, String type, Object data) {
+public class GenericResponseBean {
+	
+	public GenericResponseBean() {
+		
+	}
+
+	public GenericResponseBean(HttpStatus code, String type, Object data) {
 		this.code = code;
 		this.type = type;
 		this.data = data;
 	}
-	private int code;
+	private HttpStatus code;
 	private String type;
 	private Object data;
 	
-	public int getCode() {
+	public HttpStatus getCode() {
 		return code;
 	}
-	public void setCode(int code) {
+	public void setCode(HttpStatus code) {
 		this.code = code;
 	}
 	public String getType() {
