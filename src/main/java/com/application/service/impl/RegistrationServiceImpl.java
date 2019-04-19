@@ -14,6 +14,7 @@ import com.application.request.response.bean.GenericResponseBean;
 import com.application.request.response.bean.UserRegisterReqResBean;
 import com.application.request.response.constants.DataAccessObjectConstants;
 import com.application.service.PasswordService;
+import com.application.utils.DateUtils;
 
 
 @Service
@@ -52,6 +53,8 @@ public class RegistrationServiceImpl {
 		userDocument.setRating(0.0f);
 		userDocument.setState(request.getState());
 		userDocument.setUsername(request.getUsername());
+		userDocument.setPhoneNumber(request.getPhoneNumber());
+		userDocument.setDateOfBirth(DateUtils.convertToDate(request.getBirthDate(), request.getBirthMonth(), request.getBirthYear()));
 		
 		IMongoCollection userCollection = MongoCollectionFactory.getInstance(DataAccessObjectConstants.USER_DOCUMENT_COLLECTION
 				, template);

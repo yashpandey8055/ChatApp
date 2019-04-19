@@ -35,12 +35,12 @@ public class LoginServiceImpl {
 	public GenericResponseBean doLogin(String userName, String password) {
 		IMongoCollection userCollection = MongoCollectionFactory.getInstance(DataAccessObjectConstants.USER_DOCUMENT_COLLECTION
 				, template);
-		UserDocument userDocument = (UserDocument) userCollection.findOne("userName", userName);
+		UserDocument userDocument = (UserDocument) userCollection.findOne("username", userName);
 		GenericResponseBean responseBean = new GenericResponseBean();
 		if(userDocument!=null&&passwordService.match(userDocument.getPassword(), password)) {
 			User userDetails = new User();
 			userDetails.setId(userDocument.getId());
-			userDetails.setUserName(userDetails.getUsername());
+			userDetails.setUserName(userDocument.getUsername());
 			String token = authService.generateToken(userDetails);
 			userDetails.setToken(token);
 			responseBean.setCode(HttpStatus.OK);
