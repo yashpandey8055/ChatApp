@@ -21,6 +21,8 @@ public class TokenAuthenticationFilter  extends AbstractAuthenticationProcessing
 	public TokenAuthenticationFilter(RequestMatcher requiresAuthenticationRequestMatcher) {
 		super(requiresAuthenticationRequestMatcher);
 	}
+	
+	private static final String TOKEN = "token";
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response){
@@ -62,14 +64,14 @@ public class TokenAuthenticationFilter  extends AbstractAuthenticationProcessing
 			Cookie[] cookies = request.getCookies();
 			if(cookies!=null) {
 			for(Cookie cookie:cookies) {
-				if("token".equalsIgnoreCase(cookie.getName())) {
+				if(TOKEN.equalsIgnoreCase(cookie.getName())) {
 					token = cookie.getValue();
 				}
 			}
 			}
 		    if(param==null) {
-		    	if(request.getParameter("token")!=null) {
-		    		token = request.getParameter("token").replaceAll("\"","");
+		    	if(request.getParameter(TOKEN)!=null) {
+		    		token = request.getParameter(TOKEN).replaceAll("\"","");
 		    	}
 		    }else {
 		    	token = param.split(" ")[1].replaceAll("\"","");

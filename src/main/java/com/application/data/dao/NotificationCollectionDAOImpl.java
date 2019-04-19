@@ -13,10 +13,10 @@ import com.mongodb.client.result.DeleteResult;
 
 
 @Repository
-public class NotificationCollectionDAOImpl implements IMongoCollectionFactory {
+public class NotificationCollectionDAOImpl implements IMongoCollection {
 
 	MongoTemplate template;
-	
+
 	
 	@Override
 	public MongoDocument findOne(String key, Object value) {
@@ -43,7 +43,6 @@ public class NotificationCollectionDAOImpl implements IMongoCollectionFactory {
 	public List<? extends MongoDocument> executeQuery(Query query) {
 		return template.find(query, NotificationDocument.class);
 	}
-
 
 }
 

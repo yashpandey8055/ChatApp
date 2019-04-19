@@ -34,7 +34,7 @@ public class FieldValidationFactory {
 	}
 	
 	public static Validator<Long> getLongInstance(ValidatorType type){
-		if(equalsInteger(ValidatorType.AGE.compareTo(type))) {
+		if(equalsInteger(ValidatorType.PHONENUMBER.compareTo(type))) {
 			return new PhoneValidator();
 		}
 		throw new IllegalArgumentException(ILLEGAL_FIELD_MESSAGE+" Example: PHONENUMBER");

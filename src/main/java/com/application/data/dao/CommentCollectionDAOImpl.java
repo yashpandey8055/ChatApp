@@ -10,11 +10,10 @@ import com.application.data.dao.documents.CommentDocument;
 import com.application.data.dao.documents.MongoDocument;
 import com.mongodb.client.result.DeleteResult;
 
-public class CommentCollectionDAOImpl implements IMongoCollectionFactory {
+public class CommentCollectionDAOImpl implements IMongoCollection {
 
 	MongoTemplate template;
-	
-	
+
 	public CommentCollectionDAOImpl(MongoTemplate template) {
 		this.template = template;
 	}
@@ -44,7 +43,6 @@ public class CommentCollectionDAOImpl implements IMongoCollectionFactory {
 	public List<? extends MongoDocument> executeQuery(Query query) {
 		return template.find(query, CommentDocument.class);
 	}
-
 
 }
 

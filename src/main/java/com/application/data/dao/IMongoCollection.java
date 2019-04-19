@@ -1,33 +1,13 @@
 package com.application.data.dao;
 
 import java.util.List;
-
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 
-import com.application.data.dao.documents.CommentDocument;
 import com.application.data.dao.documents.MongoDocument;
-import com.application.data.dao.documents.UserDocument;
 import com.mongodb.client.result.DeleteResult;
 
-public interface IMongoCollectionFactory {
-	/**
-	 * Factory Pattern for Creating Instances of Data Access Object classes which 
-	 * performs operations for a particular collection.
-	 * @param Class of collection for which instance needs to be obtained. 
-	 * @param Mongotemplate 
-	 * @return Instance of class mapped to passed collection class which implements MongoCollectionDAO
-	 */
-	public static  <T> IMongoCollectionFactory getInstance(Class<T> type,MongoTemplate template) {
-		if(type.isInstance(UserDocument.class)){
-			return new UsersCollectionDAOImpl(template);
-		}
-		if(type.isInstance(CommentDocument.class)){
-			return new CommentCollectionDAOImpl(template);
-		}
-		return null;
-		
-	}
+public interface IMongoCollection {
+	
 	/**
 	 * Find a document from the MongoDB Collection.
 	 * The Key can any of the field of document which is bind strictly to String Type. 
@@ -39,6 +19,7 @@ public interface IMongoCollectionFactory {
 	 * @param value
 	 * @return MongoDocument
 	 */
+	
 	public MongoDocument findOne(String key,Object value);
 	
 	/**

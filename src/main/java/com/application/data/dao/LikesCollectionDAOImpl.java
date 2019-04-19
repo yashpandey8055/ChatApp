@@ -14,10 +14,9 @@ import com.mongodb.client.result.DeleteResult;
 
 
 @Repository
-public class LikesCollectionDAOImpl implements IMongoCollectionFactory {
+public class LikesCollectionDAOImpl implements IMongoCollection {
 
 	MongoTemplate template;
-	
 	
 	@Override
 	public MongoDocument findOne(String key, Object value) {
@@ -44,6 +43,5 @@ public class LikesCollectionDAOImpl implements IMongoCollectionFactory {
 	public List<? extends MongoDocument> executeQuery(Query query) {
 		return template.find(query, LikeDocument.class);
 	}
-
 
 }

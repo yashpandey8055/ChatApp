@@ -31,7 +31,7 @@ public class RequestValidator {
 		 */
 	}
 	
-	@Around("execution(* com.application.rest.controller.PublicUserController.register(..)) && args(request)")
+	@Around("execution(* com.application.service.rest.controller.PublicUserController.register(..)) && args(request)")
 	public  Object logRequestAdvice(ProceedingJoinPoint pjp,UserRegisterReqResBean request) throws Throwable {
 		try {
 			FieldValidationFactory.getIntegerInstance(ValidatorType.AGE).validateField(request.getBirthYear());

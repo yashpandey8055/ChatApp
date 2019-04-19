@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.application.request.response.bean.GenericResponseBean;
 import com.application.request.response.bean.UserRegisterReqResBean;
-import com.application.service.impl.RegistrationService;
+import com.application.service.impl.LoginServiceImpl;
+import com.application.service.impl.RegistrationServiceImpl;
 
 
 
@@ -21,7 +22,10 @@ import com.application.service.impl.RegistrationService;
 public class PublicUserController {
 	
 	@Autowired
-	RegistrationService registerService;
+	RegistrationServiceImpl registerService;
+	
+	@Autowired
+	LoginServiceImpl loginServiceImpl;
 
 	@PostMapping("/users/register")
 	public ResponseEntity<GenericResponseBean> register(@RequestBody UserRegisterReqResBean request){
@@ -32,8 +36,8 @@ public class PublicUserController {
 	
 	@GetMapping("/users/login")
 	public ResponseEntity<Object> login(@RequestParam String userName,@RequestParam String password){
-
-		return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+		GenericResponseBean response = loginServiceImpl.doLogin(userName,password);
+		return new ResponseEntity<>(response,response.getCode());
 	}
 
 	@GetMapping("/users/getUser")

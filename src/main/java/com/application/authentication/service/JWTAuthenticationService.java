@@ -60,7 +60,7 @@ public class JWTAuthenticationService implements AutheticationService{
 		try {
 			return mapper.readValue(jwt, User.class);
 		}catch(IOException ex) {
-			LOG.error("Cannot Parse Token subject "+jwt+" to instance of User.class");
+			LOG.error("Cannot Parse Token subject {}  to instance of User.class",jwt);
 		}
 		return null;
 	}

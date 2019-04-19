@@ -12,11 +12,10 @@ import com.application.data.dao.documents.PostDocument;
 import com.mongodb.client.result.DeleteResult;
 
 @Repository
-public class PostCollectionDAOImpl implements IMongoCollectionFactory {
+public class PostCollectionDAOImpl implements IMongoCollection {
 
 	MongoTemplate template;
-	
-	
+
 	@Override
 	public MongoDocument findOne(String key, Object value) {
 		return template.findOne(Query.query(Criteria.where(key).is(value)), PostDocument.class);
@@ -42,6 +41,7 @@ public class PostCollectionDAOImpl implements IMongoCollectionFactory {
 	public List<PostDocument> executeQuery(Query query) {
 		return template.find(query, PostDocument.class);
 	}
+
 
 
 }

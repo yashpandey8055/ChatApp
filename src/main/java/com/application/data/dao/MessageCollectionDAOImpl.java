@@ -12,11 +12,10 @@ import com.application.data.dao.documents.MongoDocument;
 import com.mongodb.client.result.DeleteResult;
 
 @Repository
-public class MessageCollectionDAOImpl implements IMongoCollectionFactory {
+public class MessageCollectionDAOImpl implements IMongoCollection {
 
 	MongoTemplate template;
-	
-	
+
 	@Override
 	public MongoDocument findOne(String key, Object value) {
 		return template.findOne(Query.query(Criteria.where(key).is(value)), MessageDocument.class);
@@ -42,7 +41,6 @@ public class MessageCollectionDAOImpl implements IMongoCollectionFactory {
 	public List<? extends MongoDocument> executeQuery(Query query) {
 		return template.find(query, MessageDocument.class);
 	}
-
 
 }
 

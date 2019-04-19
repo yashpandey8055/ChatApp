@@ -1,5 +1,7 @@
 package com.application.service.rest.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -8,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.application.bean.User;
-
+import com.application.request.response.bean.GenericResponseBean;
+import com.application.service.UserDetailsService;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class CurrentUserController {
+	
+	@Autowired
+	@Qualifier("currentUserService")
+	UserDetailsService userDetailService;
 
 	@GetMapping("/follow/{user}")
 	public ResponseEntity<String> followUser(@AuthenticationPrincipal final User currentUser,@PathVariable("user") String userName){
@@ -34,9 +41,9 @@ public class UserController {
 	}
 
 	  @GetMapping("/current")
-	  public ResponseEntity<String> getCurrent(@AuthenticationPrincipal final User user) {
-			
-			return new ResponseEntity<>(null,HttpStatus.ACCEPTED);
+	  public ResponseEntity<GenericResponseBean> getCurrent(@AuthenticationPrincipal final User user) {
+		  	GenericResponseBean responseBean = userDetailService.getUserDetails(user.getToken());
+			return new ResponseEntity<>(responseBean,responseBean.getCode());
 	  }
 	  
 	  @PostMapping(path = "/changepwd",consumes = "application/json", produces = "application/json")

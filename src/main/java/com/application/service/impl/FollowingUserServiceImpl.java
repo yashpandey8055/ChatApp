@@ -1,34 +1,34 @@
 package com.application.service.impl;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 
-import com.application.data.dao.IMongoCollectionFactory;
+import com.application.data.dao.IMongoCollection;
 import com.application.data.dao.documents.UserDocument;
+import com.application.factory.MongoCollectionFactory;
 import com.application.request.response.bean.GenericResponseBean;
 import com.application.request.response.bean.UserActivityReqResBean;
+import com.application.request.response.constants.DataAccessObjectConstants;
 import com.application.request.response.constants.RequestResponseConstant;
-import com.application.service.PasswordService;
+import com.application.service.UserDetailsService;
 
-@Service
-public class LoginService {
-	
-	MongoTemplate template;
-	PasswordService passwordService;
+public class FollowingUserServiceImpl implements UserDetailsService {
+	private MongoTemplate template;
 	
 	@Autowired
-	public LoginService(MongoTemplate template,PasswordService passwordService) {
+	public FollowingUserServiceImpl(MongoTemplate template) {
 		this.template = template;
-		this.passwordService = passwordService;
 	}
-	
-	public GenericResponseBean service(String userName, String password) {
-		UserDocument userDocument = (UserDocument) IMongoCollectionFactory.getInstance(UserDocument.class, template).findOne("userName", userName);
+
+	@Override
+	public GenericResponseBean getUserDetails(String userName) {
+		IMongoCollection userCollection = MongoCollectionFactory.getInstance(DataAccessObjectConstants.USER_DOCUMENT_COLLECTION
+				, template);
+		
+		UserDocument userDocument = (UserDocument)userCollection.findOne("username", userName);
 		GenericResponseBean responseBean = new GenericResponseBean();
-		if(userDocument!=null&&passwordService.match(userDocument.getPassword(), password)) {
+		if(userDocument!=null) {
 			UserActivityReqResBean userActivityRequResBean = new UserActivityReqResBean();
 			userActivityRequResBean.setAge(userDocument.getAge());
 			userActivityRequResBean.setBio(userDocument.getBio());
@@ -52,4 +52,5 @@ public class LoginService {
 		responseBean.setType(RequestResponseConstant.FAILURE_RESPONSE);
 		return responseBean;
 	}
+
 }
