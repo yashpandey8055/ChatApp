@@ -26,13 +26,14 @@ const phonenumber_regex = '^[0-9]{10}$'
 }
 function register(){
     	var request = {
-    			'userName' :$('#userName').val(),
+    			'username' :$('#userName').val(),
     			'firstName':$('#firstName').val(),
     			'lastName':$('#lastName').val(),
     			'bio':$('#bio').val(),
     			'password' :$('#password').val(),
-    			'dob':$('#select-date').val()+"/"+$('#select-month').val()+"/"+$('#select-year').val(),
-    			'yearOfBirth':$('#select-year').val(),
+    			'birthDate':$('#select-date').val(),
+    			'birthYear':$('#select-year').val(),
+    			'birthMonth':$('#select-month').val(),
     			'gender':$("#gender").val(),
     			'phoneNumber':$("#phoneNumber").val(),  
     			'email':$("#emailId").val()  
@@ -61,7 +62,7 @@ function register(){
 				document.location.href = env+"/user?user="+response.userName;
 			}
 		}
-		xmlHttp.open("GET",env+"/public/users/getUser?token="+token,true);
+		xmlHttp.open("GET",env+"/secure/users/getUser?token="+token,true);
 		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xmlHttp.send(null);
     }
@@ -100,8 +101,8 @@ function register(){
     		validated = false;
     	}
  
-    	validateRegexField('#emailId',email_regex,invalid_email_msg,validated)
-    	validateRegexField('#password',password_regex,'',validated)
+    	validateRegexField('#emailId',email_regex,validated,invalid_email_msg)
+    	validateRegexField('#password',password_regex,validated,'')
     	
     	validateEmptyField('#userName',validated)
     	validateEmptyField('#firstName',validated);
@@ -115,11 +116,10 @@ function register(){
     		$(selector).css({"border":"1px solid #b30000"})
     		flag = false;
     	}
-    	flag = true;
     }
     
     function validateRegexField(selector,regex,flag,message){
-    	if($(selector).val().match(regex){
+    	if(!$(selector).val().match(regex)){
     		$(selector).next().text(message)
     		$(selector).next().css({"color":"#b30000"})
     		$(selector).css({"border":"1px solid #b30000"})
@@ -141,9 +141,9 @@ function register(){
 
     	$(document).on("focusout","#userName",function(){
     		var param = new Map();
-    		param.set("key","userName");
+    		param.set("key","username");
     		param.set("value",$("#userName").val());
-    		httpRequest.get("/public/exist",param,function(response){
+    		httpRequest.get("/secure/exist",param,function(response){
     			if (response=='true'){
     				validateField.setUserName(false);
     	    		$("#userName").css({"border":"1px solid #b30000"})
@@ -173,7 +173,7 @@ function register(){
     		var param = new Map();
     		param.set("key","email");
     		param.set("value",$("#emailId").val());
-    		httpRequest.get("/public/exist",param,function(response){
+    		httpRequest.get("/secure/exist",param,function(response){
     			if (response=='true'){
     				validateField.setEmail(false);
     	    		$("#emailId").css({"border":"1px solid #b30000"})
@@ -201,7 +201,7 @@ function register(){
     		var param = new Map();
     		param.set("key","phoneNumber");
     		param.set("value",$("#phoneNumber").val());
-    		httpRequest.get("/public/exist",param,function(response){
+    		httpRequest.get("/secure/exist",param,function(response){
     			if (response=='true'){
     				validateField.setPhoneNumber(false);
     	    		$("#phoneNumber").css({"border":"1px solid #b30000"})

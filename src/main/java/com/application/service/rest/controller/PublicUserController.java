@@ -1,5 +1,7 @@
 package com.application.service.rest.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -17,6 +19,7 @@ import com.application.request.response.bean.GenericResponseBean;
 import com.application.request.response.bean.UserRegisterReqResBean;
 import com.application.service.impl.LoginServiceImpl;
 import com.application.service.impl.RegistrationServiceImpl;
+import com.application.utils.Utils;
 
 
 
@@ -29,6 +32,9 @@ public class PublicUserController {
 	
 	@Autowired
 	LoginServiceImpl loginServiceImpl;
+	
+	@Autowired 
+	MongoTemplate template;
 
 	@PostMapping("/users/register")
 	public ResponseEntity<GenericResponseBean> register(@RequestBody UserRegisterReqResBean request){
@@ -50,8 +56,7 @@ public class PublicUserController {
 
 	
 	  @GetMapping("/exist")
-	  public boolean fieldExist(@RequestParam("key") String key, @RequestParam("value") String value,@Autowired MongoTemplate template) {
-		  template.exists(Query.query(Criteria.where(key).is(value)),"users");
-		return false;
+	  public boolean fieldExist(@RequestParam("key") String key, @RequestParam("value") String value) {
+		 return template.exists(Query.query(Criteria.where(key).is(Utils.getRealTypeValue(value))),"users");
 	  }
 }
