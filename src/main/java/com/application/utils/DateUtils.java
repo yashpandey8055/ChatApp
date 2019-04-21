@@ -16,8 +16,8 @@ public class DateUtils {
 		 */
 	}
 
-	public static Date convertToDate(Integer date,String month,Integer year) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+	public static Date convertToDate(Integer date,Integer month,Integer year) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			return sdf.parse(date+"/"+month+"/"+year);
 		} catch (ParseException e) {

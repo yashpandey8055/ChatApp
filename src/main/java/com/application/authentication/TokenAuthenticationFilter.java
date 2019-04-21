@@ -55,7 +55,6 @@ public class TokenAuthenticationFilter  extends AbstractAuthenticationProcessing
 	  protected void unsuccessfulAuthentication(HttpServletRequest request,
 				HttpServletResponse response, AuthenticationException failed)
 				throws IOException, ServletException {
-		  failed.printStackTrace();
 	    response.sendRedirect("/secure/login");
 	  }
 	  

@@ -1,5 +1,9 @@
 var currentUser
-var validateField ={	
+const email_regex = '^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$'
+const invalid_email_msg = "*Not a valid email."
+const password_regex = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d]).{9,}$'
+const phonenumber_regex = '^[0-9]{10}$'
+	var validateField ={	
 		userName : false,
 		phoneNumber : false,
 		email : false,
@@ -61,12 +65,13 @@ function register(){
 		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xmlHttp.send(null);
     }
+    
    function fill_Date_and_year(){
 	   	for(var i=1;i<=31;i++){
     		$(".select-date").append("<option>"+i+"</option>");
-    	}
-    	for(var i=1;i<=12;i++){
-    		$(".select-month").append("<option>"+i+"</option>");
+    		if(i<=12){
+    			$(".select-month").append("<option>"+i+"</option>");
+    		}
     	}
    } 
     function validate_fields(){
@@ -75,7 +80,7 @@ function register(){
     	var currentYear = d.getFullYear();
     	if(!$("#phoneNumber").val().match('^[0-9]{10}$')){
     		$("#phoneNumber").css({"border":"1px solid #b30000"})
-    		$("#phoneNumber").parent().next().text("*Not valid Phone Number. Phone number is 10 digits.")
+    		$("#phoneNumber").parent().next().text()
     		$("#phoneNumber").parent().next().css({"color":"#b30000"})
     		validated = false;
     	}
@@ -86,21 +91,6 @@ function register(){
     	}else{
     		$("#select-year").css({"border":"1px solid #008080"})
     	}
-    	if($("#password").val()&&!$('#password').val().match('^(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d]).{9,}$')){
-    		$('#password').next().css({"color":"#b30000"})
-    		$("#password").css({"border":"1px solid #b30000"})
-    		validated = false;
-    	}else{
-    		$("#password").css({"border":"1px solid #008080"})
-    	}
-    	if($('#emailId').val().match( '/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/')){
-    		$('#emailId').next().text("*Not a valid email.")
-    		$('#emailId').next().css({"color":"#b30000"})
-    		$("#emailId").css({"border":"1px solid #b30000"})
-    		validated = false;
-    	}else{
-    		$("#emailId").css({"border":"1px solid #008080"})
-    	}
     	if($('#select-date').val()=='Date'){
     		$("#select-date").css({"border":"1px solid #b30000"})
     		validated = false;
@@ -109,24 +99,37 @@ function register(){
     		$("#select-month").css({"border":"1px solid #b30000"})
     		validated = false;
     	}
-       	if($('#userName').val()==''){
-    		$("#userName").css({"border":"1px solid #b30000"})
-    		validated = false;
-    	}
-       	if($('#firstName').val()==''){
-    		$("#firstName").css({"border":"1px solid #b30000"})
-    		validated = false;
-    	}
-       	if($('#lastName').val()==''){
-    		$("#lastName").css({"border":"1px solid #b30000"})
-    		validated = false;
-    	}
-       	if($('#select-year').val()==''){
-    		$("#select-year").css({"border":"1px solid #b30000"})
-    		validated = false;
-    	}
+ 
+    	validateRegexField('#emailId',email_regex,invalid_email_msg,validated)
+    	validateRegexField('#password',password_regex,'',validated)
+    	
+    	validateEmptyField('#userName',validated)
+    	validateEmptyField('#firstName',validated);
+    	validateEmptyField('#lastName',validated);
+    	validateEmptyField('#select-year',validated);
     	return validated;
     }
+    
+    function validateEmptyField(selector,flag){
+    	if($(selector).val()==''){
+    		$(selector).css({"border":"1px solid #b30000"})
+    		flag = false;
+    	}
+    	flag = true;
+    }
+    
+    function validateRegexField(selector,regex,flag,message){
+    	if($(selector).val().match(regex){
+    		$(selector).next().text(message)
+    		$(selector).next().css({"color":"#b30000"})
+    		$(selector).css({"border":"1px solid #b30000"})
+    		flag = false;
+    	}else{
+    		$(selector).css({"border":"1px solid #008080"})
+    	}
+    }
+    
+ 
     $(function(){
     	fill_Date_and_year();
     	$(".form-control").on("focus",function(){
@@ -135,7 +138,7 @@ function register(){
     	$(".form-control").on("focusout",function(){
     		$(this).css({"border":"1px solid #ced4da"})
     	})
-    	
+
     	$(document).on("focusout","#userName",function(){
     		var param = new Map();
     		param.set("key","userName");

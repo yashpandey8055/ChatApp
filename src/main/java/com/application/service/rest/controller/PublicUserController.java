@@ -1,6 +1,9 @@
 package com.application.service.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,8 +50,8 @@ public class PublicUserController {
 
 	
 	  @GetMapping("/exist")
-	  public boolean fieldExist(@RequestParam("key") String key, @RequestParam("value") String value) {
-
+	  public boolean fieldExist(@RequestParam("key") String key, @RequestParam("value") String value,@Autowired MongoTemplate template) {
+		  template.exists(Query.query(Criteria.where(key).is(value)),"users");
 		return false;
 	  }
 }

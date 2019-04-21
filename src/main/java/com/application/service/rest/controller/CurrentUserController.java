@@ -42,7 +42,7 @@ public class CurrentUserController {
 
 	  @GetMapping("/current")
 	  public ResponseEntity<GenericResponseBean> getCurrent(@AuthenticationPrincipal final User user) {
-		  	GenericResponseBean responseBean = userDetailService.getUserDetails(user.getToken());
+		  	GenericResponseBean responseBean = userDetailService.getUserDetails(user.getUsername());
 			return new ResponseEntity<>(responseBean,responseBean.getCode());
 	  }
 	  

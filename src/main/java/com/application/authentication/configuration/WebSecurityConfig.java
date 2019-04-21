@@ -20,6 +20,7 @@ import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import com.application.authentication.NoRedirectStrategy;
 import com.application.authentication.TokenAuthenticationFilter;
 import com.application.authentication.TokenAutheticationProvider;
 
@@ -50,12 +51,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	  TokenAuthenticationFilter restAuthenticationFilter() throws Exception {
 	    final TokenAuthenticationFilter filter = new TokenAuthenticationFilter(PROTECTED_URLS);
 	    filter.setAuthenticationManager(authenticationManager());
+	    filter.setAuthenticationSuccessHandler(successHandler());
 	    return filter;
 	  }
 	 
 	  @Bean
 	  SimpleUrlAuthenticationSuccessHandler successHandler() {
-	    return new SimpleUrlAuthenticationSuccessHandler();
+		  final SimpleUrlAuthenticationSuccessHandler successHandler = new SimpleUrlAuthenticationSuccessHandler();
+		  successHandler.setRedirectStrategy(new NoRedirectStrategy());
+	    return successHandler;
 	  }
 	  
 	  /**

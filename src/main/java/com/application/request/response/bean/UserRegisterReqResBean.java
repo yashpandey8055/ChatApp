@@ -9,7 +9,7 @@ public class UserRegisterReqResBean {
 	private String password;
 	private String gender;
 	private int birthDate;
-	private String birthMonth;
+	private int birthMonth;
 	private int birthYear;
 	private int age;
 	private long phoneNumber;
@@ -68,10 +68,10 @@ public class UserRegisterReqResBean {
 	public void setBirthDate(int birthDate) {
 		this.birthDate = birthDate;
 	}
-	public String getBirthMonth() {
+	public int getBirthMonth() {
 		return birthMonth;
 	}
-	public void setBirthMonth(String birthMonth) {
+	public void setBirthMonth(int birthMonth) {
 		this.birthMonth = birthMonth;
 	}
 	public int getBirthYear() {

@@ -42,7 +42,6 @@ public class LoginServiceImpl {
 			userDetails.setId(userDocument.getId());
 			userDetails.setUserName(userDocument.getUsername());
 			String token = authService.generateToken(userDetails);
-			userDetails.setToken(token);
 			responseBean.setCode(HttpStatus.OK);
 			responseBean.setData(token);
 			responseBean.setType(RequestResponseConstant.SUCCESS_RESPONSE);

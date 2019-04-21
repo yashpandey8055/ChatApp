@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails{
 	private String userName;
 	private String id;
-	private String token;
 
 	/**
 	 * 
@@ -53,13 +52,6 @@ public class User implements UserDetails{
 
 	public String getId() {
 		return id;
-	}
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
 	}
 	public void setId(String id) {
 		this.id = id;

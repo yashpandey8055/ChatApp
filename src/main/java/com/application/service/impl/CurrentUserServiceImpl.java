@@ -1,13 +1,10 @@
 package com.application.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.application.authentication.service.AutheticationService;
 import com.application.data.dao.documents.UserDocument;
 import com.application.factory.MongoCollectionFactory;
 import com.application.request.response.bean.GenericResponseBean;
@@ -20,20 +17,18 @@ import com.application.service.UserDetailsService;
 @Service("currentUserService")
 public class CurrentUserServiceImpl implements UserDetailsService {
 	private MongoTemplate template;
-	private AutheticationService authService;
+	PasswordService passwordService;
 	
 	@Autowired
-	public CurrentUserServiceImpl(MongoTemplate template,PasswordService passwordService
-			,@Qualifier("JWTAuth")AutheticationService authService) {
+	public CurrentUserServiceImpl(MongoTemplate template,PasswordService passwordService) {
 		this.template = template;
-		this.authService = authService;
-	}
+		this.passwordService = passwordService;
+		}
 	
 	@Override
-	public GenericResponseBean getUserDetails(String token) {
-		UserDetails userDetails = authService.decodeToken(token);
+	public GenericResponseBean getUserDetails(String username) {
 		UserDocument userDocument = (UserDocument) MongoCollectionFactory.getInstance(DataAccessObjectConstants.USER_DOCUMENT_COLLECTION
-				, template).findOne("userName", userDetails.getUsername());
+				, template).findOne("username", username);
 		GenericResponseBean responseBean = new GenericResponseBean();
 		if(userDocument!=null) {
 			UserActivityReqResBean userActivityRequResBean = new UserActivityReqResBean();

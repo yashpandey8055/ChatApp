@@ -13,9 +13,9 @@ public interface Validator<T> {
 		return field==null||field.isEmpty();
 	}
 	
-	static void checkValidDate(Integer date,String month,Integer year) throws IllegalFieldException {
+	static void checkValidDate(Integer date,Integer month,Integer year) throws IllegalFieldException {
 			if(DateUtils.convertToDate(date,month,year)==null) {
-				throw new IllegalFieldException("Wrong date format/Invalid date. Date should be in dd/MMM/yyyy format.");
+				throw new IllegalFieldException("Wrong date format/Invalid date. Date should be in dd/MM/yyyy format.");
 			}
 	}
 	
