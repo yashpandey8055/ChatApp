@@ -49,6 +49,9 @@ public class TokenAuthenticationFilter  extends AbstractAuthenticationProcessing
 	    final FilterChain chain,
 	    final Authentication authResult) throws IOException, ServletException {
 	    super.successfulAuthentication(request, response, chain, authResult);
+	    Cookie cookie = new Cookie(TOKEN, extractToken(request));
+	    cookie.setHttpOnly(true);
+	    response.addCookie(cookie);
 	    chain.doFilter(request, response);
 	  }
 	  @Override
