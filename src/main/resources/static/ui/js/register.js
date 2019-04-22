@@ -41,8 +41,11 @@ function register(){
         	var xmlHttp = new XMLHttpRequest();
     		xmlHttp.onreadystatechange =function(){
     			if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
-    				document.cookie="token="+ this.responseText;
-    				logon(this.responseText);
+    				var response = JSON.parse(this.responseText);
+    				if(response.type==="Success"){
+	    				document.cookie="token="+ response.data;
+	    				logon();
+    				}
     			}
     		}
     		xmlHttp.open("POST",env+"/secure/users/register",true);
@@ -53,15 +56,15 @@ function register(){
     	
     }
     
-    function logon(token){
+    function logon(){
     	var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange =function(){
 			if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
 				var response = JSON.parse(this.responseText);
-				document.location.href = env+"/user?user="+response.userName;
+				document.location.href = env+"/user?user="+response.username;
 			}
 		}
-		xmlHttp.open("GET",env+"/public/users/getUser?token="+token,true);
+		xmlHttp.open("GET",env+"/users/current",true);
 		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xmlHttp.send(null);
     }
@@ -119,7 +122,7 @@ function register(){
     }
     
     function validateRegexField(selector,regex,flag,message){
-    	if($(selector).val().match(regex){
+    	if(!$(selector).val().match(regex)){
     		$(selector).next().text(message)
     		$(selector).next().css({"color":"#b30000"})
     		$(selector).css({"border":"1px solid #b30000"})
