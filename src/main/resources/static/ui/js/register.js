@@ -26,13 +26,14 @@ const phonenumber_regex = '^[0-9]{10}$'
 }
 function register(){
     	var request = {
-    			'userName' :$('#userName').val(),
+    			'username' :$('#userName').val(),
     			'firstName':$('#firstName').val(),
     			'lastName':$('#lastName').val(),
     			'bio':$('#bio').val(),
     			'password' :$('#password').val(),
-    			'dob':$('#select-date').val()+"/"+$('#select-month').val()+"/"+$('#select-year').val(),
-    			'yearOfBirth':$('#select-year').val(),
+    			'birthDate':$('#select-date').val(),
+    			'birthYear':$('#select-year').val(),
+    			'birthMonth':$('#select-month').val(),
     			'gender':$("#gender").val(),
     			'phoneNumber':$("#phoneNumber").val(),  
     			'email':$("#emailId").val()  
@@ -44,7 +45,7 @@ function register(){
     				var response = JSON.parse(this.responseText);
     				if(response.type==="Success"){
 	    				document.cookie="token="+ response.data;
-	    				logon();
+	    				logon(response.data);
     				}
     			}
     		}
@@ -56,16 +57,19 @@ function register(){
     	
     }
     
-    function logon(){
+    function logon(token){
     	var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange =function(){
 			if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
 				var response = JSON.parse(this.responseText);
-				document.location.href = env+"/user?user="+response.username;
+				if(response.type==="Success"){
+					document.location.href = env+"/user?user="+response.data.userName;
+				}
 			}
 		}
 		xmlHttp.open("GET",env+"/users/current",true);
 		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		xmlHttp.setRequestHeader("Authorization","Bearer "+token)
 		xmlHttp.send(null);
     }
     
@@ -103,8 +107,8 @@ function register(){
     		validated = false;
     	}
  
-    	validateRegexField('#emailId',email_regex,invalid_email_msg,validated)
-    	validateRegexField('#password',password_regex,'',validated)
+    	validateRegexField('#emailId',email_regex,validated,invalid_email_msg)
+    	validateRegexField('#password',password_regex,validated,'')
     	
     	validateEmptyField('#userName',validated)
     	validateEmptyField('#firstName',validated);
@@ -118,7 +122,6 @@ function register(){
     		$(selector).css({"border":"1px solid #b30000"})
     		flag = false;
     	}
-    	flag = true;
     }
     
     function validateRegexField(selector,regex,flag,message){
@@ -144,9 +147,9 @@ function register(){
 
     	$(document).on("focusout","#userName",function(){
     		var param = new Map();
-    		param.set("key","userName");
+    		param.set("key","username");
     		param.set("value",$("#userName").val());
-    		httpRequest.get("/public/exist",param,function(response){
+    		httpRequest.get("/secure/exist",param,function(response){
     			if (response=='true'){
     				validateField.setUserName(false);
     	    		$("#userName").css({"border":"1px solid #b30000"})
@@ -176,7 +179,7 @@ function register(){
     		var param = new Map();
     		param.set("key","email");
     		param.set("value",$("#emailId").val());
-    		httpRequest.get("/public/exist",param,function(response){
+    		httpRequest.get("/secure/exist",param,function(response){
     			if (response=='true'){
     				validateField.setEmail(false);
     	    		$("#emailId").css({"border":"1px solid #b30000"})
@@ -204,7 +207,7 @@ function register(){
     		var param = new Map();
     		param.set("key","phoneNumber");
     		param.set("value",$("#phoneNumber").val());
-    		httpRequest.get("/public/exist",param,function(response){
+    		httpRequest.get("/secure/exist",param,function(response){
     			if (response=='true'){
     				validateField.setPhoneNumber(false);
     	    		$("#phoneNumber").css({"border":"1px solid #b30000"})
