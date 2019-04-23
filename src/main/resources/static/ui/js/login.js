@@ -6,9 +6,9 @@ var login = function(){
 	var param = new Map();
 	param.set("userName",$("#username").val());
 	param.set("password",$("#password").val());
-	httpRequest.get("/public/users/login",param,function(response){
+	httpRequest.get("/secure/users/login",param,function(response){
 		if (response!==ERROR){
-	        document.cookie="token="+ response;
+	        document.cookie="token="+ JSON.parse(response).data;
 	        window.location.href = "/dashboard";
         }else {
         	$(".error-message").html("<p>"+ERROR_MESSAGE+"</p>" );
