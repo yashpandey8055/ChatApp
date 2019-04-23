@@ -63,7 +63,7 @@ function register(){
 			if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
 				var response = JSON.parse(this.responseText);
 				if(response.type==="Success"){
-					document.location.href = "/ui/user?user="+response.data.userName;
+					document.location.href = "/user?user="+response.data.userName;
 				}
 			}
 		}

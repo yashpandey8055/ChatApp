@@ -32,13 +32,13 @@ function update_password(){
 		}
 	}
 		$("#profile-icon").on('click',function(){
-			window.location.href = "/ui/user?user="+currentUser.userName;
+			window.location.href = "/user?user="+currentUser.userName;
 		});
 		$("#message-icon").on('click',function(){
-			window.location.href = "/ui/chat";
+			window.location.href = "/chat";
 		});
 		$("#dashboard-icon").on('click',function(){
-			window.location.href = "/ui/dashboard";
+			window.location.href = "/dashboard";
 		});
 		$('.display-options-box').hide(); 
 		

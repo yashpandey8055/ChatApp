@@ -69,11 +69,7 @@ public class TokenAuthenticationFilter  extends AbstractAuthenticationProcessing
 				}
 			}
 			}
-		    if(param==null) {
-		    	if(request.getParameter(TOKEN)!=null) {
-		    		token = request.getParameter(TOKEN).replaceAll("\"","");
-		    	}
-		    }else {
+		    if(param!=null) {
 		    	token = param.split(" ")[1].replaceAll("\"","");
 		    }
 		    return token;

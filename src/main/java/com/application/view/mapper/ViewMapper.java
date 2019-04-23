@@ -14,22 +14,22 @@ public class ViewMapper {
 		return "/ui/login.html";
 	}
 
-	@GetMapping("/ui/chat")
+	@GetMapping("/chat")
 	public String  chatPage(Map<String, Object> model){
 		return "/ui/chat.html";
 	}
 
-	@GetMapping("/ui/dashboard")
+	@GetMapping("/dashboard")
 	public String  dashboardPage(Map<String, Object> model){
 		return "/ui/dashboard.html";
 	}
 	
-	@GetMapping("/ui/user")
+	@GetMapping("/user")
 	public String  userPage(Map<String, Object> model){
 		return "/ui/user.html";
 	}
 	
-	@GetMapping("/ui/post")
+	@GetMapping("/post")
 	public String  postViewPage(Map<String, Object> model){
 		return "/ui/post.html";
 	}
