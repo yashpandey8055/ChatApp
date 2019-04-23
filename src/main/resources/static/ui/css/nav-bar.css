@@ -1,6 +1,6 @@
 @font-face {
     font-family: Spantaran;
-    src: url(/views/fonts/btxitally.otf);
+    src: url(/ui/fonts/btxitally.otf);
 }
 .navbar-nav{
 	position:fixed;

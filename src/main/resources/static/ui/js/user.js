@@ -7,7 +7,7 @@ function displayUser(user){
 	"<div class='user-selected-profile-info'>"+
 		"<p><b>"+user.firstName+" "+user.lastName+"</b></p>"+
 		"<p>"+user.age+","+user.gender+"</p>"+
-		"<table><tr><td><img src='/views/images/icon2.png' height=20px width=20px></td><td>Bangalore,India</td></tr></table>"+
+		"<table><tr><td><img src='/ui/images/icon2.png' height=20px width=20px></td><td>Bangalore,India</td></tr></table>"+
 		"<p>"+user.bio+"</p>"+
 		"<hr>"+
 		"<div style='margin:15px;'>"+
@@ -23,7 +23,8 @@ function displayUser(user){
 						"<button type='button' class='btn simple-btn full-width-btn'>Followers ("+user.followers+")</button>";
 			}else{
 				displayInfo = displayInfo +"<button type='button' class='btn purple-button full-width-btn' onclick='message()'>Edit Profile</button>" +
-						"<button type='button' class='btn purple-button full-width-btn' id='follow-user-btn' onclick='follow()'><img height=20px width=20px src='/views/images/loading.gif'></button>"
+						"<button type='button' class='btn purple-button full-width-btn' id='follow-user-btn' onclick='follow()'><img height=20px width=20px src='/" +
+						"ui/images/loading.gif'></button>"
 				httpRequest.get("/users/follow/isfollowing/"+user.username,null,function(response){
 					if(response == 'true'){
 						$("#follow-user-btn").html("Unfollow");
@@ -48,7 +49,7 @@ function displayUser(user){
 			
 }
 function uploadImage(){
-	$("#upload_button").html("<img height=20px width=20px src='/views/images/loading.gif'>")
+	$("#upload_button").html("<img height=20px width=20px src='/ui/images/loading.gif'>")
 	var img = document.getElementById("upload_image_src");
 	var formData = new FormData();
 	formData.append("file",file);
@@ -189,7 +190,7 @@ $(function () {
 	load_CurrentUser(function(){
 	httpRequest.get("/users/user/"+user,null,function(response){
 		response = JSON.parse(response);
-		displayUser(response);
+		displayUser(response.data);
 		currentChattingWithUser = response.username;
 	})
 	
@@ -236,12 +237,16 @@ $(function () {
 		reader.readAsDataURL(file)
 	});
 		httpRequest.get("/users/getPosts/"+user,null,function(response){
-		response = JSON.parse(response);
+		if(response){
+			response = JSON.parse(response);
+		}else{
+			response = [];
+		}
 		var dashboard_response = '';
 		if(response.length<1){
 			dashboard_response  = dashboard_response +"<div class='title-content user-content' style='border:none;background-color:#f2f2f2;height:400px;'>" +
 					"<div style='margin:auto;margin-top:15px;margin-bottom:15px;' class='vertical-align'><img id='edit-profile-picture' " +
-				"style='display: inline;' src='/views/images/empty-icon.png' alt=''><h3>Its so Empty In here"+
+				"style='display: inline;' src='/ui/images/empty-icon.png' alt=''><h3>Its so Empty In here"+
 		   "</h3></div>"+
 		   
 		   "</div>";
@@ -267,9 +272,9 @@ $(function () {
 				dashboard_response = dashboard_response+	"<div class='post-content-footer'>"+
 							"<div class='navbar-element-icon' id='nav-bar-picture-icon' style='margin:0px'>";
 							if(resp.likedByUser){
-								dashboard_response = dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='unlike' width=80% src='/views/images/liked.png'></button>";
+								dashboard_response = dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='unlike' width=80% src='/ui/images/liked.png'></button>";
 							}else{
-								dashboard_response= dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='like' width=80% src='/views/images/like.png'></button>";
+								dashboard_response= dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='like' width=80% src='/ui/images/like.png'></button>";
 							}
 							dashboard_response= dashboard_response+
 						"</div>"+
@@ -293,10 +298,10 @@ $(function () {
 							"<p class=''>"+comment_res.message+"</p>"+
 							"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>";
 							if(comment_res.likedByUser){
-								dashboard_response = dashboard_response +"<button class='like-button' onclick='commentlike(event)'><img alt='unlike' width=50% src='/views/images/heart-like.png'></button>";
+								dashboard_response = dashboard_response +"<button class='like-button' onclick='commentlike(event)'><img alt='unlike' width=50% src='/ui/images/heart-like.png'></button>";
 							}
 							else{
-								dashboard_response = dashboard_response +"<button class='like-button' onclick='commentlike(event)'><img alt='like' width=50% src='/views/images/heart.png'></button>";
+								dashboard_response = dashboard_response +"<button class='like-button' onclick='commentlike(event)'><img alt='like' width=50% src='/ui/images/heart.png'></button>";
 							}
 							dashboard_response = dashboard_response +"</div></div></div></div></div>";
 					});
@@ -315,9 +320,9 @@ $(function () {
 					"<div class='post-content-footer'>"+
 						"<div class='navbar-element-icon' id='nav-bar-picture-icon' style='margin:0px'>";
 						if(resp.likedByUser){
-							dashboard_response = dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='unlike' width=80% src='/views/images/liked.png'></button>";
+							dashboard_response = dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='unlike' width=80% src='/ui/images/liked.png'></button>";
 						}else{
-							dashboard_response= dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='like' width=80% src='/views/images/like.png'></button>";
+							dashboard_response= dashboard_response+"<button class='like-button' onclick='like(event)'><img alt='like' width=80% src='/ui/images/like.png'></button>";
 						}
 						dashboard_response= dashboard_response+
 					"</div>"+
@@ -341,10 +346,10 @@ $(function () {
 						"<p class=''>"+comment_res.message+"</p>"+
 						"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>";
 						if(comment_res.likedByUser){
-							dashboard_response = dashboard_response +"<button class='like-button' onclick='commentlike(event)'><img alt='unlike' width=50% src='/views/images/heart-like.png'></button>";
+							dashboard_response = dashboard_response +"<button class='like-button' onclick='commentlike(event)'><img alt='unlike' width=50% src='/ui/images/heart-like.png'></button>";
 						}
 						else{
-							dashboard_response = dashboard_response +"<button class='like-button' onclick='commentlike(event)'><img alt='like' width=50% src='/views/images/heart.png'></button>";
+							dashboard_response = dashboard_response +"<button class='like-button' onclick='commentlike(event)'><img alt='like' width=50% src='/ui/images/heart.png'></button>";
 						}
 						dashboard_response = dashboard_response +"</div></div></div></div></div>";
 				});

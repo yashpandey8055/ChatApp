@@ -95,7 +95,7 @@ function follow(){
 			$("#follow-user-btn").html("Follow");
 		});
 	}
-	$("#follow-user-btn").html("<img height=20px width=20px src='/views/images/loading.gif'>")
+	$("#follow-user-btn").html("<img height=20px width=20px src='/ui/images/loading.gif'>")
 }
 
 function like(event){
@@ -105,12 +105,12 @@ function like(event){
 		if($(event.target).parent().parent().next().find('.like-count-number').text()){
 			$(event.target).parent().parent().next().find('.like-count-number').text(
 					parseInt($(event.target).parent().parent().next().find('.like-count-number').text())+1);
-			$(event.target).attr('src','/views/images/liked.png');
+			$(event.target).attr('src','/ui/images/liked.png');
 			$(event.target).children().attr('alt','unlike');
 		}else{
 			$(event.target).parent().next().find('.like-count-number').text(
 				parseInt($(event.target).parent().next().find('.like-count-number').text())+1);
-			$(event.target).children().attr('src','/views/images/liked.png');
+			$(event.target).children().attr('src','/ui/images/liked.png');
 		}
 		$(event.target).attr('alt','unlike'); 
 		httpRequest.get("/posts/like",params,function(response){
@@ -119,12 +119,12 @@ function like(event){
 		if($(event.target).parent().parent().next().find('.like-count-number').text()){
 			$(event.target).parent().parent().next().find('.like-count-number').text(
 					parseInt($(event.target).parent().parent().next().find('.like-count-number').text())-1);
-			$(event.target).attr('src','/views/images/like.png');
+			$(event.target).attr('src','/ui/images/like.png');
 			$(event.target).children().attr('alt','like');
 		}else{
 			$(event.target).parent().next().find('.like-count-number').text(
 				parseInt($(event.target).parent().next().find('.like-count-number').text())-1);
-			$(event.target).children().attr('src','/views/images/like.png');
+			$(event.target).children().attr('src','/ui/images/like.png');
 		}
 		$(event.target).attr('alt','like'); 
 		httpRequest.get("/posts/unlike",params,function(response){
@@ -138,14 +138,14 @@ function commentlike(event){
 	if($(event.target).attr('alt')== 'like'||$(event.target).child().attr('alt')){
 		$(event.target).attr('alt','unlike'); 
 		$(event.target).child().attr('alt','like')
-		$(event.target).child().attr('src','/views/images/heart-like.png');
+		$(event.target).child().attr('src','/ui/images/heart-like.png');
 		httpRequest.get("/comment/like",params,function(response){
 		});
 	}else{
 		$(event.target).attr('alt','like'); 
 		$(event.target).child().attr('alt','like'); 
-		$(event.target).attr('src','/views/images/heart.png');
-		$(event.target).child().attr('src','/views/images/heart.png')
+		$(event.target).attr('src','/ui/images/heart.png');
+		$(event.target).child().attr('src','/ui/images/heart.png')
 		httpRequest.get("/comment/unlike",params,function(response){
 		});
 	}

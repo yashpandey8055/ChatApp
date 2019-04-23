@@ -9,7 +9,7 @@ function displayUserInformation(user){
 		"<div class='user-selected-profile-info'>"+
 			"<p><b>"+user.firstName+" "+user.lastName+"</b></p>"+
 			"<p>"+user.age+","+user.gender+"</p>"+
-			"<table><tr><td><img src='/views/images/icon2.png' height=20px width=20px></td><td>Bangalore,India</td></tr></table>"+
+			"<table><tr><td><img src='/ui/images/icon2.png' height=20px width=20px></td><td>Bangalore,India</td></tr></table>"+
 			"<p>"+user.bio+"</p>"+
 			"<hr>"+
 			"<div style='margin:15px;'>"+
@@ -23,7 +23,7 @@ function displayUserInformation(user){
 				if(user.username==currentUser.username){
 					displayInfo = displayInfo + "<button type='button' class='btn simple-btn full-width-btn'>Followers ("+user.followers+")</button>";
 				}else{
-					displayInfo = displayInfo +"<button type='button' class='btn purple-button full-width-btn' id='follow-user-btn' onclick='follow()'><img height=20px width=20px src='/views/images/loading.gif'></button>"
+					displayInfo = displayInfo +"<button type='button' class='btn purple-button full-width-btn' id='follow-user-btn' onclick='follow()'><img height=20px width=20px src='/ui/images/loading.gif'></button>"
 					httpRequest.get("/users/follow/isfollowing/"+user.username,null,function(response){
 						if(response == 'true'){
 							$("#follow-user-btn").html("Unfollow");
@@ -54,7 +54,7 @@ var isConversationLoadComplete = false;
 var currentOnlineUsers = new Map();
 var stompClient;
 function connect() {
-    var socket = new SockJS(env+'/gs-guide-websocket?token='+token);
+    var socket = new SockJS('http://localhost:8080/gs-guide-websocket?token='+token);
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
        stompClient.subscribe('/user/queue/message', function (message){
@@ -93,7 +93,7 @@ function connect() {
         });
         
     });
-    httpRequest.get(env+"/users/connected",null,function(response){
+    httpRequest.get("/users/connected",null,function(response){
     	console.log(response);
 		  var connectedusers = JSON.parse(response);
 				 connectedusers.some(function(user){
@@ -168,11 +168,11 @@ function prependMessages(selectedUser,bucket){
 $(function () {
 	httpRequest.get("/users/current",null,function(response){
 		var thisUser = JSON.parse(response);
-			displayUserInformation(thisUser);
+			displayUserInformation(thisUser.data);
 			connect();
 		});
 	
-	httpRequest.get(env+"/pastConversations",null,function(response){
+	httpRequest.get("/pastConversations",null,function(response){
 		response = JSON.parse(response);
 		response.forEach(function(message){
 			$("#conversations").append("<div class='single-conversation' id='chat-conversation-"+message.sender+"'>"+
@@ -211,6 +211,6 @@ $(function () {
     });
 	 $("#logout").click(function(){
 	    	document.cookie = 'token' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
-	    	window.location.href = env+"/views/login.html"
+	    	window.location.href = "/ui/login"
 	    });
 });

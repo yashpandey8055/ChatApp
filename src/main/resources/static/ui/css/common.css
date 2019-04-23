@@ -58,3 +58,94 @@ h5,h6{
 	width:25%;
 	right:5%;
 }
+
+/* Button CSS*/
+.purple-button,.purple-button:hover,.purple-button:visited,.purple-button:focus,.purple-button:active{
+	float:left;
+	border-radius:5px;
+	outline:none;
+	background-color:#8042f4;
+	color:whitesmoke;
+	font-size:90%;
+	display: inline-block;
+    padding: 6px 12px;
+
+}
+.approve-btn{
+	color:#28a745;
+	background-color:white;
+	border:1px solid #28a745;
+	border-radius:5px;
+}
+.approve-btn:hover{
+	color:white;
+	background-color:#28a745;
+	border:1px solid #28a745;
+	border-radius:5px;
+}
+.app-btn{
+	color:white;
+	margin-right:5px;
+	margin-top:5px;
+	background-color:#8042f4;
+	border:1px solid #8042f4;
+	border-radius:5px;
+}
+.app-btn:hover{
+	color:white;
+	margin-right:5px;
+	margin-top:5px;
+	background-color:#8042f4;
+	border:1px solid #8042f4;
+	border-radius:5px;
+}
+.btnfull{
+	width:100%;
+	color:whitesmoke;
+	font-family:BloggerSans;
+	background-image:linear-gradient(to left ,#46377b,#6f4e96);
+}
+.btnfull:focus,.btnfull:hover,.btnfull:active{
+	outline: none !important;
+	width:100%;
+	color:whitesmoke;
+	background-image:linear-gradient(to left ,#46377b,#6f4e96);
+	box-shadow:0px 0px 2px #6f4e96; 
+}
+.follow-btn{
+	color:white;
+	margin-right:5px;
+	margin-top:5px;
+	background-color:#8042f4;
+	border:1px solid #8042f4;
+	border-radius:5px;
+}
+.full-width-btn{
+	width:100%;
+	margin-top:2px;
+}
+.simple-btn{
+	color:black;
+	margin-right:5px;
+	margin-top:5px;
+	background-color:white;
+	border:1px solid black;
+	border-radius:5px;
+}
+
+.disapprove-btn{
+	color:#dc3545;
+	background-color:white;
+	border:1px solid #dc3545;
+	border-radius:5px;
+}
+.disapprove-btn:hover{
+	color:white;
+	background-color:#dc3545;
+	border:1px solid #dc3545;
+	border-radius:5px;
+}
+.chat-close-button{
+	margin-right:20px;
+	margin-top:10px;
+}

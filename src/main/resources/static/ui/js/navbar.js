@@ -32,13 +32,13 @@ function update_password(){
 		}
 	}
 		$("#profile-icon").on('click',function(){
-			window.location.href = env+"/user?user="+currentUser.userName;
+			window.location.href = "/ui/user?user="+currentUser.userName;
 		});
 		$("#message-icon").on('click',function(){
-			window.location.href = env+"/chat";
+			window.location.href = "/ui/chat";
 		});
 		$("#dashboard-icon").on('click',function(){
-			window.location.href = env+"/dashboard";
+			window.location.href = "/ui/dashboard";
 		});
 		$('.display-options-box').hide(); 
 		
@@ -47,7 +47,7 @@ function update_password(){
 		});
 		 $("#logout").click(function(){
 		    	document.cookie = 'token' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
-		    	window.location.href = env+"/views/login.html"
+		    	window.location.href = "/ui/login"
 		 });
 		 $("#change_password").click(function(){
 				$(".content-container").css({"opacity":"0.1"});
