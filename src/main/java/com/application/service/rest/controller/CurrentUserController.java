@@ -66,9 +66,9 @@ public class CurrentUserController {
 	  }
 	  
 	  @GetMapping("/user/{user}")
-	  public ResponseEntity<String> getUser(@AuthenticationPrincipal final User currentUser,@PathVariable("user") String user) {
-			
-			return new ResponseEntity<>(null,HttpStatus.ACCEPTED);
+	  public ResponseEntity<GenericResponseBean> getUser(@AuthenticationPrincipal final User currentUser,@PathVariable("user") String user) {
+		  GenericResponseBean responseBean = userDetailService.getUserDetails(user);
+			return new ResponseEntity<>(responseBean,responseBean.getCode());
 	  }
 	  
 	  @PutMapping("/user/update")

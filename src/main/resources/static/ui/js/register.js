@@ -44,12 +44,12 @@ function register(){
     			if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
     				var response = JSON.parse(this.responseText);
     				if(response.type==="Success"){
-	    				document.cookie="token="+ response.data;
+	    				document.cookie="token="+ response.data+"; path=/";
 	    				logon(response.data);
     				}
     			}
     		}
-    		xmlHttp.open("POST",env+"/secure/users/register",true);
+    		xmlHttp.open("POST","/secure/users/register",true);
     		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     		xmlHttp.send(JSON.stringify(request));
     	}
@@ -63,13 +63,14 @@ function register(){
 			if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
 				var response = JSON.parse(this.responseText);
 				if(response.type==="Success"){
-					document.location.href = env+"/user?user="+response.data.userName;
+					document.location.href = "/ui/user?user="+response.data.userName;
 				}
 			}
 		}
-		xmlHttp.open("GET",env+"/users/current",true);
+		xmlHttp.open("GET","/users/current",true);
 		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-		xmlHttp.setRequestHeader("Authorization","Bearer "+token)
+		xmlHttp.setRequestHeader("Authorization","Bearer "+token);
+		xmlHttp.withCredentials = true
 		xmlHttp.send(null);
     }
     

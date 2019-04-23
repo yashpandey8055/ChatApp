@@ -187,7 +187,7 @@ function close_this(event){
 }
 $(function () {
 	load_CurrentUser(function(){
-	httpRequest.get(env+"/users/user/"+user,null,function(response){
+	httpRequest.get("/users/user/"+user,null,function(response){
 		response = JSON.parse(response);
 		displayUser(response);
 		currentChattingWithUser = response.username;

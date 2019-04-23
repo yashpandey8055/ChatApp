@@ -1,4 +1,4 @@
-var env = "http://localhost:8080"
+
 const ERROR = "Not found";
 const ERROR_MESSAGE = "Username/password incorrect"
 const httpRequest = new HttpRequest();
@@ -9,7 +9,7 @@ var login = function(){
 	httpRequest.get("/public/users/login",param,function(response){
 		if (response!==ERROR){
 	        document.cookie="token="+ response;
-	        window.location.href = env+"/dashboard";
+	        window.location.href = "/dashboard";
         }else {
         	$(".error-message").html("<p>"+ERROR_MESSAGE+"</p>" );
         	$(".error-message").css({"color":"#b30000"});
@@ -27,7 +27,7 @@ function HttpRequest(){
 			params.forEach(function(value,key){
 				requestParam = requestParam+key+'='+value+'&'
 			});
-			url = env+url+'?'+requestParam;
+			url = url+'?'+requestParam;
 		}
 		
 		var xmlHttp = new XMLHttpRequest();
@@ -54,7 +54,7 @@ function HttpRequest(){
 				callback(this.responseText);
 			}
 		}
-		xmlHttp.open("POST",env+url,true);
+		xmlHttp.open("POST",url,true);
 		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xmlHttp.send(JSON.stringify(request));
 	}
@@ -70,7 +70,7 @@ function HttpRequest(){
 				callback(this.responseText);
 			}
 		}
-		xmlHttp.open("PUT",env+url,true);
+		xmlHttp.open("PUT",url,true);
 		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xmlHttp.send(JSON.stringify(request));
 	}

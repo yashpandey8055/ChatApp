@@ -1,4 +1,4 @@
-var env = "http://localhost:8080"
+
 var token = getCookie();
 var currentUser = null;
 const httpRequest = new HttpRequest();
@@ -28,7 +28,7 @@ function HttpRequest(){
 			params.forEach(function(value,key){
 				requestParam = requestParam+key+'='+value+'&'
 			});
-			url = env+url+'?'+requestParam;
+			url = url+'?'+requestParam;
 		}
 		
 		var xmlHttp = new XMLHttpRequest();
@@ -41,9 +41,7 @@ function HttpRequest(){
 		}
 		
 		xmlHttp.open("GET",url);
-		if(token){
 			xmlHttp.setRequestHeader("Authorization","Bearer "+token);
-		}
 		xmlHttp.send(null);
 	}
 	
@@ -58,7 +56,7 @@ function HttpRequest(){
 				callback(this.responseText);
 			}
 		}
-		xmlHttp.open("POST",env+url,true);
+		xmlHttp.open("POST",url,true);
 		if(token){
 			xmlHttp.setRequestHeader("Authorization","Bearer "+token);
 		}
@@ -75,7 +73,7 @@ function HttpRequest(){
 				callback(this.responseText);
 			}
 		}
-		xmlHttp.open("PUT",env+url,true);
+		xmlHttp.open("PUT",url,true);
 		if(token){
 			xmlHttp.setRequestHeader("Authorization","Bearer "+token);
 		}
@@ -153,7 +151,7 @@ function commentlike(event){
 	}
 }
 function open_post(postId){
-	document.location.href = env+"/post?postId="+postId;
+	document.location.href = "/post?postId="+postId;
 }
 function add_notification(response){
 	var notification= "<li onclick= open_post('"+response.postId+"') class='unread-notification' id='notification-"+response.postId+"-"+response.type+"'>"
@@ -173,7 +171,7 @@ function add_notification(response){
 		$("#notification-box-display").prepend(notification);
 }
 function _websocket_connect(){
-    var socket = new SockJS(env+'/gs-guide-websocket?token='+token);
+    var socket = new SockJS('http://localhost:8080/gs-guide-websocket?token='+token);
     var stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
        stompClient.subscribe('/user/queue/notification', function (response){
@@ -203,11 +201,11 @@ function load_CurrentUser(callback){
 				downloadingImage.src = currentUser.profileUrl;
 			});
 	}else{
-		document.location.href = env+"/views/login.html";
+		document.location.href = "/ui/login";
 	}
 }
 $(function(){
-	$(".navbar-nav").load("/views/navbar.html");
+	$(".navbar-nav").load("/ui/navbar.html");
 	
 	load_CurrentUser(function(){});
 	
