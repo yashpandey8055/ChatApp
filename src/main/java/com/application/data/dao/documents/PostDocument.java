@@ -1,9 +1,6 @@
 package com.application.data.dao.documents;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="posts")
@@ -13,7 +10,6 @@ public class PostDocument extends MongoDocument{
 	private long likes;
 	private long commentCount; 
 	private String userName;
-	private List<String> comments;
 	private Boolean isStatus;
 	private String type;
 	private String postImageUrl;
@@ -38,15 +34,7 @@ public class PostDocument extends MongoDocument{
 	public void setCommentCount(long commentCount) {
 		this.commentCount = commentCount;
 	}
-	public List<String> getComments() {
-		if(null==comments) {
-			return new ArrayList<>();
-		}
-		return comments;
-	}
-	public void setComments(List<String> comments) {
-		this.comments = comments;
-	}
+
 	public Boolean isIsStatus() {
 		return isStatus;
 	}
