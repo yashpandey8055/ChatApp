@@ -11,5 +11,5 @@ public interface PostService {
 	
 	public GenericResponseBean delete(String id);
 	
-	public GenericResponseBean view(String id);
+	public GenericResponseBean view(String id,String user);
 }

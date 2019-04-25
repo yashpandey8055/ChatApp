@@ -8,7 +8,7 @@ var login = function(){
 	param.set("password",$("#password").val());
 	httpRequest.get("/secure/users/login",param,function(response){
 		if (response!==ERROR){
-	        document.cookie="token="+ JSON.parse(response).data;
+	        document.cookie="token="+ JSON.parse(response).data+"; path=/";
 	        window.location.href = "/dashboard";
         }else {
         	$(".error-message").html("<p>"+ERROR_MESSAGE+"</p>" );

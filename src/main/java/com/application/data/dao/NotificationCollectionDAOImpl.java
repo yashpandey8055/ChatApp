@@ -44,5 +44,11 @@ public class NotificationCollectionDAOImpl implements IMongoCollection {
 		return template.find(query, NotificationDocument.class);
 	}
 
+	@Override
+	public Long count(Query query) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 

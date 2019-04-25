@@ -1,5 +1,7 @@
 package com.application.service.rest.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,22 +13,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.application.bean.User;
+import com.application.request.response.bean.GenericResponseBean;
+import com.application.request.response.bean.PostActivityReqResBean;
+import com.application.service.PostService;
 
 @RestController
 @RequestMapping("/posts")
 public class PostController {
-
+	
+	@Autowired
+	@Qualifier("StatusPost")
+	PostService postService;
 
 	@PostMapping("/insert")
-	public ResponseEntity<String> insertPost(@AuthenticationPrincipal User currentUser, @RequestBody Object post){
-
-		return new ResponseEntity<>(null,HttpStatus.OK);
+	public ResponseEntity<GenericResponseBean> insertPost(@AuthenticationPrincipal User currentUser, @RequestBody PostActivityReqResBean postActivityReqResBean){
+		GenericResponseBean post = postService.post(postActivityReqResBean);
+		return new ResponseEntity<>(post,HttpStatus.OK);
 	}
 	
 	@GetMapping("/getPost")
 	public ResponseEntity<Object> getPost(@AuthenticationPrincipal User currentUser, @RequestParam String postId){
-
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		GenericResponseBean post = postService.view(postId,currentUser.getUsername());
+		return new ResponseEntity<>(post, HttpStatus.OK);
 	}
 	
 	@GetMapping("/like")

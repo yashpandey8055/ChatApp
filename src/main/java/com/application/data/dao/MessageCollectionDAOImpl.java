@@ -42,5 +42,11 @@ public class MessageCollectionDAOImpl implements IMongoCollection {
 		return template.find(query, MessageDocument.class);
 	}
 
+	@Override
+	public Long count(Query query) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 

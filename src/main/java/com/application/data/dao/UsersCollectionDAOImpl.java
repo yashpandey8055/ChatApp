@@ -45,5 +45,11 @@ public class  UsersCollectionDAOImpl implements IMongoCollection{
 		return template.find(query, UserDocument.class);
 	}
 
+	@Override
+	public Long count(Query query) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

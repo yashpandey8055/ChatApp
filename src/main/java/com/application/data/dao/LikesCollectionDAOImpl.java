@@ -44,4 +44,10 @@ public class LikesCollectionDAOImpl implements IMongoCollection {
 		return template.find(query, LikeDocument.class);
 	}
 
+	@Override
+	public Long count(Query query) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

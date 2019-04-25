@@ -42,6 +42,11 @@ public class PostCollectionDAOImpl implements IMongoCollection {
 		return template.find(query, PostDocument.class);
 	}
 
+	@Override
+	public Long count(Query query) {
+		return template.count(query, PostDocument.class);
+	}
+
 
 
 }

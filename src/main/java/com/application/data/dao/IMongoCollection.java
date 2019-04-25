@@ -62,6 +62,15 @@ public interface IMongoCollection {
 	 */
 	public  DeleteResult delete(String key, Object value);
 	
+	
+	/**
+	 * Counts the Number of Document with given Query
+	 * 
+	 * 
+	 * @param Query
+	 * @return Number of Records matching with Query 
+	 */
+	public Long count(Query query);
 	/**
 	 * Execute the Query on given Collection. 
 	 * 
