@@ -7,9 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection="posts")
 public class PostDocument extends MongoDocument{
-	
-	@Field("_id")
-	private String id;
+
 	private String status;
 	private long likes;
 	private long commentCount; 
@@ -20,12 +18,6 @@ public class PostDocument extends MongoDocument{
 	private Date creationDate;
 	private Date updationDate;
 
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
 	public String getStatus() {
 		return status;
 	}

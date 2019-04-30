@@ -11,4 +11,9 @@ public class GeneralConstants {
 	public static final String NOW_INSTANT = "Just now";
 	
 	public static final int COMMENT_LIMIT_ON_VIEW_POST = 2;
+	
+	
+	public static final String STATUS_POST = "Status";
+	
+	public static final String IMAGE_POST = "Image";
 }

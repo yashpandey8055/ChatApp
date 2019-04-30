@@ -15,6 +15,10 @@ import com.mongodb.client.result.DeleteResult;
 public class PostCollectionDAOImpl implements IMongoCollection {
 
 	MongoTemplate template;
+	
+	public PostCollectionDAOImpl(MongoTemplate template) {
+		this.template = template;
+	}
 
 	@Override
 	public MongoDocument findOne(String key, Object value) {

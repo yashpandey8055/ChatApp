@@ -28,8 +28,7 @@ import com.mongodb.client.result.DeleteResult;
 
 @Component("StatusPost")
 public class StatusPostServiceImpl implements PostService{
-	
-	private static final String STATUS = "Status";
+
 	private MongoTemplate template;
 	
 	@Autowired
@@ -47,26 +46,17 @@ public class StatusPostServiceImpl implements PostService{
 		document.setLikes(0);
 		document.setPostImageUrl(null);
 		document.setStatus(postActivityReqResBean.getStatus());
-		document.setType(STATUS);
+		document.setType(GeneralConstants.STATUS_POST);
 		document.setUserName(postActivityReqResBean.getUserName());
 		
 		IMongoCollection postCollection = MongoCollectionFactory.getInstance(DataAccessObjectConstants.POST_DOCUMENT_COLLECTION
 				, template);
 		postCollection.save(document);
-		GenericResponseBean responseBean = new GenericResponseBean();
-		PostResponse postResponse = new PostResponse();
 		IMongoCollection userCollection = MongoCollectionFactory.getInstance(DataAccessObjectConstants.USER_DOCUMENT_COLLECTION
 				, template);
-		postResponse.setUser((UserDocument)userCollection.findOne(DataAccessObjectConstants.USERNAME, postActivityReqResBean.getUserName()));
-		postResponse.setPost(document);
-		postResponse.setComments(new ArrayList<>(1));
-		postResponse.setLikesCount(0);
-		postResponse.setLikedByUser(false);
-		postResponse.setDaysAgo(GeneralConstants.NOW_INSTANT);
-		responseBean.setCode(HttpStatus.OK);
-		responseBean.setType(RequestResponseConstant.SUCCESS_RESPONSE);
-		responseBean.setData(postResponse);
-		return responseBean;
+		UserDocument userDocument = (UserDocument)userCollection.findOne(DataAccessObjectConstants.USERNAME, postActivityReqResBean.getUserName());
+	
+		return PostService.createPostResponse(document,userDocument);
 	}
 
 	@Override
@@ -115,6 +105,7 @@ public class StatusPostServiceImpl implements PostService{
 		responseBean.setData(postResponse);
 		return responseBean;
 	}
+
 
 	
 }

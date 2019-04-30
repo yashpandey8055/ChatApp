@@ -27,6 +27,7 @@ public class PostController {
 
 	@PostMapping("/insert")
 	public ResponseEntity<GenericResponseBean> insertPost(@AuthenticationPrincipal User currentUser, @RequestBody PostActivityReqResBean postActivityReqResBean){
+		postActivityReqResBean.setUserName(currentUser.getUsername());
 		GenericResponseBean post = postService.post(postActivityReqResBean);
 		return new ResponseEntity<>(post,HttpStatus.OK);
 	}

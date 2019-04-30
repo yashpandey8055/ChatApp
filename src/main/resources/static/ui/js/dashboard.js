@@ -3,16 +3,12 @@ var file;
 function post(){
 	var request = {
 			'status':$("#update-user-status").val(),
-			'likes':0,
-			'commentCount':0,
-			'comments':[],
 			'type':'status',
 			'isStatus':true,
-			'postImageUrl':null
 	}
 	$("#update-user-status").val('');
 	httpRequest.post("/posts/insert",request,function(response){
-		response = JSON.parse(response);
+		response = JSON.parse(response).data;
 		$(".center").append("<div class='title-content user-content' id='"+response.post.id+"'>"+
 			"<div class='post-content-header'>"+
 				"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
@@ -25,7 +21,7 @@ function post(){
 					"<div class='status-content-box'><div align='left' style='margin: 15px;font-size:20px;'>"+response.post.status+"</div>"+
 					"<div class='post-content-footer'>"+
 						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
-						"<button class='like-button' alt='like' onclick='like(event)'><img alt='like' width=80% src='/views/images/like.png'></button>"+
+						"<button class='like-button' alt='like' onclick='like(event)'><img alt='like' width=80% src='/ui/images/like.png'></button>"+
 					"</div>"+
 					"<div class='likes-count'><b><p class='like-count-number'>0</p></b>&nbsp<b><p>Likes</p></b></div>"+
 				"</div>"+
