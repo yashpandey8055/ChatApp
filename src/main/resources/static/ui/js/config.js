@@ -170,14 +170,14 @@ function add_notification(response){
 		$("#notification-box-display").prepend(notification);
 }
 function _websocket_connect(){
-    var socket = new SockJS('http://localhost:8080/gs-guide-websocket?token='+token);
+    var socket = new SockJS('http://localhost:8080/ketu-socket?token='+token);
     var stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
-       stompClient.subscribe('/user/queue/notification', function (response){
-    	   add_notification(JSON.parse(response.body));
-    	   $("#notification-nav-bar").text( parseInt($('#notification-nav-bar').text())+1);
-    	   $("#notification-nav-bar").css({"background-color":"red","color":"white"});
-       });
+      // stompClient.subscribe('/user/queue/notification', function (response){
+    //	   add_notification(JSON.parse(response.body));
+    //	   $("#notification-nav-bar").text( parseInt($('#notification-nav-bar').text())+1);
+    //	   $("#notification-nav-bar").css({"background-color":"red","color":"white"});
+     //  });
     });
 }
 function load_CurrentUser(callback){

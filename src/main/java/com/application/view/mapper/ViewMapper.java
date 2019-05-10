@@ -34,6 +34,11 @@ public class ViewMapper {
 		return "/ui/post.html";
 	}
 	
+	@GetMapping("/findfriends")
+	public String  findFriendsPage(Map<String, Object> model){
+		return "/ui/find.html";
+	}
+	
 	@GetMapping("/secure/register")
 	public String  registerPage(Map<String, Object> model){
 		return "/ui/register.html";

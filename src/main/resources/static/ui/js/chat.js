@@ -54,7 +54,7 @@ var isConversationLoadComplete = false;
 var currentOnlineUsers = new Map();
 var stompClient;
 function connect() {
-    var socket = new SockJS('http://localhost:8080/gs-guide-websocket?token='+token);
+    var socket = new SockJS('http://localhost:8080/ketu-socket?token='+token);
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
        stompClient.subscribe('/user/queue/message', function (message){

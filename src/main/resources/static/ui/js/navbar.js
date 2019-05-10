@@ -40,6 +40,9 @@ function update_password(){
 		$("#dashboard-icon").on('click',function(){
 			window.location.href = "/dashboard";
 		});
+		$("#findfriends-icon").on('click',function(){
+			window.location.href = "/findfriends";
+		});
 		$('.display-options-box').hide(); 
 		
 		$('#nav-bar-picture-icon').click(function(e) {                              
