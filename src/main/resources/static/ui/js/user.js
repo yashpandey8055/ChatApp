@@ -180,6 +180,46 @@ function update_profile(){
 	close_this();
 	}
 }
+
+function comment(){
+	console.log(this);
+	$(this).keypress(function(e){
+		var key = e.which;
+		if(key==13){
+			postComment($(e.target).parents('[id]:last').attr('id'),$(e.target).val(),currentUser.userName)
+			return false;
+		}
+	});
+}
+function postComment(postId,comment,userName){
+	 var commentRequest = {
+			'comment':comment,
+			'postId':postId,
+			'userName':userName
+	}
+	httpRequest.post("/comment/insert",commentRequest,function(response){
+		console.log(response)
+		response = JSON.parse(response).data;
+		$('#'+postId).find('.post-content-container').append("<div class='status-comment-display-box'>"+
+				"<div class='' align='left'>"+
+				"<div class='post-content-header'>"+
+					"<div class='comment-header'>"+
+						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
+							"<img height=100% id='nav-bar-profile-picture' width=100% src='"+currentUser.profileUrl+"'>"+
+						"</div>"+
+					"</div>"+
+					"<div>"+
+					"<p class=''><b>"+response.userName+"</b>&nbsp Just Now</p>"+
+					"<p class=''>"+response.message+"</p>"+
+					"<div class='navbar-element-icon like-button' id='nav-bar-picture-icon'>"+
+					"<button class='like-button' alt='like' onclick='commentlike(event)'><img alt='like' width=50% src='/ui/images/heart.png'></button>"+
+					"</div>"+
+					"</div>"+
+				"</div>"+
+	"</div>"+
+"</div>");
+	});
+}
 function close_this(event){
 	$(event.target).closest('.pop-up-box').remove();
 	if(!($('.pop-up-box')[0])){
@@ -236,9 +276,9 @@ $(function () {
 		
 		reader.readAsDataURL(file)
 	});
-		httpRequest.get("/users/getPosts/"+user,null,function(response){
+		httpRequest.get("/posts/getuserpost/"+user,null,function(response){
 		if(response){
-			response = JSON.parse(response);
+			response = JSON.parse(response).data;
 		}else{
 			response = [];
 		}

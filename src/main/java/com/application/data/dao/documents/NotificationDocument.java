@@ -5,10 +5,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection="notification")
 public class NotificationDocument extends MongoDocument{
-	
+	@Field("_id")
+	private String id;
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	private String postId;
 	private long count = 0;
 	private String receiver;

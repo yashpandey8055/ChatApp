@@ -2,7 +2,7 @@ package com.application.request.response.bean;
 
 
 public class PostActivityReqResBean {
-
+	private String id;
 	private String status;
 	private long likes;
 	private long commentCount; 
@@ -51,5 +51,17 @@ public class PostActivityReqResBean {
 	}
 	public void setPostImageUrl(String postImageUrl) {
 		this.postImageUrl = postImageUrl;
+	}
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
 	}
 }

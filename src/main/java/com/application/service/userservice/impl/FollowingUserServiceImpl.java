@@ -1,34 +1,34 @@
-package com.application.service.impl;
+package com.application.service.userservice.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.application.data.dao.IMongoCollection;
 import com.application.data.dao.documents.UserDocument;
 import com.application.factory.MongoCollectionFactory;
 import com.application.request.response.bean.GenericResponseBean;
 import com.application.request.response.bean.UserActivityReqResBean;
 import com.application.request.response.constants.DataAccessObjectConstants;
 import com.application.request.response.constants.RequestResponseConstant;
-import com.application.service.PasswordService;
 import com.application.service.UserDetailsService;
 
-@Service("currentUserService")
-public class CurrentUserServiceImpl implements UserDetailsService {
+@Service("FollowingUser")
+public class FollowingUserServiceImpl implements UserDetailsService {
 	private MongoTemplate template;
-	PasswordService passwordService;
 	
 	@Autowired
-	public CurrentUserServiceImpl(MongoTemplate template,PasswordService passwordService) {
+	public FollowingUserServiceImpl(MongoTemplate template) {
 		this.template = template;
-		this.passwordService = passwordService;
-		}
-	
+	}
+
 	@Override
-	public GenericResponseBean getUserDetails(String username) {
-		UserDocument userDocument = (UserDocument) MongoCollectionFactory.getInstance(DataAccessObjectConstants.USER_DOCUMENT_COLLECTION
-				, template).findOne("username", username);
+	public GenericResponseBean getUserDetails(String userName) {
+		IMongoCollection userCollection = MongoCollectionFactory.getInstance(DataAccessObjectConstants.USER_DOCUMENT_COLLECTION
+				, template);
+		
+		UserDocument userDocument = (UserDocument)userCollection.findOne("username", userName);
 		GenericResponseBean responseBean = new GenericResponseBean();
 		if(userDocument!=null) {
 			UserActivityReqResBean userActivityRequResBean = new UserActivityReqResBean();
@@ -36,7 +36,6 @@ public class CurrentUserServiceImpl implements UserDetailsService {
 			userActivityRequResBean.setBio(userDocument.getBio());
 			userActivityRequResBean.setCity(userDocument.getCity());
 			userActivityRequResBean.setCountry(userDocument.getCountry());
-			userActivityRequResBean.setEmail(userDocument.getEmail());
 			userActivityRequResBean.setFirstName(userDocument.getFirstName());
 			userActivityRequResBean.setGender(userDocument.getGender());
 			userActivityRequResBean.setLastName(userDocument.getLastName());

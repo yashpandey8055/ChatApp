@@ -1,4 +1,4 @@
-package com.application.service.impl;
+package com.application.service.loginregisterservice.impl;
 
 import java.util.ArrayList;
 

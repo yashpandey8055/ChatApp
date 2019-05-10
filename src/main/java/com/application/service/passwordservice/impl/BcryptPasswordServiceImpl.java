@@ -1,4 +1,4 @@
-package com.application.service.impl;
+package com.application.service.passwordservice.impl;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;

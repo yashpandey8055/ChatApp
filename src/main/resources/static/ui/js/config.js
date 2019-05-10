@@ -113,7 +113,7 @@ function like(event){
 			$(event.target).children().attr('src','/ui/images/liked.png');
 		}
 		$(event.target).attr('alt','unlike'); 
-		httpRequest.get("/posts/like",params,function(response){
+		httpRequest.get("/unlike/post",params,function(response){
 		});
 	}else{
 		if($(event.target).parent().parent().next().find('.like-count-number').text()){
@@ -127,7 +127,7 @@ function like(event){
 			$(event.target).children().attr('src','/ui/images/like.png');
 		}
 		$(event.target).attr('alt','like'); 
-		httpRequest.get("/posts/unlike",params,function(response){
+		httpRequest.get("/like/post",params,function(response){
 		});
 	}
 }
@@ -137,16 +137,15 @@ function commentlike(event){
 	
 	if($(event.target).attr('alt')== 'like'||$(event.target).child().attr('alt')){
 		$(event.target).attr('alt','unlike'); 
-		$(event.target).child().attr('alt','like')
-		$(event.target).child().attr('src','/ui/images/heart-like.png');
-		httpRequest.get("/comment/like",params,function(response){
+		$(event.target).children().attr('alt','like')
+		$(event.target).attr('src','/ui/images/heart-like.png');
+		httpRequest.get("/like/comment",params,function(response){
 		});
 	}else{
 		$(event.target).attr('alt','like'); 
-		$(event.target).child().attr('alt','like'); 
+		$(event.target).children().attr('alt','like'); 
 		$(event.target).attr('src','/ui/images/heart.png');
-		$(event.target).child().attr('src','/ui/images/heart.png')
-		httpRequest.get("/comment/unlike",params,function(response){
+		httpRequest.get("/unlike/comment",params,function(response){
 		});
 	}
 }
@@ -192,7 +191,7 @@ function load_CurrentUser(callback){
 					add_notification(res);
 				})
 			})
-			currentUser = JSON.parse(response);
+			currentUser = JSON.parse(response).data;
 				var downloadingImage = new Image();
 				downloadingImage.onload = function(){
 				 $("#nav-bar-profile-picture").attr("src",this.src);

@@ -4,10 +4,18 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection="comments")
 public class CommentDocument extends MongoDocument{
-
+	@Field("_id")
+	private String id;
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	private String postId;
 	private String userName;
 	private String profileUrl;

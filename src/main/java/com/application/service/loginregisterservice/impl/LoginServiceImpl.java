@@ -1,4 +1,4 @@
-package com.application.service.impl;
+package com.application.service.loginregisterservice.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +41,7 @@ public class LoginServiceImpl {
 			User userDetails = new User();
 			userDetails.setId(userDocument.getId());
 			userDetails.setUserName(userDocument.getUsername());
+			userDetails.setProfileUrl(userDocument.getProfileUrl());
 			String token = authService.generateToken(userDetails);
 			responseBean.setCode(HttpStatus.OK);
 			responseBean.setData(token);

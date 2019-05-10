@@ -1,5 +1,7 @@
 package com.application.service.rest.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -8,16 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.application.bean.User;
+import com.application.request.response.bean.GenericResponseBean;
+import com.application.service.DisplayPostService;
 
 @RestController
 @RequestMapping("/dashboard")
 public class DashboardController {
 	
-
+	@Autowired
+	@Qualifier("Dashboard")
+	DisplayPostService dashboardService;
+	
 	@GetMapping("/getPosts")
-	public ResponseEntity<String> getPost(@AuthenticationPrincipal User currentUser){
-		
-		return new ResponseEntity<>(null, HttpStatus.OK);
+	public ResponseEntity<GenericResponseBean> getPost(@AuthenticationPrincipal User currentUser){
+		return new ResponseEntity<>(dashboardService.viewPost(currentUser.getUsername()),HttpStatus.OK);
 		
 		
 	}

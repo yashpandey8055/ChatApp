@@ -16,7 +16,7 @@ public class  UsersCollectionDAOImpl implements IMongoCollection{
 		this.template = template;
 	}
 	
-	MongoTemplate template;
+	private MongoTemplate template;
 	
 	
 	@Override

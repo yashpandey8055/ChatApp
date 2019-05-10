@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.application.data.dao.documents.MongoDocument;
 import com.application.data.dao.documents.PostDocument;
-import com.application.data.dao.documents.UserDocument;
+import com.application.request.response.bean.UserActivityReqResBean;
 
 public class PostResponse {
 	private PostDocument post;
-	private UserDocument user;
+	private UserActivityReqResBean user;
 	private Boolean likedByUser;
 	private long likesCount;
 	private String daysAgo;
@@ -26,10 +26,10 @@ public class PostResponse {
 	public void setPost(PostDocument post) {
 		this.post = post;
 	}
-	public UserDocument getUser() {
+	public UserActivityReqResBean getUser() {
 		return user;
 	}
-	public void setUser(UserDocument user) {
+	public void setUser(UserActivityReqResBean user) {
 		this.user = user;
 	}
 	public Boolean getLikedByUser() {

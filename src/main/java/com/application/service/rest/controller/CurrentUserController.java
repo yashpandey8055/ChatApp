@@ -77,11 +77,4 @@ public class CurrentUserController {
 			return new ResponseEntity<>(null,HttpStatus.ACCEPTED);
 	  }
 	  
-		@GetMapping("/getPosts/{user}")
-		public ResponseEntity<String> getPosts(@AuthenticationPrincipal User currentUser,@PathVariable("user") String user){			
-			
-			return new ResponseEntity<>(null,HttpStatus.ACCEPTED);
-			
-			
-		}
 }

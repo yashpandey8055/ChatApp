@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.application.data.dao.CommentCollectionDAOImpl;
 import com.application.data.dao.IMongoCollection;
+import com.application.data.dao.LikesCollectionDAOImpl;
 import com.application.data.dao.PostCollectionDAOImpl;
 import com.application.data.dao.UsersCollectionDAOImpl;
 import com.application.request.response.constants.DataAccessObjectConstants;
@@ -36,6 +37,8 @@ public class MongoCollectionFactory {
 
 			case DataAccessObjectConstants.POST_DOCUMENT_COLLECTION:
 				collection = new PostCollectionDAOImpl(template);break;
+			case DataAccessObjectConstants.LIKE_DOCUMENT_COLLECTION:
+				collection = new LikesCollectionDAOImpl(template);break;
 			default: collection = null;
 					
 		}

@@ -9,6 +9,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails{
 	private String userName;
 	private String id;
+	private String profileUrl;
+
+	public String getProfileUrl() {
+		return profileUrl;
+	}
+
+	public void setProfileUrl(String profileUrl) {
+		this.profileUrl = profileUrl;
+	}
 
 	/**
 	 * 
@@ -62,7 +71,7 @@ public class User implements UserDetails{
 	
 	@Override
 	public String toString() {
-		return "{\"userName\": \""+getUsername()+"\","+"\"id\":\""+getId()+"\"}";
+		return "{\"userName\": \""+getUsername()+"\","+"\"id\":\""+getId()+"\","+"\"profileUrl\":\""+getProfileUrl()+"\"}";
 		
 	}
 

@@ -5,9 +5,18 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection="messages")
 public class MessageDocument extends MongoDocument {
+	@Field("_id")
+	private String id;
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	private String sender;
 	private List<String> participants = new ArrayList<>(2);

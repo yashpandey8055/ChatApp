@@ -1,6 +1,11 @@
 package com.application.utils;
 
+import java.util.Random;
+
 public class Utils {
+	
+
+	private static final Random RANDOM = new Random();
 	
 	private Utils() {
 		/**
@@ -34,5 +39,21 @@ public class Utils {
 		  
 		  return realValue;
 	}
+	
+	
+	/**
+	 * Generate a rantome striing with an extension
+	 * @param ext
+	 * @return
+	 */
+	public static String randomStringGenerate(String ext) {
+		String characterArray= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnaopqrst1234567890";
+		StringBuilder stringBuilder = new StringBuilder();
+		for(int i =0;i<10;i++) {
+			stringBuilder.append(characterArray.charAt(RANDOM.nextInt(characterArray.length())));
+		}
+		stringBuilder.append("."+ext);
+		return stringBuilder.toString();
+}
 
 }

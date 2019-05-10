@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.application.request.response.bean.GenericResponseBean;
 import com.application.request.response.bean.UserRegisterReqResBean;
-import com.application.service.impl.LoginServiceImpl;
-import com.application.service.impl.RegistrationServiceImpl;
+import com.application.service.loginregisterservice.impl.LoginServiceImpl;
+import com.application.service.loginregisterservice.impl.RegistrationServiceImpl;
 import com.application.utils.Utils;
 
 

@@ -18,6 +18,10 @@ public class LikesCollectionDAOImpl implements IMongoCollection {
 
 	MongoTemplate template;
 	
+	public LikesCollectionDAOImpl(MongoTemplate template) {
+		this.template = template;
+	}
+
 	@Override
 	public MongoDocument findOne(String key, Object value) {
 		return template.findOne(Query.query(Criteria.where(key).is(value)), LikeDocument.class);

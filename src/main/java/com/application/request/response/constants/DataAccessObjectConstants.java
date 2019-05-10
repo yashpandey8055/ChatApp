@@ -22,6 +22,8 @@ public class DataAccessObjectConstants {
 	public static final String USERNAME = "username";
 	public static final String ID_FIELD = "_id";
 	public static final String POST_ID = "postId";
+	public static final String CREATION_DATE = "creationDate";
+	public static final String UPDATION_DATE = "updationDate";
 	
 	
 }
