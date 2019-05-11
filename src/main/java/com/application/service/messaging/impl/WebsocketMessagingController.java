@@ -1,4 +1,4 @@
-package com.application.websocket.config;
+package com.application.service.messaging.impl;
 
 import java.security.Principal;
 import java.util.Date;
@@ -7,12 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import com.application.bean.MessageBean;
-import com.application.bean.User;
+import com.application.bean.OnlineStatus;
 import com.application.data.dao.documents.MessageDocument;
 
 @Controller
@@ -21,7 +18,7 @@ public class WebsocketMessagingController {
 	private SimpMessageSendingOperations  template ;
 
     @MessageMapping("/message")
-    public void greeting(@Payload MessageBean message, 
+    public void sendMessage(@Payload MessageBean message, 
     	      Principal principal){
     	MessageDocument document = new MessageDocument();
     	document.setMessage(message.getMessage());
@@ -31,8 +28,11 @@ public class WebsocketMessagingController {
 		template.convertAndSendToUser(message.getReceiver(),"/queue/message",message);
     }
     
-    @GetMapping("/findfriend/register")
-    public void registerUser(@AuthenticationPrincipal User user) {
-    	
+    @MessageMapping("/fetchuser")
+    public void fetchUser(String receiver, 
+    	      OnlineStatus message){
+    	template.convertAndSendToUser(receiver,"/queue/fetchuser",message);
     }
+    
+   
 }

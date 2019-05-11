@@ -43,12 +43,15 @@
 			<div class="box chat-box">
 			<div class='box chat-display-box' >
 				<p style="margin-top:40%">You have no current conversations</p>
+				<button type='button' class='btn simple-btn full-width-btn' id="start_chat_button" onclick="start_chat()">Start Chat</button>
 			</div>
 			
 			</div>
 				<div class="box chat-action-box">
 					<div><input  class="chat-text-box" id ="chat-text-box" type="text" placeholder="Write you message"></div>
-					<div class="chat-options-container"><button type='button' class='btn purple-button' id="send_button" onclick="send()" disabled>Send</button></div>
+					<div class="chat-options-container">
+					<button type='button' class='btn purple-button' id="send_button" onclick="send()">Send</button>
+					</div>
 				</div>
 			
 		</div>

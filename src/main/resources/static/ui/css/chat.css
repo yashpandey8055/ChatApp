@@ -235,7 +235,7 @@ body{
 }
 
 .chat-box{
-	width:85%;
+	width:100%;
 	float:right;
 	height:85%;
 }
@@ -252,9 +252,7 @@ body{
     
 }
 .chat-display-box{
-	padding-top:10px;
-	padding-left:10px;
-	padding-bottom:10px;
+	padding:10px;
   	position: absolute;
     height: 70%;
     width: inherit;

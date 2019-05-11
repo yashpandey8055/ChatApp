@@ -8,7 +8,7 @@ function displayUserInformation(user){
 		var displayInfo = "<div class='selected-user-info'>"+
 		"<div class='user-selected-profile-picture'><img id='user-selected-profile-picture' alt=''></div>"+
 		"<div class='user-selected-profile-info'>"+
-			"<p><b>"+user.firstName+" "+user.lastName+"</b></p>"+
+			"<p><b>"+user.userName+"</b></p>"+
 			"<p>"+user.age+","+user.gender+"</p>"+
 			"<table><tr><td><img src='/ui/images/icon2.png' height=20px width=20px></td><td>Bangalore,India</td></tr></table>"+
 			"<p>"+user.bio+"</p>"+
@@ -64,63 +64,63 @@ function connect() {
     		   $("#chatbox_"+message.sender).append("<div class='right-message chat-message' align='right'><div><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>") 
     		   $("#chatbox_"+currentChattingWithUser).scrollTop(function() { return this.scrollHeight; });
     	   }
-    	   else{
-    		  var count = $("#notification-user-"+message.sender).text();
-    		  $("#notification-user-"+message.sender).text(parseInt(count)+1);
-    		  $("#notification-user-"+message.sender).css({"background-color":"red","color":"white"});
-    	   }
-    	   $("#chat-conversation-"+message.sender).remove();
     	   
-    	   $("#conversations").prepend("<div class='single-conversation' id='chat-conversation-"+message.sender+"'>"+
-					"<div class='conversation-profile-picture'><div class='profile-picture'><img src='"+message.senderProfileUrl+"'></div></div>"+
-					"<div class='conversation-content'>"+
-						"<p align='left' style='overflow:hidden;'>"+message.message+" </p>"+
-					"</div>"+
-					"<div class='conversation-date'>Just Now</div>"+
-				"</div>");
+       });
+       stompClient.subscribe('/user/queue/fetchuser', function (message){
+    	   var resp = JSON.parse(message.body);
+    	   currentChattingWithUser = resp.username;
+    	   if(resp.status === 'Connected'){
+	    	   if(currentChattingWithUser){
+	    		   $(".chat-box").append("<div class='box chat-display-box' id='chatbox_"+currentChattingWithUser+"'></div>");
+	    	   }
+    	   }
+    	   if(resp.status === 'Disconnected'){
+	    	   if(currentChattingWithUser){
+	    		   $("#chatbox_"+currentChattingWithUser).append("<button type='button' class='btn simple-btn full-width-btn' onclick='close_chat()'>Disconnected. Close Chat?</button>") 
+	     		  
+	    	   }
+    	   }
        });
         
     });
+    
+}
+function close_chat(){
+	$("#start_chat_button").prop("disabled",false);
+	$("#start_chat_button").text("Start a new Chat");
+	$("#chatbox_"+currentChattingWithUser).remove();
+	currentChattingWithUser = null;
+	
+}
+function start_chat(){
+	$("#start_chat_button").html("<img src='/ui/images/loading.gif' height=20px width=20px>");
+	$("#start_chat_button").prop("disabled",true);
+	/**
+     * Fetch a user for the current user
+     * @param response
+     * @returns
+     */
+    httpRequest.get("/findfriend/register",null,function(response){
+    	 httpRequest.get("/findfriend/find",null,function(response){
+    	    	console.log(response);
+    	    	 $("#chatbox_"+currentChattingWithUser).remove();
+    	    	response = JSON.parse(response);
+    	    		currentChattingWithUser = response.data;
+    	    		 if(currentChattingWithUser){
+    	      		   $(".chat-box").append("<div class='box chat-display-box' id='chatbox_"+currentChattingWithUser+"'></div>");
+    	      	   }
+    	    		
+    		  });
+	  });
 }
 function send(){
 	stompClient.send("/app/message", {}, JSON.stringify({'message': $('#chat-text-box').val()
-    	,'receiver':currentChattingWithUser,'sender':currentUser.username}));
+    	,'receiver':currentChattingWithUser,'sender':currentUser.userName}));
 	 $("#chatbox_"+currentChattingWithUser).append("<div class='left-message chat-message' align='left'><div><p class='chat-message-text'>"+$('#chat-text-box').val()+"</p></div><p class='chat-message-time'>Just Now</p></div>");
 		$("#chatbox_"+currentChattingWithUser).scrollTop(function() { return this.scrollHeight; });
 		$("#chat-text-box").val('');
 }
-function prepareBox(selectedUser){
-	var bucket=1;
-	var params = new Map();
-	params.set("receiver",selectedUser);
-	params.set("bucket",bucket);
-	httpRequest.get("/getMessages",params,function(response){
-		var messages = "";
-		response = JSON.parse(response);
-		response.some(function(message){
-			if(currentUser.username==message.sender){
-				messages= messages +"<div class='left-message chat-message' align='left'><div><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>"
-			}else{
-				messages= messages +"<div class='right-message chat-message' align='right'><div><p class='chat-message-text'>"+message.message+"</p></div><p class='chat-message-time'>11.36 am</p></div>"
-			}
-		})
-		if(currentChattingWithUser==selectedUser){
-			$("#chatbox_"+selectedUser).prepend(messages);
-		}else{
-			$("#chatbox_"+currentChattingWithUser).remove();
-			$(".chat-box").append("<div class='box chat-display-box' id='chatbox_"+selectedUser+"'>"+messages+"</div>");
-	    	currentChattingWithUser = selectedUser;
-		}
-		$("#chatbox_"+selectedUser).scrollTop(function() { return this.scrollHeight; });
-		$("#chatbox_"+selectedUser).on('scroll',function() {
-			if(this.scrollTop==0&&!isConversationLoadComplete){
-				prependMessages(selectedUser,++bucket);
-			}
 
-  		});
-        	
-	})
-}
 
 function prependMessages(selectedUser,bucket){
 	var params = new Map();
@@ -160,19 +160,6 @@ $(function () {
 		}
 	});
 	
-	$("#online_users").on("click","div",function(event){
-        var id = $(this).closest("div").prop("id");
-    	var user = currentOnlineUsers.get(id);
-    	$("#"+currentChattingWithUser).prop("disabled",false);
-    	$("#"+user.username).prop("disabled",true);
-    	displayUserInformation(user);
-		$("#send_button").prop("disabled",false);
-		$("#heading-name").html("<b>"+user.firstName+" "+user.lastName+"</b>");
-        $("#heading-username").html(user.username);
-        $("#notification-user-"+user.username).text(0);
-  		$("#notification-user-"+user.username).css({"background-color":"transparent","color":"transparent"});
-  		prepareBox(user.username);
-    });
 	 $("#logout").click(function(){
 	    	document.cookie = 'token' + '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
 	    	window.location.href = "/ui/login"

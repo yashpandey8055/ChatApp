@@ -54,6 +54,10 @@ public class Utils {
 		}
 		stringBuilder.append("."+ext);
 		return stringBuilder.toString();
-}
+	}
+	
+	public static String stringtoJson(String field,String value) {
+		return "{\""+field+"\":\""+value+"\"}";
+	}
 
 }
