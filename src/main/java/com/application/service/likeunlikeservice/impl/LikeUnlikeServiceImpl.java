@@ -1,5 +1,8 @@
 package com.application.service.likeunlikeservice.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -33,7 +36,9 @@ public class LikeUnlikeServiceImpl implements ILikeUnlikeAction{
 			document = new LikeDocument();
 			document.setPostId(id);
 			document.setType(type);
-			document.setLikedBy(Lists.newArrayList(username));
+			List<String> list = new ArrayList<>(1);
+			list.add(username);
+			document.setLikedBy(list);
 			
 		}
 		likeCollection.save(document);
