@@ -2,6 +2,7 @@
 var token = getCookie();
 var currentUser = null;
 const httpRequest = new HttpRequest();
+var env = 'https://ketu.herokuapp.com'
 function getCookie(){
 	 var name = "token=";
 	    var decodedCookie = decodeURIComponent(document.cookie);
@@ -170,7 +171,7 @@ function add_notification(response){
 		$("#notification-box-display").prepend(notification);
 }
 function _websocket_connect(){
-    var socket = new SockJS('http://localhost:8080/ketu-socket?token='+token);
+    var socket = new SockJS(env+'/ketu-socket?token='+token);
     var stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
       // stompClient.subscribe('/user/queue/notification', function (response){
