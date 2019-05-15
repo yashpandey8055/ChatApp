@@ -11,7 +11,7 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import com.application.bean.OnlineStatus;
 import com.application.request.response.constants.RequestResponseConstant;
 import com.application.service.OnlineUserPersistenceService;
-import com.application.service.messaging.impl.WebsocketMessagingController;
+import com.application.service.messagingservice.impl.WebsocketMessagingController;
 
 @Component
 public class WebsocketSessionListener{

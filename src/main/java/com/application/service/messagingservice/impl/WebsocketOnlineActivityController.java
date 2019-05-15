@@ -1,4 +1,4 @@
-package com.application.service.messaging.impl;
+package com.application.service.messagingservice.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

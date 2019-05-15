@@ -2,7 +2,7 @@
 var token = getCookie();
 var currentUser = null;
 const httpRequest = new HttpRequest();
-var env = 'https://ketu.herokuapp.com'
+var env = 'http://localhost:8080'
 function getCookie(){
 	 var name = "token=";
 	    var decodedCookie = decodeURIComponent(document.cookie);
@@ -140,13 +140,13 @@ function commentlike(event){
 		$(event.target).attr('alt','unlike'); 
 		$(event.target).children().attr('alt','like')
 		$(event.target).attr('src','/ui/images/heart-like.png');
-		httpRequest.get("/like/comment",params,function(response){
+		httpRequest.get("/unlike/comment",params,function(response){
 		});
 	}else{
 		$(event.target).attr('alt','like'); 
 		$(event.target).children().attr('alt','like'); 
 		$(event.target).attr('src','/ui/images/heart.png');
-		httpRequest.get("/unlike/comment",params,function(response){
+		httpRequest.get("/like/comment",params,function(response){
 		});
 	}
 }

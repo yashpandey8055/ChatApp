@@ -53,7 +53,6 @@ var currentChattingWithUser = null;
 var isConversationLoadComplete = false;
 var currentOnlineUsers = new Map();
 var stompClient;
-var env = 'https://ketu.herokuapp.com'
 function connect() {
     var socket = new SockJS(env+'/ketu-socket?token='+token);
     stompClient = Stomp.over(socket);

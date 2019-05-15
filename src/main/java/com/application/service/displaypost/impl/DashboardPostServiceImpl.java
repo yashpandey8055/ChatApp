@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.application.bean.PostResponse;
+import com.application.bean.ViewPostBean;
 import com.application.data.dao.IMongoCollection;
 import com.application.data.dao.documents.CommentDocument;
 import com.application.data.dao.documents.LikeDocument;
@@ -45,7 +46,8 @@ public class DashboardPostServiceImpl implements DisplayPostService{
 	
 	
 	@Override
-	public GenericResponseBean viewPost(String username) {
+	public GenericResponseBean viewPost(ViewPostBean viewPostBean) {
+		String username = viewPostBean.getUsernameForPost();
 		IMongoCollection userCollection = MongoCollectionFactory.getInstance(DataAccessObjectConstants.USER_DOCUMENT_COLLECTION
 				, template);
 		
@@ -92,7 +94,7 @@ public class DashboardPostServiceImpl implements DisplayPostService{
 			comments.stream().forEach(x->{((CommentDocument)x).setDaysAgo(DateUtils.calculateTimeDifference(((CommentDocument)x).getCreationDate()));
 			
 			LikeDocument commentLikeDocument = (LikeDocument) likesCollection.findOne(DataAccessObjectConstants.POST_ID,((CommentDocument)x).getId());
-				((CommentDocument) x).setLikedByUser(Optional.ofNullable(commentLikeDocument).map(it-> it.getLikedBy().contains(username)).orElse(false));
+				((CommentDocument) x).setLikedByUser(Optional.ofNullable(commentLikeDocument).map(it-> it.getLikedBy().contains(viewPostBean.getActiveUser().getUsername())).orElse(false));
 			});
 			postResponse.setComments(comments);
 			postResponse.setPost(post);

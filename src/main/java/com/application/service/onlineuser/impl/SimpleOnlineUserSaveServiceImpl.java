@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.application.bean.OnlineStatus;
 import com.application.request.response.constants.RequestResponseConstant;
 import com.application.service.OnlineUserPersistenceService;
-import com.application.service.messaging.impl.WebsocketMessagingController;
+import com.application.service.messagingservice.impl.WebsocketMessagingController;
 
 @Service("SimpleOnlineUserPersistence")
 public class SimpleOnlineUserSaveServiceImpl implements OnlineUserPersistenceService{

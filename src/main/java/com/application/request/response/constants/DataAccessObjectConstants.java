@@ -15,6 +15,7 @@ public class DataAccessObjectConstants {
 	public static final String COMMENT_DOCUMENT_COLLECTION = "CommentDocument";
 	public static final String POST_DOCUMENT_COLLECTION = "PostDocument";
 	public static final String LIKE_DOCUMENT_COLLECTION = "LikeDocument";
+	public static final String MESSAGE_DOCUMENT_COLLECTION = "MessageDocument";
 	
 	/**
 	 * Fields
@@ -24,6 +25,7 @@ public class DataAccessObjectConstants {
 	public static final String POST_ID = "postId";
 	public static final String CREATION_DATE = "creationDate";
 	public static final String UPDATION_DATE = "updationDate";
+
 	
 	
 }

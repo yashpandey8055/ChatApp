@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.application.bean.User;
+import com.application.bean.ViewPostBean;
 import com.application.request.response.bean.GenericResponseBean;
 import com.application.service.DisplayPostService;
 
@@ -23,7 +24,10 @@ public class DashboardController {
 	
 	@GetMapping("/getPosts")
 	public ResponseEntity<GenericResponseBean> getPost(@AuthenticationPrincipal User currentUser){
-		return new ResponseEntity<>(dashboardService.viewPost(currentUser.getUsername()),HttpStatus.OK);
+		ViewPostBean viewPostBean = new ViewPostBean();
+		viewPostBean.setActiveUser(currentUser);
+		viewPostBean.setUsernameForPost(currentUser.getUsername());
+		return new ResponseEntity<>(dashboardService.viewPost(viewPostBean),HttpStatus.OK);
 		
 		
 	}

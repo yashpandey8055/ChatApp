@@ -1,4 +1,4 @@
-package com.application.service.messaging.impl;
+package com.application.service.messagingservice.impl;
 
 import java.security.Principal;
 import java.util.Date;

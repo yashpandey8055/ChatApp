@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.application.bean.User;
+import com.application.bean.ViewPostBean;
 import com.application.request.response.bean.GenericResponseBean;
 import com.application.request.response.bean.PostActivityReqResBean;
 import com.application.service.DisplayPostService;
@@ -28,6 +29,7 @@ public class PostController {
 	PostService postService;
 	
 	@Autowired
+	
 	@Qualifier("UserSpecific")
 	DisplayPostService userPostService;
 
@@ -43,20 +45,13 @@ public class PostController {
 		GenericResponseBean post = postService.view(postId,currentUser.getUsername());
 		return new ResponseEntity<>(post, HttpStatus.OK);
 	}
-	
-	@GetMapping("/like")
-	public ResponseEntity<String> likePost(@AuthenticationPrincipal User currentUser, @RequestParam String postId){
-		return new ResponseEntity<>("Fail",HttpStatus.OK);
-	}
-	@GetMapping("/unlike")
-	public ResponseEntity<String> unlikePost(@AuthenticationPrincipal User currentUser, @RequestParam String postId){
 
-		return new ResponseEntity<>("fail",HttpStatus.OK);
-	}
-	
 	@GetMapping("/getuserpost/{username}")
 	public ResponseEntity<GenericResponseBean> getPosts(@AuthenticationPrincipal User currentUser,@PathVariable("username") String user){			
-		return new ResponseEntity<>(userPostService.viewPost(user),HttpStatus.OK);
+		ViewPostBean viewPostBean = new ViewPostBean();
+		viewPostBean.setActiveUser(currentUser);
+		viewPostBean.setUsernameForPost(user);
+		return new ResponseEntity<>(userPostService.viewPost(viewPostBean),HttpStatus.OK);
 		
 		
 	}
