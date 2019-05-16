@@ -25,6 +25,7 @@ public class DataAccessObjectConstants {
 	public static final String POST_ID = "postId";
 	public static final String CREATION_DATE = "creationDate";
 	public static final String UPDATION_DATE = "updationDate";
+	public static final String PARTICIPANTS = "participants";
 
 	
 	

@@ -2,6 +2,7 @@ package com.application.data.dao;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -14,7 +15,12 @@ import com.mongodb.client.result.DeleteResult;
 @Repository
 public class MessageCollectionDAOImpl implements IMongoCollection {
 
-	MongoTemplate template;
+	private MongoTemplate template;
+
+	@Autowired
+	public MessageCollectionDAOImpl(MongoTemplate template) {
+		this.template = template;
+	}
 
 	@Override
 	public MongoDocument findOne(String key, Object value) {

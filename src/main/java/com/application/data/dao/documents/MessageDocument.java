@@ -23,13 +23,7 @@ public class MessageDocument extends MongoDocument {
 	private String receiver ;
 	private String message;
 	private Date date; 
-	private Integer index =0;
-	public Integer getIndex() {
-		return index;
-	}
-	public void setIndex(Integer index) {
-		this.index = index;
-	}
+
 	public String getSender() {
 		return sender;
 	}
