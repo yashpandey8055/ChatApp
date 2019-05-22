@@ -30,21 +30,22 @@ public class PastMessagesServiceImpl{
 
 	public Collection<MessageDocument> pastConversations(User user) {
 		Bson filter = Filters.or(
-                Filters.eq(DataAccessObjectConstants.SENDER, user.getUsername()), 
-                Filters.eq(DataAccessObjectConstants.RECEIVER,  user.getUsername())
+                Filters.eq(DataAccessObjectConstants.SENDER, "yash"), 
+                Filters.eq(DataAccessObjectConstants.RECEIVER, "yash")
               );
-		DistinctIterable<String> list = template.getCollection(DataAccessObjectConstants.MESSAGE_DOCUMENT_COLLECTION)
+		
+		DistinctIterable<String> list = template.getCollection("messages")
 				.distinct(DataAccessObjectConstants.PARTICIPANTS, filter,String.class);
 		Iterator<String> itr = list.iterator();
 		List<MessageDocument> messageDocuments = new ArrayList<>();
 		while(itr.hasNext()){
 			String userName = itr.next();
 			Query q = Query.query(Criteria.where(DataAccessObjectConstants.PARTICIPANTS)
-					.in(user.getUsername(),userName));
+					.all("yash",userName));
 			q.with(new Sort(Sort.Direction.DESC, "date"));
 			q.limit(1);
 			MessageDocument message = template.findOne(q
-					, MessageDocument.class,DataAccessObjectConstants.MESSAGE_DOCUMENT_COLLECTION);
+					, MessageDocument.class,"messages");
 			messageDocuments.add(message);
 		}
 		return messageDocuments;

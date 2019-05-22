@@ -8,6 +8,8 @@ public class MessageBean {
 	private String senderProfileUrl;
 	private Integer bucketNumber;
 	private Integer pageSize;
+	private String conversationId;
+	
 	
 	public MessageBean() {
 		/**
@@ -64,5 +66,13 @@ public class MessageBean {
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
 	}
+	public String getConversationId() {
+		return conversationId;
+	}
+
+	public void setConversationId(String conversationId) {
+		this.conversationId = conversationId;
+	}
+
 
 }

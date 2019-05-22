@@ -4,6 +4,7 @@ package com.application.factory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.application.data.dao.CommentCollectionDAOImpl;
+import com.application.data.dao.ConversationCollectionDAOImpl;
 import com.application.data.dao.IMongoCollection;
 import com.application.data.dao.LikesCollectionDAOImpl;
 import com.application.data.dao.MessageCollectionDAOImpl;
@@ -42,6 +43,8 @@ public class MongoCollectionFactory {
 				collection = new LikesCollectionDAOImpl(template);break;
 			case DataAccessObjectConstants.MESSAGE_DOCUMENT_COLLECTION:
 				collection = new MessageCollectionDAOImpl(template);break;
+			case DataAccessObjectConstants.CONVERSATION_DOCUMENT_COLLECTION:
+				collection = new ConversationCollectionDAOImpl(template);break;
 			default: collection = null;
 					
 		}

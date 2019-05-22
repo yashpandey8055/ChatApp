@@ -49,13 +49,21 @@ public class Utils {
 	public static String randomStringGenerate(String ext) {
 		String characterArray= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnaopqrst1234567890";
 		StringBuilder stringBuilder = new StringBuilder();
-		for(int i =0;i<10;i++) {
+		for(int i =0;i<3;i++) {
 			stringBuilder.append(characterArray.charAt(RANDOM.nextInt(characterArray.length())));
 		}
 		stringBuilder.append("."+ext);
 		return stringBuilder.toString();
 	}
 	
+	public static String randomStringGenerate(Integer length) {
+		String characterArray= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnaopqrst1234567890";
+		StringBuilder stringBuilder = new StringBuilder();
+		for(int i =0;i<length;i++) {
+			stringBuilder.append(characterArray.charAt(RANDOM.nextInt(characterArray.length())));
+		}
+		return stringBuilder.toString();
+	}
 	public static String stringtoJson(String field,String value) {
 		return "{\""+field+"\":\""+value+"\"}";
 	}

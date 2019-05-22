@@ -7,16 +7,25 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import com.application.bean.OnlineStatus;
+import com.application.data.dao.IMongoCollection;
+import com.application.data.dao.documents.ConversationDocument;
+import com.application.factory.MongoCollectionFactory;
+import com.application.request.response.constants.DataAccessObjectConstants;
 import com.application.request.response.constants.RequestResponseConstant;
 import com.application.service.OnlineUserPersistenceService;
 import com.application.service.messagingservice.impl.WebsocketMessagingController;
+import com.application.utils.Utils;
+import com.google.common.collect.Lists;
 
 @Service("SimpleOnlineUserPersistence")
 public class SimpleOnlineUserSaveServiceImpl implements OnlineUserPersistenceService{
 	private static final Logger LOG = LoggerFactory.getLogger(SimpleOnlineUserSaveServiceImpl.class);
+	@Autowired
+	private MongoTemplate template;
 	
 	@Autowired
 	WebsocketMessagingController messageController;
@@ -53,6 +62,11 @@ public class SimpleOnlineUserSaveServiceImpl implements OnlineUserPersistenceSer
 		String fetchedUser = null;
 		for(Relation relation : relations) {
 			if(relation.hasUser(username)) {
+				IMongoCollection conversationCollection = MongoCollectionFactory.getInstance(DataAccessObjectConstants.CONVERSATION_DOCUMENT_COLLECTION, template);
+		    	ConversationDocument document = new ConversationDocument();
+		    	document.setConversationId(Utils.randomStringGenerate(10));
+		    	document.setParticipants(Lists.newArrayList(relation.getOtherUser(username),username));
+		    	conversationCollection.save(document);
 				fetchedUser = relation.getOtherUser(username);
 				break;
 			}
