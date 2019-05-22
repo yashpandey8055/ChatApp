@@ -26,6 +26,8 @@ public class DataAccessObjectConstants {
 	public static final String CREATION_DATE = "creationDate";
 	public static final String UPDATION_DATE = "updationDate";
 	public static final String PARTICIPANTS = "participants";
+	public static final String SENDER = "sender";
+	public static final String RECEIVER = "receiver";
 
 	
 	
