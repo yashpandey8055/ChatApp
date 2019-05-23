@@ -53,7 +53,8 @@ function displayUserInformation(user){
 var currentChattingWithUser = null;
 var isConversationLoadComplete = false;
 var currentOnlineUsers = new Map();
-var env = 'https://ketu.herokuapp.com'
+var conversationId = null;
+var env = 'http://localhost:8080'
 var stompClient;
 function connect() {
     var socket = new SockJS(env+'/ketu-socket?token='+token);
@@ -69,13 +70,14 @@ function connect() {
        });
        stompClient.subscribe('/user/queue/fetchuser', function (message){
     	   var resp = JSON.parse(message.body);
-    	   currentChattingWithUser = resp.username;
-    	   if(resp.status === 'Connected'){
+    	   currentChattingWithUser = resp.data.username;
+    	   conversationId = resp.data.conversationId;
+    	   if(resp.data.status === 'Connected'){
 	    	   if(currentChattingWithUser){
 	    		   $(".chat-box").append("<div class='box chat-display-box' id='chatbox_"+currentChattingWithUser+"'></div>");
 	    	   }
     	   }
-    	   if(resp.status === 'Disconnected'){
+    	   if(resp.data.status === 'Disconnected'){
 	    	   if(currentChattingWithUser){
 	    		   $("#chatbox_"+currentChattingWithUser).append("<button type='button' class='btn simple-btn full-width-btn' onclick='close_chat()'>Disconnected. Close Chat?</button>") 
 	     		  
@@ -105,8 +107,9 @@ function start_chat(){
     	 httpRequest.get("/findfriend/find",null,function(response){
     	    	console.log(response);
     	    	 $("#chatbox_"+currentChattingWithUser).remove();
-    	    	response = JSON.parse(response);
-    	    		currentChattingWithUser = response.data;
+    	    	 response = JSON.parse(response);
+    	    		currentChattingWithUser = response.data.username;
+    	    		conversationId = response.data.conversationId;
     	    		 if(currentChattingWithUser){
     	      		   $(".chat-box").append("<div class='box chat-display-box' id='chatbox_"+currentChattingWithUser+"'></div>");
     	      	   }
@@ -116,7 +119,7 @@ function start_chat(){
 }
 function send(){
 	stompClient.send("/app/message", {}, JSON.stringify({'message': $('#chat-text-box').val()
-    	,'receiver':currentChattingWithUser,'sender':currentUser.userName}));
+    	,'receiver':currentChattingWithUser,'sender':currentUser.userName,'conversationId':conversationId}));
 	 $("#chatbox_"+currentChattingWithUser).append("<div class='left-message chat-message' align='left'><div><p class='chat-message-text'>"+$('#chat-text-box').val()+"</p></div><p class='chat-message-time'>Just Now</p></div>");
 		$("#chatbox_"+currentChattingWithUser).scrollTop(function() { return this.scrollHeight; });
 		$("#chat-text-box").val('');

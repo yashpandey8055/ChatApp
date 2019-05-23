@@ -39,6 +39,7 @@ public class MessageServiceImpl implements MessagingService{
 		document.setReceiver(messageBean.getReceiver());
 		document.setSender(messageBean.getSender());
 		document.setParticipants(participants);
+		document.setConversationId(messageBean.getConversationId());
 		messageCollection.save(document);
 
 	}

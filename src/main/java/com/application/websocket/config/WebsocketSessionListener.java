@@ -35,6 +35,5 @@ public class WebsocketSessionListener{
 		}
 		onlinePersistence.remove(user);
 
-		
 	}
 }

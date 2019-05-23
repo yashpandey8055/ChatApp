@@ -23,6 +23,7 @@ public class MessageDocument extends MongoDocument {
 	private String receiver ;
 	private String message;
 	private Date date; 
+	private String conversationId;
 
 	public String getSender() {
 		return sender;
@@ -55,5 +56,11 @@ public class MessageDocument extends MongoDocument {
 	}
 	public List<String> getParticipants() {
 		return participants;
+	}
+	public String getConversationId() {
+		return conversationId;
+	}
+	public void setConversationId(String conversationId) {
+		this.conversationId = conversationId;
 	}
 }

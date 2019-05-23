@@ -29,6 +29,7 @@ public class DataAccessObjectConstants {
 	public static final String PARTICIPANTS = "participants";
 	public static final String SENDER = "sender";
 	public static final String RECEIVER = "receiver";
+	public static final String CONVERSATION_ID = "conversationId";
 
 
 	
