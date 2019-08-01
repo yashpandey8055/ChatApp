@@ -22,4 +22,5 @@ public class ConversationHandshakeBean {
 	public void setConversationId(String conversationId) {
 		this.conversationId = conversationId;
 	}
+	
 }

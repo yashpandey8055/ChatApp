@@ -41,7 +41,7 @@ public class ConversationServiceImpl {
 	
 	public ConversationHandshakeBean save(String sender,String receiver) {
 		ConversationHandshakeBean handshakeBean = fetch(sender,receiver);
-		if(handshakeBean.getConversationId()!=null&&!handshakeBean.getConversationId().isBlank()) {
+		if(handshakeBean.getConversationId()!=null&&!handshakeBean.getConversationId().isEmpty()) {
 			return handshakeBean;
 		}
 		String conversationId = Utils.randomStringGenerate(10);
