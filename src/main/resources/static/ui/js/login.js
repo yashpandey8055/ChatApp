@@ -1,5 +1,4 @@
-
-const ERROR = "Not found";
+const FOUND = "OK"
 const ERROR_MESSAGE = "Username/password incorrect"
 const httpRequest = new HttpRequest();
 var login = function(){
@@ -7,8 +6,9 @@ var login = function(){
 	param.set("userName",$("#username").val());
 	param.set("password",$("#password").val());
 	httpRequest.get("/secure/users/login",param,function(response){
-		if (response!==ERROR){
-	        document.cookie="token="+ JSON.parse(response).data+"; path=/";
+		response = JSON.parse(response);
+		if (response.code===FOUND){
+	        document.cookie="token="+ response.data+"; path=/";
 	        window.location.href = "/dashboard";
         }else {
         	$(".error-message").html("<p>"+ERROR_MESSAGE+"</p>" );

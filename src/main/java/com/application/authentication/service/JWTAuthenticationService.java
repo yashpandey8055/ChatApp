@@ -49,6 +49,7 @@ public class JWTAuthenticationService implements AutheticationService{
 	
 	@Override
 	public UserDetails decodeToken(String token) {
+		if(token!=null&!token.equalsIgnoreCase("null")) {
 		String jwt =   Jwts.parser()
 		       .setSigningKey(TextCodec.BASE64.encode(SECRET_KEY))
 		       .parse(token,new JwtHandlerAdapter<String>() {
@@ -61,6 +62,7 @@ public class JWTAuthenticationService implements AutheticationService{
 			return mapper.readValue(jwt, User.class);
 		}catch(IOException ex) {
 			LOG.error("Cannot Parse Token subject {}  to instance of User.class",jwt);
+		}
 		}
 		return null;
 	}
