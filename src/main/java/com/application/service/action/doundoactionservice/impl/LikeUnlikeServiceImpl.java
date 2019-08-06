@@ -1,4 +1,4 @@
-package com.application.service.likeunlikeservice.impl;
+package com.application.service.action.doundoactionservice.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,10 @@ import com.application.data.dao.LikesCollectionDAOImpl;
 import com.application.data.dao.documents.LikeDocument;
 import com.application.factory.MongoCollectionFactory;
 import com.application.request.response.constants.DataAccessObjectConstants;
-import com.application.service.ILikeUnlikeAction;
+import com.application.service.IDoUndoAction;
 
 @Service("PostLikeAction")
-public class LikeUnlikeServiceImpl implements ILikeUnlikeAction{
+public class LikeUnlikeServiceImpl implements IDoUndoAction{
 	
 	private MongoTemplate template;
 
@@ -24,7 +24,7 @@ public class LikeUnlikeServiceImpl implements ILikeUnlikeAction{
 	}
 
 	@Override
-	public void likePost(String id,String type,String username) {
+	public void doAction(String id,String type,String username) {
 		LikesCollectionDAOImpl likeCollection = (LikesCollectionDAOImpl) MongoCollectionFactory.getInstance(DataAccessObjectConstants.LIKE_DOCUMENT_COLLECTION
 					, template);
 			
@@ -44,7 +44,7 @@ public class LikeUnlikeServiceImpl implements ILikeUnlikeAction{
 	}
 
 	@Override
-	public void unlikePost(String id,String type,String username) {
+	public void undoAction(String id,String type,String username) {
 			LikesCollectionDAOImpl likeCollection = (LikesCollectionDAOImpl) MongoCollectionFactory.getInstance(DataAccessObjectConstants.LIKE_DOCUMENT_COLLECTION
 					, template);
 			

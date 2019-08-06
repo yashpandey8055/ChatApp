@@ -1,6 +1,5 @@
 var urlParams = new URLSearchParams(window.location.search);
 var user = urlParams.get('user');
-var currentChattingWithUser;
 function displayUser(user){
 	var displayInfo = "<div class='selected-user-info'>"+
 	"<div class='user-selected-profile-picture' style='position:relative;'><img id='user-selected-profile-picture' alt=''></div>"+
@@ -20,16 +19,17 @@ function displayUser(user){
 		"<div>";
 			if(user.userName==currentUser.userName){
 				displayInfo = displayInfo + "<button type='button' class='btn purple-button full-width-btn' id='edit-profile' onclick='edit_profile()'>Edit Profile</button>" +
-						"<button type='button' class='btn simple-btn full-width-btn'>Followers ("+user.followers+")</button>";
+						"<button type='button' class='btn simple-btn full-width-btn'>Connections ("+user.followers+")</button>";
 			}else{
-				displayInfo = displayInfo +"<button type='button' class='btn purple-button full-width-btn' onclick='message()'>Edit Profile</button>" +
-						"<button type='button' class='btn purple-button full-width-btn' id='follow-user-btn' onclick='follow()'><img height=20px width=20px src='/" +
+				displayInfo = displayInfo +"<button type='button' class='btn purple-button full-width-btn' onclick='message()'>Message</button>" +
+						"<button type='button' class='btn purple-button full-width-btn' id='follow-user-btn'><img height=20px width=20px src='/" +
 						"ui/images/loading.gif'></button>"
-				httpRequest.get("/users/follow/isfollowing/"+user.username,null,function(response){
+				httpRequest.get("/users/follow/isfollowing/"+user.userName,null,function(response){
+					console.log(response);
 					if(response == 'true'){
-						$("#follow-user-btn").html("Unfollow");
+						$("#follow-user-btn").html("Disconnect");
 					}else{
-						$("#follow-user-btn").html("Follow");
+						$("#follow-user-btn").html("Connect");
 					}
 				});
 			}
@@ -228,12 +228,16 @@ function close_this(event){
 }
 $(function () {
 	load_CurrentUser(function(){
+	
 	httpRequest.get("/users/user/"+user,null,function(response){
 		response = JSON.parse(response);
+		
 		displayUser(response.data);
-		currentChattingWithUser = response.username;
+		
+		$(document).on("click","#follow-user-btn",function(){
+			follow(user);
+		})
 	})
-	
 	$(document).on("click","#edit-profile-picture",function(){
 		$("#image-upload").trigger('click');
 	})

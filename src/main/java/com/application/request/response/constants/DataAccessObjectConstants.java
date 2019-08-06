@@ -16,7 +16,8 @@ public class DataAccessObjectConstants {
 	public static final String POST_DOCUMENT_COLLECTION = "PostDocument";
 	public static final String LIKE_DOCUMENT_COLLECTION = "LikeDocument";
 	public static final String MESSAGE_DOCUMENT_COLLECTION = "MessageDocument";
-	public static final String CONVERSATION_DOCUMENT_COLLECTION = "ConversatioDocument";
+	public static final String CONVERSATION_DOCUMENT_COLLECTION = "ConversationDocument";
+	public static final String FOLLOW_DOCUMENT_COLLECTION = "FollowDocument";
 	
 	/**
 	 * Fields
@@ -30,6 +31,8 @@ public class DataAccessObjectConstants {
 	public static final String SENDER = "sender";
 	public static final String RECEIVER = "receiver";
 	public static final String CONVERSATION_ID = "conversationId";
+	public static final String CONNECT_PARTICIPANTS = "connection";
+
 
 
 	

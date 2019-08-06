@@ -2,7 +2,7 @@
 var token = getCookie();
 var currentUser = null;
 const httpRequest = new HttpRequest();
-var env = 'https://ketu.herokuapp.com'
+var env = 'http://localhost:8080'
 function getCookie(){
 	 var name = "token=";
 	    var decodedCookie = decodeURIComponent(document.cookie);
@@ -84,16 +84,17 @@ function HttpRequest(){
 	
 	return obj;
 }
-function follow(){
-	if($("#follow-user-btn").text()=='Follow'){
-		httpRequest.get("/users/follow/"+currentChattingWithUser,null,function(response){
+function follow(user){
+	if($("#follow-user-btn").text()=='Connect'){
+		httpRequest.get("/user/connect/"+user,null,function(response){
 			console.log(response);
-			$("#follow-user-btn").html("Unfollow");
+			$("#follow-user-btn").html("Connect");
 		});
-	}else if($("#follow-user-btn").text()=='Unfollow'){
-		httpRequest.get("/users/unfollow/"+currentChattingWithUser,null,function(response){
+	}else if($("#follow-user-btn").text()=='Disconnect'){
+		httpRequest.get("/user/disconnect/"+user,null,function(response){
 			console.log(response);
-			$("#follow-user-btn").html("Follow");
+			("#follow-user-btn").removeClass("purple-button").addClass("app-btn");
+			$("#follow-user-btn").html("Requested");
 		});
 	}
 	$("#follow-user-btn").html("<img height=20px width=20px src='/ui/images/loading.gif'>")

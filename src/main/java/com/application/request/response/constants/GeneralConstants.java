@@ -20,6 +20,10 @@ public class GeneralConstants {
 	
 	public static final String LIKED_MSG = "Liked";
 	
+	public static final String CONNECTED_MSG = "Connected";
+	
+	public static final String DISCONNECTED_MSG = "Disconnected";
+	
 	
 	/**
 	 * Amazon S3 upload constants 
@@ -44,4 +48,18 @@ public class GeneralConstants {
 	public static final String COMMENT_TYPE = "commentType";
 	
 	public static final String POST_TYPE = "postType";
+	
+	/**
+	 * Follow Unfollow Constants 
+	 */
+	
+	
+	public static final String CONNECT_USER_TYPE = "Connect To";
+	
+	public static final String DISCONNECT_USER_TYPE = "Connect To";
+	
+	public static final String ACCEPT_CONNECT_TYPE = "Connect To";
+	
+	public static final String REJECT_CONNECT_TYPE = "Connect To";
+
 }

@@ -38,6 +38,7 @@ public interface IMongoCollection {
 	 */
 	public List<? extends MongoDocument> findList(String key,Object value);
 	
+	
 	/**
 	 * Insert/Update a document into the MongoDB Collection.
 	 *
