@@ -23,4 +23,10 @@ public class RequestResponseConstant {
 	public static final String FAILED_UPLOAD_IMAGE = "Failed to Upload Image. Try again later";
 	public static final String CONNECTED = "Connected";
 	public static final String DISCONNECTED = "Disconnected";
+	
+	public static final String CONNECT_MESSAGE_CONNECT ="Connect";
+	
+	public static final String CONNECT_MESSAGE_REQUESTED ="Requested. Undo?";
+	
+	public static final String CONNECT_MESSAGE_DISCONNECT ="Disconnect";
 }

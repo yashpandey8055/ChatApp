@@ -22,24 +22,23 @@ function displayUser(user){
 						"<button type='button' class='btn simple-btn full-width-btn'>Connections ("+user.followers+")</button>";
 			}else{
 				displayInfo = displayInfo +"<button type='button' class='btn purple-button full-width-btn' onclick='message()'>Message</button>" +
-						"<button type='button' class='btn purple-button full-width-btn' id='follow-user-btn'><img height=20px width=20px src='/" +
+						"<button type='button' class='btn simple-btn full-width-btn' id='follow-user-btn'><img height=20px width=20px src='/" +
 						"ui/images/loading.gif'></button>"
-				httpRequest.get("/users/follow/isfollowing/"+user.userName,null,function(response){
-					console.log(response);
-					if(response == 'true'){
-						$("#follow-user-btn").html("Disconnect");
+				httpRequest.get("/user/connect/status/"+user.userName,null,function(response){
+					response = JSON.parse(response);
+					if(response.type === 'Success'){
+						if(response.data === 'Connect'){
+							$("#follow-user-btn").removeClass("simple-btn").addClass("purple-button");
+						}
+						$("#follow-user-btn").html(response.data);
 					}else{
-						$("#follow-user-btn").html("Connect");
+						$("#follow-user-btn").html("Couldn't Connect");
+						$("#follow-user-btn").attr("disabled",true);
 					}
 				});
 			}
 			displayInfo = displayInfo +"</div></div>";
 			$(".front").prepend(displayInfo);
-			$(".front").append(
-			"<div class='selected-user-info'><h3><b>About</b></h3><hr><p>Experienced Application Developer with a demonstrated history of working in the computer " +
-			"hardware industry Skilled in Java,Nodejs Agile Methodologies, Cloud Technologies and Linux."+
-			  " Strong engineering professional with a Bachelor’s Degree focused in from National Institute of Technology, Mizoram."+
-			"Interests lies in field of Cloud Computing and the rising era of Quantum Computing.</p><hr></div>");
 			var downloadingImage = new Image();
 			downloadingImage.onload = function(){
 			 $("#user-selected-profile-picture").attr("src",this.src);

@@ -88,13 +88,14 @@ function follow(user){
 	if($("#follow-user-btn").text()=='Connect'){
 		httpRequest.get("/user/connect/"+user,null,function(response){
 			console.log(response);
-			$("#follow-user-btn").html("Connect");
+			$("#follow-user-btn").removeClass("purple-button").addClass("simple-btn");
+			$("#follow-user-btn").html("Requested. Undo?");
 		});
-	}else if($("#follow-user-btn").text()=='Disconnect'){
+	}else if($("#follow-user-btn").text()=='Disconnect'||$("#follow-user-btn").text()=='Requested. Undo?'){
 		httpRequest.get("/user/disconnect/"+user,null,function(response){
 			console.log(response);
-			("#follow-user-btn").removeClass("purple-button").addClass("app-btn");
-			$("#follow-user-btn").html("Requested");
+			$("#follow-user-btn").removeClass("simple-btn").addClass("purple-button");
+			$("#follow-user-btn").html("Connect");
 		});
 	}
 	$("#follow-user-btn").html("<img height=20px width=20px src='/ui/images/loading.gif'>")

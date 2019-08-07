@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import com.application.data.dao.FollowCollectionDAOImpl;
-import com.application.data.dao.documents.FollowDocument;
+import com.application.data.dao.documents.ConnectionsDocument;
 import com.application.factory.MongoCollectionFactory;
 import com.application.request.response.constants.DataAccessObjectConstants;
 import com.application.service.IDoUndoAction;
@@ -34,15 +34,15 @@ public class ConnectDisconnectServiceImpl implements IDoUndoAction{
 	Map<String,Object[]> criteria = new HashMap<>(1);
 	criteria.put(DataAccessObjectConstants.CONNECT_PARTICIPANTS, connection);
 	
-	FollowDocument document = (FollowDocument) followDocument.findWithMutipleKeys(criteria);
+	ConnectionsDocument document = (ConnectionsDocument) followDocument.findWithMutipleKeys(criteria);
 	if(document==null) {
-		document = new FollowDocument();
-		document.setConnection(Arrays.asList(followedBy));
+		document = new ConnectionsDocument();
+	}
+		document.setConnection(Arrays.asList(connection));
 		document.setRequestedTo(followed);
 		document.setRequester(followedBy);
 		document.setConnectiveActive(true);
 		document.setAccepted(false);
-	}
 		followDocument.save(document);
 	}
 
@@ -55,7 +55,7 @@ public class ConnectDisconnectServiceImpl implements IDoUndoAction{
 	Map<String,Object[]> criteria = new HashMap<>(1);
 	criteria.put(DataAccessObjectConstants.CONNECT_PARTICIPANTS, connection);
 	
-	FollowDocument document = (FollowDocument) followDocument.findWithMutipleKeys(criteria);
+	ConnectionsDocument document = (ConnectionsDocument) followDocument.findWithMutipleKeys(criteria);
 	if(document!=null) {
 		document.setConnectiveActive(false);
 		document.setAccepted(false);

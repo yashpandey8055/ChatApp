@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import com.application.data.dao.documents.FollowDocument;
+import com.application.data.dao.documents.ConnectionsDocument;
 import com.application.data.dao.documents.MongoDocument;
 import com.mongodb.client.result.DeleteResult;
 
@@ -25,20 +25,20 @@ public class FollowCollectionDAOImpl implements IMongoCollection{
 
 	@Override
 	public MongoDocument findOne(String key, Object value) {
-		return template.findOne(Query.query(Criteria.where(key).is(value)), FollowDocument.class);
+		return template.findOne(Query.query(Criteria.where(key).is(value)), ConnectionsDocument.class);
 	}
 
 	@Override
 	public List<? extends MongoDocument> findList(String key, Object value) {
-		return template.find(Query.query(Criteria.where(key).is(value)), FollowDocument.class);
+		return template.find(Query.query(Criteria.where(key).is(value)), ConnectionsDocument.class);
 	}
 
 	public MongoDocument findWithMutipleKeys(Map<String,Object[]> criterias) {
 		Query query=new Query();
 		for (Entry<String, Object[]> entry : criterias.entrySet()) { 
-			query.addCriteria(Criteria.where(entry.getKey()).in(entry.getValue()));
+			query.addCriteria(Criteria.where(entry.getKey()).all(entry.getValue()));
 		}
-		return template.findOne(query, FollowDocument.class);
+		return template.findOne(query, ConnectionsDocument.class);
 	}
 
 	@Override
@@ -49,12 +49,12 @@ public class FollowCollectionDAOImpl implements IMongoCollection{
 
 	@Override
 	public DeleteResult delete(String key, Object value) {
-		return template.remove(Query.query(Criteria.where(key).is(value)), FollowDocument.class);
+		return template.remove(Query.query(Criteria.where(key).is(value)), ConnectionsDocument.class);
 	}
 
 	@Override
 	public List<? extends MongoDocument> executeQuery(Query query) {
-		return template.find(query, FollowDocument.class);
+		return template.find(query, ConnectionsDocument.class);
 	}
 
 	@Override
