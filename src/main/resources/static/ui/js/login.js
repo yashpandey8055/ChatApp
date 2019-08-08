@@ -17,6 +17,13 @@ var login = function(){
 });
 }
 
+function checktoken() {
+	var token = getCookie();
+	if(token){
+		 window.location.href = "/dashboard";
+	}
+};
+
 function HttpRequest(){
 	var obj = {};
 	
