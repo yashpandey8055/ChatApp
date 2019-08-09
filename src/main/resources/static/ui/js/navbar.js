@@ -84,3 +84,9 @@ function update_password(){
 			   $('#notification-nav-bar').text(0);
 			   $('#notification-nav-bar').css({"background":"transparent","color":"transparent"});
 			});
+		
+		$('#connect-icon').click(function(e) {                              
+			   $('#connections-pop-box').toggle(); 
+			   $('#notification-nav-bar').text(0);
+			   $('#notification-nav-bar').css({"background":"transparent","color":"transparent"});
+			});

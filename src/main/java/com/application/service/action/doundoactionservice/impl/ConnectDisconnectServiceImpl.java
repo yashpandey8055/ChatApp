@@ -30,20 +30,20 @@ public class ConnectDisconnectServiceImpl implements IDoUndoAction{
 		FollowCollectionDAOImpl followDocument = (FollowCollectionDAOImpl) MongoCollectionFactory.getInstance(DataAccessObjectConstants.FOLLOW_DOCUMENT_COLLECTION
 				, template);
 	
-	String[] connection = {followedBy,followed};
-	Map<String,Object[]> criteria = new HashMap<>(1);
-	criteria.put(DataAccessObjectConstants.CONNECT_PARTICIPANTS, connection);
-	
-	ConnectionsDocument document = (ConnectionsDocument) followDocument.findWithMutipleKeys(criteria);
-	if(document==null) {
-		document = new ConnectionsDocument();
-	}
-		document.setConnection(Arrays.asList(connection));
-		document.setRequestedTo(followed);
-		document.setRequester(followedBy);
-		document.setConnectiveActive(true);
-		document.setAccepted(false);
-		followDocument.save(document);
+		String[] connection = {followedBy,followed};
+		Map<String,Object[]> criteria = new HashMap<>(1);
+		criteria.put(DataAccessObjectConstants.CONNECT_PARTICIPANTS, connection);
+		
+		ConnectionsDocument document = (ConnectionsDocument) followDocument.findWithMutipleKeys(criteria);
+		if(document==null) {
+			document = new ConnectionsDocument();
+		}
+			document.setConnection(Arrays.asList(connection));
+			document.setRequestedTo(followed);
+			document.setRequester(followedBy);
+			document.setConnectiveActive(true);
+			document.setAccepted(false);
+			followDocument.save(document);
 	}
 
 	@Override
