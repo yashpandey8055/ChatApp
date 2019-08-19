@@ -32,6 +32,10 @@ public class DataAccessObjectConstants {
 	public static final String RECEIVER = "receiver";
 	public static final String CONVERSATION_ID = "conversationId";
 	public static final String CONNECT_PARTICIPANTS = "connection";
+	public static final String REQUESTED_TO = "requestedTo";
+	public static final String CONNECTION_ACCEPTED = "accepted";
+	public static final String CONNECTION_ACTIVE = "connectiveActive";
+	public static final String CONNECTION_DOCUMENT_FIELD = "connection";
 
 
 

@@ -26,7 +26,7 @@ public class ConnectDisconnectServiceImpl implements IDoUndoAction{
 	}
 
 	@Override
-	public void doAction(String followedBy,String type,String followed) {
+	public void doAction(String followedBy,String profileUrl,String followed) {
 		FollowCollectionDAOImpl followDocument = (FollowCollectionDAOImpl) MongoCollectionFactory.getInstance(DataAccessObjectConstants.FOLLOW_DOCUMENT_COLLECTION
 				, template);
 	
@@ -38,6 +38,7 @@ public class ConnectDisconnectServiceImpl implements IDoUndoAction{
 		if(document==null) {
 			document = new ConnectionsDocument();
 		}
+		document.setRequesterProfileUrl(profileUrl);
 			document.setConnection(Arrays.asList(connection));
 			document.setRequestedTo(followed);
 			document.setRequester(followedBy);

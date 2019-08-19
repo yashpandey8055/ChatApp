@@ -1,7 +1,7 @@
 package com.application.service.action.doundoactionservice.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -35,7 +35,7 @@ public class LikeUnlikeServiceImpl implements IDoUndoAction{
 			document = new LikeDocument();
 			document.setPostId(id);
 			document.setType(type);
-			List<String> list = new ArrayList<>(1);
+			Set<String> list = new HashSet<>(1);
 			list.add(username);
 			document.setLikedBy(list);
 			

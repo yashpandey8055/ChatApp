@@ -24,7 +24,7 @@ public class AcceptRejectConnectionServiceImpl implements IDoUndoAction{
 	}
 
 	@Override
-	public void doAction(String followedBy,String type,String followed) {
+	public void doAction(String followedBy,String profileUrl,String followed) {
 	FollowCollectionDAOImpl followDocument = (FollowCollectionDAOImpl) MongoCollectionFactory.getInstance(DataAccessObjectConstants.FOLLOW_DOCUMENT_COLLECTION
 				, template);
 	
@@ -34,8 +34,8 @@ public class AcceptRejectConnectionServiceImpl implements IDoUndoAction{
 	
 	ConnectionsDocument document = (ConnectionsDocument) followDocument.findWithMutipleKeys(criteria);
 	if(document!=null) {
-		document.setRequestedTo(followed);
-		document.setRequester(followedBy);
+		document.setRequestedTo(followedBy);
+		document.setRequester(followed);
 		document.setConnectiveActive(true);
 		document.setAccepted(true);
 	}
@@ -43,7 +43,7 @@ public class AcceptRejectConnectionServiceImpl implements IDoUndoAction{
 	}
 
 	@Override
-	public void undoAction(String followedBy,String type,String followed) {
+	public void undoAction(String followedBy,String profileUrl,String followed) {
 	FollowCollectionDAOImpl followDocument = (FollowCollectionDAOImpl) MongoCollectionFactory.getInstance(DataAccessObjectConstants.FOLLOW_DOCUMENT_COLLECTION
 				, template);
 	

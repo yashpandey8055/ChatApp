@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Document(collection="connections")
 public class ConnectionsDocument  extends MongoDocument{
 	@Id
+	@JsonIgnore
 	private String id;
 	
 	private List<String> connection;
@@ -19,6 +22,8 @@ public class ConnectionsDocument  extends MongoDocument{
 	private boolean connectiveActive;
 	
 	private boolean accepted;
+	
+	private String requesterProfileUrl;
 
 	public boolean isConnectiveActive() {
 		return connectiveActive;
@@ -67,6 +72,14 @@ public class ConnectionsDocument  extends MongoDocument{
 
 	public void setAccepted(boolean accepted) {
 		this.accepted = accepted;
+	}
+
+	public String getRequesterProfileUrl() {
+		return requesterProfileUrl;
+	}
+
+	public void setRequesterProfileUrl(String requesterProfileUrl) {
+		this.requesterProfileUrl = requesterProfileUrl;
 	}
 	
 }

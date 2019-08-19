@@ -14,6 +14,7 @@ import com.application.request.response.constants.GeneralConstants;
 import com.application.service.DoUndoActionExecuteService;
 import com.application.service.IDoUndoAction;
 import com.application.service.action.doundoactionservice.impl.DoActionImpl;
+import com.application.service.action.doundoactionservice.impl.UndoActionImpl;
 
 @RestController
 public class LikeController {
@@ -30,7 +31,7 @@ public class LikeController {
 	}
 	@GetMapping("/unlike/post")
 	public ResponseEntity<String> unlikePost(@AuthenticationPrincipal User currentUser, @RequestParam String postId){
-		DoUndoActionExecuteService unlikeService = new DoActionImpl(likeUnlikeService);
+		DoUndoActionExecuteService unlikeService = new UndoActionImpl(likeUnlikeService);
 		unlikeService.execute(postId,GeneralConstants.POST_TYPE,currentUser.getUsername());
 		return new ResponseEntity<>(GeneralConstants.LIKED_MSG,HttpStatus.OK);
 	}
@@ -43,7 +44,7 @@ public class LikeController {
 	}
 	@GetMapping("/unlike/comment")
 	public ResponseEntity<String> unlikeComment(@AuthenticationPrincipal User currentUser, @RequestParam String postId){
-		DoUndoActionExecuteService unlikeService = new DoActionImpl(likeUnlikeService);
+		DoUndoActionExecuteService unlikeService = new UndoActionImpl(likeUnlikeService);
 		unlikeService.execute(postId,GeneralConstants.COMMENT_TYPE,currentUser.getUsername());
 		return new ResponseEntity<>(GeneralConstants.LIKED_MSG,HttpStatus.OK);
 	}

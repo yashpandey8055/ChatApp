@@ -45,7 +45,7 @@ public class StatusPostServiceImpl implements PostService{
 		document.setCommentCount(0);
 		document.setCreationDate(new Date());
 		document.setUpdationDate(new Date());
-		document.setIsStatus(false);
+		document.setIsStatus(true);
 		document.setLikes(0);
 		document.setPostImageUrl(null);
 		document.setStatus(postActivityReqResBean.getStatus());

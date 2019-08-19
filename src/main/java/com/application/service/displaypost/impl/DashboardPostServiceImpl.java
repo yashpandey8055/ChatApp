@@ -59,8 +59,12 @@ public class DashboardPostServiceImpl implements DisplayPostService{
 		
 		IMongoCollection commentCollection = MongoCollectionFactory.getInstance(DataAccessObjectConstants.COMMENT_DOCUMENT_COLLECTION
 				, template);
+		
+		IMongoCollection connectionCollection = MongoCollectionFactory.getInstance(DataAccessObjectConstants.FOLLOW_DOCUMENT_COLLECTION
+				, template);
 		UserDocument userDocument = (UserDocument) userCollection.findOne(DataAccessObjectConstants.USERNAME, username);
-		List<String> following = userDocument.getFollowing();
+		List<? extends MongoDocument> following = connectionCollection.executeQuery(
+				Query.query(Criteria.where(DataAccessObjectConstants.CONNECTION_DOCUMENT_FIELD).in(username));
 		following.add(userDocument.getUsername());
 		
 		List<PostResponse> response = new ArrayList<>();

@@ -83,10 +83,46 @@ function update_password(){
 			   $('#notification-pop-box').toggle(); 
 			   $('#notification-nav-bar').text(0);
 			   $('#notification-nav-bar').css({"background":"transparent","color":"transparent"});
-			});
+		});
 		
 		$('#connect-icon').click(function(e) {                              
 			   $('#connections-pop-box').toggle(); 
-			   $('#notification-nav-bar').text(0);
-			   $('#notification-nav-bar').css({"background":"transparent","color":"transparent"});
-			});
+			   $('.connection_items').remove();
+			   var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function(){
+					 if (xhr.readyState == 4 && xhr.status == 200){
+						console.log(this.responseText)
+						var response = JSON.parse(this.responseText);
+						var connection_request = '';
+						var constant_accept = 'Accept';
+						var constant_reject= 'Reject';
+						response.data.some(function(resp){
+							connection_request = connection_request +
+							"<li class='unread-notification  connection_items'>"+
+							"<div class='navbar-element-icon' id='nav-bar-picture-icon'><img height=100% id='nav-bar-profile-picture' src='"+resp.requesterProfileUrl+"' width=100% alt=''></div>"+
+							"<div class='connection-display-name'><p><b>"+resp.requester+"</b></p></div>"+
+							"<div style='display:flex;flex-direction:row'>"+
+								"<div class='connection-display-btn'>"+
+								"<button class='btn btnfull' onclick='acceptReject(\""+resp.requester+"\",\""+constant_accept+"\",event)'>Accept</button>"+
+								"</div>"+
+								"<div class='connection-display-btn'>"+
+								"<button class='btn btnfull connection-white-btn' onclick='acceptReject(\""+resp.requester+"\",\""+constant_reject+"\",event)'>Reject</button>"+
+								"</div>"+
+							"</div>"+
+						"</li>" +
+						"<hr class='connection-bottom-line connection_items'>"
+							
+						}); 
+						$("#connection_loading_gif").remove();
+						 $("#connections-box-display").prepend(connection_request);
+					}else if(xhr.readyState == 4 &&xhr.status !== 200){
+						
+					}
+				}
+				xhr.open("GET", "/user/connectionrequests");
+				if(token){
+					xhr.setRequestHeader("Authorization","Bearer "+token);
+				}
+				xhr.setRequestHeader("content-type","application/json");
+				xhr.send(null);
+		});

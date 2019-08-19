@@ -1,7 +1,7 @@
 
 	<script src="/ui/js/navbar.js"></script>
 	<div></div>
-	<div class="logo">Ketu</div>
+	<div class="logo">AppName</div>
 	<div class="navbar-element">
 	<div class="icons">
 		<div class="navbar-element-content">
@@ -34,14 +34,7 @@
 		<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>View All Notification</b></h5></div>
 	</li>
 	</ul>
-	</div>
-	<div class="display-options-box large-display" id="notification-pop-box">
-	<ul class="notification-box-display" id="notification-box-display">
-	<li class='unread-notification'>
-		<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>View All Notification</b></h5></div>
-	</li>
-	</ul>
-	</div>
+	</div> 
 	<div class="display-options-box large-display" id="options-pop-box">
 		<ul class="notification-box-display" id="optioons-box-display">
 			<li class='unread-notification' id="change_password">
@@ -52,10 +45,13 @@
 			</li> 
 		</ul>
 	</div>
-	<div class="display-options-box large-display" id="connections-pop-box">
+	<div class="display-options-box auto-display" id="connections-pop-box">
 		<ul class="notification-box-display" id="connections-box-display">
+			<li class='unread-notification' id="connection_loading_gif">
+				<img height=20px width=20px src='/ui/images/loading.gif' style="margin-left:auto;margin-right:auto">
+			</li>
 			<li class='unread-notification'>
-				<div class="navbar-element-icon" id="nav-bar-picture-icon"><img height=100% id="nav-bar-profile-picture" width=100% alt=""></div>
+				<p><b><a href="/connection/requests">See All Requests</a></b></p>
 			</li>
 		</ul>
 	</div>

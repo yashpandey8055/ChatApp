@@ -101,6 +101,25 @@ function follow(user){
 	$("#follow-user-btn").html("<img height=20px width=20px src='/ui/images/loading.gif'>")
 }
 
+function acceptReject(user,action,event){
+	if(action==='Accept'){
+		httpRequest.get("/user/connect/accept/"+user,null,function(response){
+			$(event.target).text('Connected');
+			$(event.target).parent().next().remove();
+			$(event.target).attr('disabled','true');
+			$(event.target).css({'width':'100px','background-image': 'linear-gradient(to left ,white,whitesmoke)','color':'black','border': '1px solid #46377b'});
+		});
+	}else if(action==='Reject'){
+		httpRequest.get("/user/disconnect/reject/"+user,null,function(response){
+			$(event.target).text('Rejected')
+			$(event.target).parent().parent().children()[0].remove();
+			$(event.target).attr('disabled','true');
+			$(event.target).css({'width':'100px','background-image': 'linear-gradient(to left ,white,whitesmoke)','color':'black','border': '1px solid #46377b'});
+		
+		});
+	}
+}
+
 function like(event){
 	var params = new Map();
 	params.set("postId", $(event.target).parents('[id]:last').attr('id'));
@@ -116,7 +135,7 @@ function like(event){
 			$(event.target).children().attr('src','/ui/images/liked.png');
 		}
 		$(event.target).attr('alt','unlike'); 
-		httpRequest.get("/unlike/post",params,function(response){
+		httpRequest.get("/like/post",params,function(response){
 		});
 	}else{
 		if($(event.target).parent().parent().next().find('.like-count-number').text()){
@@ -130,7 +149,7 @@ function like(event){
 			$(event.target).children().attr('src','/ui/images/like.png');
 		}
 		$(event.target).attr('alt','like'); 
-		httpRequest.get("/like/post",params,function(response){
+		httpRequest.get("/unlike/post",params,function(response){
 		});
 	}
 }

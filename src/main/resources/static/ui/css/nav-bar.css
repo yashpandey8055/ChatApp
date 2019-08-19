@@ -111,6 +111,10 @@
 .large-display{
 	width: 400px;
 }
+.auto-display{
+	width: auto;
+	min-width:300px
+}
 ul{
 	list-style:none;
 }
@@ -119,6 +123,7 @@ ul{
 	margin:0px;
 }
 .notification-box-display>li{
+	
 	display:flex;
 	flex-direction: row;
 	padding:10px;
@@ -137,6 +142,47 @@ p{
 h5{
 	margin:0px;
 }
+
+.connection-display-name{
+	width: 75px;
+	display: flex;
+	flex-direction:column;
+	margin-left:15px;
+	margin-right:15px;
+	text-align:center;
+	word-wrap: break-word
+}
+
+.connection-display-btn{
+	display: flex;
+	lex-direction:column;
+	margin-left:5px;
+	text-align:center
+}
+
+.connection-white-btn{
+	background-image: linear-gradient(to left ,white,whitesmoke);
+    color: black;
+    border: 1px solid #46377b;
+
+}
+.connection-white-btn:hover{
+	background-image: linear-gradient(to left ,white,whitesmoke);
+    color: black;
+    border: 1px solid #46377b;
+
+}
+
+
+.connection-bottom-line{
+	margin:2px;
+	
+}
+
+#connections-box-display>li{
+	background:white;
+}
+
 @media screen and (max-width:600px){
 	.navbar-nav{
 		height:8%;

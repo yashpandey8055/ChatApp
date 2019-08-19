@@ -1,16 +1,15 @@
 package com.application.data.dao.documents;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection="likes")
 public class LikeDocument extends MongoDocument {
 	private String _id;
 
 	private String postId;
-	private List<String> likedBy;
+	private Set<String> likedBy;
 	private String type;
 
 	public String getType() {
@@ -25,10 +24,10 @@ public class LikeDocument extends MongoDocument {
 	public void setPostId(String postId) {
 		this.postId = postId;
 	}
-	public List<String> getLikedBy() {
+	public Set<String> getLikedBy() {
 		return likedBy;
 	}
-	public void setLikedBy(List<String> likedBy) {
+	public void setLikedBy(Set<String> likedBy) {
 		this.likedBy = likedBy;
 	}
 	/**
