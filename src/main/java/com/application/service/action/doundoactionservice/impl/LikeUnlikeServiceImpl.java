@@ -27,7 +27,6 @@ public class LikeUnlikeServiceImpl implements IDoUndoAction{
 	public void doAction(String id,String type,String username) {
 		LikesCollectionDAOImpl likeCollection = (LikesCollectionDAOImpl) MongoCollectionFactory.getInstance(DataAccessObjectConstants.LIKE_DOCUMENT_COLLECTION
 					, template);
-			
 		LikeDocument document = (LikeDocument) likeCollection.findOne(DataAccessObjectConstants.POST_ID, id);
 		if(document!=null) {
 			document.getLikedBy().add(username);

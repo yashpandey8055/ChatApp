@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.application.bean.NotificationBean;
 import com.application.bean.User;
 import com.application.data.dao.FollowCollectionDAOImpl;
 import com.application.data.dao.documents.ConnectionsDocument;
@@ -43,6 +44,9 @@ public class FollowController {
 	@Qualifier("ConnectionAcceptRequest")
 	IDoUndoAction acceptRejectConnection;
 	
+	@Autowired
+	NotificationController notificationService;
+	
 	
 	@Autowired
 	MongoTemplate template;
@@ -65,6 +69,14 @@ public class FollowController {
 	public ResponseEntity<String> acceptRequest(@AuthenticationPrincipal User currentUser,@PathVariable("user") String userName){
 		DoUndoActionExecuteService unfollowUser = new DoActionImpl(acceptRejectConnection);
 		unfollowUser.execute(currentUser.getUsername(),GeneralConstants.ACCEPT_CONNECT_TYPE,userName);
+		NotificationBean notification = new NotificationBean();
+		notification.setNotification(currentUser.getUsername()+" accepted your connection request. Hooray!!. Message them");
+		notification.setRedirectUrl("/user?user="+currentUser.getUsername());
+		notification.setReceiver(userName);
+		notification.setSender(currentUser.getUsername());
+		notification.setSenderProfileUrl(currentUser.getProfileUrl());
+		notification.setTimeAgo("just now");
+		notificationService.sendNotificationDirectlyToQueue(userName, notification);
 		return new ResponseEntity<>(GeneralConstants.CONNECTED_MSG,HttpStatus.OK);
 	}
 	

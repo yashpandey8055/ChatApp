@@ -79,10 +79,27 @@ function update_password(){
 	"</form>"+
 	"<div style='width:100%;margin:auto;'><button class='btn app-btn btnfull' id='register-button' onclick='update_password()'>Update Password</button></div>");
 		 });
-		$('#notification-icon').click(function(e) {                              
+		
+		 $('#notification-icon').click(function(e) {                              
 			   $('#notification-pop-box').toggle(); 
-			   $('#notification-nav-bar').text(0);
-			   $('#notification-nav-bar').css({"background":"transparent","color":"transparent"});
+			   $('.notification-item').remove();
+			   var xhr = new XMLHttpRequest();
+			   xhr.onreadystatechange = function(){
+				   if (xhr.readyState == 4 && xhr.status == 200){
+					   console.log(this.responseText);
+					   var response = JSON.parse(this.responseText);
+					   response.some(function(res){
+						   add_notification(res);
+					   })
+				   }
+			   }
+			   
+			   xhr.open("GET", "/notification/get");
+				if(token){
+					xhr.setRequestHeader("Authorization","Bearer "+token);
+				}
+				xhr.setRequestHeader("content-type","application/json");
+				xhr.send(null);
 		});
 		
 		$('#connect-icon').click(function(e) {                              

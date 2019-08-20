@@ -171,35 +171,29 @@ function commentlike(event){
 		});
 	}
 }
-function open_post(postId){
-	document.location.href = "/post?postId="+postId;
+function open_post(redirectUrl){
+	document.location.href = redirectUrl;
 }
 function add_notification(response){
-	var notification= "<li onclick= open_post('"+response.postId+"') class='unread-notification' id='notification-"+response.postId+"-"+response.type+"'>"
+	console.log("I am here");
+	var notification= "<li onclick= open_post('"+response.redirectUrl+"') class='unread-notification notification-item'>"
 			+"<div  id='nav-bar-picture-icon' style='position:relative;width: 40px;' >"
 			+"<img id='nav-bar-profile-picture'  alt=''"
-				+" src='"+response.pictureUrls[0]+"' style='border-radius:50%;position:absolute;display: inline;'>";
-			if(response.pictureUrls[1]){
-			notification = notification+"	<img id='nav-bar-profile-picture'  alt=''"
-			 				+" src='"+response.pictureUrls[1]+"' style='border-radius:50%;position:absolute;display: inline;margin-left:-10px;'>"
-			}
+				+" src='"+response.senderProfileUrl+"' style='border-radius:50%;position:absolute;display: inline;'>";
 			notification = notification + "</div>"
-			+"<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>"+response.message+"</b></h5><h6>"+response.timeAgo+"</h6></div>"
+			+"<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>"+response.notification+"</b></h5><h6>12s ago</h6></div>"
 		+"</li>";
-		if($("#notification-"+response.postId+"-"+response.type)){
-			$("#notification-"+response.postId).remove()
-		}
 		$("#notification-box-display").prepend(notification);
 }
 function _websocket_connect(){
     var socket = new SockJS(env+'/ketu-socket?token='+token);
     var stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
-      // stompClient.subscribe('/user/queue/notification', function (response){
-    //	   add_notification(JSON.parse(response.body));
-    //	   $("#notification-nav-bar").text( parseInt($('#notification-nav-bar').text())+1);
-    //	   $("#notification-nav-bar").css({"background-color":"red","color":"white"});
-     //  });
+       stompClient.subscribe('/user/queue/notification', function (response){
+    	   add_notification(JSON.parse(response.body));
+    	   $("#notification-nav-bar").text( parseInt($('#notification-nav-bar').text())+1);
+    	   $("#notification-nav-bar").css({"background-color":"red","color":"white"});
+       });
     });
 }
 function load_CurrentUser(callback){

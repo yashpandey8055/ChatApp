@@ -3,8 +3,10 @@ package com.application.service.displaypost.impl;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -17,6 +19,7 @@ import com.application.bean.PostResponse;
 import com.application.bean.ViewPostBean;
 import com.application.data.dao.IMongoCollection;
 import com.application.data.dao.documents.CommentDocument;
+import com.application.data.dao.documents.ConnectionsDocument;
 import com.application.data.dao.documents.LikeDocument;
 import com.application.data.dao.documents.MongoDocument;
 import com.application.data.dao.documents.PostDocument;
@@ -48,8 +51,6 @@ public class DashboardPostServiceImpl implements DisplayPostService{
 	@Override
 	public GenericResponseBean viewPost(ViewPostBean viewPostBean) {
 		String username = viewPostBean.getUsernameForPost();
-		IMongoCollection userCollection = MongoCollectionFactory.getInstance(DataAccessObjectConstants.USER_DOCUMENT_COLLECTION
-				, template);
 		
 		IMongoCollection postCollection = MongoCollectionFactory.getInstance(DataAccessObjectConstants.POST_DOCUMENT_COLLECTION
 				, template);
@@ -62,10 +63,18 @@ public class DashboardPostServiceImpl implements DisplayPostService{
 		
 		IMongoCollection connectionCollection = MongoCollectionFactory.getInstance(DataAccessObjectConstants.FOLLOW_DOCUMENT_COLLECTION
 				, template);
-		UserDocument userDocument = (UserDocument) userCollection.findOne(DataAccessObjectConstants.USERNAME, username);
+		
 		List<? extends MongoDocument> following = connectionCollection.executeQuery(
-				Query.query(Criteria.where(DataAccessObjectConstants.CONNECTION_DOCUMENT_FIELD).in(username));
-		following.add(userDocument.getUsername());
+				Query.query(Criteria.where(DataAccessObjectConstants.CONNECTION_DOCUMENT_FIELD)
+						.in(username)
+						.and(DataAccessObjectConstants.CONNECTION_ACCEPTED).is(true)
+						.and(DataAccessObjectConstants.CONNECTION_ACTIVE).is(true)));
+		
+		Set<String> users = new HashSet<>();
+		for(MongoDocument connection:following ) {
+			ConnectionsDocument conn = (ConnectionsDocument)connection;
+			users.addAll(conn.getConnection());
+		}
 		
 		List<PostResponse> response = new ArrayList<>();
 		
@@ -75,12 +84,10 @@ public class DashboardPostServiceImpl implements DisplayPostService{
 		
 		//Fetch all the post of user this user is following updated in last 3 days, 
 		Query postQuery = Query.query(Criteria
-				.where(DataAccessObjectConstants.USERNAME).in(userDocument.getFollowing()));
-		
+				.where(DataAccessObjectConstants.USERNAME).in(users));
 		postQuery.addCriteria(Criteria.where(DataAccessObjectConstants.UPDATION_DATE).gte(new Date(cal.getTimeInMillis())));
+		
 		List<? extends MongoDocument> posts = postCollection.executeQuery(postQuery);
-		
-		
 		
 		for(MongoDocument postDocument:posts) {
 			PostDocument post  = (PostDocument) postDocument;

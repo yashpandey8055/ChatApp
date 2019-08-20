@@ -9,6 +9,7 @@ import com.application.data.dao.FollowCollectionDAOImpl;
 import com.application.data.dao.IMongoCollection;
 import com.application.data.dao.LikesCollectionDAOImpl;
 import com.application.data.dao.MessageCollectionDAOImpl;
+import com.application.data.dao.NotificationCollectionDAOImpl;
 import com.application.data.dao.PostCollectionDAOImpl;
 import com.application.data.dao.UsersCollectionDAOImpl;
 import com.application.request.response.constants.DataAccessObjectConstants;
@@ -48,6 +49,8 @@ public class MongoCollectionFactory {
 				collection = new ConversationCollectionDAOImpl(template);break;
 			case DataAccessObjectConstants.FOLLOW_DOCUMENT_COLLECTION:
 				collection = new FollowCollectionDAOImpl(template);break;
+			case DataAccessObjectConstants.NOTIFICATION_DOCUMENT_COLLECTION:
+				collection = new NotificationCollectionDAOImpl(template);break;
 			default: collection = null;
 					
 		}

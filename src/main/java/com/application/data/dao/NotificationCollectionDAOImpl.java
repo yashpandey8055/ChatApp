@@ -2,6 +2,7 @@ package com.application.data.dao;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -17,7 +18,12 @@ public class NotificationCollectionDAOImpl implements IMongoCollection {
 
 	MongoTemplate template;
 
-	
+	@Autowired
+	public NotificationCollectionDAOImpl(MongoTemplate template) {
+		super();
+		this.template = template;
+	}
+
 	@Override
 	public MongoDocument findOne(String key, Object value) {
 		return template.findOne(Query.query(Criteria.where(key).is(value)), NotificationDocument.class);

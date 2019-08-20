@@ -1,14 +1,12 @@
 package com.application.data.dao.documents;
 
+import java.util.Comparator;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection="notification")
-public class NotificationDocument extends MongoDocument{
+public class NotificationDocument extends MongoDocument implements Comparator<NotificationDocument> {
 	@Field("_id")
 	private String id;
 	public String getId() {
@@ -21,14 +19,18 @@ public class NotificationDocument extends MongoDocument{
 	private long count = 0;
 	private String receiver;
 	private String message;
-	private Set<String> pictureUrl = new HashSet<>(2);
 	private Date date;
-	private String type;
 	private String currentSender;
-	private String lastSender;
-	private String linkToPost;
+	private String redirectUrl;
 	private Boolean read = false;
+	private String pictureUrl;
 
+	public String getRedirectUrl() {
+		return redirectUrl;
+	}
+	public void setRedirectUrl(String redirectUrl) {
+		this.redirectUrl = redirectUrl;
+	}
 	public String getPostId() {
 		return postId;
 	}
@@ -53,10 +55,10 @@ public class NotificationDocument extends MongoDocument{
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public Set<String> getPictureUrl() {
+	public String getPictureUrl() {
 		return pictureUrl;
 	}
-	public void setPictureUrl(Set<String> pictureUrl) {
+	public void setPictureUrl(String pictureUrl) {
 		this.pictureUrl = pictureUrl;
 	}
 	public Date getDate() {
@@ -65,18 +67,7 @@ public class NotificationDocument extends MongoDocument{
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public String getLastSender() {
-		return lastSender;
-	}
-	public void setLastSender(String lastSender) {
-		this.lastSender = lastSender;
-	}
-	public String getLinkToPost() {
-		return linkToPost;
-	}
-	public void setLinkToPost(String linkToPost) {
-		this.linkToPost = linkToPost;
-	}
+
 	public Boolean getRead() {
 		return read;
 	}
@@ -89,16 +80,15 @@ public class NotificationDocument extends MongoDocument{
 	public void setCurrentSender(String currentSender) {
 		this.currentSender = currentSender;
 	}
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return type;
+	@Override
+	public int compare(NotificationDocument o1, NotificationDocument o2) {
+		if(o1.getDate().after(o2.getDate())) {
+			return 1;
+		}
+		if(o1.getDate().before(o2.getDate())) {
+			return -1;
+		}
+		return 0;
 	}
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
+	
 }

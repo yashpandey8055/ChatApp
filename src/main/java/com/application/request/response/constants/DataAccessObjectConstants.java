@@ -18,6 +18,7 @@ public class DataAccessObjectConstants {
 	public static final String MESSAGE_DOCUMENT_COLLECTION = "MessageDocument";
 	public static final String CONVERSATION_DOCUMENT_COLLECTION = "ConversationDocument";
 	public static final String FOLLOW_DOCUMENT_COLLECTION = "FollowDocument";
+	public static final String NOTIFICATION_DOCUMENT_COLLECTION = "NotificationDocument";
 	
 	/**
 	 * Fields

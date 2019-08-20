@@ -2,6 +2,7 @@ package com.application.service.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,7 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.application.bean.NotificationBean;
 import com.application.bean.User;
+import com.application.data.dao.LikesCollectionDAOImpl;
+import com.application.data.dao.PostCollectionDAOImpl;
+import com.application.data.dao.documents.PostDocument;
+import com.application.factory.MongoCollectionFactory;
+import com.application.request.response.constants.DataAccessObjectConstants;
 import com.application.request.response.constants.GeneralConstants;
 import com.application.service.DoUndoActionExecuteService;
 import com.application.service.IDoUndoAction;
@@ -23,10 +30,29 @@ public class LikeController {
 	@Qualifier("PostLikeAction")
 	IDoUndoAction likeUnlikeService;
 	
+	
+	@Autowired
+	private MongoTemplate template;
+	
+	@Autowired
+	NotificationController notificationService;
+	
 	@GetMapping("/like/post")
 	public ResponseEntity<String> likePost(@AuthenticationPrincipal User currentUser, @RequestParam String postId){
 		DoUndoActionExecuteService likeService = new DoActionImpl(likeUnlikeService);
 		likeService.execute(postId,GeneralConstants.POST_TYPE,currentUser.getUsername());
+		
+		PostCollectionDAOImpl postCollection = (PostCollectionDAOImpl) MongoCollectionFactory.getInstance(DataAccessObjectConstants.POST_DOCUMENT_COLLECTION
+				, template);
+		PostDocument post = (PostDocument)postCollection.findOne(DataAccessObjectConstants.POST_ID, postId);
+		NotificationBean notification = new NotificationBean();
+		notification.setNotification(currentUser.getUsername()+" accepted your connection request. Hooray!!. Message them");
+		notification.setRedirectUrl("/user?user="+currentUser.getUsername());
+		notification.setReceiver(post.getUsername());
+		notification.setSender(currentUser.getUsername());
+		notification.setSenderProfileUrl(currentUser.getProfileUrl());
+		notification.setTimeAgo("just now");
+		notificationService.sendNotificationDirectlyToQueue(post.getUsername(), notification);
 		return new ResponseEntity<>(GeneralConstants.LIKED_MSG,HttpStatus.OK);
 	}
 	@GetMapping("/unlike/post")
