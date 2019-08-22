@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.application.bean.NotificationBean;
 import com.application.bean.User;
-import com.application.data.dao.LikesCollectionDAOImpl;
 import com.application.data.dao.PostCollectionDAOImpl;
 import com.application.data.dao.documents.PostDocument;
 import com.application.factory.MongoCollectionFactory;
@@ -46,8 +45,8 @@ public class LikeController {
 				, template);
 		PostDocument post = (PostDocument)postCollection.findOne(DataAccessObjectConstants.POST_ID, postId);
 		NotificationBean notification = new NotificationBean();
-		notification.setNotification(currentUser.getUsername()+" accepted your connection request. Hooray!!. Message them");
-		notification.setRedirectUrl("/user?user="+currentUser.getUsername());
+		notification.setNotification(currentUser.getUsername()+" Liked your post. Thank Them.");
+		notification.setRedirectUrl("/post?postId="+postId);
 		notification.setReceiver(post.getUsername());
 		notification.setSender(currentUser.getUsername());
 		notification.setSenderProfileUrl(currentUser.getProfileUrl());

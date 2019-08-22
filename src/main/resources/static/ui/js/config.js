@@ -181,7 +181,7 @@ function add_notification(response){
 			+"<img id='nav-bar-profile-picture'  alt=''"
 				+" src='"+response.senderProfileUrl+"' style='border-radius:50%;position:absolute;display: inline;'>";
 			notification = notification + "</div>"
-			+"<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>"+response.notification+"</b></h5><h6>12s ago</h6></div>"
+			+"<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>"+response.notification+"</b></h5><h6>"+response.timeAgo+"</h6></div>"
 		+"</li>";
 		$("#notification-box-display").prepend(notification);
 }
