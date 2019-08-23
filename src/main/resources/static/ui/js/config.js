@@ -2,7 +2,7 @@
 var token = getCookie();
 var currentUser = null;
 const httpRequest = new HttpRequest();
-var env = 'http://localhost:8080'
+var env = 'https://ketu.herokuapp.com'
 function getCookie(){
 	 var name = "token=";
 	    var decodedCookie = decodeURIComponent(document.cookie);
