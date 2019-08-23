@@ -43,7 +43,7 @@ public class LikeController {
 		
 		PostCollectionDAOImpl postCollection = (PostCollectionDAOImpl) MongoCollectionFactory.getInstance(DataAccessObjectConstants.POST_DOCUMENT_COLLECTION
 				, template);
-		PostDocument post = (PostDocument)postCollection.findOne(DataAccessObjectConstants.POST_ID, postId);
+		PostDocument post = (PostDocument)postCollection.findOne(DataAccessObjectConstants.ID_FIELD, postId);
 		NotificationBean notification = new NotificationBean();
 		notification.setNotification(currentUser.getUsername()+" Liked your post. Thank Them.");
 		notification.setRedirectUrl("/post?postId="+postId);
