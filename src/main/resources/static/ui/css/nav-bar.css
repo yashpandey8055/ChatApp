@@ -6,7 +6,7 @@
 	position:fixed;
 	top:0px;
 	margin-top:0px;
-	background-image: linear-gradient(to right, #6800b3,#8042f4);
+	background-image: linear-gradient(to right, #4a0080,#8042f4);
 	margin-left:auto;
 	margin-right:auto;
 	width:100%;
@@ -25,7 +25,6 @@
     color: whitesmoke;
     border-radius: 5px;
     font-family: Spantaran;
-    background-color: #4a0080;
 }
 .navbar-element{
 	height:100%;
@@ -190,6 +189,9 @@ h5{
 	}
 	.logo{
 	display:none;
+	}
+	.searchbar{
+		display:none;
 	}
 	
 }
