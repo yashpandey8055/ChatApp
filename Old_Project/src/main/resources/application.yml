@@ -1,9 +1,0 @@
-mongo:
-  address: localhost
-  dbName: ketu
-  password: Yashpandey@123
-  port: 27017
-  userName: ketu_dev_user
-
-  
-spring:  servlet:    multipart:      max-file-size: 10MB
