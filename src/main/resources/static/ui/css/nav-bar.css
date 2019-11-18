@@ -182,6 +182,16 @@ h5{
 	background:white;
 }
 
+.search-bar{
+	width:70%;
+	margin:auto;
+	margin-left:auto;
+	padding:5px;
+	border-radius:5px;
+	border:1px solid #4a0080;
+	background:whitesmoke;
+	text-align:center; 
+}
 @media screen and (max-width:600px){
 	.navbar-nav{
 		height:8%;

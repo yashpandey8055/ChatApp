@@ -143,3 +143,7 @@ function update_password(){
 				xhr.setRequestHeader("content-type","application/json");
 				xhr.send(null);
 		});
+		
+function search_bar_suggestions(){
+	
+}
