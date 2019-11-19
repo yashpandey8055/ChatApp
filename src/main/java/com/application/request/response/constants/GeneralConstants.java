@@ -61,5 +61,7 @@ public class GeneralConstants {
 	public static final String ACCEPT_CONNECT_TYPE = "Connect To";
 	
 	public static final String REJECT_CONNECT_TYPE = "Connect To";
+	
+	public static final String USER_REDIRECT_URL = "/user?user=";
 
 }

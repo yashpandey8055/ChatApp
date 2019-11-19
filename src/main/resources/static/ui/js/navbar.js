@@ -101,7 +101,28 @@ function update_password(){
 				xhr.setRequestHeader("content-type","application/json");
 				xhr.send(null);
 		});
-		
+		$('#search-bar').on('input',function(e){
+			if(this.value.length>3){
+				 var xhr = new XMLHttpRequest();
+				   xhr.onreadystatechange = function(){
+					   if (xhr.readyState == 4 && xhr.status == 200){
+						   console.log(this.responseText);
+						   var response = JSON.parse(this.responseText);
+							   add_suggestion_on_search(response.data);
+					   }
+				   }
+				   xhr.open("GET", "/secure/users/suggestions?regex="+this.value);
+					if(token){
+						xhr.setRequestHeader("Authorization","Bearer "+token);
+					}
+					xhr.setRequestHeader("content-type","application/json");
+					xhr.send(null);
+				$('#search-box').css({'display':'flex'})
+			}else{
+				$('#search-box').css({'display':'none'})
+			}
+
+		})
 		$('#connect-icon').click(function(e) {                              
 			   $('#connections-pop-box').toggle(); 
 			   $('.connection_items').remove();
@@ -144,6 +165,21 @@ function update_password(){
 				xhr.send(null);
 		});
 		
-function search_bar_suggestions(){
-	
+function add_suggestion_on_searcsh(res){
+	var usersList ="";
+	res.some(function(resp){
+		usersList = usersList +
+		"<li  class='unread-notification notification-item search-item' style='background:whitesmoke;height:auto; min-height:40px;padding:5px'>"+
+		"<img  alt='' id='nav-bar-profile-picture'"+
+			 "src='"+resp.profilePictureUrl+"' class='profile-picture'>"+
+			 "<a href='"+resp.linkToProfile+"' style='display:flex;color:black;text-decoration:none'><span class='link-spanner'>"+
+		"<div style='height:auto; display:flex'>"+
+		"<h5 style='height: inherit;line-height: inherit'><b>"+resp.firstName+" "+resp.lastName+"</b>"+
+		"</h5><h5 style='height: inherit;line-height: inherit;margin-left:3px'>"+resp.bio+"</h5></div>" +
+		"</span></a>"+
+		"</li><hr style='margin-top:2px;margin-bottom:2px;'>" 
+	});
+
+	$("#search-list").empty();
+	$("#search-list").append(usersList);
 }

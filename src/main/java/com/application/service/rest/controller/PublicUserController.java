@@ -23,6 +23,7 @@ import com.application.request.response.bean.GenericResponseBean;
 import com.application.request.response.bean.UserRegisterReqResBean;
 import com.application.service.loginregisterservice.impl.LoginServiceImpl;
 import com.application.service.loginregisterservice.impl.RegistrationServiceImpl;
+import com.application.service.userservice.impl.SuggestionUserServiceImpl;
 import com.application.utils.Utils;
 import com.google.common.collect.Lists;
 
@@ -40,6 +41,9 @@ public class PublicUserController {
 	
 	@Autowired 
 	MongoTemplate template;
+	
+	@Autowired
+	SuggestionUserServiceImpl suggestUser;
 
 	@PostMapping("/users/register")
 	public ResponseEntity<GenericResponseBean> register(@RequestBody UserRegisterReqResBean request){
@@ -57,6 +61,12 @@ public class PublicUserController {
 	@GetMapping("/users/getUser")
 	public ResponseEntity<Object> getUser(@RequestParam String token){
 		return new ResponseEntity<>(null,HttpStatus.OK);
+	}
+	
+	@GetMapping("/users/suggestions")
+	public ResponseEntity<GenericResponseBean> getUserSuggestions(@RequestParam String regex){
+		GenericResponseBean res = suggestUser.getUserDetails(regex);
+		return new ResponseEntity<>(res,HttpStatus.OK);
 	}
 	
 	@GetMapping("/insert")

@@ -58,6 +58,10 @@
 .navbar-element-title{
 	text-alignment:center;
 }
+.search-item *{
+	margin-left:5px;
+	margin-right:5px;
+}
 #nav-bar-profile-picture{
 	height:30px;
 	background-image: linear-gradient(to left, white,#d1d1e0);
@@ -67,6 +71,15 @@
     animation-name: animate-profile-download ;
     animation-iteration-count: infinite;
     animation-duration: 1s;
+}
+
+.profile-picture{
+	height:30px;
+	width:30px;
+	margin-right:10px;
+	margin-left:10px;
+	border-radius:50%;
+	display: inline
 }
 .display-options-box{
 	display:inline-block;
@@ -185,6 +198,7 @@ h5{
 .search-bar{
 	width:70%;
 	margin:auto;
+	margin-top:10px;
 	margin-left:auto;
 	padding:5px;
 	border-radius:5px;
@@ -192,6 +206,17 @@ h5{
 	background:whitesmoke;
 	text-align:center; 
 }
+.search-box{
+	width:70%;
+	height:auto;
+	border:1px solid;
+	background:whitesmoke;
+	margin-left:auto;
+	margin-right:auto;
+	display:none;
+	padding:0px;
+}
+
 @media screen and (max-width:600px){
 	.navbar-nav{
 		height:8%;
