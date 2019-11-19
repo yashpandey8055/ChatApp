@@ -58,10 +58,6 @@
 .navbar-element-title{
 	text-alignment:center;
 }
-.search-item *{
-	margin-left:5px;
-	margin-right:5px;
-}
 #nav-bar-profile-picture{
 	height:30px;
 	background-image: linear-gradient(to left, white,#d1d1e0);

@@ -108,7 +108,7 @@ function update_password(){
 					   if (xhr.readyState == 4 && xhr.status == 200){
 						   console.log(this.responseText);
 						   var response = JSON.parse(this.responseText);
-							   add_suggestion_on_search(response.data);
+						   add_suggestion_on_search(response.data);
 					   }
 				   }
 				   xhr.open("GET", "/secure/users/suggestions?regex="+this.value);
@@ -165,7 +165,7 @@ function update_password(){
 				xhr.send(null);
 		});
 		
-function add_suggestion_on_searcsh(res){
+function add_suggestion_on_search(res){
 	var usersList ="";
 	res.some(function(resp){
 		usersList = usersList +
