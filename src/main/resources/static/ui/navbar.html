@@ -1,8 +1,18 @@
 
 	<script src="/ui/js/navbar.js"></script>
+
 	<div style="display:flex;">
 	<div class="logo">AppName</div>
-	<div style="width:50%;margin-left:20px;display: flex;flex-direction:column">
+	<div class="navbar-element-ham-container">
+	<div class="icons-show">
+		<div class="navbar-element-content" id="hamburger-icon">
+			<div class="navbar-element-ham-icon"><img height=100% width=100% alt="" src="/ui/images/hamburger-icon.png" style="background:#4a0080;padding:5px">
+		</div>
+	</div>
+	</div>
+	</div>
+	
+	<div class="search-bar-container">
 		<input type="text" placeholder="search" id="search-bar" onChange = "search_bar_suggestions()" class= "search-bar"/>
 		<div  id="search-box" class="search-box">
 			<ul id="search-list" style="padding-left: 0px;width:100%;margin-bottom:0px">
@@ -10,6 +20,7 @@
 			</ul>
 		</div>
 	</div>
+	
 	<div class="navbar-element">
 	<div class="icons">
 		<div class="navbar-element-content">
@@ -38,7 +49,7 @@
 	</div>
 	</div>
 	<!--Notification Dropdown goes here  -->
-	<div class="display-options-box large-display" id="notification-pop-box">
+	<div class="display-options-box large-display dropdown-box" id="notification-pop-box">
 		<ul class="notification-box-display" id="notification-box-display">
 			<li class='read-notification'>
 				<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>View All Notification</b></h5></div>
@@ -47,7 +58,7 @@
 	</div> 
 	
 		<!--Connection Requests Go here  -->
-	<div class="display-options-box large-display" id="options-pop-box">
+	<div class="display-options-box large-display dropdown-box" id="options-pop-box">
 		<ul class="notification-box-display" id="optioons-box-display">
 			<li class='unread-notification' id="change_password">
 				<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>Change Password</b></h5></div>
@@ -57,7 +68,7 @@
 			</li> 
 		</ul>
 	</div>
-	<div class="display-options-box auto-display" id="connections-pop-box">
+	<div class="display-options-box auto-display dropdown-box" id="connections-pop-box">
 		<ul class="notification-box-display" id="connections-box-display">
 			<li class='unread-notification' id="connection_loading_gif">
 				<img height=20px width=20px src='/ui/images/loading.gif' style="margin-left:auto;margin-right:auto">

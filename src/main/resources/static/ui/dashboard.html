@@ -8,11 +8,13 @@
     <script src="../webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/ui/js/config.js"></script>
     <script src="/ui/js/common.js"></script>
+    <script src="/ui/js/navbar.js"></script>
     <script src="/ui/js/cropper.js"></script>
     <script src="/ui/js/dashboard.js"></script>
     <link href="/ui/css/chat.css" rel="stylesheet"></link>
     <link href="/ui/css/common.css" rel="stylesheet"></link>
     <link href="/ui/css/nav-bar.css" rel="stylesheet"></link>
+    
     <link href="/ui/css/dashboard.css" rel="stylesheet"></link>
     <link href="/ui/css/components.css" rel="stylesheet"></link>
     <link href="/ui/css/cropper.css" rel="stylesheet"></link>
@@ -26,6 +28,21 @@
 	<nav class="navbar-nav">
 	
 	</nav>
+	<div class="navigation-sidebar" id="navigation-sidebar" style='display:none'>
+	<div class='nav-sidebar-profile-picture' style='position:relative;'><img id='nav-sidebar-profile-picture' alt=''></div>
+		<ul class="notification-box-display" id="optioons-box-display">
+			<li class='read-notification' id="change_password">
+				<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>Change Password</b></h5></div>
+			</li>
+			<li class='read-notification' id="logout">
+				<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>Logout</b></h5></div>
+			</li> 
+			<li class='read-notification' id="logout">
+				<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>Logout</b></h5></div>
+			</li> 
+		</ul>
+	</div>
+	
 	<div class="content-container" align="center">
 	<div class="split center">
 		<div class="dashboard-header">

@@ -43,9 +43,17 @@ function update_password(){
 		$("#findfriends-icon").on('click',function(){
 			window.location.href = "/findfriends";
 		});
-		$('.display-options-box').hide(); 
+		$("#hamburger-icon").on('click',function(){
+			$("#navigation-sidebar").toggle();
+		});
 		
-		$('#nav-bar-picture-icon').click(function(e) {                              
+		$('.display-options-box').hide(); 
+		$(".content-container").on('click',function(){
+			$('.display-options-box').hide(); 
+		});
+		
+		$('#nav-bar-picture-icon').click(function(e) {  
+			$('.display-options-box').hide(); 
 		   $('#options-pop-box').toggle();  
 		});
 		 $("#logout").click(function(){
@@ -53,9 +61,9 @@ function update_password(){
 		    	window.location.href = "/ui/login"
 		 });
 		 $("#change_password").click(function(){
-				$(".content-container").css({"opacity":"0.1"});
+				$(".content-container").addClass("disabledbutton");
 				$('.display-options-box').hide(); 
-			 $("body").prepend("<div class='pop-up-box vertical-align' style='top:40%;width:40%;'>" +
+			 $("body").prepend("<div class='pop-up-box vertical-align' style='top:50%;width:40%;'>" +
 				"<div align=right><button type='button' id='close_button' class='close' onclick='close_this(event)'><span aria-hidden='true'>&times;</span></button></div>"+
 			"<form>"+
 		"<div class='row-full'>"+
@@ -80,7 +88,8 @@ function update_password(){
 	"<div style='width:100%;margin:auto;'><button class='btn app-btn btnfull' id='register-button' onclick='update_password()'>Update Password</button></div>");
 		 });
 		
-		 $('#notification-icon').click(function(e) {                              
+		 $('#notification-icon').click(function(e) {   
+			 $('.display-options-box').hide(); 
 			   $('#notification-pop-box').toggle(); 
 			   $('.notification-item').remove();
 			   var xhr = new XMLHttpRequest();
@@ -123,7 +132,9 @@ function update_password(){
 			}
 
 		})
-		$('#connect-icon').click(function(e) {                              
+		
+		$('#connect-icon').click(function(e) {    
+			$('.display-options-box').hide(); 
 			   $('#connections-pop-box').toggle(); 
 			   $('.connection_items').remove();
 			   var xhr = new XMLHttpRequest();
@@ -153,8 +164,6 @@ function update_password(){
 						}); 
 						$("#connection_loading_gif").remove();
 						 $("#connections-box-display").prepend(connection_request);
-					}else if(xhr.readyState == 4 &&xhr.status !== 200){
-						
 					}
 				}
 				xhr.open("GET", "/user/connectionrequests");
@@ -164,7 +173,14 @@ function update_password(){
 				xhr.setRequestHeader("content-type","application/json");
 				xhr.send(null);
 		});
-		
+
+function close_this(event){
+	$(".content-container").removeClass("disabledbutton");
+			$(event.target).closest('.pop-up-box').remove();
+			if(!($('.pop-up-box')[0])){
+				$(".content-container").css({"opacity":"1"});
+			}
+		}		
 function add_suggestion_on_search(res){
 	var usersList ="";
 	res.some(function(resp){

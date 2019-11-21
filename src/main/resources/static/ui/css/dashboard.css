@@ -165,21 +165,6 @@ body{
 	margin:5px;
 }
 
-.pop-up-box{
-	padding:30px;
-	height:auto;
-	width:auto;
-	background:white;
-	border-radius:5px;
-	margin:auto;
-	z-index: 10;
-	margin-top: 10%;
-	text-align: center;
-	border:1px solid #dcdcdc;
-}
-.pop-up-box>input{
-	width:100%;
-}
 
 .time-ago{
 	font-size: 11px;

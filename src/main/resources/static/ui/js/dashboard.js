@@ -205,6 +205,10 @@ function comment(){
 }
 
 $(function () {
+	
+	$('#hamburger-icon').click(function(e) {  
+		windows.alert(1);
+	}
 	$(document).on('change', '#image-upload', function(e) {
 		file = e.target.files[0];
 		var reader = new FileReader();
