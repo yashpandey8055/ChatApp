@@ -221,7 +221,7 @@ function load_CurrentUser(callback){
 }
 $(function(){
 	$(".navbar-nav").load("/ui/navbar.html");
-	
+	$(".sidebar").load("/ui/sidebar.html");
 	load_CurrentUser(function(){});
 	
 })

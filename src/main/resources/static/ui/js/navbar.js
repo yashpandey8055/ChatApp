@@ -44,7 +44,7 @@ function update_password(){
 			window.location.href = "/findfriends";
 		});
 		$("#hamburger-icon").on('click',function(){
-			$("#navigation-sidebar").toggle();
+			$("#sidebar").toggle();
 		});
 		
 		$('.display-options-box').hide(); 
