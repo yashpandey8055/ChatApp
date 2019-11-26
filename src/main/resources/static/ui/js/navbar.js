@@ -41,12 +41,19 @@ function update_password(){
 			window.location.href = "/dashboard";
 		});
 	
-		
+
+		$("#hamburger-icon").on('click',function(){
+					$("#sidebar").toggle();
+					$("#nav-sidebar-profile-picture").attr("src",window.localStorage.getItem('profile-picture'));
+					 $("#nav-bar-profile-picture").css({"display":"inline"});
+		});
 		$('.display-options-box').hide(); 
 		$(".content-container").on('click',function(){
 			$('.display-options-box').hide(); 
 		});
-		
+		$("#findfriends-icon").on('click',function(){
+			window.location.href = "/findfriends";
+		});
 		$('#nav-bar-picture-icon').click(function(e) {  
 			$('.display-options-box').hide(); 
 		   $('#options-pop-box').toggle();  

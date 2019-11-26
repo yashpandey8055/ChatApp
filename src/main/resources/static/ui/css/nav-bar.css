@@ -2,6 +2,11 @@
     font-family: Spantaran;
     src: url(/ui/fonts/btxitally.otf);
 }
+a,a:hover,a:visited{
+	text-decoration:none;
+	color:black;
+}
+
 .navbar-nav{
 	position:fixed;
 	top:0px;

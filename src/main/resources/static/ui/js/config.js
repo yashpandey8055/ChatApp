@@ -208,12 +208,22 @@ function load_CurrentUser(callback){
 				})
 			})
 			currentUser = JSON.parse(response).data;
-				var downloadingImage = new Image();
-				downloadingImage.onload = function(){
-				 $("#nav-bar-profile-picture").attr("src",this.src);
-				 $("#nav-bar-profile-picture").css({"display":"inline"});
-				};
-				downloadingImage.src = currentUser.profileUrl;
+				
+				if(!window.localStorage.getItem('profile-picture')){
+					var downloadingImage = new Image();
+					downloadingImage.onload = function(){
+					window.localStorage.setItem('profile-picture',this.src)
+					 $("#nav-bar-profile-picture").attr("src",this.src);
+					 $("#nav-sidebar-profile-picture").attr("src",this.src)
+					 $("#nav-bar-profile-picture").css({"display":"inline"});
+					};
+					downloadingImage.src = currentUser.profileUrl;
+				}else{
+					$("#nav-bar-profile-picture").attr("src",window.localStorage.getItem('profile-picture'));
+					$("#nav-sidebar-profile-picture").attr("src",window.localStorage.getItem('profile-picture'))
+					
+				}
+				
 			});
 	}else{
 		document.location.href = "/ui/login";
@@ -222,6 +232,7 @@ function load_CurrentUser(callback){
 $(function(){
 	$(".navbar-nav").load("/ui/navbar.html");
 	$(".sidebar").load("/ui/sidebar.html");
+
 	load_CurrentUser(function(){});
 	
 })
