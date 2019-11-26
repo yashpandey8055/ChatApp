@@ -40,12 +40,7 @@ function update_password(){
 		$("#dashboard-icon").on('click',function(){
 			window.location.href = "/dashboard";
 		});
-		$("#findfriends-icon").on('click',function(){
-			window.location.href = "/findfriends";
-		});
-		$("#hamburger-icon").on('click',function(){
-			$("#sidebar").toggle();
-		});
+	
 		
 		$('.display-options-box').hide(); 
 		$(".content-container").on('click',function(){
@@ -181,6 +176,9 @@ function close_this(event){
 				$(".content-container").css({"opacity":"1"});
 			}
 		}		
+
+
+
 function add_suggestion_on_search(res){
 	var usersList ="";
 	res.some(function(resp){

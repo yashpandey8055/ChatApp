@@ -62,6 +62,7 @@
     color: whitesmoke;
     border-radius: 5px;
     font-family: Spantaran;
+    display:none
 }
 .navbar-element{
 	height:100%;
@@ -93,7 +94,7 @@
     flex-direction: column;
 }
 .navbar-element-ham-container{
-		display:none;
+		display:grid;
 	}
 .navbar-element-ham-icon{
 	height:60%;
