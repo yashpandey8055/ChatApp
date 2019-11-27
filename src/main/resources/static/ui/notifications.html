@@ -9,10 +9,10 @@
     <script src="/ui/js/config.js"></script>
     <script src="/ui/js/common.js"></script>
     <script src="/ui/js/cropper.js"></script>
-    <script src="/ui/js/dashboard.js"></script>
+     <script src="/ui/js/notification.js"></script>
     <link href="/ui/css/common.css" rel="stylesheet"></link>
+     <link href="/ui/css/dashboard.css" rel="stylesheet"></link>
     <link href="/ui/css/nav-bar.css" rel="stylesheet"></link>
-    <link href="/ui/css/dashboard.css" rel="stylesheet"></link>
     <link href="/ui/css/components.css" rel="stylesheet"></link>
     <link href="/ui/css/cropper.css" rel="stylesheet"></link>
   	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,11 +26,23 @@
 	
 	</nav>
 	<div class="sidebar" id="sidebar" style="display:none;">
+	
+	
+	
 	</div>
+	
 	<div class="content-container" align="center">
 	<div class="split center">
+	<div class="box center-text">
+				<h4>Notifications</h4>
+			</div>
+		<ul class="notification-box-display" id="notification-box-page-display">
 		
-		</div>
-		</div>
+			<li class='read-notification'>
+				<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>View All Notification</b></h5></div>
+			</li>
+		</ul>
+	</div>
+	</div>
 </body>
 </html>

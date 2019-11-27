@@ -5,7 +5,7 @@
 		<hr>
 		<ul class="notification-box-display" id="optioons-box-display" style="margin-top:20px">
 			<li class='read-notification side-bar-links'  id="dashboard-icon">
-					<a href="dashboard"><div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>Dashboard</b></h5></div></a>
+					<a href="/dashboard"><div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>Dashboard</b></h5></div></a>
 				</li>
 			<li class='read-notification side-bar-links'  id="connectionrequests-icon">
 			<a href="/requests"><div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>Connection Requests</b></h5></div></a>
@@ -17,13 +17,13 @@
 				<a href="/chat"><div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>Messages</b></h5></div></a>
 			</li>
 			<li class='read-notification side-bar-links'>
-				<a href="/findfriends"><div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>Notification</b></h5></div></a>
+				<a href="/notifications"><div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>Notification</b></h5></div></a>
 			</li>
 			<hr>
-			<li class='read-notification side-bar-links' id="change_password">
+			<li class='read-notification side-bar-links' onclick="change_password()">
 				<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>Change Password</b></h5></div>
 			</li>
-			<li class='read-notification side-bar-links' id="logout">
+			<li class='read-notification side-bar-links' onclick="logout()" >
 				<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>Logout</b></h5></div>
 			</li> 
 		</ul>

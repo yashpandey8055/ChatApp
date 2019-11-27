@@ -1,0 +1,35 @@
+.conversations{
+	bottom:0;
+	height:82%;
+	overflow:auto;
+}
+
+.single-conversation{
+	height:15%;
+	width:100%;;
+	border-bottom:1px solid #DCDCDC;
+	background-color: #F5F5F5;
+	bottom:0;
+	padding:10px;
+	overflow:hidden;
+}
+.conversation-profile-picture{
+	width: 13%;
+	position:relative;
+	left:0px;
+	margin-right:10px;
+	height:80%;
+	float:left;
+}
+.conversation-content{
+	position:relative;
+	width:65%;
+	float:left;
+	height:100%;
+}
+.conversation-date{
+	width:15%;
+	position:relative;
+	height:100%;
+	float:right;
+}

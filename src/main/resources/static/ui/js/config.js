@@ -175,15 +175,14 @@ function open_post(redirectUrl){
 	document.location.href = redirectUrl;
 }
 function add_notification(response){
-	console.log("I am here");
 	var notification= "<li onclick= open_post('"+response.redirectUrl+"') class='unread-notification notification-item'>"
-			+"<div  id='nav-bar-picture-icon' style='position:relative;width: 40px;' >"
+			+"<div  id='nav-bar-picture-icon' style='width: 40px;margin-right:10px' >"
 			+"<img id='nav-bar-profile-picture'  alt=''"
-				+" src='"+response.senderProfileUrl+"' style='border-radius:50%;position:absolute;display: inline;'>";
+				+" src='"+response.senderProfileUrl+"' style='border-radius:50%;display: inline;'>";
 			notification = notification + "</div>"
-			+"<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>"+response.notification+"</b></h5><h6>"+response.timeAgo+"</h6></div>"
+			+"<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>"+response.notification+"</b></h5><h6 style='margin-top:5px'>"+response.timeAgo+"</h6></div>"
 		+"</li>";
-		$("#notification-box-display").prepend(notification);
+		return notification;
 }
 function _websocket_connect(){
     var socket = new SockJS(env+'/ketu-socket?token='+token);

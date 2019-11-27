@@ -4,7 +4,7 @@
 	<div class="logo">AppName</div>
 	<div class="navbar-element-ham-container">
 	<div class="icons-show">
-		<div class="navbar-element-content" id="hamburger-icon">
+		<div class="navbar-element-content" id="hamburger-icon" style="height: auto;">
 			<div class="navbar-element-ham-icon"><img height=100% width=100% alt="" src="/ui/images/hamburger-icon.png" style="background:#4a0080;padding:5px">
 		</div>
 	</div>
@@ -59,10 +59,10 @@
 		<!--Connection Requests Go here  -->
 	<div class="display-options-box large-display dropdown-box" id="options-pop-box">
 		<ul class="notification-box-display" id="optioons-box-display">
-			<li class='unread-notification' id="change_password">
+			<li class='unread-notification' onclick="change_password()">
 				<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>Change Password</b></h5></div>
 			</li>
-			<li class='unread-notification' id="logout">
+			<li class='unread-notification' onclick="logout()">
 				<div style='display: flex;flex-direction:column;margin-left:5px;'><h5><b>Logout</b></h5></div>
 			</li> 
 		</ul>
@@ -73,7 +73,7 @@
 				<img height=20px width=20px src='/ui/images/loading.gif' style="margin-left:auto;margin-right:auto">
 			</li>
 			<li class='unread-notification'>
-				<p><b><a href="/connection/requests">See All Requests</a></b></p>
+				<p><b><a href="/requests">See All Requests</a></b></p>
 			</li>
 		</ul>
 	</div>

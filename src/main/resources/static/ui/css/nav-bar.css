@@ -99,7 +99,7 @@ a,a:hover,a:visited{
     flex-direction: column;
 }
 .navbar-element-ham-container{
-		display:grid;
+		display:none;
 	}
 .navbar-element-ham-icon{
 	height:60%;
@@ -195,6 +195,7 @@ ul{
 	padding:0px;
 	margin:0px;
 }
+
 .notification-box-display>li{
 	
 	display:flex;
@@ -203,6 +204,7 @@ ul{
 	padding-left:20px;
 	cursor:pointer;
 }
+
 .unread-notification{
 	background:	#E6E6FA;
 }
@@ -303,6 +305,23 @@ h5{
 .search-bar-container{
 	width:50%;margin-left:20px;display: flex;flex-direction:column
 }
+.notification-number{
+	position: absolute;
+	border-radius:3px;
+    background-color: transparent;
+    height: 12px;
+    width: 12px;
+    font-size: 10px;
+    color: transparent;
+    top: 81%;
+    left: 75%;
+}
+.notification-nav-bar{
+	position:relative;
+	top:-10px;
+	left:-10px;
+}
+
 @media screen and (max-width:1185px){
 	.navbar-nav{
 		height:50px;

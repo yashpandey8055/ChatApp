@@ -1,7 +1,6 @@
 body{
 	overflow:scroll;
 	background-color:	#f2f2f2;
-	font-family:BloggerSans;
 }
 .container{
 	position:relative;
@@ -100,6 +99,7 @@ body{
 .post-content-footer>div{
 	margin:5px;
 }
+
 @media screen and (max-width:600px){
 	.center{
 		width:100%;
@@ -107,6 +107,12 @@ body{
 		left:0px;
 		margin:0px;
 		overflow-y:scroll;
+	}
+	.left{
+		display:none;
+	}
+	.right{
+		display:none;
 	}
 	.dashboard-header-post>input{
 		width:100%;

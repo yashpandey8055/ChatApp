@@ -9,10 +9,10 @@
     <script src="/ui/js/config.js"></script>
     <script src="/ui/js/common.js"></script>
     <script src="/ui/js/cropper.js"></script>
-    <script src="/ui/js/dashboard.js"></script>
+     <script src="/ui/js/requests.js"></script>
     <link href="/ui/css/common.css" rel="stylesheet"></link>
+     <link href="/ui/css/dashboard.css" rel="stylesheet"></link>
     <link href="/ui/css/nav-bar.css" rel="stylesheet"></link>
-    <link href="/ui/css/dashboard.css" rel="stylesheet"></link>
     <link href="/ui/css/components.css" rel="stylesheet"></link>
     <link href="/ui/css/cropper.css" rel="stylesheet"></link>
   	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,11 +26,25 @@
 	
 	</nav>
 	<div class="sidebar" id="sidebar" style="display:none;">
+	
+	
+	
 	</div>
+	
 	<div class="content-container" align="center">
 	<div class="split center">
-		
-		</div>
-		</div>
+	<div class="box center-text">
+				<h4>Connection Requests</h4>
+			</div>
+		<ul class="notification-box-display" id="connections-box-page-display">
+			<li class='unread-notification' id="connection_loading_gif">
+				<img height=20px width=20px src='/ui/images/loading.gif' style="margin-left:auto;margin-right:auto">
+			</li>
+			<li class='read-notification'>
+				<p><b><a href="/connection/requests">See More Requests</a></b></p>
+			</li>
+		</ul>
+	</div>
+	</div>
 </body>
 </html>

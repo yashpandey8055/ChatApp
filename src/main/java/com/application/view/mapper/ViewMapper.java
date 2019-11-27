@@ -14,6 +14,7 @@ public class ViewMapper {
 		return "/ui/login.html";
 	}
 
+	
 	@GetMapping("/chat")
 	public String  chatPage(Map<String, Object> model){
 		return "/ui/chat.html";
@@ -38,7 +39,14 @@ public class ViewMapper {
 	public String  findFriendsPage(Map<String, Object> model){
 		return "/ui/find.html";
 	}
-	
+	@GetMapping("/notifications")
+	public String  notifications(Map<String, Object> model){
+		return "/ui/notifications.html";
+	}
+	@GetMapping("/requests")
+	public String  connectionRequests(Map<String, Object> model){
+		return "/ui/requests.html";
+	}
 	@GetMapping("/secure/register")
 	public String  registerPage(Map<String, Object> model){
 		return "/ui/register.html";
