@@ -100,7 +100,7 @@ body{
 	margin:5px;
 }
 
-@media screen and (max-width:600px){
+@media screen and (max-width:700px){
 	.center{
 		width:100%;
 		left:0px;

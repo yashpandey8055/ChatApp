@@ -97,7 +97,7 @@ function edit_profile(){
 	validateField.setUserName(true);
 	validateField.setPhoneNumber(true);
 	$(".content-container").css({"opacity":"0.1"});
-		$("body").prepend("<div class='pop-up-box vertical-align' style='top:40%;width:40%;'>" +
+		$("body").prepend("<div class='pop-up-box vertical-align'>" +
 				"<div align=right><button type='button' id='close_button' class='close' onclick='close_this(event)'><span aria-hidden='true'>&times;</span></button></div>"+
 				"<input type='file' id='image-upload' style='display:none'/> <div class='user-selected-profile-picture' style='margin:auto;margin-top:15px;margin-bottom:15px;'><img id='edit-profile-picture' " +
 				"style='display: inline;' src="+currentUser.profileUrl+" alt=''></div>"+
