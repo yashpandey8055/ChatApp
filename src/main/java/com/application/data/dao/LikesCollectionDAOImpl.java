@@ -28,7 +28,7 @@ public class LikesCollectionDAOImpl implements IMongoCollection {
 	}
 
 	@Override
-	public List<? extends MongoDocument> findList(String key, Object value) {
+	public List<LikeDocument> findList(String key, Object value) {
 		return template.find(Query.query(Criteria.where(key).is(value)), LikeDocument.class);
 	}
 
@@ -44,7 +44,7 @@ public class LikesCollectionDAOImpl implements IMongoCollection {
 	}
 
 	@Override
-	public List<? extends MongoDocument> executeQuery(Query query) {
+	public List<LikeDocument> executeQuery(Query query) {
 		return template.find(query, LikeDocument.class);
 	}
 

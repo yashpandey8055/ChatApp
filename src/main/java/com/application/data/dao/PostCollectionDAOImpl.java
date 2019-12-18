@@ -26,7 +26,7 @@ public class PostCollectionDAOImpl implements IMongoCollection {
 	}
 
 	@Override
-	public List<? extends MongoDocument> findList(String key, Object value) {
+	public List<PostDocument> findList(String key, Object value) {
 		return template.find(Query.query(Criteria.where(key).is(value)), PostDocument.class);
 	}
 
