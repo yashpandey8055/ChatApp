@@ -29,7 +29,7 @@ public class FollowCollectionDAOImpl implements IMongoCollection{
 	}
 
 	@Override
-	public List<? extends MongoDocument> findList(String key, Object value) {
+	public List<ConnectionsDocument> findList(String key, Object value) {
 		return template.find(Query.query(Criteria.where(key).is(value)), ConnectionsDocument.class);
 	}
 
@@ -53,7 +53,7 @@ public class FollowCollectionDAOImpl implements IMongoCollection{
 	}
 
 	@Override
-	public List<? extends MongoDocument> executeQuery(Query query) {
+	public List<ConnectionsDocument> executeQuery(Query query) {
 		return template.find(query, ConnectionsDocument.class);
 	}
 

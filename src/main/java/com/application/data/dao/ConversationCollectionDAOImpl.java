@@ -27,7 +27,7 @@ public class ConversationCollectionDAOImpl implements IMongoCollection {
 	}
 
 	@Override
-	public List<? extends MongoDocument> findList(String key, Object value) {
+	public List<ConversationDocument> findList(String key, Object value) {
 		return template.find(Query.query(Criteria.where(key).is(value)), ConversationDocument.class);
 	}
 

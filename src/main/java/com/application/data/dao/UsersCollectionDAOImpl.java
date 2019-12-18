@@ -25,7 +25,7 @@ public class  UsersCollectionDAOImpl implements IMongoCollection{
 	}
 
 	@Override
-	public List<? extends MongoDocument> findList(String key, Object value) {
+	public List<UserDocument> findList(String key, Object value) {
 		return template.find(Query.query(Criteria.where(key).is(value)), UserDocument.class);
 	}
 
@@ -41,7 +41,7 @@ public class  UsersCollectionDAOImpl implements IMongoCollection{
 	}
 
 	@Override
-	public List<? extends MongoDocument> executeQuery(Query query) {
+	public List<UserDocument> executeQuery(Query query) {
 		return template.find(query, UserDocument.class);
 	}
 

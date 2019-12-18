@@ -24,7 +24,7 @@ public class CommentCollectionDAOImpl implements IMongoCollection {
 	}
 
 	@Override
-	public List<? extends MongoDocument> findList(String key, Object value) {
+	public List<CommentDocument> findList(String key, Object value) {
 		return template.find(Query.query(Criteria.where(key).is(value)), CommentDocument.class);
 	}
 
@@ -40,7 +40,7 @@ public class CommentCollectionDAOImpl implements IMongoCollection {
 	}
 
 	@Override
-	public List<? extends MongoDocument> executeQuery(Query query) {
+	public List<CommentDocument> executeQuery(Query query) {
 		return template.find(query, CommentDocument.class);
 	}
 

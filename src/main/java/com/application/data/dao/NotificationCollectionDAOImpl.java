@@ -46,7 +46,7 @@ public class NotificationCollectionDAOImpl implements IMongoCollection {
 	}
 
 	@Override
-	public List<? extends MongoDocument> executeQuery(Query query) {
+	public List<NotificationDocument> executeQuery(Query query) {
 		return template.find(query, NotificationDocument.class);
 	}
 

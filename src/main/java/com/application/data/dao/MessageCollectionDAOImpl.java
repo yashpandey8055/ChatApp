@@ -28,7 +28,7 @@ public class MessageCollectionDAOImpl implements IMongoCollection {
 	}
 
 	@Override
-	public List<? extends MongoDocument> findList(String key, Object value) {
+	public List<MessageDocument> findList(String key, Object value) {
 		return template.find(Query.query(Criteria.where(key).is(value)), MessageDocument.class);
 	}
 
@@ -44,7 +44,7 @@ public class MessageCollectionDAOImpl implements IMongoCollection {
 	}
 
 	@Override
-	public List<? extends MongoDocument> executeQuery(Query query) {
+	public List<MessageDocument> executeQuery(Query query) {
 		return template.find(query, MessageDocument.class);
 	}
 
