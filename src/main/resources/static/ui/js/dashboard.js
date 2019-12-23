@@ -38,7 +38,7 @@ function post(){
 }
 function viewVideoandUpload(result){
 	$("body").append("<div class='pop-up-box split vertical-align'>"+
-			"<div align=right><button type='button' id='close_button' class='close' onclick='close_this()'><span aria-hidden='true'>&times;</span></button></div>"+
+			"<div align=right style='margin-right:5px;'><button type='button' id='close_button' class='close' onclick='close_this_pop_up()'><span aria-hidden='true'>&times;</span></button></div>"+
 			"<input type='text' placeholder='write something' id='video_status_text' class='chat-text-box'/><hr>"+
 			"<div class='cropper-container' id='cropper-container'>"+
 			"<video controls='controls'><source src='"+result+"' type='video/mp4'></video>"+
@@ -49,8 +49,8 @@ function viewVideoandUpload(result){
 }
 function previewAndUpload(dataUrl){
 	$("body").append("<div class='pop-up-box split vertical-align'>"+
-	"<div align=right><button type='button' id='close_button' class='close' onclick='close_this()'><span aria-hidden='true'>&times;</span></button></div>"+
-	"<input type='text' placeholder='write something' id='photo_status_text'  class='chat-text-box'/><hr>"+
+	"<div align=right style='margin-right:5px;'><button type='button' id='close_button' class='close' onclick='close_this_pop_up()'><span aria-hidden='true'>&times;</span></button></div>"+
+	"<input type='text' placeholder='write something' id='photo_status_text'  class='chat-text-box' style='margin-left:12px; margin-right:12px; width:80%'/><hr>"+
 	"<div class='cropper-container' id='cropper-container'>"+	
 	"<img src='"+dataUrl+"' id='upload_image_src'/>"+
 	"</div>"+
@@ -71,7 +71,7 @@ function _crop_enable(){
 			"</div>")
 			  load();
 }
-function close_this(){
+function close_this_pop_up(){
 	$('.pop-up-box').remove();
 	$('#image-upload').val("");
 	console.log("close clicked")
@@ -93,7 +93,7 @@ function uploadImage(){
 			 var resp = JSON.parse(this.responseText).data;
 			 display_notification_popup("uploaded Succesfully");
 			$(".empty-content-card").remove();
-			 close_this();
+			close_this_pop_up();
 			 $(".center").append(
 					 "<div class='title-content user-content' id='"+resp.post.id+"'>"+
 						"<div class='post-content-header'>"+
@@ -135,7 +135,7 @@ function uploadVideo(){
 		var resp = JSON.parse(this.responseText);
 		 if (xhr.readyState == 4 && xhr.status == 200){
 			 display_notification_popup("uploaded Succesfully");
-			 close_this();
+			 close_this_pop_up();
 			 $(".center").append("<div class='title-content user-content' id='"+resp.post.id+"'>"+
 						"<div class='post-content-header'>"+
 						"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
