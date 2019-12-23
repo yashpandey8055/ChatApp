@@ -23,7 +23,6 @@ import com.application.data.dao.documents.ConnectionsDocument;
 import com.application.data.dao.documents.LikeDocument;
 import com.application.data.dao.documents.MongoDocument;
 import com.application.data.dao.documents.PostDocument;
-import com.application.data.dao.documents.UserDocument;
 import com.application.factory.MongoCollectionFactory;
 import com.application.request.response.bean.GenericResponseBean;
 import com.application.request.response.bean.UserActivityReqResBean;

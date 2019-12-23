@@ -286,6 +286,7 @@ $(function () {
 						"<img height=100% id='nav-bar-profile-picture' width=100% src='"+resp.user.profileUrl+"'>"+
 					"</div>"+
 					"<div><h5><b>"+resp.user.firstName+"</b></h5><h6>"+resp.daysAgo+"</h6></div>"+
+					"<div style='margin-left: auto;margin-right: 0%;'><image src='/ui/images/delete.png' style='height:20px;width:20px'></div>"+
 				"</div>"+ 
 				"<div class='post-content'>"+
 				"<div class='post-content-container'>"+
