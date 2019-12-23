@@ -499,6 +499,17 @@ body{
 	box-shadow:0px 0px 3px #46377b;
 }
 
+.side-options-box{
+width: 75px;
+    height: auto;
+    border-radius: 2px;
+    box-shadow: 0px 1px 3px #dcdcdc;
+    border: 1px solid #dcdcdc;
+    color: #808080;
+}
+.side-options-box>ul{
+	padding-left:8px;
+}
 @media screen and (max-width:700px){
 	
 	.pop-up-box {

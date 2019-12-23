@@ -70,6 +70,7 @@ public class DashboardPostServiceImpl implements DisplayPostService{
 						.and(DataAccessObjectConstants.CONNECTION_ACTIVE).is(true)));
 		
 		Set<String> users = new HashSet<>();
+		users.add(username);
 		for(MongoDocument connection:following ) {
 			ConnectionsDocument conn = (ConnectionsDocument)connection;
 			users.addAll(conn.getConnection());
@@ -92,11 +93,14 @@ public class DashboardPostServiceImpl implements DisplayPostService{
 			PostDocument post  = (PostDocument) postDocument;
 			LikeDocument postLikeDocument =  (LikeDocument) likesCollection.findOne(DataAccessObjectConstants.POST_ID,post.getId());
 			PostResponse postResponse = new PostResponse();
+	
 			postResponse.setDaysAgo(DateUtils.calculateTimeDifference(post.getUpdationDate()));
 			postResponse.setLikedByUser(Optional.ofNullable(postLikeDocument).map(x-> x.getLikedBy().contains(username)).orElse(false));
 			postResponse.setLikesCount(Optional.ofNullable(postLikeDocument).map(x-> x.getLikedBy().size()).orElse(0));
 			UserActivityReqResBean userDetail = (UserActivityReqResBean) followingUser.getUserDetails(post.getUsername()).getData();
 			
+
+			postResponse.setCurrentUser(username.equals(userDetail.getUserName()));
 			postResponse.setUser(userDetail);
 			List<? extends MongoDocument> comments = commentCollection.executeQuery(Query.query(Criteria
 					.where(DataAccessObjectConstants.POST_ID).is(post.getId())).limit(GeneralConstants.COMMENT_LIMIT_ON_VIEW_POST));

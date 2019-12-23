@@ -76,7 +76,7 @@ function previewAndUpload(dataUrl){
 	$("body").append("<div class='pop-up-box split vertical-align' id='edit-profile-picture-box'>"+
 	"<div align=right><button type='button' id='close_button' class='close' onclick='close_this(event)'><span aria-hidden='true'>&times;</span></button></div>"+
 	"<div class='cropper-container' id='cropper-container'>"+	
-	"<img src='"+dataUrl+"' id='upload_image_src'/>"+
+	"<img style='width:80%' src='"+dataUrl+"' id='upload_image_src'/>"+
 	"<div class='cropper' id='cropper'>"+
 	"<ul>"+
 		"<li class='top-left-resizer'></li>"+
@@ -225,6 +225,9 @@ function close_this(event){
 		$(".content-container").css({"opacity":"1"});
 	}
 }
+function display_option_box(){
+	
+}
 $(function () {
 	load_CurrentUser(function(){
 	
@@ -302,7 +305,13 @@ $(function () {
 					"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
 						"<img height=100% id='nav-bar-profile-picture' width=100% src='"+resp.user.profileUrl+"'>"+
 					"</div>"+
-					"<div><h5><b>"+resp.user.firstName+"</b></h5><h6>"+resp.daysAgo+"</h6></div>"+
+					"<div><h5><b>"+resp.user.firstName+"</b></h5><h6>"+resp.daysAgo+"</h6></div>";
+				if(resp.currentUser){
+					dashboard_response = dashboard_response+"<div style='margin-left: auto;margin-right: 0%;'><image src='/ui/images/options.png' style='height:20px;width:20px'>" +
+							"<div style='width:50px;height:50px;'></div></div>";
+				}
+
+				dashboard_response = dashboard_response+
 				"</div>"+ 
 				"<div class='post-content'>"+
 				"<div class='post-content-container'>"+
@@ -310,7 +319,7 @@ $(function () {
 								if(resp.post.type == 'video'){
 								dashboard_response = dashboard_response+"<video controls='controls'><source src='"+resp.post.postImageUrl+"' type='video/mp4'></video>";
 							}else{
-								dashboard_response = dashboard_response+"<img alt='' src="+resp.post.postImageUrl+" >";
+								dashboard_response = dashboard_response+"<img style='width:80%' alt='' src="+resp.post.postImageUrl+" >";
 							}
 				dashboard_response = dashboard_response+	"<div class='post-content-footer'>"+
 							"<div class='navbar-element-icon' id='nav-bar-picture-icon' style='margin:0px'>";

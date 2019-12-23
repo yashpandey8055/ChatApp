@@ -12,6 +12,13 @@ public class PostResponse {
 	private Boolean likedByUser;
 	private long likesCount;
 	private String daysAgo;
+	private boolean isCurrentUser;
+	public boolean isCurrentUser() {
+		return isCurrentUser;
+	}
+	public void setCurrentUser(boolean isCurrentUser) {
+		this.isCurrentUser = isCurrentUser;
+	}
 	private List<? extends MongoDocument> comments;
 
 	public List<? extends MongoDocument> getComments() {

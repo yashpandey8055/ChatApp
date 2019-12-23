@@ -105,7 +105,7 @@ function uploadImage(){
 					"<div class='post-content'>"+
 					"<div class='post-content-container'>"+
 							"<div class='status-content-box'><div align='left' style='margin: 15px;font-size:20px;'>"+resp.post.status+"</div>"+
-			 				"<img alt='' src="+resp.post.postImageUrl+" >"+
+			 				"<img style='width:80%' alt='' src="+resp.post.postImageUrl+" >"+
 					"<div class='post-content-footer'>"+
 								"<div class='navbar-element-icon' id='nav-bar-picture-icon' style='margin:0px'>"+
 			 			"<button class='like-button' alt='like' onclick='like(event)'><img alt='like' width=80% src='/ui/images/like.png'></button>"+
@@ -285,8 +285,14 @@ $(function () {
 					"<div class='navbar-element-icon' id='nav-bar-picture-icon'>"+
 						"<img height=100% id='nav-bar-profile-picture' width=100% src='"+resp.user.profileUrl+"'>"+
 					"</div>"+
-					"<div><h5><b>"+resp.user.firstName+"</b></h5><h6>"+resp.daysAgo+"</h6></div>"+
-					"<div style='margin-left: auto;margin-right: 0%;'><image src='/ui/images/delete.png' style='height:20px;width:20px'></div>"+
+					"<div><h5><b>"+resp.user.firstName+"</b></h5><h6>"+resp.daysAgo+"</h6></div>";
+				if(resp.currentUser){
+					dashboard_response = dashboard_response+"<div style='margin-left: auto;margin-right: 0%;display:flex'>" +
+							"<image src='/ui/images/options.png' style='height:20px;width:20px'>" +
+							"</div>";
+				}
+
+				dashboard_response = dashboard_response+
 				"</div>"+ 
 				"<div class='post-content'>"+
 				"<div class='post-content-container'>"+
@@ -294,7 +300,7 @@ $(function () {
 								if(resp.post.type == 'video'){
 								dashboard_response = dashboard_response+"<video controls='controls'><source src='"+resp.post.postImageUrl+"' type='video/mp4'></video>";
 							}else{
-								dashboard_response = dashboard_response+"<img alt='' src="+resp.post.postImageUrl+" >";
+								dashboard_response = dashboard_response+"<img style='width:80%' alt='' src="+resp.post.postImageUrl+" >";
 							}
 				dashboard_response = dashboard_response+	"<div class='post-content-footer'>"+
 							"<div class='navbar-element-icon' id='nav-bar-picture-icon' style='margin:0px'>";
