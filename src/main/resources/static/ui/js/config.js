@@ -82,6 +82,24 @@ function HttpRequest(){
 		xmlHttp.send(JSON.stringify(request));
 	}
 	
+obj.del = function(url,request,callback){
+		
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.onreadystatechange =function(){
+			if (xmlHttp.readyState == 4 && xmlHttp.status == 200){
+				 callback(this.responseText);
+			}else if(xmlHttp.readyState == 4 &&xmlHttp.status !== 200){
+				callback(this.responseText);
+			}
+		}
+		xmlHttp.open("DELETE",url,true);
+		if(token){
+			xmlHttp.setRequestHeader("Authorization","Bearer "+token);
+		}
+		xmlHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		xmlHttp.send(JSON.stringify(request));
+	}
+	
 	return obj;
 }
 function follow(user){

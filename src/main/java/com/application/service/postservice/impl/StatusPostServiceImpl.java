@@ -80,7 +80,7 @@ public class StatusPostServiceImpl implements PostService{
 	public GenericResponseBean delete(String id) {
 		IMongoCollection postCollection = MongoCollectionFactory.getInstance(DataAccessObjectConstants.POST_DOCUMENT_COLLECTION
 				, template);
-		DeleteResult result = postCollection.delete(DataAccessObjectConstants.POST_ID, id);
+		DeleteResult result = postCollection.delete(DataAccessObjectConstants.ID_FIELD, id);
 		GenericResponseBean responseBean = new GenericResponseBean();
 		responseBean.setCode(HttpStatus.OK);
 		responseBean.setType(RequestResponseConstant.SUCCESS_RESPONSE);

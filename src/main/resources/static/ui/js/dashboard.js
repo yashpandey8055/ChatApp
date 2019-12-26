@@ -72,9 +72,9 @@ function _crop_enable(){
 			  load();
 }
 function close_this_pop_up(){
+	$(".content-container").css({'opacity':'1'})
 	$('.pop-up-box').remove();
 	$('#image-upload').val("");
-	console.log("close clicked")
 }
 function uploadImage(){
 	var img = document.getElementById("upload_image_src");
@@ -204,6 +204,79 @@ function comment(){
 	});
 }
 
+function pop_up_options(postId){
+	$(".content-container").css({'opacity':'0.5'})
+	$("body").append("<div class='pop-up-box split vertical-align'>"+
+			"<div align=right style='margin-right:5px;'><button type='button' id='close_button' class='close' onclick='close_this_pop_up()'><span aria-hidden='true'>&times;</span></button></div>"+
+			"<div>" +
+			"<ul>" +
+				"<li><h4><b>Edit</b></h4>" +
+				"<p>Edit the post status only</p></li>" +
+				"<li><h4><b>Send Message</b></h4></li>"+
+				"<li><h4><b>Save for later</b></h4></li>" +
+				"<li><h4><b>Privacy Options</b></h4></li>" +
+				"<li><h4><b>Delete Post</b></h4></li>" +
+			"</ul>"+
+			"</div>"+
+		"</div>");
+	
+}
+
+function pop_delete_post(postId){
+
+	$(".content-container").css({'opacity':'0.5'})
+	$("body").append("<div class='pop-up-box split vertical-align'>"+
+			"<div align=right style='margin-right:5px;'><button type='button' id='close_button' class='close' onclick='close_this_pop_up()'><span aria-hidden='true'>&times;</span></button></div>"+
+			"<div>" +
+			  "<h4>Are you sure you want to delete post?</h4>"+
+			"<button type='button'  class='btn btn-danger' style='margin-right:10px;' onclick=delete_post('"+postId+"')>Confirm</button>"+
+			"<button type='button' class='btn btn-default' style='margin-right:10px;' onclick=close_this_pop_up()>Cancel</button>"+
+			"</div>"+
+		"</div>");	
+}
+
+function pop_edit_post(postId){
+
+	$(".content-container").css({'opacity':'0.5'})
+	$("body").append("<div class='pop-up-box split vertical-align'>"+
+			"<div align=right style='margin-right:5px;'><button type='button' id='close_button' class='close' onclick='close_this_pop_up()'><span aria-hidden='true'>&times;</span></button></div>"+
+			"<label>Status</label>"+
+			"<div>" +
+			  "<textarea style='width:80%;height:50%' id='edit_post_text'></textarea>"+
+			  "<div>" +
+			"<button type='button'  class='btn app-btn' style='margin-right:10px;' onclick=edit_post('"+postId+"')>Confirm</button>"+
+			"<button type='button' class='btn simple-btn' style='margin-right:10px;' onclick=close_this_pop_up()>Cancel</button>"+
+			"</div>"+
+			"</div>"+
+		"</div>");	
+}
+
+function edit_post(postId){
+	var editPost = {
+			'postId':postId,
+			'userName':currentUser.userName,
+			'status':$("#edit_post_text").val()
+	}
+	httpRequest.put("/posts/update",editPost,function(response){
+		console.log(response)
+		response = JSON.parse(response).data;
+		close_this_pop_up();
+	});
+}
+
+function delete_post(postId){
+	var deletePost = {
+			'postId':postId,
+			'userName':currentUser.userName
+	}
+	httpRequest.del("/posts/delete",deletePost,function(response){
+		console.log(response)
+		response = JSON.parse(response).data;
+		$("#"+postId).remove();
+		close_this_pop_up();
+	});
+}
+
 $(function () {
 	
 	$(document).on('change', '#image-upload', function(e) {
@@ -288,7 +361,8 @@ $(function () {
 					"<div><h5><b>"+resp.user.firstName+"</b></h5><h6>"+resp.daysAgo+"</h6></div>";
 				if(resp.currentUser){
 					dashboard_response = dashboard_response+"<div style='margin-left: auto;margin-right: 0%;display:flex'>" +
-							"<image src='/ui/images/options.png' style='height:20px;width:20px'>" +
+					        "<image src='/ui/images/editpost.png' style='height:20px;width:20px;margin:5px;' onclick=pop_edit_post('"+resp.post.id+"')>" +
+							"<image src='/ui/images/delete.png' style='height:20px;width:20px;margin:5px;' onclick=pop_delete_post('"+resp.post.id+"')>" +
 							"</div>";
 				}
 
