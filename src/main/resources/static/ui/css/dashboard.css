@@ -169,12 +169,17 @@ body{
 .time-ago{
 	font-size: 11px;
 }
+.edit_post_box{
+ width:50%
+}
 @media screen and (max-width:800px){
 	body{
 	overflow:auto
 	background-color:	#f2f2f2;
 	}
-	
+	.edit_post_box{
+      width:80%
+   }
 	.center{
 		width:100%;
 		height:100%;

@@ -28,7 +28,7 @@ function post(){
 				"</div>"+
 				"<div class='comment-write-box'>"+
 					"<div class='horizontal'><input type='text' placeholder='Add a comment'  class='chat-text-box comment-box'/></div>"+
-					"<p align='left' style='margin: 15px;'>View All Comments</p>"+
+					"<a href = '/post?postId="+resp.post.id+"' style='display: flex;margin: 15px;line-height: 0px;'>View All Comments</a>"+
 				"</div>"+
 				"</div>"+
 			"</div>"+
@@ -114,7 +114,7 @@ function uploadImage(){
 						"</div>"+
 						"<div class='comment-write-box'>"+
 							"<div class='horizontal'><input type='text' placeholder='Add a comment' onfocus='comment()' class='chat-text-box comment-box'/></div>"+
-							"<p align='left' style='margin: 15px;line-height: 0px;'>View All Comments</p>"+
+							"<a href = '/post?postId="+resp.post.id+"' style='display: flex;margin: 15px;line-height: 0px;'>View All Comments</a>"+
 						"</div>"
 						);
 			
@@ -155,7 +155,7 @@ function uploadVideo(){
 						"</div>"+
 						"<div class='comment-write-box'>"+
 							"<div class='horizontal'><input type='text' placeholder='Add a comment' onfocus='comment()' class='chat-text-box comment-box'/></div>"+
-							"<p align='left' style='margin: 15px;line-height: 0px;'>View All Comments</p>"+
+							"<a href = '/post?postId="+resp.post.id+"' style='display: flex;margin: 15px;line-height: 0px;'>View All Comments</a>"+
 						"</div></div>");
 		}else if(xhr.readyState == 4 &&xhr.status !== 200){
 			 display_notification_popup("Cant upload");
@@ -238,11 +238,11 @@ function pop_delete_post(postId){
 function pop_edit_post(postId){
 
 	$(".content-container").css({'opacity':'0.5'})
-	$("body").append("<div class='pop-up-box split vertical-align'>"+
+	$("body").append("<div class='pop-up-box split vertical-align edit_post_box'>"+
 			"<div align=right style='margin-right:5px;'><button type='button' id='close_button' class='close' onclick='close_this_pop_up()'><span aria-hidden='true'>&times;</span></button></div>"+
 			"<label>Status</label>"+
 			"<div>" +
-			  "<textarea style='width:80%;height:50%' id='edit_post_text'></textarea>"+
+			  "<input type='text' style='width:80%;height:50px;border: 1px solid #e6e6e6;margin-top: 5px;padding:5px;border-radius: 20px;' id='edit_post_text' placeholder = 'Edit Post'/>"+
 			  "<div>" +
 			"<button type='button'  class='btn app-btn' style='margin-right:10px;' onclick=edit_post('"+postId+"')>Confirm</button>"+
 			"<button type='button' class='btn simple-btn' style='margin-right:10px;' onclick=close_this_pop_up()>Cancel</button>"+
@@ -389,7 +389,7 @@ $(function () {
 					"</div>"+
 					"<div class='comment-write-box'>"+
 						"<div class='horizontal'><input type='text' placeholder='Add a comment' onfocus='comment()' class='chat-text-box comment-box'/></div>"+
-						"<p align='left' style='margin: 15px;line-height: 0px;'>View All Comments</p>"+
+						"<a href = '/post?postId="+resp.post.id+"' style='display: flex;margin: 15px;line-height: 0px;'>View All Comments</a>"+
 					"</div>"+"</div>";
 					resp.comments.some(function(comment_res){
 						dashboard_response = dashboard_response + "<div class='status-comment-display-box' id="+comment_res.id+">"+
@@ -437,7 +437,7 @@ $(function () {
 				"</div>"+
 				"<div class='comment-write-box'>"+
 					"<div class='horizontal'><input type='text' placeholder='Add a comment' onfocus='comment()' class='chat-text-box comment-box'/></div>"+
-					"<p align='left' style='margin: 15px;line-height: 0px;'>View All Comments</p>"+
+					"<a href = '/post?postId="+resp.post.id+"' style='display: flex;margin: 15px;line-height: 0px;'>View All Comments</a>"+
 				"</div>"+"</div>";
 				resp.comments.some(function(comment_res){
 					dashboard_response = dashboard_response + "<div class='status-comment-display-box' id="+comment_res.id+">"+

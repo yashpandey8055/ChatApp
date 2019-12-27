@@ -2,6 +2,7 @@ package com.application.service.postservice.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.application.bean.PostResponse;
 import com.application.data.dao.IMongoCollection;
+import com.application.data.dao.documents.CommentDocument;
 import com.application.data.dao.documents.LikeDocument;
 import com.application.data.dao.documents.MongoDocument;
 import com.application.data.dao.documents.PostDocument;
@@ -24,6 +26,7 @@ import com.application.request.response.constants.GeneralConstants;
 import com.application.request.response.constants.RequestResponseConstant;
 import com.application.service.PostService;
 import com.application.service.userservice.impl.FollowingUserServiceImpl;
+import com.application.utils.DateUtils;
 import com.mongodb.client.result.DeleteResult;
 
 @Service("StatusPost")
@@ -102,17 +105,19 @@ public class StatusPostServiceImpl implements PostService{
 		PostResponse postResponse = new PostResponse();
 		List<? extends MongoDocument> comments = commentCollection.executeQuery(Query.
 				query(Criteria.where(DataAccessObjectConstants.POST_ID).is(id)).limit(GeneralConstants.COMMENT_LIMIT_ON_VIEW_POST));
-
+		comments.stream().forEach(x->((CommentDocument)x).setDaysAgo(DateUtils.calculateTimeDifference(((CommentDocument)x).getCreationDate())));
 		UserActivityReqResBean userDetail = (UserActivityReqResBean) followingUser.getUserDetails(post.getUsername()).getData();
 	
 		postResponse.setUser(userDetail);
 		postResponse.setPost(post);
 		postResponse.setComments(comments);
-		postResponse.setLikesCount(likesCollection.count(Query.
-				query(Criteria.where(DataAccessObjectConstants.POST_ID).is(id))));
-		postResponse.setLikedByUser(((LikeDocument)likesCollection.findOne(
-				DataAccessObjectConstants.POST_ID,id)).getLikedBy().contains(user));
-		postResponse.setDaysAgo(GeneralConstants.NOW_INSTANT);
+		
+		postResponse.setLikesCount(Optional.ofNullable(likesCollection.count(Query.
+				query(Criteria.where(DataAccessObjectConstants.ID_FIELD).is(id)))).orElse(Long.valueOf(0)));
+		LikeDocument likedDocument = (LikeDocument)likesCollection.findOne(
+				DataAccessObjectConstants.POST_ID,id);
+		postResponse.setLikedByUser(likedDocument!=null?likedDocument.getLikedBy().contains(user):false);
+		postResponse.setDaysAgo(DateUtils.calculateTimeDifference(post.getCreationDate()));
 		responseBean.setCode(HttpStatus.OK);
 		responseBean.setType(RequestResponseConstant.SUCCESS_RESPONSE);
 		responseBean.setData(postResponse);
