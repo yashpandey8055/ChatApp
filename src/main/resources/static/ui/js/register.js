@@ -25,6 +25,8 @@ const phonenumber_regex = '^[0-9]{10}$'
 	}
 }
 function register(){
+	$("#register-button").html("<img src='/ui/images/loading.gif' style='height:25px;width:25px'>");
+	$("#register-button").attr('disabled','disabled');
     	var request = {
     			'username' :$('#userName').val(),
     			'firstName':$('#firstName').val(),

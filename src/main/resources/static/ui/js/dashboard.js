@@ -44,7 +44,7 @@ function viewVideoandUpload(result){
 			"<video controls='controls'><source src='"+result+"' type='video/mp4'></video>"+
 			"</div>"+
 			"<hr>"+
-			"<button type='button' class='btn purple-button full-width-btn' onclick='uploadVideo()'>Upload</button>"+
+			"<button type='button' id='upload_button' class='btn purple-button full-width-btn' onclick='uploadVideo()'>Upload</button>"+
 		"</div>");
 }
 function previewAndUpload(dataUrl){
@@ -77,6 +77,8 @@ function close_this_pop_up(){
 	$('#image-upload').val("");
 }
 function uploadImage(){
+	$("#upload_button").html("<img src='/ui/images/loading.gif' style='height:25px;width:25px'>");
+	$("#upload_button").attr('disabled','disabled');
 	var img = document.getElementById("upload_image_src");
 	console.log(img.offsetHeight+" "+img.offsetWidth);
 	console.log($(""))
@@ -127,6 +129,8 @@ function uploadImage(){
 }
 
 function uploadVideo(){
+	$("#upload_button").html("<img src='/ui/images/loading.gif' style='height:25px;width:25px'>");
+	$("#upload_button").attr('disabled','disabled');
 	var formData = new FormData();
 	formData.append("file",file);
 	formData.append("status",$("#video_status_text").val())
