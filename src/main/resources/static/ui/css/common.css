@@ -72,6 +72,32 @@ h5,h6{
     margin:2px;
 
 }
+
+.red-button,.red-button:hover,.red-button:visited,.red-button:focus,.red-button:active{
+	float:left;
+	border-radius:5px;
+	outline:none;
+	background-color:#dc3545;
+	color:whitesmoke;
+	font-size:90%;
+	display: inline-block;
+    padding: 6px 12px;
+    margin:2px;
+
+}
+.simple-white-button,.simple-white-button:hover,.simple-white-button:visited,.simple-white-button:focus,.simple-white-button:active{
+	float:left;
+	border-radius:5px;
+	outline:none;
+	background-color:white;
+	color:black;
+	font-size:90%;
+	border: 1px solid;
+	display: inline-block;
+    padding: 6px 12px;
+    margin:2px;
+
+}
 .approve-btn{
 	color:#28a745;
 	background-color:white;
