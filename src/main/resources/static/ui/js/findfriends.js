@@ -5,18 +5,22 @@ function displayUserInformation(user){
 	$(".selected-user-info").empty();
 	//$(".selected-user-info").css({"transform":"rotateY("+turn+"deg)"});
 	setTimeout(function(){
-		var displayInfo = "<div class='selected-user-info'>"+
-		"<div class='user-selected-profile-picture'><img id='user-selected-profile-picture' alt=''></div>"+
+		var displayInfo = 
+		"<div class='user-selected-profile-picture' style='display:inline-block;'><img id='user-selected-profile-picture' alt=''></div>"+
 		"<div class='user-selected-profile-info'>"+
 			"<p><b>"+user.userName+"</b></p>"+
 			"<p>"+user.age+","+user.gender+"</p>"+
-			"<table><tr><td><img src='/ui/images/icon2.png' height=20px width=20px></td><td>Bangalore,India</td></tr></table>"+
+			"<p>Bangalore,India</p>"+
 			"<p>"+user.bio+"</p>"+
 			"<hr>"+
 			"<div style='margin:15px;'>"+
-				"<table style='width:80%'>"+
-				"<tr><td><b>Approval rating</b></td><td>"+user.approvals+"</td></tr>"+
-				"<tr><td><b>Conversations</b></td><td>"+user.disapprovals+"</td></tr>"+
+				"<table class='award-table'>" +
+				"<tr><td><img src='/ui/images/gold-coin.png' height=20px width=20px></td>" +
+				"<td><img src='/ui/images/silver-coin.png' height=20px width=20px></td>" +
+				"<td><img src='/ui/images/superlike.png' height=20px width=20px></td></tr>"+
+				"<tr><td><h6>36</h6></td>" +
+				"<td><h6>24</h6></td>" +
+				"<td><h6>48</h6></td></tr>"+
 				"</table>"+
 			"</div>"+
 			"<hr>"+
@@ -33,8 +37,8 @@ function displayUserInformation(user){
 						}
 					});
 				}
-				displayInfo = displayInfo +"</div></div>";
-				$(".selected-user-info").append(displayInfo);
+				displayInfo = displayInfo +"</div>";
+				$(".pop-up-box").append(displayInfo);
 				var downloadingImage = new Image();
 				downloadingImage.onload = function(){
 				 $("#user-selected-profile-picture").attr("src",this.src);
@@ -48,8 +52,25 @@ function displayUserInformation(user){
 //		turn = 0;
 //	}
 }
+function close_this_pop_up(){
+	$(".content-container").css({'opacity':'1'})
+	$('.pop-up-box').remove();
+	$('#image-upload').val("");
+}
 
-
+function reveal(){
+	$(".content-container").css({'opacity':'1'})
+	var displayInfo = "<div class='pop-up-box split vertical-align reveal'><div align=right style='margin-right:5px;'>" +
+			"<button type='button' id='close_button' class='close' onclick='close_this_pop_up()'>" +
+			"<span aria-hidden='true'>&times;</span></button></div>" +
+			"<img id='loading-bar' src='/ui/images/loading.gif' style='height:25px;width:25px'></div>";
+	$("body").append(displayInfo);
+	   httpRequest.get("/users/current",null,function(response){
+		var thisUser = JSON.parse(response);
+		$('#loading-bar').remove();
+			displayUserInformation(thisUser.data);
+		});
+}
 var currentChattingWithUser = null;
 var isConversationLoadComplete = false;
 var currentOnlineUsers = new Map();
@@ -149,8 +170,6 @@ function prependMessages(selectedUser,bucket){
 
 $(function () {
 	httpRequest.get("/users/current",null,function(response){
-		var thisUser = JSON.parse(response);
-			displayUserInformation(thisUser.data);
 			connect();
 		});
 	

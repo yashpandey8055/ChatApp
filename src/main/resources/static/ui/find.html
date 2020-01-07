@@ -54,21 +54,26 @@
 					<div><input  class="chat-text-box" id ="chat-text-box" type="text" placeholder="Write you message"></div>
 					<div class="chat-options-container">
 					<button type='button' class='btn purple-button' id="send_button" onclick="send()">Send</button>
-					<button type='button' class='btn simple-white-button' id="send_button" onclick="send()">Reveal</button>
-				    <button type='button' class='btn red-button' id="send_button" onclick="send()" disabled>Mark as Spam</button>
+					<button type='button' class='btn simple-white-button' id="send_button" onclick="reveal()">Reveal</button>
+				    <button type='button' class='btn red-button' id="send_button" onclick="spam()">Mark as Spam</button>
+				     <table class='award-table'>
+						<tr>
+						<td><h5><b>Give an award</b></h5></td>
+						<td><img src='/ui/images/gold-coin.png' height=20px width=20px></td>
+						<td><img src='/ui/images/silver-coin.png' height=20px width=20px></td>
+						<td><img src='/ui/images/superlike.png' height=20px width=20px></td></tr>
+						<tr>
+						<td></td>
+						<td><h5><b>Gold</b></h5></td>
+						<td><h5><b>Silver</b></h5></td>
+						<td><h5><b>Superlike</b></h5></tr>
+				    </table>
+				    <div>
 					</div>
 				</div>
 			
 		</div>
-		<div class="flip-container left">
-			<div class="flipper">
-				<div class="front">
-					<div class="selected-user-info">
-						
-				</div>
-			</div>
-		</div>
-	</div>
+		
 	</div>
 </body>
 </html>

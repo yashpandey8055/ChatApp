@@ -13,10 +13,7 @@ function displayUserInformation(user){
 			"<p>"+user.bio+"</p>"+
 			"<hr>"+
 			"<div style='margin:15px;'>"+
-				"<table style='width:80%'>"+
-				"<tr><td><b>Approval rating</b></td><td>"+user.approvals+"</td></tr>"+
-				"<tr><td><b>Conversations</b></td><td>"+user.disapprovals+"</td></tr>"+
-				"</table>"+
+				
 			"</div>"+
 			"<hr>"+
 			"<div>";

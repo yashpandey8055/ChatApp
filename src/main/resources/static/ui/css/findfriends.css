@@ -1,3 +1,16 @@
+
+.reveal{
+		width:300px;
+		margin-top:0px;
+}
+.center{
+	left:22%;
+	right:25%;
+	border-radius: 0px 8px 8px 0px;
+	margin-left:5px;
+	margin-right:0px;
+	
+}
 @media screen and (max-width:600px){
 	.center{
 		width:100%;
@@ -6,6 +19,7 @@
 		margin:0px;
 		
 	}
+	
 	.left{
 		display:none;
 	}
@@ -22,4 +36,5 @@
 		margin:0px;
 		height:92%;
 	}
+
 }
