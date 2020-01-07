@@ -8,6 +8,7 @@ public class NotificationBean {
 	private String senderProfileUrl;
 	private String redirectUrl;
 	private String timeAgo;
+	private String type;
 	private boolean read;
 	
 	public boolean isRead() {
@@ -51,6 +52,12 @@ public class NotificationBean {
 	}
 	public void setRedirectUrl(String redirectUrl) {
 		this.redirectUrl = redirectUrl;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

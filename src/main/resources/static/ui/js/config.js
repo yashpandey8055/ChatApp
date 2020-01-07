@@ -207,7 +207,15 @@ function _websocket_connect(){
     var stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
        stompClient.subscribe('/user/queue/notification', function (response){
-    	   add_notification(JSON.parse(response.body));
+    	   var notification = JSON.parse(response.body);
+	    	   if(notification.type&&notification.type==='R'){
+	    		   var displayInfo = "<div class='pop-up-box split vertical-align reveal'><div align=right style='margin-right:5px;'>" +
+	   			"<button type='button' id='close_button' class='close' onclick='close_this_pop_up()'>" +
+	   			"<span aria-hidden='true'>&times;</span></button></div>" +
+	   			"<p>"+response.notification+"</p>";
+	   	       $("body").append(displayInfo);
+    	   }
+    	   add_notification(notification);
     	   $("#notification-nav-bar").text( parseInt($('#notification-nav-bar').text())+1);
     	   $("#notification-nav-bar").css({"background-color":"red","color":"white"});
        });
