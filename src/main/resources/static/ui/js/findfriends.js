@@ -65,9 +65,11 @@ function reveal(){
 			"<span aria-hidden='true'>&times;</span></button></div>" +
 			"<img id='loading-bar' src='/ui/images/loading.gif' style='height:25px;width:25px'></div>";
 	$("body").append(displayInfo);
-	   httpRequest.get("/users/current",null,function(response){
-		var thisUser = JSON.parse(response);
-		$('#loading-bar').remove();
+	var param = new Map();
+	param.put("requestId",currentChattingWithUser)
+	   httpRequest.get("/user/reveal",null,function(response){
+			var thisUser = JSON.parse(response);
+			$('#loading-bar').remove();
 			displayUserInformation(thisUser.data);
 		});
 }
@@ -75,7 +77,7 @@ var currentChattingWithUser = null;
 var isConversationLoadComplete = false;
 var currentOnlineUsers = new Map();
 var conversationId = null;
-var env = "https://ketu.herokuapp.com";
+var env = "http://localhost:8080";
 var stompClient;
 function connect() {
     var socket = new SockJS(env+'/ketu-socket?token='+token);
