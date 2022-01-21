@@ -1,9 +1,9 @@
 mongo:
-  address: ds257648.mlab.com
-  dbName: ketu
-  password: Yashpandey@123
+  address: cluster0.ronz5.mongodb.net
+  dbName: myFirstDatabase
+  password: killjangofat
   port: 57648
-  userName: ketu_dev_user
+  userName: yash
 
 management:
   endpoint:
